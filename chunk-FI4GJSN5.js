@@ -9,6 +9,9 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   AutoFocus,
+  AutoFocusModule,
+  Badge,
+  BadgeModule,
   BaseComponent,
   BaseIcon,
   BaseStyle,
@@ -36,10 +39,17 @@ import {
   FormsModule,
   HorizontalRadioButtonsComponent,
   HttpClient,
+  IconField,
   IftaLabel,
   IftaLabelModule,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupAddonModule,
+  InputIcon,
   InputNumber,
   InputNumberModule,
+  InputText,
+  InputTextModule,
   LocationStrategy,
   Message,
   MessageModule,
@@ -58,8 +68,6 @@ import {
   OverlayService,
   Paginator,
   PaginatorModule,
-  PanelModule,
-  PlusIcon,
   PrimeTemplate,
   ProgressBar,
   ProgressBarModule,
@@ -75,6 +83,7 @@ import {
   RouterLinkActive,
   RouterModule,
   Scroller,
+  SearchIcon,
   SelectableRow,
   SharedModule,
   SortAltIcon,
@@ -86,6 +95,7 @@ import {
   TableModule,
   Textarea,
   TextareaModule,
+  ThemeService,
   TimesIcon,
   Toast,
   ToggleButton,
@@ -98,6 +108,7 @@ import {
   TranslatePipe,
   TranslateService,
   TranslationKeys,
+  TreeDragDropService,
   UploadPasteComponent,
   UploadStateService,
   UploadUrlComponent,
@@ -133,7 +144,9 @@ import {
   getWindowScrollTop,
   hasClass,
   invokeElementMethod,
+  isAndroid,
   isEmpty,
+  isIOS,
   isNotEmpty,
   isPlatformBrowser,
   isPrintableCharacter,
@@ -141,6 +154,8 @@ import {
   isTouchDevice,
   nestedPosition,
   relativePosition,
+  removeAccents,
+  removeChild,
   removeClass,
   reorderArray,
   resolve,
@@ -149,7 +164,7 @@ import {
   unblockBodyScroll,
   uuid,
   zindexutils
-} from "./chunk-DJEXFAMN.js";
+} from "./chunk-GL6NV25R.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -165,6 +180,7 @@ import {
   Input,
   NgModule,
   NgZone,
+  Optional,
   Output,
   PLATFORM_ID,
   Renderer2,
@@ -1194,9 +1210,9 @@ var require_core = __commonJS({
         return options.noHighlightRe.test(languageName);
       }
       function blockLanguage(block) {
-        let classes12 = block.className + " ";
-        classes12 += block.parentNode ? block.parentNode.className : "";
-        const match = options.languageDetectRe.exec(classes12);
+        let classes13 = block.className + " ";
+        classes13 += block.parentNode ? block.parentNode.className : "";
+        const match = options.languageDetectRe.exec(classes13);
         if (match) {
           const language = getLanguage(match[1]);
           if (!language) {
@@ -1205,7 +1221,7 @@ var require_core = __commonJS({
           }
           return language ? match[1] : "no-highlight";
         }
-        return classes12.split(/\s+/).find((_class) => shouldNotHighlight(_class) || getLanguage(_class));
+        return classes13.split(/\s+/).find((_class) => shouldNotHighlight(_class) || getLanguage(_class));
       }
       function highlight2(codeOrLanguageName, optionsOrCode, ignoreIllegals) {
         let code = "";
@@ -29464,714 +29480,231 @@ var AiOptionsComponent = class _AiOptionsComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AiOptionsComponent, { className: "AiOptionsComponent", filePath: "src/app/views/page-assistant/components/ai-options.component.ts", lineNumber: 31 });
 })();
 
-// node_modules/primeng/fesm2022/primeng-fieldset.mjs
-var _c09 = ["header"];
-var _c110 = ["expandicon"];
-var _c28 = ["collapseicon"];
-var _c38 = ["content"];
-var _c48 = ["*", [["p-header"]]];
-var _c57 = ["*", "p-header"];
-var _c67 = (a0, a1) => ({
-  "p-fieldset p-component": true,
-  "p-fieldset-toggleable": a0,
-  "p-fieldset-expanded": a1
-});
-var _c77 = (a0) => ({
-  transitionParams: a0,
-  height: "0"
-});
-var _c87 = (a0) => ({
-  value: "hidden",
-  params: a0
-});
-var _c96 = (a0) => ({
-  transitionParams: a0,
-  height: "*"
-});
-var _c105 = (a0) => ({
-  value: "visible",
-  params: a0
-});
-function Fieldset_ng_container_2_ng_container_2_PlusIcon_1_Template(rf, ctx) {
+// src/app/views/page-assistant/components/tools/heading-structure.component.ts
+var _c09 = () => ({ "min-width": "50rem" });
+function HeadingStructureComponent_ng_template_1_th_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "PlusIcon", 11);
-  }
-  if (rf & 2) {
-    \u0275\u0275property("styleClass", "p-fieldset-toggler");
-    \u0275\u0275attribute("data-pc-section", "togglericon");
-  }
-}
-function Fieldset_ng_container_2_ng_container_2_span_2_ng_container_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainer(0);
-  }
-}
-function Fieldset_ng_container_2_ng_container_2_span_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 12);
-    \u0275\u0275template(1, Fieldset_ng_container_2_ng_container_2_span_2_ng_container_1_Template, 1, 0, "ng-container", 6);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(3);
-    \u0275\u0275attribute("data-pc-section", "togglericon");
-    \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r2.expandIconTemplate || ctx_r2._expandIconTemplate);
-  }
-}
-function Fieldset_ng_container_2_ng_container_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, Fieldset_ng_container_2_ng_container_2_PlusIcon_1_Template, 1, 2, "PlusIcon", 9)(2, Fieldset_ng_container_2_ng_container_2_span_2_Template, 2, 2, "span", 10);
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r2.expandIconTemplate && !ctx_r2._expandIconTemplate);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r2.expandIconTemplate || ctx_r2._expandIconTemplate);
-  }
-}
-function Fieldset_ng_container_2_ng_container_3_MinusIcon_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "MinusIcon", 11);
-  }
-  if (rf & 2) {
-    \u0275\u0275property("styleClass", "p-fieldset-toggler");
-    \u0275\u0275attribute("aria-hidden", true)("data-pc-section", "togglericon");
-  }
-}
-function Fieldset_ng_container_2_ng_container_3_span_2_ng_container_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainer(0);
-  }
-}
-function Fieldset_ng_container_2_ng_container_3_span_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 12);
-    \u0275\u0275template(1, Fieldset_ng_container_2_ng_container_3_span_2_ng_container_1_Template, 1, 0, "ng-container", 6);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(3);
-    \u0275\u0275attribute("data-pc-section", "togglericon");
-    \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r2.collapseIconTemplate || ctx_r2._collapseIconTemplate);
-  }
-}
-function Fieldset_ng_container_2_ng_container_3_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, Fieldset_ng_container_2_ng_container_3_MinusIcon_1_Template, 1, 3, "MinusIcon", 9)(2, Fieldset_ng_container_2_ng_container_3_span_2_Template, 2, 2, "span", 10);
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r2.collapseIconTemplate && !ctx_r2._collapseIconTemplate);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r2.collapseIconTemplate || ctx_r2._collapseIconTemplate);
-  }
-}
-function Fieldset_ng_container_2_ng_container_4_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainer(0);
-  }
-}
-function Fieldset_ng_container_2_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r2 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275elementStart(1, "button", 7);
-    \u0275\u0275listener("click", function Fieldset_ng_container_2_Template_button_click_1_listener($event) {
-      \u0275\u0275restoreView(_r2);
-      const ctx_r2 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r2.toggle($event));
-    })("keydown", function Fieldset_ng_container_2_Template_button_keydown_1_listener($event) {
-      \u0275\u0275restoreView(_r2);
-      const ctx_r2 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r2.onKeyDown($event));
-    });
-    \u0275\u0275template(2, Fieldset_ng_container_2_ng_container_2_Template, 3, 2, "ng-container", 8)(3, Fieldset_ng_container_2_ng_container_3_Template, 3, 2, "ng-container", 8)(4, Fieldset_ng_container_2_ng_container_4_Template, 1, 0, "ng-container", 6);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext();
-    const legendContent_r4 = \u0275\u0275reference(4);
-    \u0275\u0275advance();
-    \u0275\u0275attribute("id", ctx_r2.id + "_header")("aria-controls", ctx_r2.id + "_content")("aria-expanded", !ctx_r2.collapsed)("aria-label", ctx_r2.buttonAriaLabel);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r2.collapsed);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r2.collapsed);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", legendContent_r4);
-  }
-}
-function Fieldset_ng_template_3_ng_container_3_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainer(0);
-  }
-}
-function Fieldset_ng_template_3_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 13);
+    \u0275\u0275elementStart(0, "th");
     \u0275\u0275text(1);
     \u0275\u0275elementEnd();
-    \u0275\u0275projection(2, 1);
-    \u0275\u0275template(3, Fieldset_ng_template_3_ng_container_3_Template, 1, 0, "ng-container", 6);
   }
   if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext();
-    \u0275\u0275attribute("data-pc-section", "legendtitle");
+    const col_r2 = ctx.$implicit;
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(ctx_r2.legend);
-    \u0275\u0275advance(2);
-    \u0275\u0275property("ngTemplateOutlet", ctx_r2.headerTemplate || ctx_r2._headerTemplate);
+    \u0275\u0275textInterpolate1(" ", col_r2.header, " ");
   }
 }
-function Fieldset_ng_container_8_Template(rf, ctx) {
+function HeadingStructureComponent_ng_template_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementContainer(0);
+    \u0275\u0275elementStart(0, "tr");
+    \u0275\u0275element(1, "th", 3);
+    \u0275\u0275template(2, HeadingStructureComponent_ng_template_1_th_2_Template, 2, 1, "th", 4);
+    \u0275\u0275elementStart(3, "th");
+    \u0275\u0275text(4, "Action");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const columns_r3 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngForOf", columns_r3);
   }
 }
-var theme8 = ({
-  dt
-}) => `
-.p-fieldset {
-    background: ${dt("fieldset.background")};
-    border: 1px solid ${dt("fieldset.border.color")};
-    border-radius: ${dt("fieldset.border.radius")};
-    color: ${dt("fieldset.color")};
-    padding:  ${dt("fieldset.padding")};
-    margin: 0;
-}
-
-.p-fieldset-legend {
-    background: ${dt("fieldset.legend.background")};
-    border-radius: ${dt("fieldset.legend.border.radius")};
-    border-width: ${dt("fieldset.legend.border.width")};
-    border-style: solid;
-    border-color: ${dt("fieldset.legend.border.color")};
-    color: ${dt("fieldset.legend.color")};
-    padding: ${dt("fieldset.legend.padding")};
-    transition: background ${dt("fieldset.transition.duration")}, color ${dt("fieldset.transition.duration")}, outline-color ${dt("fieldset.transition.duration")}, box-shadow ${dt("fieldset.transition.duration")};
-}
-
-.p-fieldset-toggleable > .p-fieldset-legend {
-    padding: 0;
-}
-
-.p-fieldset-toggle-button {
-    cursor: pointer;
-    user-select: none;
-    overflow: hidden;
-    position: relative;
-    text-decoration: none;
-    display: flex;
-    gap: ${dt("fieldset.legend.gap")};
-    align-items: center;
-    justify-content: center;
-    padding: ${dt("fieldset.legend.padding")};
-    background: transparent;
-    border: 0 none;
-    border-radius: ${dt("fieldset.legend.border.radius")};
-    transition: background ${dt("fieldset.transition.duration")}, color ${dt("fieldset.transition.duration")}, outline-color ${dt("fieldset.transition.duration")}, box-shadow ${dt("fieldset.transition.duration")};
-    outline-color: transparent;
-}
-
-.p-fieldset-legend-label {
-    font-weight: ${dt("fieldset.legend.font.weight")};
-}
-
-.p-fieldset-toggle-button:focus-visible {
-    box-shadow: ${dt("fieldset.legend.focus.ring.shadow")};
-    outline: ${dt("fieldset.legend.focus.ring.width")} ${dt("fieldset.legend.focus.ring.style")} ${dt("fieldset.legend.focus.ring.color")};
-    outline-offset: ${dt("fieldset.legend.focus.ring.offset")};
-}
-
-.p-fieldset-toggleable > .p-fieldset-legend:hover {
-    color: ${dt("fieldset.legend.hover.color")};
-    background: ${dt("fieldset.legend.hover.background")};
-}
-
-.p-fieldset-toggle-icon {
-    color: ${dt("fieldset.toggle.icon.color")};
-    transition: color ${dt("fieldset.transition.duration")};
-}
-
-.p-fieldset-toggleable > .p-fieldset-legend:hover .p-fieldset-toggle-icon {
-    color: ${dt("fieldset.toggle.icon.hover.color")};
-}
-
-.p-fieldset .p-fieldset-content {
-    padding: ${dt("fieldset.content.padding")};
-}
-
-/* For PrimeNG */
-.p-fieldset-toggleable.p-fieldset-expanded > .p-fieldset-content-container:not(.ng-animating) {
-    overflow: visible
-}
-
-.p-fieldset-toggleable .p-fieldset-content-container {
-    overflow: hidden;
-}
-`;
-var classes8 = {
-  root: ({
-    props
-  }) => ["p-fieldset p-component", {
-    "p-fieldset-toggleable": props.toggleable
-  }],
-  legend: "p-fieldset-legend",
-  legendLabel: "p-fieldset-legend-label",
-  toggleButton: "p-fieldset-toggle-button",
-  toggleIcon: "p-fieldset-toggle-icon",
-  contentContainer: "p-fieldset-content-container",
-  content: "p-fieldset-content"
-};
-var FieldsetStyle = class _FieldsetStyle extends BaseStyle {
-  name = "fieldset";
-  theme = theme8;
-  classes = classes8;
-  static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275FieldsetStyle_BaseFactory;
-    return function FieldsetStyle_Factory(__ngFactoryType__) {
-      return (\u0275FieldsetStyle_BaseFactory || (\u0275FieldsetStyle_BaseFactory = \u0275\u0275getInheritedFactory(_FieldsetStyle)))(__ngFactoryType__ || _FieldsetStyle);
-    };
-  })();
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
-    token: _FieldsetStyle,
-    factory: _FieldsetStyle.\u0275fac
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FieldsetStyle, [{
-    type: Injectable
-  }], null, null);
-})();
-var FieldsetClasses;
-(function(FieldsetClasses2) {
-  FieldsetClasses2["root"] = "p-fieldset";
-  FieldsetClasses2["legend"] = "p-fieldset-legend";
-  FieldsetClasses2["legendLabel"] = "p-fieldset-legend-label";
-  FieldsetClasses2["toggleIcon"] = "p-fieldset-toggle-icon";
-  FieldsetClasses2["contentContainer"] = "p-fieldset-content-container";
-  FieldsetClasses2["content"] = "p-fieldset-content";
-})(FieldsetClasses || (FieldsetClasses = {}));
-var Fieldset = class _Fieldset extends BaseComponent {
-  /**
-   * Header text of the fieldset.
-   * @group Props
-   */
-  legend;
-  /**
-   * When specified, content can toggled by clicking the legend.
-   * @group Props
-   * @defaultValue false
-   */
-  toggleable;
-  /**
-   * Defines the default visibility state of the content.
-   * * @group Props
-   */
-  collapsed = false;
-  /**
-   * Inline style of the component.
-   * @group Props
-   */
-  style;
-  /**
-   * Style class of the component.
-   * @group Props
-   */
-  styleClass;
-  /**
-   * Transition options of the panel animation.
-   * @group Props
-   */
-  transitionOptions = "400ms cubic-bezier(0.86, 0, 0.07, 1)";
-  /**
-   * Emits when the collapsed state changes.
-   * @param {boolean} value - New value.
-   * @group Emits
-   */
-  collapsedChange = new EventEmitter();
-  /**
-   * Callback to invoke before panel toggle.
-   * @param {PanelBeforeToggleEvent} event - Custom toggle event
-   * @group Emits
-   */
-  onBeforeToggle = new EventEmitter();
-  /**
-   * Callback to invoke after panel toggle.
-   * @param {PanelAfterToggleEvent} event - Custom toggle event
-   * @group Emits
-   */
-  onAfterToggle = new EventEmitter();
-  get id() {
-    return uuid("pn_id_");
+function HeadingStructureComponent_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr", 5)(1, "td");
+    \u0275\u0275element(2, "span", 6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "td");
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "td");
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(7, "td", 7);
+    \u0275\u0275text(8);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(9, "td");
+    \u0275\u0275text(10, "Add buttons!");
+    \u0275\u0275elementEnd()();
   }
-  get buttonAriaLabel() {
-    return this.legend;
+  if (rf & 2) {
+    const rowData_r4 = ctx.$implicit;
+    const index_r5 = ctx.rowIndex;
+    const ctx_r5 = \u0275\u0275nextContext();
+    \u0275\u0275property("pReorderableRow", index_r5)("pSelectableRow", rowData_r4);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(rowData_r4.order);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(rowData_r4.type);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngClass", ctx_r5.getTextClass(rowData_r4))("ngStyle", ctx_r5.getTextStyle(rowData_r4));
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(rowData_r4.text);
   }
-  animating;
-  _componentStyle = inject(FieldsetStyle);
-  /**
-   * Defines the header template.
-   * @group Templates
-   */
-  headerTemplate;
-  /**
-   * Defines the expandicon template.
-   * @group Templates
-   */
-  expandIconTemplate;
-  /**
-   * Defines the collapseicon template.
-   * @group Templates
-   */
-  collapseIconTemplate;
-  /**
-   * Defines the content template.
-   * @group Templates
-   */
-  contentTemplate;
-  toggle(event) {
-    if (this.animating) {
-      return false;
-    }
-    this.animating = true;
-    this.onBeforeToggle.emit({
-      originalEvent: event,
-      collapsed: this.collapsed
-    });
-    if (this.collapsed) this.expand();
-    else this.collapse();
-    this.onAfterToggle.emit({
-      originalEvent: event,
-      collapsed: this.collapsed
-    });
-    event.preventDefault();
+}
+var HeadingStructureComponent = class _HeadingStructureComponent {
+  uploadState;
+  translate;
+  constructor(uploadState, translate) {
+    this.uploadState = uploadState;
+    this.translate = translate;
   }
-  onKeyDown(event) {
-    if (event.code === "Enter" || event.code === "Space") {
-      this.toggle(event);
-      event.preventDefault();
+  ngOnInit() {
+    this.fetchHeadings();
+    this.cols = [
+      { field: "order", header: "Original order" },
+      { field: "type", header: "Heading type" },
+      { field: "text", header: "Text" }
+    ];
+  }
+  headings = [];
+  selectedHeading;
+  cols;
+  headingTypes = ["h1", "h2", "h3", "h4", "h5", "h6", "summary"];
+  fetchHeadings() {
+    try {
+      const data = this.uploadState.getUploadData();
+      if (!data || !data.originalHtml)
+        return;
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(data.originalHtml, "text/html");
+      const selector = this.headingTypes.join(", ");
+      const elements = doc.querySelectorAll(selector);
+      this.headings = Array.from(elements).map((el, index) => ({
+        order: index + 1,
+        //this is so we can track the original order
+        type: el.tagName.toLowerCase(),
+        text: el.textContent?.trim() || ""
+      }));
+    } catch (err) {
+      console.error("Failed to get heading from HTML data", err);
     }
   }
-  expand() {
-    this.collapsed = false;
-    this.collapsedChange.emit(this.collapsed);
+  //In-line styles
+  getTextStyle(row) {
+    switch (row.type) {
+      case "h1":
+        return { fontWeight: "bold" };
+      case "h2":
+        return { fontWeight: "bold" };
+      case "h6":
+        return { color: "gray" };
+      case "summary":
+        return { color: "blue" };
+      default:
+        return {};
+    }
   }
-  collapse() {
-    this.collapsed = true;
-    this.collapsedChange.emit(this.collapsed);
+  //Classes
+  getTextClass(heading) {
+    switch (heading.type) {
+      case "h1":
+        return { "": heading.type === "h1" };
+      case "h2":
+        return { "pl-4": heading.type === "h2" };
+      case "h3":
+        return { "pl-6": heading.type === "h3" };
+      case "h4":
+        return { "pl-7": heading.type === "h4" };
+      case "h5":
+        return { "pl-8": heading.type === "h5" };
+      case "h6":
+        return { "pl-8": heading.type === "h6" };
+      case "summary":
+        return { "pl-8": heading.type === "summary" };
+      default:
+        return {};
+    }
   }
-  getBlockableElement() {
-    return this.el.nativeElement.children[0];
-  }
-  onToggleDone() {
-    this.animating = false;
-  }
-  _headerTemplate;
-  _expandIconTemplate;
-  _collapseIconTemplate;
-  _contentTemplate;
-  templates;
-  ngAfterContentInit() {
-    this.templates.forEach((item) => {
-      switch (item.getType()) {
-        case "header":
-          this._headerTemplate = item.template;
-          break;
-        case "expandicon":
-          this._expandIconTemplate = item.template;
-          break;
-        case "collapseicon":
-          this._collapseIconTemplate = item.template;
-          break;
-        case "content":
-          this._contentTemplate = item.template;
-          break;
-      }
-    });
-  }
-  static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275Fieldset_BaseFactory;
-    return function Fieldset_Factory(__ngFactoryType__) {
-      return (\u0275Fieldset_BaseFactory || (\u0275Fieldset_BaseFactory = \u0275\u0275getInheritedFactory(_Fieldset)))(__ngFactoryType__ || _Fieldset);
-    };
-  })();
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-    type: _Fieldset,
-    selectors: [["p-fieldset"]],
-    contentQueries: function Fieldset_ContentQueries(rf, ctx, dirIndex) {
-      if (rf & 1) {
-        \u0275\u0275contentQuery(dirIndex, _c09, 4);
-        \u0275\u0275contentQuery(dirIndex, _c110, 4);
-        \u0275\u0275contentQuery(dirIndex, _c28, 4);
-        \u0275\u0275contentQuery(dirIndex, _c38, 4);
-        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
-      }
-      if (rf & 2) {
-        let _t;
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerTemplate = _t.first);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.expandIconTemplate = _t.first);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.collapseIconTemplate = _t.first);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentTemplate = _t.first);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
-      }
-    },
-    inputs: {
-      legend: "legend",
-      toggleable: [2, "toggleable", "toggleable", booleanAttribute],
-      collapsed: [2, "collapsed", "collapsed", booleanAttribute],
-      style: "style",
-      styleClass: "styleClass",
-      transitionOptions: "transitionOptions"
-    },
-    outputs: {
-      collapsedChange: "collapsedChange",
-      onBeforeToggle: "onBeforeToggle",
-      onAfterToggle: "onAfterToggle"
-    },
-    features: [\u0275\u0275ProvidersFeature([FieldsetStyle]), \u0275\u0275InheritDefinitionFeature],
-    ngContentSelectors: _c57,
-    decls: 9,
-    vars: 28,
-    consts: [["legendContent", ""], [3, "ngClass", "ngStyle"], [1, "p-fieldset-legend"], [4, "ngIf", "ngIfElse"], ["role", "region", 1, "p-fieldset-content-container"], [1, "p-fieldset-content"], [4, "ngTemplateOutlet"], ["tabindex", "0", "role", "button", 1, "p-fieldset-toggle-button", 3, "click", "keydown"], [4, "ngIf"], [3, "styleClass", 4, "ngIf"], ["class", "p-fieldset-toggler", 4, "ngIf"], [3, "styleClass"], [1, "p-fieldset-toggler"], [1, "p-fieldset-legend-label"]],
-    template: function Fieldset_Template(rf, ctx) {
-      if (rf & 1) {
-        const _r1 = \u0275\u0275getCurrentView();
-        \u0275\u0275projectionDef(_c48);
-        \u0275\u0275elementStart(0, "fieldset", 1)(1, "legend", 2);
-        \u0275\u0275template(2, Fieldset_ng_container_2_Template, 5, 7, "ng-container", 3)(3, Fieldset_ng_template_3_Template, 4, 3, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
-        \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(5, "div", 4);
-        \u0275\u0275listener("@fieldsetContent.done", function Fieldset_Template_div_animation_fieldsetContent_done_5_listener() {
-          \u0275\u0275restoreView(_r1);
-          return \u0275\u0275resetView(ctx.onToggleDone());
-        });
-        \u0275\u0275elementStart(6, "div", 5);
-        \u0275\u0275projection(7);
-        \u0275\u0275template(8, Fieldset_ng_container_8_Template, 1, 0, "ng-container", 6);
-        \u0275\u0275elementEnd()()();
-      }
-      if (rf & 2) {
-        const legendContent_r4 = \u0275\u0275reference(4);
-        \u0275\u0275classMap(ctx.styleClass);
-        \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(17, _c67, ctx.toggleable, !ctx.collapsed && ctx.toggleable))("ngStyle", ctx.style);
-        \u0275\u0275attribute("id", ctx.id)("data-pc-name", "fieldset")("data-pc-section", "root");
-        \u0275\u0275advance();
-        \u0275\u0275attribute("data-pc-section", "legend");
-        \u0275\u0275advance();
-        \u0275\u0275property("ngIf", ctx.toggleable)("ngIfElse", legendContent_r4);
-        \u0275\u0275advance(3);
-        \u0275\u0275property("@fieldsetContent", ctx.collapsed ? \u0275\u0275pureFunction1(22, _c87, \u0275\u0275pureFunction1(20, _c77, ctx.transitionOptions)) : \u0275\u0275pureFunction1(26, _c105, \u0275\u0275pureFunction1(24, _c96, ctx.animating ? ctx.transitionOptions : "0ms")));
-        \u0275\u0275attribute("id", ctx.id + "_content")("aria-labelledby", ctx.id + "_header")("aria-hidden", ctx.collapsed)("data-pc-section", "toggleablecontent");
-        \u0275\u0275advance();
-        \u0275\u0275attribute("data-pc-section", "content");
-        \u0275\u0275advance(2);
-        \u0275\u0275property("ngTemplateOutlet", ctx.contentTemplate || ctx._contentTemplate);
-      }
-    },
-    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, ButtonModule, MinusIcon, PlusIcon, SharedModule],
-    encapsulation: 2,
-    data: {
-      animation: [trigger("fieldsetContent", [state("hidden", style({
-        height: "0"
-      })), state("visible", style({
-        height: "*"
-      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])]
-    },
-    changeDetection: 0
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Fieldset, [{
-    type: Component,
-    args: [{
-      selector: "p-fieldset",
-      standalone: true,
-      imports: [CommonModule, ButtonModule, MinusIcon, PlusIcon, SharedModule],
-      template: `
-        <fieldset
-            [attr.id]="id"
-            [ngClass]="{
-                'p-fieldset p-component': true,
-                'p-fieldset-toggleable': toggleable,
-                'p-fieldset-expanded': !collapsed && toggleable
-            }"
-            [ngStyle]="style"
-            [class]="styleClass"
-            [attr.data-pc-name]="'fieldset'"
-            [attr.data-pc-section]="'root'"
-        >
-            <legend class="p-fieldset-legend" [attr.data-pc-section]="'legend'">
-                <ng-container *ngIf="toggleable; else legendContent">
-                    <button
-                        [attr.id]="id + '_header'"
-                        tabindex="0"
-                        role="button"
-                        [attr.aria-controls]="id + '_content'"
-                        [attr.aria-expanded]="!collapsed"
-                        [attr.aria-label]="buttonAriaLabel"
-                        (click)="toggle($event)"
-                        (keydown)="onKeyDown($event)"
-                        class="p-fieldset-toggle-button"
-                    >
-                        <ng-container *ngIf="collapsed">
-                            <PlusIcon *ngIf="!expandIconTemplate && !_expandIconTemplate" [styleClass]="'p-fieldset-toggler'" [attr.data-pc-section]="'togglericon'" />
-                            <span *ngIf="expandIconTemplate || _expandIconTemplate" class="p-fieldset-toggler" [attr.data-pc-section]="'togglericon'">
-                                <ng-container *ngTemplateOutlet="expandIconTemplate || _expandIconTemplate"></ng-container>
-                            </span>
-                        </ng-container>
-                        <ng-container *ngIf="!collapsed">
-                            <MinusIcon *ngIf="!collapseIconTemplate && !_collapseIconTemplate" [styleClass]="'p-fieldset-toggler'" [attr.aria-hidden]="true" [attr.data-pc-section]="'togglericon'" />
-                            <span *ngIf="collapseIconTemplate || _collapseIconTemplate" class="p-fieldset-toggler" [attr.data-pc-section]="'togglericon'">
-                                <ng-container *ngTemplateOutlet="collapseIconTemplate || _collapseIconTemplate"></ng-container>
-                            </span>
-                        </ng-container>
-                        <ng-container *ngTemplateOutlet="legendContent"></ng-container>
-                    </button>
-                </ng-container>
-                <ng-template #legendContent>
-                    <span class="p-fieldset-legend-label" [attr.data-pc-section]="'legendtitle'">{{ legend }}</span>
-                    <ng-content select="p-header"></ng-content>
-                    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-                </ng-template>
-            </legend>
-            <div
-                [attr.id]="id + '_content'"
-                role="region"
-                class="p-fieldset-content-container"
-                [@fieldsetContent]="collapsed ? { value: 'hidden', params: { transitionParams: transitionOptions, height: '0' } } : { value: 'visible', params: { transitionParams: animating ? transitionOptions : '0ms', height: '*' } }"
-                [attr.aria-labelledby]="id + '_header'"
-                [attr.aria-hidden]="collapsed"
-                [attr.data-pc-section]="'toggleablecontent'"
-                (@fieldsetContent.done)="onToggleDone()"
-            >
-                <div class="p-fieldset-content" [attr.data-pc-section]="'content'">
-                    <ng-content></ng-content>
-                    <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-                </div>
-            </div>
-        </fieldset>
-    `,
-      animations: [trigger("fieldsetContent", [state("hidden", style({
-        height: "0"
-      })), state("visible", style({
-        height: "*"
-      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])],
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      encapsulation: ViewEncapsulation.None,
-      providers: [FieldsetStyle]
-    }]
-  }], null, {
-    legend: [{
-      type: Input
-    }],
-    toggleable: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    collapsed: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    style: [{
-      type: Input
-    }],
-    styleClass: [{
-      type: Input
-    }],
-    transitionOptions: [{
-      type: Input
-    }],
-    collapsedChange: [{
-      type: Output
-    }],
-    onBeforeToggle: [{
-      type: Output
-    }],
-    onAfterToggle: [{
-      type: Output
-    }],
-    headerTemplate: [{
-      type: ContentChild,
-      args: ["header", {
-        descendants: false
-      }]
-    }],
-    expandIconTemplate: [{
-      type: ContentChild,
-      args: ["expandicon", {
-        descendants: false
-      }]
-    }],
-    collapseIconTemplate: [{
-      type: ContentChild,
-      args: ["collapseicon", {
-        descendants: false
-      }]
-    }],
-    contentTemplate: [{
-      type: ContentChild,
-      args: ["content", {
-        descendants: false
-      }]
-    }],
-    templates: [{
-      type: ContentChildren,
-      args: [PrimeTemplate]
-    }]
-  });
-})();
-var FieldsetModule = class _FieldsetModule {
-  static \u0275fac = function FieldsetModule_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _FieldsetModule)();
+  static \u0275fac = function HeadingStructureComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _HeadingStructureComponent)(\u0275\u0275directiveInject(UploadStateService), \u0275\u0275directiveInject(TranslateService));
   };
-  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
-    type: _FieldsetModule,
-    imports: [Fieldset, SharedModule],
-    exports: [Fieldset, SharedModule]
-  });
-  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
-    imports: [Fieldset, SharedModule, SharedModule]
-  });
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeadingStructureComponent, selectors: [["ca-heading-structure"]], decls: 5, vars: 6, consts: [["header", ""], ["body", ""], ["size", "small", "stripedRows", "", "selectionMode", "single", "dataKey", "order", "metaKeySelection", "false", 3, "selectionChange", "columns", "value", "tableStyle", "reorderableColumns", "selection"], [2, "width", "3rem"], [4, "ngFor", "ngForOf"], [3, "pReorderableRow", "pSelectableRow"], ["pReorderableRowHandle", "", 1, "pi", "pi-bars"], [3, "ngClass", "ngStyle"]], template: function HeadingStructureComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      const _r1 = \u0275\u0275getCurrentView();
+      \u0275\u0275elementStart(0, "p-table", 2);
+      \u0275\u0275twoWayListener("selectionChange", function HeadingStructureComponent_Template_p_table_selectionChange_0_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        \u0275\u0275twoWayBindingSet(ctx.selectedHeading, $event) || (ctx.selectedHeading = $event);
+        return \u0275\u0275resetView($event);
+      });
+      \u0275\u0275template(1, HeadingStructureComponent_ng_template_1_Template, 5, 1, "ng-template", null, 0, \u0275\u0275templateRefExtractor)(3, HeadingStructureComponent_ng_template_3_Template, 11, 7, "ng-template", null, 1, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementEnd();
+    }
+    if (rf & 2) {
+      \u0275\u0275property("columns", ctx.cols)("value", ctx.headings)("tableStyle", \u0275\u0275pureFunction0(5, _c09))("reorderableColumns", true);
+      \u0275\u0275twoWayProperty("selection", ctx.selectedHeading);
+    }
+  }, dependencies: [
+    CommonModule,
+    NgClass,
+    NgForOf,
+    NgStyle,
+    FormsModule,
+    TranslateModule,
+    TableModule,
+    Table,
+    SelectableRow,
+    ReorderableRowHandle,
+    ReorderableRow,
+    ButtonModule
+  ], encapsulation: 2 });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FieldsetModule, [{
-    type: NgModule,
-    args: [{
-      imports: [Fieldset, SharedModule],
-      exports: [Fieldset, SharedModule]
-    }]
-  }], null, null);
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(HeadingStructureComponent, [{
+    type: Component,
+    args: [{ selector: "ca-heading-structure", imports: [
+      CommonModule,
+      FormsModule,
+      TranslateModule,
+      TableModule,
+      ButtonModule
+    ], template: `<p-table [columns]="cols" [value]="headings"
+         size="small" stripedRows [tableStyle]="{ 'min-width': '50rem' }"
+         [reorderableColumns]="true"
+         selectionMode="single" [(selection)]="selectedHeading" dataKey="order" metaKeySelection="false">
+    <ng-template #header let-columns>
+        <tr>
+            <th style="width:3rem"></th>
+            <th *ngFor="let col of columns">
+                {{ col.header }}
+            </th>
+            <th>Action</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-rowData let-columns="columns" let-index="rowIndex">
+        <tr [pReorderableRow]="index" [pSelectableRow]="rowData">
+            <td>
+                <span class="pi pi-bars" pReorderableRowHandle></span>
+            </td>
+            <td>{{ rowData.order }}</td>
+            <td>{{ rowData.type }}</td>
+            <td [ngClass]="getTextClass(rowData)" [ngStyle]="getTextStyle(rowData)">{{ rowData.text }}</td>
+            <td>Add buttons!</td>
+        </tr>
+    </ng-template>
+</p-table>` }]
+  }], () => [{ type: UploadStateService }, { type: TranslateService }], null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HeadingStructureComponent, { className: "HeadingStructureComponent", filePath: "src/app/views/page-assistant/components/tools/heading-structure.component.ts", lineNumber: 33 });
 })();
 
 // node_modules/primeng/fesm2022/primeng-breadcrumb.mjs
 var _c010 = ["item"];
-var _c111 = ["separator"];
-var _c29 = (a0) => ({
+var _c110 = ["separator"];
+var _c28 = (a0) => ({
   "p-breadcrumb-home-item": true,
   "p-disabled": a0
 });
-var _c39 = () => ({
+var _c38 = () => ({
   exact: false
 });
-var _c49 = (a0) => ({
+var _c48 = (a0) => ({
   "p-breadcrumb-item": true,
   "p-disabled": a0
 });
-var _c58 = (a0) => ({
+var _c57 = (a0) => ({
   $implicit: a0
 });
 function Breadcrumb_li_2_a_1_span_1_Template(rf, ctx) {
@@ -30314,7 +29847,7 @@ function Breadcrumb_li_2_a_2_Template(rf, ctx) {
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275property("routerLink", ctx_r1.home.routerLink)("queryParams", ctx_r1.home.queryParams)("routerLinkActiveOptions", ctx_r1.home.routerLinkActiveOptions || \u0275\u0275pureFunction0(16, _c39))("target", ctx_r1.home.target)("fragment", ctx_r1.home.fragment)("queryParamsHandling", ctx_r1.home.queryParamsHandling)("preserveFragment", ctx_r1.home.preserveFragment)("skipLocationChange", ctx_r1.home.skipLocationChange)("replaceUrl", ctx_r1.home.replaceUrl)("state", ctx_r1.home.state);
+    \u0275\u0275property("routerLink", ctx_r1.home.routerLink)("queryParams", ctx_r1.home.queryParams)("routerLinkActiveOptions", ctx_r1.home.routerLinkActiveOptions || \u0275\u0275pureFunction0(16, _c38))("target", ctx_r1.home.target)("fragment", ctx_r1.home.fragment)("queryParamsHandling", ctx_r1.home.queryParamsHandling)("preserveFragment", ctx_r1.home.preserveFragment)("skipLocationChange", ctx_r1.home.skipLocationChange)("replaceUrl", ctx_r1.home.replaceUrl)("state", ctx_r1.home.state);
     \u0275\u0275attribute("aria-label", ctx_r1.homeAriaLabel)("title", ctx_r1.home.title)("tabindex", ctx_r1.home.disabled ? null : "0");
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", ctx_r1.home.icon);
@@ -30333,7 +29866,7 @@ function Breadcrumb_li_2_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275classMap(ctx_r1.home.styleClass);
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(9, _c29, ctx_r1.home.disabled))("ngStyle", ctx_r1.home.style)("tooltipOptions", ctx_r1.home.tooltipOptions);
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(9, _c28, ctx_r1.home.disabled))("ngStyle", ctx_r1.home.style)("tooltipOptions", ctx_r1.home.tooltipOptions);
     \u0275\u0275attribute("id", ctx_r1.home.id)("data-pc-section", "home");
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", !ctx_r1.home.routerLink);
@@ -30382,7 +29915,7 @@ function Breadcrumb_ng_template_4_li_0_Conditional_1_Template(rf, ctx) {
   if (rf & 2) {
     const menuitem_r6 = \u0275\u0275nextContext(2).$implicit;
     const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r1.itemTemplate || ctx_r1._itemTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c58, menuitem_r6));
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.itemTemplate || ctx_r1._itemTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c57, menuitem_r6));
   }
 }
 function Breadcrumb_ng_template_4_li_0_Conditional_2_a_0_ng_container_1_span_1_Template(rf, ctx) {
@@ -30522,7 +30055,7 @@ function Breadcrumb_ng_template_4_li_0_Conditional_2_a_1_Template(rf, ctx) {
   }
   if (rf & 2) {
     const menuitem_r6 = \u0275\u0275nextContext(3).$implicit;
-    \u0275\u0275property("routerLink", menuitem_r6 == null ? null : menuitem_r6.routerLink)("queryParams", menuitem_r6 == null ? null : menuitem_r6.queryParams)("routerLinkActiveOptions", (menuitem_r6 == null ? null : menuitem_r6.routerLinkActiveOptions) || \u0275\u0275pureFunction0(14, _c39))("target", menuitem_r6 == null ? null : menuitem_r6.target)("fragment", menuitem_r6 == null ? null : menuitem_r6.fragment)("queryParamsHandling", menuitem_r6 == null ? null : menuitem_r6.queryParamsHandling)("preserveFragment", menuitem_r6 == null ? null : menuitem_r6.preserveFragment)("skipLocationChange", menuitem_r6 == null ? null : menuitem_r6.skipLocationChange)("replaceUrl", menuitem_r6 == null ? null : menuitem_r6.replaceUrl)("state", menuitem_r6 == null ? null : menuitem_r6.state);
+    \u0275\u0275property("routerLink", menuitem_r6 == null ? null : menuitem_r6.routerLink)("queryParams", menuitem_r6 == null ? null : menuitem_r6.queryParams)("routerLinkActiveOptions", (menuitem_r6 == null ? null : menuitem_r6.routerLinkActiveOptions) || \u0275\u0275pureFunction0(14, _c38))("target", menuitem_r6 == null ? null : menuitem_r6.target)("fragment", menuitem_r6 == null ? null : menuitem_r6.fragment)("queryParamsHandling", menuitem_r6 == null ? null : menuitem_r6.queryParamsHandling)("preserveFragment", menuitem_r6 == null ? null : menuitem_r6.preserveFragment)("skipLocationChange", menuitem_r6 == null ? null : menuitem_r6.skipLocationChange)("replaceUrl", menuitem_r6 == null ? null : menuitem_r6.replaceUrl)("state", menuitem_r6 == null ? null : menuitem_r6.state);
     \u0275\u0275attribute("title", menuitem_r6 == null ? null : menuitem_r6.title)("tabindex", (menuitem_r6 == null ? null : menuitem_r6.disabled) ? null : "0");
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", menuitem_r6 == null ? null : menuitem_r6.icon);
@@ -30551,7 +30084,7 @@ function Breadcrumb_ng_template_4_li_0_Template(rf, ctx) {
     const menuitem_r6 = \u0275\u0275nextContext().$implicit;
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275classMap(menuitem_r6.styleClass);
-    \u0275\u0275property("ngStyle", menuitem_r6.style)("ngClass", \u0275\u0275pureFunction1(8, _c49, menuitem_r6.disabled))("tooltipOptions", menuitem_r6.tooltipOptions);
+    \u0275\u0275property("ngStyle", menuitem_r6.style)("ngClass", \u0275\u0275pureFunction1(8, _c48, menuitem_r6.disabled))("tooltipOptions", menuitem_r6.tooltipOptions);
     \u0275\u0275attribute("id", menuitem_r6.id)("data-pc-section", "menuitem");
     \u0275\u0275advance();
     \u0275\u0275conditional(ctx_r1.itemTemplate || ctx_r1._itemTemplate ? 1 : 2);
@@ -30596,7 +30129,7 @@ function Breadcrumb_ng_template_4_Template(rf, ctx) {
     \u0275\u0275property("ngIf", !end_r11 && menuitem_r6.visible !== false);
   }
 }
-var theme9 = ({
+var theme8 = ({
   dt
 }) => `
 .p-breadcrumb {
@@ -30663,7 +30196,7 @@ var theme9 = ({
     color: ${dt("breadcrumb.item.icon.hover.color")};
 }
 `;
-var classes9 = {
+var classes8 = {
   root: "p-breadcrumb p-component",
   list: "p-breadcrumb-list",
   homeItem: "p-breadcrumb-home-item",
@@ -30679,8 +30212,8 @@ var classes9 = {
 };
 var BreadCrumbStyle = class _BreadCrumbStyle extends BaseStyle {
   name = "breadcrumb";
-  theme = theme9;
-  classes = classes9;
+  theme = theme8;
+  classes = classes8;
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275BreadCrumbStyle_BaseFactory;
     return function BreadCrumbStyle_Factory(__ngFactoryType__) {
@@ -30802,7 +30335,7 @@ var Breadcrumb = class _Breadcrumb extends BaseComponent {
     contentQueries: function Breadcrumb_ContentQueries(rf, ctx, dirIndex) {
       if (rf & 1) {
         \u0275\u0275contentQuery(dirIndex, _c010, 5);
-        \u0275\u0275contentQuery(dirIndex, _c111, 5);
+        \u0275\u0275contentQuery(dirIndex, _c110, 5);
         \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
       }
       if (rf & 2) {
@@ -31046,15 +30579,15 @@ var BreadcrumbModule = class _BreadcrumbModule {
 
 // node_modules/primeng/fesm2022/primeng-organizationchart.mjs
 var _c011 = ["pOrganizationChartNode", ""];
-var _c114 = (a0, a1) => ({
+var _c111 = (a0, a1) => ({
   "p-organizationchart-node": true,
   "p-organizationchart-node-selectable": a0,
   "p-organizationchart-node-selected": a1
 });
-var _c210 = (a0) => ({
+var _c29 = (a0) => ({
   $implicit: a0
 });
-var _c310 = (a0) => ({
+var _c39 = (a0) => ({
   "p-organizationchart-connector-top": a0
 });
 function OrganizationChartNode_tbody_0_div_4_Template(rf, ctx) {
@@ -31083,7 +30616,7 @@ function OrganizationChartNode_tbody_0_div_5_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r1.chart.getTemplateForNode(ctx_r1.node))("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c210, ctx_r1.node));
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.chart.getTemplateForNode(ctx_r1.node))("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c29, ctx_r1.node));
   }
 }
 function OrganizationChartNode_tbody_0_ng_container_6_a_1_ng_container_1_ChevronDownIcon_1_Template(rf, ctx) {
@@ -31135,7 +30668,7 @@ function OrganizationChartNode_tbody_0_ng_container_6_a_1_span_2_Template(rf, ct
     const ctx_r1 = \u0275\u0275nextContext(4);
     \u0275\u0275attribute("data-pc-section", "nodeTogglerIcon");
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r1.chart.togglerIconTemplate || ctx_r1.chart._togglerIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(3, _c210, ctx_r1.node.expanded));
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.chart.togglerIconTemplate || ctx_r1.chart._togglerIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(3, _c29, ctx_r1.node.expanded));
   }
 }
 function OrganizationChartNode_tbody_0_ng_container_6_a_1_Template(rf, ctx) {
@@ -31207,10 +30740,10 @@ function OrganizationChartNode_tbody_0_ng_container_12_ng_template_1_Template(rf
   if (rf & 2) {
     const first_r4 = ctx.first;
     const last_r5 = ctx.last;
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(4, _c310, !first_r4));
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(4, _c39, !first_r4));
     \u0275\u0275attribute("data-pc-section", "lineLeft");
     \u0275\u0275advance(2);
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(6, _c310, !last_r5));
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(6, _c39, !last_r5));
     \u0275\u0275attribute("data-pc-section", "lineRight");
   }
 }
@@ -31270,7 +30803,7 @@ function OrganizationChartNode_tbody_0_Template(rf, ctx) {
     \u0275\u0275attribute("colspan", ctx_r1.colspan)("data-pc-section", "cell");
     \u0275\u0275advance();
     \u0275\u0275classMap(ctx_r1.node.styleClass);
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(26, _c114, ctx_r1.chart.selectionMode && ctx_r1.node.selectable !== false, ctx_r1.isSelected()));
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(26, _c111, ctx_r1.chart.selectionMode && ctx_r1.node.selectable !== false, ctx_r1.isSelected()));
     \u0275\u0275attribute("data-pc-section", "node");
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", !ctx_r1.chart.getTemplateForNode(ctx_r1.node));
@@ -31299,8 +30832,8 @@ function OrganizationChartNode_tbody_0_Template(rf, ctx) {
     \u0275\u0275property("ngForOf", ctx_r1.node.children);
   }
 }
-var _c410 = ["togglericon"];
-var _c59 = (a0) => ({
+var _c49 = ["togglericon"];
+var _c58 = (a0) => ({
   "p-organizationchart p-component": true,
   "p-organizationchart-preservespace": a0
 });
@@ -31313,7 +30846,7 @@ function OrganizationChart_table_1_Template(rf, ctx) {
     \u0275\u0275property("collapsible", ctx_r0.collapsible)("node", ctx_r0.root);
   }
 }
-var theme10 = ({
+var theme9 = ({
   dt
 }) => `
 .p-organizationchart-table {
@@ -31428,7 +30961,7 @@ var theme10 = ({
     border-start-start-radius: ${dt("organizationchart.connector.border.radius")};
 }
 `;
-var classes10 = {
+var classes9 = {
   root: "p-organizationchart p-component",
   table: "p-organizationchart-table",
   node: ({
@@ -31456,8 +30989,8 @@ var classes10 = {
 };
 var OrganizationChartStyle = class _OrganizationChartStyle extends BaseStyle {
   name = "organizationchart";
-  theme = theme10;
-  classes = classes10;
+  theme = theme9;
+  classes = classes9;
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275OrganizationChartStyle_BaseFactory;
     return function OrganizationChartStyle_Factory(__ngFactoryType__) {
@@ -31875,7 +31408,7 @@ var OrganizationChart = class _OrganizationChart extends BaseComponent {
     selectors: [["p-organizationChart"], ["p-organization-chart"], ["p-organizationchart"]],
     contentQueries: function OrganizationChart_ContentQueries(rf, ctx, dirIndex) {
       if (rf & 1) {
-        \u0275\u0275contentQuery(dirIndex, _c410, 4);
+        \u0275\u0275contentQuery(dirIndex, _c49, 4);
         \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
       }
       if (rf & 2) {
@@ -31912,7 +31445,7 @@ var OrganizationChart = class _OrganizationChart extends BaseComponent {
       }
       if (rf & 2) {
         \u0275\u0275classMap(ctx.styleClass);
-        \u0275\u0275property("ngStyle", ctx.style)("ngClass", \u0275\u0275pureFunction1(6, _c59, ctx.preserveSpace));
+        \u0275\u0275property("ngStyle", ctx.style)("ngClass", \u0275\u0275pureFunction1(6, _c58, ctx.preserveSpace));
         \u0275\u0275attribute("data-pc-section", "root");
         \u0275\u0275advance();
         \u0275\u0275property("ngIf", ctx.root);
@@ -32021,17 +31554,17 @@ var OrganizationChartModule = class _OrganizationChartModule {
 
 // node_modules/primeng/fesm2022/primeng-treetable.mjs
 var _c012 = ["colgroup"];
-var _c115 = ["caption"];
-var _c211 = ["header"];
-var _c311 = ["body"];
-var _c411 = ["footer"];
-var _c510 = ["summary"];
-var _c68 = ["emptymessage"];
-var _c78 = ["paginatorleft"];
-var _c88 = ["paginatorright"];
-var _c97 = ["paginatordropdownitem"];
-var _c106 = ["frozenheader"];
-var _c116 = ["frozenbody"];
+var _c114 = ["caption"];
+var _c210 = ["header"];
+var _c310 = ["body"];
+var _c410 = ["footer"];
+var _c59 = ["summary"];
+var _c67 = ["emptymessage"];
+var _c77 = ["paginatorleft"];
+var _c87 = ["paginatorright"];
+var _c96 = ["paginatordropdownitem"];
+var _c105 = ["frozenheader"];
+var _c115 = ["frozenbody"];
 var _c124 = ["frozenfooter"];
 var _c132 = ["frozencolgroup"];
 var _c142 = ["loadingicon"];
@@ -32913,7 +32446,7 @@ function TreeTableToggler_2_Template(rf, ctx) {
     \u0275\u0275template(0, TreeTableToggler_2_ng_template_0_Template, 0, 0, "ng-template");
   }
 }
-var theme11 = ({
+var theme10 = ({
   dt
 }) => `
 /* For PrimeNG */
@@ -33364,7 +32897,7 @@ p-tree-table-toggler + p-tree-table-checkbox + span {
     vertical-align: middle;
 }
 `;
-var classes11 = {
+var classes10 = {
   root: ({
     instance
   }) => ({
@@ -33454,8 +32987,8 @@ var inlineStyles4 = {
 };
 var TreeTableStyle = class _TreeTableStyle extends BaseStyle {
   name = "treetable";
-  theme = theme11;
-  classes = classes11;
+  theme = theme10;
+  classes = classes10;
   inlineStyles = inlineStyles4;
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275TreeTableStyle_BaseFactory;
@@ -35366,17 +34899,17 @@ var TreeTable = class _TreeTable extends BaseComponent {
     contentQueries: function TreeTable_ContentQueries(rf, ctx, dirIndex) {
       if (rf & 1) {
         \u0275\u0275contentQuery(dirIndex, _c012, 4);
+        \u0275\u0275contentQuery(dirIndex, _c114, 4);
+        \u0275\u0275contentQuery(dirIndex, _c210, 4);
+        \u0275\u0275contentQuery(dirIndex, _c310, 4);
+        \u0275\u0275contentQuery(dirIndex, _c410, 4);
+        \u0275\u0275contentQuery(dirIndex, _c59, 4);
+        \u0275\u0275contentQuery(dirIndex, _c67, 4);
+        \u0275\u0275contentQuery(dirIndex, _c77, 4);
+        \u0275\u0275contentQuery(dirIndex, _c87, 4);
+        \u0275\u0275contentQuery(dirIndex, _c96, 4);
+        \u0275\u0275contentQuery(dirIndex, _c105, 4);
         \u0275\u0275contentQuery(dirIndex, _c115, 4);
-        \u0275\u0275contentQuery(dirIndex, _c211, 4);
-        \u0275\u0275contentQuery(dirIndex, _c311, 4);
-        \u0275\u0275contentQuery(dirIndex, _c411, 4);
-        \u0275\u0275contentQuery(dirIndex, _c510, 4);
-        \u0275\u0275contentQuery(dirIndex, _c68, 4);
-        \u0275\u0275contentQuery(dirIndex, _c78, 4);
-        \u0275\u0275contentQuery(dirIndex, _c88, 4);
-        \u0275\u0275contentQuery(dirIndex, _c97, 4);
-        \u0275\u0275contentQuery(dirIndex, _c106, 4);
-        \u0275\u0275contentQuery(dirIndex, _c116, 4);
         \u0275\u0275contentQuery(dirIndex, _c124, 4);
         \u0275\u0275contentQuery(dirIndex, _c132, 4);
         \u0275\u0275contentQuery(dirIndex, _c142, 4);
@@ -38436,53 +37969,7109 @@ var TreeTableModule = class _TreeTableModule {
   }], null, null);
 })();
 
-// src/app/views/page-assistant/components/tools/template-conversion.component.ts
-var TemplateConversionComponent = class _TemplateConversionComponent {
-  static \u0275fac = function TemplateConversionComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _TemplateConversionComponent)();
-  };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TemplateConversionComponent, selectors: [["ca-template-conversion"]], decls: 4, vars: 0, consts: [[1, "m-0"]], template: function TemplateConversionComponent_Template(rf, ctx) {
-    if (rf & 1) {
-      \u0275\u0275elementStart(0, "p", 0);
-      \u0275\u0275text(1, "Unfinished. Will add auto-detect page template fxn and option to choose a template to inform GenAI what kind of page it is or should be.");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(2, "p");
-      \u0275\u0275text(3, "Should this be part of the heading structure tool?");
-      \u0275\u0275elementEnd();
-    }
-  }, encapsulation: 2 });
+// node_modules/primeng/fesm2022/primeng-tree.mjs
+var _c013 = (a0) => ({
+  height: a0
+});
+var _c116 = (a0) => ({
+  "p-tree-node-droppoint-active": a0
+});
+var _c211 = (a0, a1) => ({
+  $implicit: a0,
+  loading: a1
+});
+var _c311 = (a0, a1) => ({
+  $implicit: a0,
+  partialSelected: a1,
+  class: "p-tree-node-checkbox"
+});
+var _c411 = (a0) => ({
+  $implicit: a0
+});
+function UITreeNode_Conditional_0_li_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "li", 11);
+    \u0275\u0275listener("drop", function UITreeNode_Conditional_0_li_0_Template_li_drop_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onDropPoint($event, -1));
+    })("dragover", function UITreeNode_Conditional_0_li_0_Template_li_dragover_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onDropPointDragOver($event));
+    })("dragenter", function UITreeNode_Conditional_0_li_0_Template_li_dragenter_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onDropPointDragEnter($event, -1));
+    })("dragleave", function UITreeNode_Conditional_0_li_0_Template_li_dragleave_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onDropPointDragLeave($event));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(2, _c116, ctx_r2.draghoverPrev));
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function UITreeNode_Conditional_0_ng_container_4_ng_container_1_ChevronRightIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "ChevronRightIcon", 13);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("styleClass", "p-tree-node-toggle-icon");
+  }
+}
+function UITreeNode_Conditional_0_ng_container_4_ng_container_1_ChevronDownIcon_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "ChevronDownIcon", 13);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("styleClass", "p-tree-node-toggle-icon");
+  }
+}
+function UITreeNode_Conditional_0_ng_container_4_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, UITreeNode_Conditional_0_ng_container_4_ng_container_1_ChevronRightIcon_1_Template, 1, 1, "ChevronRightIcon", 12)(2, UITreeNode_Conditional_0_ng_container_4_ng_container_1_ChevronDownIcon_2_Template, 1, 1, "ChevronDownIcon", 12);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.node.expanded);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.node.expanded);
+  }
+}
+function UITreeNode_Conditional_0_ng_container_4_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275element(1, "SpinnerIcon", 13);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275property("styleClass", "pi-spin p-tree-node-toggle-icon");
+  }
+}
+function UITreeNode_Conditional_0_ng_container_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, UITreeNode_Conditional_0_ng_container_4_ng_container_1_Template, 3, 2, "ng-container", 5)(2, UITreeNode_Conditional_0_ng_container_4_ng_container_2_Template, 2, 1, "ng-container", 5);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.node.loading);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.loadingMode === "icon" && ctx_r2.node.loading);
+  }
+}
+function UITreeNode_Conditional_0_span_5_1_ng_template_0_Template(rf, ctx) {
+}
+function UITreeNode_Conditional_0_span_5_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, UITreeNode_Conditional_0_span_5_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function UITreeNode_Conditional_0_span_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 14);
+    \u0275\u0275template(1, UITreeNode_Conditional_0_span_5_1_Template, 1, 0, null, 15);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.tree.togglerIconTemplate || ctx_r2.tree._togglerIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction2(2, _c211, ctx_r2.node.expanded, ctx_r2.node.loading));
+  }
+}
+function UITreeNode_Conditional_0_p_checkbox_6_ng_container_1_ng_template_1_0_ng_template_0_Template(rf, ctx) {
+}
+function UITreeNode_Conditional_0_p_checkbox_6_ng_container_1_ng_template_1_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, UITreeNode_Conditional_0_p_checkbox_6_ng_container_1_ng_template_1_0_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function UITreeNode_Conditional_0_p_checkbox_6_ng_container_1_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, UITreeNode_Conditional_0_p_checkbox_6_ng_container_1_ng_template_1_0_Template, 1, 0, null, 15);
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(4);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.tree.checkboxIconTemplate || ctx_r2.tree._checkboxIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction2(2, _c311, ctx_r2.isSelected(), ctx_r2.node.partialSelected));
+  }
+}
+function UITreeNode_Conditional_0_p_checkbox_6_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, UITreeNode_Conditional_0_p_checkbox_6_ng_container_1_ng_template_1_Template, 1, 5, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementContainerEnd();
+  }
+}
+function UITreeNode_Conditional_0_p_checkbox_6_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-checkbox", 16);
+    \u0275\u0275listener("click", function UITreeNode_Conditional_0_p_checkbox_6_Template_p_checkbox_click_0_listener($event) {
+      \u0275\u0275restoreView(_r4);
+      return \u0275\u0275resetView($event.preventDefault());
+    });
+    \u0275\u0275template(1, UITreeNode_Conditional_0_p_checkbox_6_ng_container_1_Template, 3, 0, "ng-container", 5);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngModel", ctx_r2.isSelected())("binary", true)("indeterminate", ctx_r2.node.partialSelected)("disabled", ctx_r2.node.selectable === false)("variant", (ctx_r2.tree == null ? null : ctx_r2.tree.config.inputStyle()) === "filled" || (ctx_r2.tree == null ? null : ctx_r2.tree.config.inputVariant()) === "filled" ? "filled" : "outlined")("tabindex", -1);
+    \u0275\u0275attribute("data-p-partialchecked", ctx_r2.node.partialSelected);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.tree.checkboxIconTemplate || ctx_r2.tree._checkboxIconTemplate);
+  }
+}
+function UITreeNode_Conditional_0_span_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span");
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275classMap(ctx_r2.getIcon());
+  }
+}
+function UITreeNode_Conditional_0_span_9_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r2.node.label);
+  }
+}
+function UITreeNode_Conditional_0_span_10_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function UITreeNode_Conditional_0_span_10_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275template(1, UITreeNode_Conditional_0_span_10_ng_container_1_Template, 1, 0, "ng-container", 15);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.tree.getTemplateForNode(ctx_r2.node))("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c411, ctx_r2.node));
+  }
+}
+function UITreeNode_Conditional_0_ul_11_p_treeNode_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-treeNode", 19);
+  }
+  if (rf & 2) {
+    const childNode_r5 = ctx.$implicit;
+    const firstChild_r6 = ctx.first;
+    const lastChild_r7 = ctx.last;
+    const index_r8 = ctx.index;
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("node", childNode_r5)("parentNode", ctx_r2.node)("firstChild", firstChild_r6)("lastChild", lastChild_r7)("index", index_r8)("itemSize", ctx_r2.itemSize)("level", ctx_r2.level + 1)("loadingMode", ctx_r2.loadingMode);
+  }
+}
+function UITreeNode_Conditional_0_ul_11_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "ul", 17);
+    \u0275\u0275template(1, UITreeNode_Conditional_0_ul_11_p_treeNode_1_Template, 1, 8, "p-treeNode", 18);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275styleProp("display", ctx_r2.node.expanded ? "flex" : "none");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngForOf", ctx_r2.node.children)("ngForTrackBy", ctx_r2.tree.trackBy.bind(ctx_r2));
+  }
+}
+function UITreeNode_Conditional_0_li_12_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "li", 11);
+    \u0275\u0275listener("drop", function UITreeNode_Conditional_0_li_12_Template_li_drop_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onDropPoint($event, 1));
+    })("dragover", function UITreeNode_Conditional_0_li_12_Template_li_dragover_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onDropPointDragOver($event));
+    })("dragenter", function UITreeNode_Conditional_0_li_12_Template_li_dragenter_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onDropPointDragEnter($event, 1));
+    })("dragleave", function UITreeNode_Conditional_0_li_12_Template_li_dragleave_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onDropPointDragLeave($event));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(2, _c116, ctx_r2.draghoverNext));
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function UITreeNode_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275template(0, UITreeNode_Conditional_0_li_0_Template, 1, 4, "li", 1);
+    \u0275\u0275elementStart(1, "li", 2);
+    \u0275\u0275listener("keydown", function UITreeNode_Conditional_0_Template_li_keydown_1_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onKeyDown($event));
+    });
+    \u0275\u0275elementStart(2, "div", 3);
+    \u0275\u0275listener("click", function UITreeNode_Conditional_0_Template_div_click_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onNodeClick($event));
+    })("contextmenu", function UITreeNode_Conditional_0_Template_div_contextmenu_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onNodeRightClick($event));
+    })("dblclick", function UITreeNode_Conditional_0_Template_div_dblclick_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onNodeDblClick($event));
+    })("touchend", function UITreeNode_Conditional_0_Template_div_touchend_2_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onNodeTouchEnd());
+    })("drop", function UITreeNode_Conditional_0_Template_div_drop_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onDropNode($event));
+    })("dragover", function UITreeNode_Conditional_0_Template_div_dragover_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onDropNodeDragOver($event));
+    })("dragenter", function UITreeNode_Conditional_0_Template_div_dragenter_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onDropNodeDragEnter($event));
+    })("dragleave", function UITreeNode_Conditional_0_Template_div_dragleave_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onDropNodeDragLeave($event));
+    })("dragstart", function UITreeNode_Conditional_0_Template_div_dragstart_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onDragStart($event));
+    })("dragend", function UITreeNode_Conditional_0_Template_div_dragend_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onDragStop($event));
+    });
+    \u0275\u0275elementStart(3, "button", 4);
+    \u0275\u0275listener("click", function UITreeNode_Conditional_0_Template_button_click_3_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.toggle($event));
+    });
+    \u0275\u0275template(4, UITreeNode_Conditional_0_ng_container_4_Template, 3, 2, "ng-container", 5)(5, UITreeNode_Conditional_0_span_5_Template, 2, 5, "span", 6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(6, UITreeNode_Conditional_0_p_checkbox_6_Template, 2, 8, "p-checkbox", 7)(7, UITreeNode_Conditional_0_span_7_Template, 1, 2, "span", 8);
+    \u0275\u0275elementStart(8, "span", 9);
+    \u0275\u0275template(9, UITreeNode_Conditional_0_span_9_Template, 2, 1, "span", 5)(10, UITreeNode_Conditional_0_span_10_Template, 2, 4, "span", 5);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(11, UITreeNode_Conditional_0_ul_11_Template, 2, 4, "ul", 10);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(12, UITreeNode_Conditional_0_li_12_Template, 1, 4, "li", 1);
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngIf", ctx_r2.tree.droppableNodes);
+    \u0275\u0275advance();
+    \u0275\u0275styleMap(ctx_r2.node.style);
+    \u0275\u0275classMap(ctx_r2.node.styleClass);
+    \u0275\u0275property("ngClass", ctx_r2.nodeClass)("ngStyle", \u0275\u0275pureFunction1(29, _c013, ctx_r2.itemSize + "px"));
+    \u0275\u0275attribute("aria-label", ctx_r2.node.label)("aria-checked", ctx_r2.checked)("aria-setsize", ctx_r2.node.children ? ctx_r2.node.children.length : 0)("aria-selected", ctx_r2.selected)("aria-expanded", ctx_r2.node.expanded)("aria-posinset", ctx_r2.index + 1)("aria-level", ctx_r2.level + 1)("tabindex", ctx_r2.index === 0 ? 0 : -1)("data-id", ctx_r2.node.key);
+    \u0275\u0275advance();
+    \u0275\u0275styleProp("padding-left", ctx_r2.level * ctx_r2.indentation + "rem");
+    \u0275\u0275property("ngClass", ctx_r2.nodeContentClass)("draggable", ctx_r2.tree.draggableNodes);
+    \u0275\u0275advance();
+    \u0275\u0275attribute("data-pc-section", "toggler");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.tree.togglerIconTemplate && !ctx_r2.tree._togglerIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.tree.togglerIconTemplate || ctx_r2.tree._togglerIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.tree.selectionMode == "checkbox");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.node.icon || ctx_r2.node.expandedIcon || ctx_r2.node.collapsedIcon);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", !ctx_r2.tree.getTemplateForNode(ctx_r2.node));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.tree.getTemplateForNode(ctx_r2.node));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.tree.virtualScroll && ctx_r2.node.children && ctx_r2.node.expanded);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.tree.droppableNodes && ctx_r2.lastChild);
+  }
+}
+var _c510 = ["filter"];
+var _c68 = ["node"];
+var _c78 = ["header"];
+var _c88 = ["footer"];
+var _c97 = ["loader"];
+var _c106 = ["empty"];
+var _c117 = ["togglericon"];
+var _c125 = ["checkboxicon"];
+var _c133 = ["loadingicon"];
+var _c143 = ["filtericon"];
+var _c153 = ["scroller"];
+var _c163 = ["wrapper"];
+var _c173 = (a0) => ({
+  options: a0
+});
+function Tree_div_1_i_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i");
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275classMap("p-tree-loading-icon pi-spin " + ctx_r0.loadingIcon);
+  }
+}
+function Tree_div_1_ng_container_2_SpinnerIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "SpinnerIcon", 16);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("spin", true)("styleClass", "p-tree-loading-icon");
+  }
+}
+function Tree_div_1_ng_container_2_span_2_1_ng_template_0_Template(rf, ctx) {
+}
+function Tree_div_1_ng_container_2_span_2_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Tree_div_1_ng_container_2_span_2_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function Tree_div_1_ng_container_2_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 17);
+    \u0275\u0275template(1, Tree_div_1_ng_container_2_span_2_1_Template, 1, 0, null, 9);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.loadingIconTemplate || ctx_r0._loadingIconTemplate);
+  }
+}
+function Tree_div_1_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Tree_div_1_ng_container_2_SpinnerIcon_1_Template, 1, 2, "SpinnerIcon", 14)(2, Tree_div_1_ng_container_2_span_2_Template, 2, 1, "span", 15);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r0.loadingIconTemplate && !ctx_r0._loadingIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.loadingIconTemplate || ctx_r0._loadingIconTemplate);
+  }
+}
+function Tree_div_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 12);
+    \u0275\u0275template(1, Tree_div_1_i_1_Template, 1, 2, "i", 13)(2, Tree_div_1_ng_container_2_Template, 3, 2, "ng-container", 10);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.loadingIcon);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r0.loadingIcon);
+  }
+}
+function Tree_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Tree_Conditional_3_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Tree_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Tree_Conditional_3_ng_container_0_Template, 1, 0, "ng-container", 18);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.filterTemplate || ctx_r0._filterTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c411, ctx_r0.filterOptions));
+  }
+}
+function Tree_Conditional_4_p_iconField_0_SearchIcon_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "SearchIcon", 21);
+  }
+}
+function Tree_Conditional_4_p_iconField_0_span_5_1_ng_template_0_Template(rf, ctx) {
+}
+function Tree_Conditional_4_p_iconField_0_span_5_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Tree_Conditional_4_p_iconField_0_span_5_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function Tree_Conditional_4_p_iconField_0_span_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275template(1, Tree_Conditional_4_p_iconField_0_span_5_1_Template, 1, 0, null, 9);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.filterIconTemplate || ctx_r0._filterIconTemplate);
+  }
+}
+function Tree_Conditional_4_p_iconField_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-iconField")(1, "input", 19, 0);
+    \u0275\u0275listener("keydown.enter", function Tree_Conditional_4_p_iconField_0_Template_input_keydown_enter_1_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      return \u0275\u0275resetView($event.preventDefault());
+    })("input", function Tree_Conditional_4_p_iconField_0_Template_input_input_1_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r0 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r0._filter($event.target.value));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "p-inputIcon");
+    \u0275\u0275template(4, Tree_Conditional_4_p_iconField_0_SearchIcon_4_Template, 1, 0, "SearchIcon", 20)(5, Tree_Conditional_4_p_iconField_0_span_5_Template, 2, 1, "span", 10);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("pAutoFocus", ctx_r0.filterInputAutoFocus);
+    \u0275\u0275attribute("placeholder", ctx_r0.filterPlaceholder);
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngIf", !ctx_r0.filterIconTemplate && !ctx_r0._filterIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.filterIconTemplate || ctx_r0._filterIconTemplate);
+  }
+}
+function Tree_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Tree_Conditional_4_p_iconField_0_Template, 6, 4, "p-iconField", 10);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngIf", ctx_r0.filter);
+  }
+}
+function Tree_ng_container_5_p_scroller_1_ng_template_2_ul_0_p_treeNode_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-treeNode", 27, 3);
+  }
+  if (rf & 2) {
+    const rowNode_r4 = ctx.$implicit;
+    const firstChild_r5 = ctx.first;
+    const lastChild_r6 = ctx.last;
+    const index_r7 = ctx.index;
+    const scrollerOptions_r8 = \u0275\u0275nextContext(2).options;
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("level", rowNode_r4.level)("rowNode", rowNode_r4)("node", rowNode_r4.node)("parentNode", rowNode_r4.parent)("firstChild", firstChild_r5)("lastChild", lastChild_r6)("index", ctx_r0.getIndex(scrollerOptions_r8, index_r7))("itemSize", scrollerOptions_r8.itemSize)("indentation", ctx_r0.indentation)("loadingMode", ctx_r0.loadingMode);
+  }
+}
+function Tree_ng_container_5_p_scroller_1_ng_template_2_ul_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "ul", 25);
+    \u0275\u0275template(1, Tree_ng_container_5_p_scroller_1_ng_template_2_ul_0_p_treeNode_1_Template, 2, 10, "p-treeNode", 26);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r8 = \u0275\u0275nextContext();
+    const items_r10 = ctx_r8.$implicit;
+    const scrollerOptions_r8 = ctx_r8.options;
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275styleMap(scrollerOptions_r8.contentStyle);
+    \u0275\u0275property("ngClass", scrollerOptions_r8.contentStyleClass);
+    \u0275\u0275attribute("aria-label", ctx_r0.ariaLabel)("aria-labelledby", ctx_r0.ariaLabelledBy);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngForOf", items_r10)("ngForTrackBy", ctx_r0.trackBy);
+  }
+}
+function Tree_ng_container_5_p_scroller_1_ng_template_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Tree_ng_container_5_p_scroller_1_ng_template_2_ul_0_Template, 2, 7, "ul", 24);
+  }
+  if (rf & 2) {
+    const items_r10 = ctx.$implicit;
+    \u0275\u0275property("ngIf", items_r10);
+  }
+}
+function Tree_ng_container_5_p_scroller_1_ng_container_4_ng_template_1_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Tree_ng_container_5_p_scroller_1_ng_container_4_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Tree_ng_container_5_p_scroller_1_ng_container_4_ng_template_1_ng_container_0_Template, 1, 0, "ng-container", 18);
+  }
+  if (rf & 2) {
+    const scrollerOptions_r11 = ctx.options;
+    const ctx_r0 = \u0275\u0275nextContext(4);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.loaderTemplate || ctx_r0._loaderTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c173, scrollerOptions_r11));
+  }
+}
+function Tree_ng_container_5_p_scroller_1_ng_container_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Tree_ng_container_5_p_scroller_1_ng_container_4_ng_template_1_Template, 1, 4, "ng-template", null, 4, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementContainerEnd();
+  }
+}
+function Tree_ng_container_5_p_scroller_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-scroller", 23, 1);
+    \u0275\u0275listener("onScroll", function Tree_ng_container_5_p_scroller_1_Template_p_scroller_onScroll_0_listener($event) {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r0 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r0.onScroll.emit($event));
+    })("onScrollIndexChange", function Tree_ng_container_5_p_scroller_1_Template_p_scroller_onScrollIndexChange_0_listener($event) {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r0 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r0.onScrollIndexChange.emit($event));
+    })("onLazyLoad", function Tree_ng_container_5_p_scroller_1_Template_p_scroller_onLazyLoad_0_listener($event) {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r0 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r0.onLazyLoad.emit($event));
+    });
+    \u0275\u0275template(2, Tree_ng_container_5_p_scroller_1_ng_template_2_Template, 1, 1, "ng-template", null, 2, \u0275\u0275templateRefExtractor)(4, Tree_ng_container_5_p_scroller_1_ng_container_4_Template, 3, 0, "ng-container", 10);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275styleMap(\u0275\u0275pureFunction1(9, _c013, ctx_r0.scrollHeight !== "flex" ? ctx_r0.scrollHeight : void 0));
+    \u0275\u0275property("items", ctx_r0.serializedValue)("tabindex", -1)("scrollHeight", ctx_r0.scrollHeight !== "flex" ? void 0 : "100%")("itemSize", ctx_r0.virtualScrollItemSize || ctx_r0._virtualNodeHeight)("lazy", ctx_r0.lazy)("options", ctx_r0.virtualScrollOptions);
+    \u0275\u0275advance(4);
+    \u0275\u0275property("ngIf", ctx_r0.loaderTemplate || ctx_r0._loaderTemplate);
+  }
+}
+function Tree_ng_container_5_ng_container_2_ul_3_p_treeNode_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-treeNode", 32);
+  }
+  if (rf & 2) {
+    const node_r12 = ctx.$implicit;
+    const firstChild_r13 = ctx.first;
+    const lastChild_r14 = ctx.last;
+    const index_r15 = ctx.index;
+    const ctx_r0 = \u0275\u0275nextContext(4);
+    \u0275\u0275property("node", node_r12)("firstChild", firstChild_r13)("lastChild", lastChild_r14)("index", index_r15)("level", 0)("loadingMode", ctx_r0.loadingMode);
+  }
+}
+function Tree_ng_container_5_ng_container_2_ul_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "ul", 30);
+    \u0275\u0275template(1, Tree_ng_container_5_ng_container_2_ul_3_p_treeNode_1_Template, 1, 6, "p-treeNode", 31);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275attribute("aria-label", ctx_r0.ariaLabel)("aria-labelledby", ctx_r0.ariaLabelledBy);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngForOf", ctx_r0.getRootNode())("ngForTrackBy", ctx_r0.trackBy.bind(ctx_r0));
+  }
+}
+function Tree_ng_container_5_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "div", 28, 5);
+    \u0275\u0275template(3, Tree_ng_container_5_ng_container_2_ul_3_Template, 2, 4, "ul", 29);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275styleProp("max-height", ctx_r0.scrollHeight);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", ctx_r0.getRootNode());
+  }
+}
+function Tree_ng_container_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Tree_ng_container_5_p_scroller_1_Template, 5, 11, "p-scroller", 22)(2, Tree_ng_container_5_ng_container_2_Template, 4, 3, "ng-container", 10);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.virtualScroll);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r0.virtualScroll);
+  }
+}
+function Tree_div_6_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275text(1);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", ctx_r0.emptyMessageLabel, " ");
+  }
+}
+function Tree_div_6_2_ng_template_0_Template(rf, ctx) {
+}
+function Tree_div_6_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Tree_div_6_2_ng_template_0_Template, 0, 0, "ng-template", null, 6, \u0275\u0275templateRefExtractor);
+  }
+}
+function Tree_div_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 33);
+    \u0275\u0275template(1, Tree_div_6_ng_container_1_Template, 2, 1, "ng-container", 34)(2, Tree_div_6_2_Template, 2, 0, null, 9);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r0.emptyMessageTemplate && !ctx_r0._emptyMessageTemplate)("ngIfElse", ctx_r0.emptyFilter);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.emptyMessageTemplate || ctx_r0._emptyMessageTemplate);
+  }
+}
+function Tree_ng_container_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+var theme11 = ({
+  dt
+}) => `
+.p-tree {
+    background: ${dt("tree.background")};
+    color: ${dt("tree.color")};
+    padding: ${dt("tree.padding")};
+}
+
+.p-tree-root-children,
+.p-tree-node-children {
+    display: flex;
+    list-style-type: none;
+    flex-direction: column;
+    margin: 0;
+    gap: ${dt("tree.gap")};
+}
+
+.p-tree-root-children {
+    padding: 0;
+    padding-block-start: ${dt("tree.gap")};
+}
+
+.p-tree-node-children {
+    padding-block-start: ${dt("tree.gap")};
+    padding-inline-start: ${dt("tree.indent")};
+}
+
+.p-tree-node {
+    padding: 0;
+    outline: 0 none;
+}
+
+.p-tree-node-content {
+    border-radius: ${dt("tree.node.border.radius")};
+    padding: ${dt("tree.node.padding")};
+    display: flex;
+    align-items: center;
+    outline-color: transparent;
+    color: ${dt("tree.node.color")};
+    gap: ${dt("tree.node.gap")};
+    transition: background ${dt("tree.transition.duration")}, color ${dt("tree.transition.duration")}, outline-color ${dt("tree.transition.duration")}, box-shadow ${dt("tree.transition.duration")};
+}
+
+.p-tree-node:focus-visible > .p-tree-node-content {
+    box-shadow: ${dt("tree.node.focus.ring.shadow")};
+    outline: ${dt("tree.node.focus.ring.width")} ${dt("tree.node.focus.ring.style")} ${dt("tree.node.focus.ring.color")};
+    outline-offset: ${dt("tree.node.focus.ring.offset")};
+}
+
+.p-tree-node-content.p-tree-node-selectable:not(.p-tree-node-selected):hover {
+    background: ${dt("tree.node.hover.background")};
+    color: ${dt("tree.node.hover.color")};
+}
+
+.p-tree-node-content.p-tree-node-selectable:not(.p-tree-node-selected):hover .p-tree-node-icon {
+    color: ${dt("tree.node.icon.hover.color")};
+}
+
+.p-tree-node-content.p-tree-node-selected {
+    background: ${dt("tree.node.selected.background")};
+    color: ${dt("tree.node.selected.color")};
+}
+
+.p-tree-node-content.p-tree-node-selected .p-tree-node-toggle-button {
+    color: inherit;
+}
+
+.p-tree-node-toggle-button {
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    width: ${dt("tree.node.toggle.button.size")};
+    height: ${dt("tree.node.toggle.button.size")};
+    color: ${dt("tree.node.toggle.button.color")};
+    border: 0 none;
+    background: transparent;
+    border-radius: ${dt("tree.node.toggle.button.border.radius")};
+    transition: background ${dt("tree.transition.duration")}, color ${dt("tree.transition.duration")}, border-color ${dt("tree.transition.duration")}, outline-color ${dt("tree.transition.duration")}, box-shadow ${dt("tree.transition.duration")};
+    outline-color: transparent;
+    padding: 0;
+}
+
+.p-tree-node-toggle-button:enabled:hover {
+    background: ${dt("tree.node.toggle.button.hover.background")};
+    color: ${dt("tree.node.toggle.button.hover.color")};
+}
+
+.p-tree-node-content.p-tree-node-selected .p-tree-node-toggle-button:hover {
+    background: ${dt("tree.node.toggle.button.selected.hover.background")};
+    color: ${dt("tree.node.toggle.button.selected.hover.color")};
+}
+
+.p-tree-root {
+    overflow: auto;
+}
+
+.p-tree-node-selectable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.p-tree-node-leaf > .p-tree-node-content .p-tree-node-toggle-button {
+    visibility: hidden;
+}
+
+.p-tree-node-icon {
+    color: ${dt("tree.node.icon.color")};
+    transition: color ${dt("tree.transition.duration")};
+}
+
+.p-tree-node-content.p-tree-node-selected .p-tree-node-icon {
+    color: ${dt("tree.node.icon.selected.color")};
+}
+
+.p-tree-filter-input {
+    width: 100%;
+}
+
+.p-tree-loading {
+    position: relative;
+    height: 100%;
+}
+
+.p-tree-loading-icon {
+    font-size: ${dt("tree.loading.icon.size")};
+    width: ${dt("tree.loading.icon.size")};
+    height: ${dt("tree.loading.icon.size")};
+}
+
+.p-tree .p-tree-mask {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.p-tree-flex-scrollable {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    flex-direction: column;
+}
+
+.p-tree-flex-scrollable .p-tree-root {
+    flex: 1;
+}
+
+/* For PrimeNG */
+.p-tree .p-tree-node-droppoint {
+    height: 4px;
+    list-style-type: none;
+}
+
+.p-tree .p-tree-node-droppoint-active {
+    border: 0 none;
+    background-color: ${dt("primary.color")};
+}
+
+.p-tree-node-content.p-tree-node-dragover {
+    background: ${dt("tree.node.hover.background")};
+    color: ${dt("tree.node.hover.color")};
+}
+
+.p-tree-node-content.p-tree-node-dragover .p-tree-node-icon {
+    color: ${dt("tree.node.icon.hover.color")};
+}
+
+.p-tree-horizontal {
+    width: auto;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    overflow: auto;
+}
+
+.p-tree.p-tree-horizontal table,
+.p-tree.p-tree-horizontal tr,
+.p-tree.p-tree-horizontal td {
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.p-tree-horizontal .p-tree-node-content {
+    font-weight: normal;
+    padding: 0.4em 1em 0.4em 0.2em;
+    display: flex;
+    align-items: center;
+}
+
+.p-tree-horizontal .p-tree-node-parent .p-tree-node-content {
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+.p-tree.p-tree-horizontal .p-tree-node.p-tree-node-leaf,
+.p-tree.p-tree-horizontal .p-tree-node.p-tree-node-collapsed {
+    padding-inline-end: 0;
+}
+
+.p-tree.p-tree-horizontal .p-tree-node-children {
+    padding: 0;
+    margin: 0;
+}
+
+.p-tree.p-tree-horizontal .p-tree-node-connector {
+    width: 1px;
+}
+
+.p-tree.p-tree-horizontal .p-tree-node-connector-table {
+    height: 100%;
+    width: 1px;
+}
+
+.p-tree.p-tree-horizontal table {
+    height: 0;
+}
+`;
+var classes11 = {
+  root: ({
+    instance
+  }) => ({
+    "p-tree p-component": true,
+    "p-tree-selectable": instance.selectionMode != null,
+    "p-tree-loading": instance.loading,
+    "p-tree-flex-scrollable": instance.scrollHeight === "flex",
+    "p-tree-node-dragover": instance.dragHover
+  }),
+  mask: "p-tree-mask p-overlay-mask",
+  loadingIcon: "p-tree-loading-icon",
+  pcFilterInput: "p-tree-filter-input",
+  wrapper: "p-tree-root",
+  //TODO: discuss
+  rootChildren: "p-tree-root-children",
+  node: ({
+    instance
+  }) => ({
+    "p-tree-node": true,
+    "p-tree-node-leaf": instance.isLeaf()
+  }),
+  nodeContent: ({
+    instance
+  }) => ({
+    "p-tree-node-content": true,
+    [instance.styleClass]: !!instance.styleClass,
+    "p-tree-node-selectable": instance.selectable,
+    "p-tree-node-dragover": instance.draghoverNode,
+    "p-tree-node-selected": instance.selectionMode === "checkbox" && instance.tree.highlightOnSelect ? instance.checked : instance.selected
+  }),
+  nodeToggleButton: "p-tree-node-toggle-button",
+  nodeToggleIcon: "p-tree-node-toggle-icon",
+  nodeCheckbox: "p-tree-node-checkbox",
+  nodeIcon: "p-tree-node-icon",
+  nodeLabel: "p-tree-node-label",
+  nodeChildren: "p-tree-node-children"
+};
+var TreeStyle = class _TreeStyle extends BaseStyle {
+  name = "tree";
+  theme = theme11;
+  classes = classes11;
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275TreeStyle_BaseFactory;
+    return function TreeStyle_Factory(__ngFactoryType__) {
+      return (\u0275TreeStyle_BaseFactory || (\u0275TreeStyle_BaseFactory = \u0275\u0275getInheritedFactory(_TreeStyle)))(__ngFactoryType__ || _TreeStyle);
+    };
+  })();
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+    token: _TreeStyle,
+    factory: _TreeStyle.\u0275fac
+  });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(TemplateConversionComponent, [{
-    type: Component,
-    args: [{ selector: "ca-template-conversion", imports: [], template: '<p class="m-0">Unfinished. Will add auto-detect page template fxn and option to choose a template to inform GenAI what kind of page it is or should be.</p>\n<p>Should this be part of the heading structure tool?</p>' }]
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(TreeStyle, [{
+    type: Injectable
   }], null, null);
 })();
+var TreeClasses;
+(function(TreeClasses2) {
+  TreeClasses2["root"] = "p-tree";
+  TreeClasses2["mask"] = "p-tree-mask";
+  TreeClasses2["loadingIcon"] = "p-tree-loading-icon";
+  TreeClasses2["pcFilterInput"] = "p-tree-filter-input";
+  TreeClasses2["wrapper"] = "p-tree-root";
+  TreeClasses2["rootChildren"] = "p-tree-root-children";
+  TreeClasses2["node"] = "p-tree-node";
+  TreeClasses2["nodeContent"] = "p-tree-node-content";
+  TreeClasses2["nodeToggleButton"] = "p-tree-node-toggle-button";
+  TreeClasses2["nodeToggleIcon"] = "p-tree-node-toggle-icon";
+  TreeClasses2["nodeCheckbox"] = "p-tree-node-checkbox";
+  TreeClasses2["nodeIcon"] = "p-tree-node-icon";
+  TreeClasses2["nodeLabel"] = "p-tree-node-label";
+  TreeClasses2["nodeChildren"] = "p-tree-node-children";
+})(TreeClasses || (TreeClasses = {}));
+var UITreeNode = class _UITreeNode extends BaseComponent {
+  static ICON_CLASS = "p-tree-node-icon ";
+  rowNode;
+  node;
+  parentNode;
+  root;
+  index;
+  firstChild;
+  lastChild;
+  level;
+  indentation;
+  itemSize;
+  loadingMode;
+  tree = inject(forwardRef(() => Tree));
+  timeout;
+  draghoverPrev;
+  draghoverNext;
+  draghoverNode;
+  get selected() {
+    return this.tree.selectionMode === "single" || this.tree.selectionMode === "multiple" ? this.isSelected() : void 0;
+  }
+  get checked() {
+    return this.tree.selectionMode === "checkbox" ? this.isSelected() : void 0;
+  }
+  get nodeClass() {
+    return this.tree._componentStyle.classes.node({
+      instance: this
+    });
+  }
+  get nodeContentClass() {
+    return this.tree._componentStyle.classes.nodeContent({
+      instance: this
+    });
+  }
+  get selectable() {
+    return this.node.selectable === false ? false : this.tree.selectionMode != null;
+  }
+  ngOnInit() {
+    super.ngOnInit();
+    this.node.parent = this.parentNode;
+    const nativeElement = this.tree.el.nativeElement;
+    const pDialogWrapper = nativeElement.closest("p-dialog");
+    if (this.parentNode && !pDialogWrapper) {
+      this.setAllNodesTabIndexes();
+      this.tree.syncNodeOption(this.node, this.tree.value, "parent", this.tree.getNodeWithKey(this.parentNode.key, this.tree.value));
+    }
+  }
+  getIcon() {
+    let icon;
+    if (this.node.icon) icon = this.node.icon;
+    else icon = this.node.expanded && this.node.children && this.node.children?.length ? this.node.expandedIcon : this.node.collapsedIcon;
+    return _UITreeNode.ICON_CLASS + " " + icon + " p-tree-node-icon";
+  }
+  isLeaf() {
+    return this.tree.isNodeLeaf(this.node);
+  }
+  toggle(event) {
+    if (this.node.expanded) this.collapse(event);
+    else this.expand(event);
+    event.stopPropagation();
+  }
+  expand(event) {
+    this.node.expanded = true;
+    if (this.tree.virtualScroll) {
+      this.tree.updateSerializedValue();
+      this.focusVirtualNode();
+    }
+    this.tree.onNodeExpand.emit({
+      originalEvent: event,
+      node: this.node
+    });
+  }
+  collapse(event) {
+    this.node.expanded = false;
+    if (this.tree.virtualScroll) {
+      this.tree.updateSerializedValue();
+      this.focusVirtualNode();
+    }
+    this.tree.onNodeCollapse.emit({
+      originalEvent: event,
+      node: this.node
+    });
+  }
+  onNodeClick(event) {
+    this.tree.onNodeClick(event, this.node);
+  }
+  onNodeKeydown(event) {
+    if (event.key === "Enter") {
+      this.tree.onNodeClick(event, this.node);
+    }
+  }
+  onNodeTouchEnd() {
+    this.tree.onNodeTouchEnd();
+  }
+  onNodeRightClick(event) {
+    this.tree.onNodeRightClick(event, this.node);
+  }
+  onNodeDblClick(event) {
+    this.tree.onNodeDblClick(event, this.node);
+  }
+  isSelected() {
+    return this.tree.isSelected(this.node);
+  }
+  isSameNode(event) {
+    return event.currentTarget && (event.currentTarget.isSameNode(event.target) || event.currentTarget.isSameNode(event.target.closest('[role="treeitem"]')));
+  }
+  onDropPoint(event, position) {
+    event.preventDefault();
+    let dragNode = this.tree.dragNode;
+    let dragNodeIndex = this.tree.dragNodeIndex;
+    let dragNodeScope = this.tree.dragNodeScope;
+    let isValidDropPointIndex = this.tree.dragNodeTree === this.tree ? position === 1 || dragNodeIndex !== this.index - 1 : true;
+    if (this.tree.allowDrop(dragNode, this.node, dragNodeScope) && isValidDropPointIndex) {
+      let dropParams = __spreadValues({}, this.createDropPointEventMetadata(position));
+      if (this.tree.validateDrop) {
+        this.tree.onNodeDrop.emit({
+          originalEvent: event,
+          dragNode,
+          dropNode: this.node,
+          index: this.index,
+          accept: () => {
+            this.processPointDrop(dropParams);
+          }
+        });
+      } else {
+        this.processPointDrop(dropParams);
+        this.tree.onNodeDrop.emit({
+          originalEvent: event,
+          dragNode,
+          dropNode: this.node,
+          index: this.index
+        });
+      }
+    }
+    this.draghoverPrev = false;
+    this.draghoverNext = false;
+  }
+  processPointDrop(event) {
+    let newNodeList = event.dropNode.parent ? event.dropNode.parent.children : this.tree.value;
+    event.dragNodeSubNodes.splice(event.dragNodeIndex, 1);
+    let dropIndex = this.index;
+    if (event.position < 0) {
+      dropIndex = event.dragNodeSubNodes === newNodeList ? event.dragNodeIndex > event.index ? event.index : event.index - 1 : event.index;
+      newNodeList.splice(dropIndex, 0, event.dragNode);
+    } else {
+      dropIndex = newNodeList.length;
+      newNodeList.push(event.dragNode);
+    }
+    this.tree.dragDropService.stopDrag({
+      node: event.dragNode,
+      subNodes: event.dropNode.parent ? event.dropNode.parent.children : this.tree.value,
+      index: event.dragNodeIndex
+    });
+  }
+  createDropPointEventMetadata(position) {
+    return {
+      dragNode: this.tree.dragNode,
+      dragNodeIndex: this.tree.dragNodeIndex,
+      dragNodeSubNodes: this.tree.dragNodeSubNodes,
+      dropNode: this.node,
+      index: this.index,
+      position
+    };
+  }
+  onDropPointDragOver(event) {
+    event.dataTransfer.dropEffect = "move";
+    event.preventDefault();
+  }
+  onDropPointDragEnter(event, position) {
+    if (this.tree.allowDrop(this.tree.dragNode, this.node, this.tree.dragNodeScope)) {
+      if (position < 0) this.draghoverPrev = true;
+      else this.draghoverNext = true;
+    }
+  }
+  onDropPointDragLeave(event) {
+    this.draghoverPrev = false;
+    this.draghoverNext = false;
+  }
+  onDragStart(event) {
+    if (this.tree.draggableNodes && this.node.draggable !== false) {
+      event.dataTransfer.setData("text", "data");
+      this.tree.dragDropService.startDrag({
+        tree: this,
+        node: this.node,
+        subNodes: this.node?.parent ? this.node.parent.children : this.tree.value,
+        index: this.index,
+        scope: this.tree.draggableScope
+      });
+    } else {
+      event.preventDefault();
+    }
+  }
+  onDragStop(event) {
+    this.tree.dragDropService.stopDrag({
+      node: this.node,
+      subNodes: this.node?.parent ? this.node.parent.children : this.tree.value,
+      index: this.index
+    });
+  }
+  onDropNodeDragOver(event) {
+    event.dataTransfer.dropEffect = "move";
+    if (this.tree.droppableNodes) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+  onDropNode(event) {
+    if (this.tree.droppableNodes && this.node?.droppable !== false) {
+      let dragNode = this.tree.dragNode;
+      if (this.tree.allowDrop(dragNode, this.node, this.tree.dragNodeScope)) {
+        let dropParams = __spreadValues({}, this.createDropNodeEventMetadata());
+        if (this.tree.validateDrop) {
+          this.tree.onNodeDrop.emit({
+            originalEvent: event,
+            dragNode,
+            dropNode: this.node,
+            index: this.index,
+            accept: () => {
+              this.processNodeDrop(dropParams);
+            }
+          });
+        } else {
+          this.processNodeDrop(dropParams);
+          this.tree.onNodeDrop.emit({
+            originalEvent: event,
+            dragNode,
+            dropNode: this.node,
+            index: this.index
+          });
+        }
+      }
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    this.draghoverNode = false;
+  }
+  createDropNodeEventMetadata() {
+    return {
+      dragNode: this.tree.dragNode,
+      dragNodeIndex: this.tree.dragNodeIndex,
+      dragNodeSubNodes: this.tree.dragNodeSubNodes,
+      dropNode: this.node
+    };
+  }
+  processNodeDrop(event) {
+    let dragNodeIndex = event.dragNodeIndex;
+    event.dragNodeSubNodes.splice(dragNodeIndex, 1);
+    if (event.dropNode.children) event.dropNode.children.push(event.dragNode);
+    else event.dropNode.children = [event.dragNode];
+    this.tree.dragDropService.stopDrag({
+      node: event.dragNode,
+      subNodes: event.dropNode.parent ? event.dropNode.parent.children : this.tree.value,
+      index: dragNodeIndex
+    });
+  }
+  onDropNodeDragEnter(event) {
+    if (this.tree.droppableNodes && this.node?.droppable !== false && this.tree.allowDrop(this.tree.dragNode, this.node, this.tree.dragNodeScope)) {
+      this.draghoverNode = true;
+    }
+  }
+  onDropNodeDragLeave(event) {
+    if (this.tree.droppableNodes) {
+      let rect = event.currentTarget.getBoundingClientRect();
+      if (event.x > rect.left + rect.width || event.x < rect.left || event.y >= Math.floor(rect.top + rect.height) || event.y < rect.top) {
+        this.draghoverNode = false;
+      }
+    }
+  }
+  onKeyDown(event) {
+    if (!this.isSameNode(event) || this.tree.contextMenu && this.tree.contextMenu.containerViewChild?.nativeElement.style.display === "block") {
+      return;
+    }
+    switch (event.code) {
+      //down arrow
+      case "ArrowDown":
+        this.onArrowDown(event);
+        break;
+      //up arrow
+      case "ArrowUp":
+        this.onArrowUp(event);
+        break;
+      //right arrow
+      case "ArrowRight":
+        this.onArrowRight(event);
+        break;
+      //left arrow
+      case "ArrowLeft":
+        this.onArrowLeft(event);
+        break;
+      //enter
+      case "Enter":
+      case "Space":
+      case "NumpadEnter":
+        this.onEnter(event);
+        break;
+      //tab
+      case "Tab":
+        this.setAllNodesTabIndexes();
+        break;
+      default:
+        break;
+    }
+  }
+  onArrowUp(event) {
+    const nodeElement = event.target.getAttribute("data-pc-section") === "toggler" ? event.target.closest('[role="treeitem"]') : event.target.parentElement;
+    if (nodeElement.previousElementSibling) {
+      this.focusRowChange(nodeElement, nodeElement.previousElementSibling, this.findLastVisibleDescendant(nodeElement.previousElementSibling));
+    } else {
+      let parentNodeElement = this.getParentNodeElement(nodeElement);
+      if (parentNodeElement) {
+        this.focusRowChange(nodeElement, parentNodeElement);
+      }
+    }
+    event.preventDefault();
+  }
+  onArrowDown(event) {
+    const nodeElement = event.target.getAttribute("data-pc-section") === "toggler" ? event.target.closest('[role="treeitem"]') : event.target;
+    const listElement = nodeElement.children[1];
+    if (listElement && listElement.children.length > 0) {
+      this.focusRowChange(nodeElement, listElement.children[0]);
+    } else {
+      if (nodeElement.parentElement.nextElementSibling) {
+        this.focusRowChange(nodeElement, nodeElement.parentElement.nextElementSibling);
+      } else {
+        let nextSiblingAncestor = this.findNextSiblingOfAncestor(nodeElement.parentElement);
+        if (nextSiblingAncestor) {
+          this.focusRowChange(nodeElement, nextSiblingAncestor);
+        }
+      }
+    }
+    event.preventDefault();
+  }
+  onArrowRight(event) {
+    if (!this.node?.expanded && !this.tree.isNodeLeaf(this.node)) {
+      this.expand(event);
+      event.currentTarget.tabIndex = -1;
+      setTimeout(() => {
+        this.onArrowDown(event);
+      }, 1);
+    }
+    event.preventDefault();
+  }
+  onArrowLeft(event) {
+    const nodeElement = event.target.getAttribute("data-pc-section") === "toggler" ? event.target.closest('[role="treeitem"]') : event.target;
+    if (this.level === 0 && !this.node?.expanded) {
+      return false;
+    }
+    if (this.node?.expanded) {
+      this.collapse(event);
+      return;
+    }
+    let parentNodeElement = this.getParentNodeElement(nodeElement.parentElement);
+    if (parentNodeElement) {
+      this.focusRowChange(event.currentTarget, parentNodeElement);
+    }
+    event.preventDefault();
+  }
+  onEnter(event) {
+    this.tree.onNodeClick(event, this.node);
+    this.setTabIndexForSelectionMode(event, this.tree.nodeTouched);
+    event.preventDefault();
+  }
+  setAllNodesTabIndexes() {
+    const nodes = find(this.tree.el.nativeElement, ".p-tree-node");
+    const hasSelectedNode = [...nodes].some((node) => node.getAttribute("aria-selected") === "true" || node.getAttribute("aria-checked") === "true");
+    [...nodes].forEach((node) => {
+      node.tabIndex = -1;
+    });
+    if (hasSelectedNode) {
+      const selectedNodes = [...nodes].filter((node) => node.getAttribute("aria-selected") === "true" || node.getAttribute("aria-checked") === "true");
+      selectedNodes[0].tabIndex = 0;
+      return;
+    }
+    if (nodes.length) {
+      [...nodes][0].tabIndex = 0;
+    }
+  }
+  setTabIndexForSelectionMode(event, nodeTouched) {
+    if (this.tree.selectionMode !== null) {
+      const elements = [...find(this.tree.el.nativeElement, '[role="treeitem"]')];
+      event.currentTarget.tabIndex = nodeTouched === false ? -1 : 0;
+      if (elements.every((element) => element.tabIndex === -1)) {
+        elements[0].tabIndex = 0;
+      }
+    }
+  }
+  findNextSiblingOfAncestor(nodeElement) {
+    let parentNodeElement = this.getParentNodeElement(nodeElement);
+    if (parentNodeElement) {
+      if (parentNodeElement.nextElementSibling) return parentNodeElement.nextElementSibling;
+      else return this.findNextSiblingOfAncestor(parentNodeElement);
+    } else {
+      return null;
+    }
+  }
+  findLastVisibleDescendant(nodeElement) {
+    const listElement = Array.from(nodeElement.children).find((el) => hasClass(el, "p-tree-node"));
+    const childrenListElement = listElement?.children[1];
+    if (childrenListElement && childrenListElement.children.length > 0) {
+      const lastChildElement = childrenListElement.children[childrenListElement.children.length - 1];
+      return this.findLastVisibleDescendant(lastChildElement);
+    } else {
+      return nodeElement;
+    }
+  }
+  getParentNodeElement(nodeElement) {
+    const parentNodeElement = nodeElement.parentElement?.parentElement?.parentElement;
+    return parentNodeElement?.tagName === "P-TREENODE" ? parentNodeElement : null;
+  }
+  focusNode(element) {
+    if (this.tree.droppableNodes) element.children[1].focus();
+    else element.children[0].focus();
+  }
+  focusRowChange(firstFocusableRow, currentFocusedRow, lastVisibleDescendant) {
+    firstFocusableRow.tabIndex = "-1";
+    currentFocusedRow.children[0].tabIndex = "0";
+    this.focusNode(lastVisibleDescendant || currentFocusedRow);
+  }
+  focusVirtualNode() {
+    this.timeout = setTimeout(() => {
+      let node = findSingle(document.body, `[data-id="${this.node?.key ?? this.node?.data}"]`);
+      focus(node);
+    }, 1);
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275UITreeNode_BaseFactory;
+    return function UITreeNode_Factory(__ngFactoryType__) {
+      return (\u0275UITreeNode_BaseFactory || (\u0275UITreeNode_BaseFactory = \u0275\u0275getInheritedFactory(_UITreeNode)))(__ngFactoryType__ || _UITreeNode);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _UITreeNode,
+    selectors: [["p-treeNode"]],
+    inputs: {
+      rowNode: "rowNode",
+      node: "node",
+      parentNode: "parentNode",
+      root: [2, "root", "root", booleanAttribute],
+      index: [2, "index", "index", numberAttribute],
+      firstChild: [2, "firstChild", "firstChild", booleanAttribute],
+      lastChild: [2, "lastChild", "lastChild", booleanAttribute],
+      level: [2, "level", "level", numberAttribute],
+      indentation: [2, "indentation", "indentation", numberAttribute],
+      itemSize: [2, "itemSize", "itemSize", numberAttribute],
+      loadingMode: "loadingMode"
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    decls: 1,
+    vars: 1,
+    consts: [["icon", ""], ["class", "p-tree-node-droppoint", 3, "ngClass", "drop", "dragover", "dragenter", "dragleave", 4, "ngIf"], ["role", "treeitem", 3, "keydown", "ngClass", "ngStyle"], [3, "click", "contextmenu", "dblclick", "touchend", "drop", "dragover", "dragenter", "dragleave", "dragstart", "dragend", "ngClass", "draggable"], ["type", "button", "pRipple", "", "tabindex", "-1", 1, "p-tree-node-toggle-button", 3, "click"], [4, "ngIf"], ["class", "p-tree-node-toggle-icon", 4, "ngIf"], ["styleClass", "p-tree-node-checkbox", 3, "ngModel", "binary", "indeterminate", "disabled", "variant", "tabindex", "click", 4, "ngIf"], [3, "class", 4, "ngIf"], [1, "p-tree-node-label"], ["class", "p-tree-node-children", "style", "display: none;", "role", "group", 3, "display", 4, "ngIf"], [1, "p-tree-node-droppoint", 3, "drop", "dragover", "dragenter", "dragleave", "ngClass"], [3, "styleClass", 4, "ngIf"], [3, "styleClass"], [1, "p-tree-node-toggle-icon"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["styleClass", "p-tree-node-checkbox", 3, "click", "ngModel", "binary", "indeterminate", "disabled", "variant", "tabindex"], ["role", "group", 1, "p-tree-node-children", 2, "display", "none"], [3, "node", "parentNode", "firstChild", "lastChild", "index", "itemSize", "level", "loadingMode", 4, "ngFor", "ngForOf", "ngForTrackBy"], [3, "node", "parentNode", "firstChild", "lastChild", "index", "itemSize", "level", "loadingMode"]],
+    template: function UITreeNode_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275template(0, UITreeNode_Conditional_0_Template, 13, 31);
+      }
+      if (rf & 2) {
+        \u0275\u0275conditional(ctx.node ? 0 : -1);
+      }
+    },
+    dependencies: [_UITreeNode, CommonModule, NgClass, NgForOf, NgIf, NgTemplateOutlet, NgStyle, Ripple, Checkbox, FormsModule, NgControlStatus, NgModel, ChevronRightIcon, ChevronDownIcon, SpinnerIcon, SharedModule],
+    encapsulation: 2
+  });
+};
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TemplateConversionComponent, { className: "TemplateConversionComponent", filePath: "src/app/views/page-assistant/components/tools/template-conversion.component.ts", lineNumber: 9 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(UITreeNode, [{
+    type: Component,
+    args: [{
+      selector: "p-treeNode",
+      standalone: true,
+      imports: [CommonModule, Ripple, Checkbox, FormsModule, ChevronRightIcon, ChevronDownIcon, SpinnerIcon, SharedModule],
+      template: `
+        @if (node) {
+            <li
+                *ngIf="tree.droppableNodes"
+                class="p-tree-node-droppoint"
+                [attr.aria-hidden]="true"
+                [ngClass]="{ 'p-tree-node-droppoint-active': draghoverPrev }"
+                (drop)="onDropPoint($event, -1)"
+                (dragover)="onDropPointDragOver($event)"
+                (dragenter)="onDropPointDragEnter($event, -1)"
+                (dragleave)="onDropPointDragLeave($event)"
+            ></li>
+            <li
+                [ngClass]="nodeClass"
+                [class]="node.styleClass"
+                [ngStyle]="{ height: itemSize + 'px' }"
+                [style]="node.style"
+                [attr.aria-label]="node.label"
+                [attr.aria-checked]="checked"
+                [attr.aria-setsize]="node.children ? node.children.length : 0"
+                [attr.aria-selected]="selected"
+                [attr.aria-expanded]="node.expanded"
+                [attr.aria-posinset]="index + 1"
+                [attr.aria-level]="level + 1"
+                [attr.tabindex]="index === 0 ? 0 : -1"
+                [attr.data-id]="node.key"
+                role="treeitem"
+                (keydown)="onKeyDown($event)"
+            >
+                <div
+                    [ngClass]="nodeContentClass"
+                    [style.paddingLeft]="level * indentation + 'rem'"
+                    (click)="onNodeClick($event)"
+                    (contextmenu)="onNodeRightClick($event)"
+                    (dblclick)="onNodeDblClick($event)"
+                    (touchend)="onNodeTouchEnd()"
+                    (drop)="onDropNode($event)"
+                    (dragover)="onDropNodeDragOver($event)"
+                    (dragenter)="onDropNodeDragEnter($event)"
+                    (dragleave)="onDropNodeDragLeave($event)"
+                    [draggable]="tree.draggableNodes"
+                    (dragstart)="onDragStart($event)"
+                    (dragend)="onDragStop($event)"
+                >
+                    <button type="button" [attr.data-pc-section]="'toggler'" class="p-tree-node-toggle-button" (click)="toggle($event)" pRipple tabindex="-1">
+                        <ng-container *ngIf="!tree.togglerIconTemplate && !tree._togglerIconTemplate">
+                            <ng-container *ngIf="!node.loading">
+                                <ChevronRightIcon *ngIf="!node.expanded" [styleClass]="'p-tree-node-toggle-icon'" />
+                                <ChevronDownIcon *ngIf="node.expanded" [styleClass]="'p-tree-node-toggle-icon'" />
+                            </ng-container>
+                            <ng-container *ngIf="loadingMode === 'icon' && node.loading">
+                                <SpinnerIcon [styleClass]="'pi-spin p-tree-node-toggle-icon'" />
+                            </ng-container>
+                        </ng-container>
+                        <span *ngIf="tree.togglerIconTemplate || tree._togglerIconTemplate" class="p-tree-node-toggle-icon">
+                            <ng-template *ngTemplateOutlet="tree.togglerIconTemplate || tree._togglerIconTemplate; context: { $implicit: node.expanded, loading: node.loading }"></ng-template>
+                        </span>
+                    </button>
+
+                    <p-checkbox
+                        [ngModel]="isSelected()"
+                        styleClass="p-tree-node-checkbox"
+                        [binary]="true"
+                        [indeterminate]="node.partialSelected"
+                        *ngIf="tree.selectionMode == 'checkbox'"
+                        [disabled]="node.selectable === false"
+                        [variant]="tree?.config.inputStyle() === 'filled' || tree?.config.inputVariant() === 'filled' ? 'filled' : 'outlined'"
+                        [attr.data-p-partialchecked]="node.partialSelected"
+                        [tabindex]="-1"
+                        (click)="$event.preventDefault()"
+                    >
+                        <ng-container *ngIf="tree.checkboxIconTemplate || tree._checkboxIconTemplate">
+                            <ng-template #icon>
+                                <ng-template
+                                    *ngTemplateOutlet="
+                                        tree.checkboxIconTemplate || tree._checkboxIconTemplate;
+                                        context: {
+                                            $implicit: isSelected(),
+                                            partialSelected: node.partialSelected,
+                                            class: 'p-tree-node-checkbox'
+                                        }
+                                    "
+                                ></ng-template>
+                            </ng-template>
+                        </ng-container>
+                    </p-checkbox>
+
+                    <span [class]="getIcon()" *ngIf="node.icon || node.expandedIcon || node.collapsedIcon"></span>
+                    <span class="p-tree-node-label">
+                        <span *ngIf="!tree.getTemplateForNode(node)">{{ node.label }}</span>
+                        <span *ngIf="tree.getTemplateForNode(node)">
+                            <ng-container *ngTemplateOutlet="tree.getTemplateForNode(node); context: { $implicit: node }"></ng-container>
+                        </span>
+                    </span>
+                </div>
+                <ul class="p-tree-node-children" style="display: none;" *ngIf="!tree.virtualScroll && node.children && node.expanded" [style.display]="node.expanded ? 'flex' : 'none'" role="group">
+                    <p-treeNode
+                        *ngFor="let childNode of node.children; let firstChild = first; let lastChild = last; let index = index; trackBy: tree.trackBy.bind(this)"
+                        [node]="childNode"
+                        [parentNode]="node"
+                        [firstChild]="firstChild"
+                        [lastChild]="lastChild"
+                        [index]="index"
+                        [itemSize]="itemSize"
+                        [level]="level + 1"
+                        [loadingMode]="loadingMode"
+                    ></p-treeNode>
+                </ul>
+            </li>
+
+            <li
+                *ngIf="tree.droppableNodes && lastChild"
+                class="p-tree-node-droppoint"
+                [ngClass]="{ 'p-tree-node-droppoint-active': draghoverNext }"
+                (drop)="onDropPoint($event, 1)"
+                [attr.aria-hidden]="true"
+                (dragover)="onDropPointDragOver($event)"
+                (dragenter)="onDropPointDragEnter($event, 1)"
+                (dragleave)="onDropPointDragLeave($event)"
+            ></li>
+        }
+    `,
+      encapsulation: ViewEncapsulation.None
+    }]
+  }], null, {
+    rowNode: [{
+      type: Input
+    }],
+    node: [{
+      type: Input
+    }],
+    parentNode: [{
+      type: Input
+    }],
+    root: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    index: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    firstChild: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    lastChild: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    level: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    indentation: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    itemSize: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    loadingMode: [{
+      type: Input
+    }]
+  });
+})();
+var Tree = class _Tree extends BaseComponent {
+  dragDropService;
+  /**
+   * An array of treenodes.
+   * @group Props
+   */
+  value;
+  /**
+   * Defines the selection mode.
+   * @group Props
+   */
+  selectionMode;
+  /**
+   * Loading mode display.
+   * @group Props
+   */
+  loadingMode = "mask";
+  /**
+   * A single treenode instance or an array to refer to the selections.
+   * @group Props
+   */
+  selection;
+  /**
+   * Inline style of the component.
+   * @group Props
+   */
+  style;
+  /**
+   * Style class of the component.
+   * @group Props
+   */
+  styleClass;
+  /**
+   * Context menu instance.
+   * @group Props
+   */
+  contextMenu;
+  /**
+   * Scope of the draggable nodes to match a droppableScope.
+   * @group Props
+   */
+  draggableScope;
+  /**
+   * Scope of the droppable nodes to match a draggableScope.
+   * @group Props
+   */
+  droppableScope;
+  /**
+   * Whether the nodes are draggable.
+   * @group Props
+   */
+  draggableNodes;
+  /**
+   * Whether the nodes are droppable.
+   * @group Props
+   */
+  droppableNodes;
+  /**
+   * Defines how multiple items can be selected, when true metaKey needs to be pressed to select or unselect an item and when set to false selection of each item can be toggled individually. On touch enabled devices, metaKeySelection is turned off automatically.
+   * @group Props
+   */
+  metaKeySelection = false;
+  /**
+   * Whether checkbox selections propagate to ancestor nodes.
+   * @group Props
+   */
+  propagateSelectionUp = true;
+  /**
+   * Whether checkbox selections propagate to descendant nodes.
+   * @group Props
+   */
+  propagateSelectionDown = true;
+  /**
+   * Displays a loader to indicate data load is in progress.
+   * @group Props
+   */
+  loading;
+  /**
+   * The icon to show while indicating data load is in progress.
+   * @group Props
+   */
+  loadingIcon;
+  /**
+   * Text to display when there is no data.
+   * @group Props
+   */
+  emptyMessage = "";
+  /**
+   * Used to define a string that labels the tree.
+   * @group Props
+   */
+  ariaLabel;
+  /**
+   * Defines a string that labels the toggler icon for accessibility.
+   * @group Props
+   */
+  togglerAriaLabel;
+  /**
+   * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
+   * @group Props
+   */
+  ariaLabelledBy;
+  /**
+   * When enabled, drop can be accepted or rejected based on condition defined at onNodeDrop.
+   * @group Props
+   */
+  validateDrop;
+  /**
+   * When specified, displays an input field to filter the items.
+   * @group Props
+   */
+  filter;
+  /**
+   * Determines whether the filter input should be automatically focused when the component is rendered.
+   * @group Props
+   */
+  filterInputAutoFocus = false;
+  /**
+   * When filtering is enabled, filterBy decides which field or fields (comma separated) to search against.
+   * @group Props
+   */
+  filterBy = "label";
+  /**
+   * Mode for filtering valid values are "lenient" and "strict". Default is lenient.
+   * @group Props
+   */
+  filterMode = "lenient";
+  /**
+   * Mode for filtering valid values are "lenient" and "strict". Default is lenient.
+   * @group Props
+   */
+  filterOptions;
+  /**
+   * Placeholder text to show when filter input is empty.
+   * @group Props
+   */
+  filterPlaceholder;
+  /**
+   * Values after the tree nodes are filtered.
+   * @group Props
+   */
+  filteredNodes;
+  /**
+   * Locale to use in filtering. The default locale is the host environment's current locale.
+   * @group Props
+   */
+  filterLocale;
+  /**
+   * Height of the scrollable viewport.
+   * @group Props
+   */
+  scrollHeight;
+  /**
+   * Defines if data is loaded and interacted with in lazy manner.
+   * @group Props
+   */
+  lazy = false;
+  /**
+   * Whether the data should be loaded on demand during scroll.
+   * @group Props
+   */
+  virtualScroll;
+  /**
+   * Height of an item in the list for VirtualScrolling.
+   * @group Props
+   */
+  virtualScrollItemSize;
+  /**
+   * Whether to use the scroller feature. The properties of scroller component can be used like an object in it.
+   * @group Props
+   */
+  virtualScrollOptions;
+  /**
+   * Indentation factor for spacing of the nested node when virtual scrolling is enabled.
+   * @group Props
+   */
+  indentation = 1.5;
+  /**
+   * Custom templates of the component.
+   * @group Props
+   */
+  _templateMap;
+  /**
+   * Function to optimize the node list rendering, default algorithm checks for object identity.
+   * @group Props
+   */
+  trackBy = (index, item) => item;
+  /**
+   * Highlights the node on select.
+   * @group Props
+   */
+  highlightOnSelect = false;
+  /**
+   * Height of the node.
+   * @group Props
+   * @deprecated use virtualScrollItemSize property instead.
+   */
+  _virtualNodeHeight;
+  get virtualNodeHeight() {
+    return this._virtualNodeHeight;
+  }
+  set virtualNodeHeight(val) {
+    this._virtualNodeHeight = val;
+    console.log("The virtualNodeHeight property is deprecated, use virtualScrollItemSize property instead.");
+  }
+  /**
+   * Callback to invoke on selection change.
+   * @param {(TreeNode<any> | TreeNode<any>[] | null)} event - Custom selection change event.
+   * @group Emits
+   */
+  selectionChange = new EventEmitter();
+  /**
+   * Callback to invoke when a node is selected.
+   * @param {TreeNodeSelectEvent} event - Node select event.
+   * @group Emits
+   */
+  onNodeSelect = new EventEmitter();
+  /**
+   * Callback to invoke when a node is unselected.
+   * @param {TreeNodeUnSelectEvent} event - Node unselect event.
+   * @group Emits
+   */
+  onNodeUnselect = new EventEmitter();
+  /**
+   * Callback to invoke when a node is expanded.
+   * @param {TreeNodeExpandEvent} event - Node expand event.
+   * @group Emits
+   */
+  onNodeExpand = new EventEmitter();
+  /**
+   * Callback to invoke when a node is collapsed.
+   * @param {TreeNodeCollapseEvent} event - Node collapse event.
+   * @group Emits
+   */
+  onNodeCollapse = new EventEmitter();
+  /**
+   * Callback to invoke when a node is selected with right click.
+   * @param {onNodeContextMenuSelect} event - Node context menu select event.
+   * @group Emits
+   */
+  onNodeContextMenuSelect = new EventEmitter();
+  /**
+   * Callback to invoke when a node is double clicked.
+   * @param {TreeNodeDoubleClickEvent} event - Node double click event.
+   * @group Emits
+   */
+  onNodeDoubleClick = new EventEmitter();
+  /**
+   * Callback to invoke when a node is dropped.
+   * @param {TreeNodeDropEvent} event - Node drop event.
+   * @group Emits
+   */
+  onNodeDrop = new EventEmitter();
+  /**
+   * Callback to invoke in lazy mode to load new data.
+   * @param {TreeLazyLoadEvent} event - Custom lazy load event.
+   * @group Emits
+   */
+  onLazyLoad = new EventEmitter();
+  /**
+   * Callback to invoke in virtual scroll mode when scroll position changes.
+   * @param {TreeScrollEvent} event - Custom scroll event.
+   * @group Emits
+   */
+  onScroll = new EventEmitter();
+  /**
+   * Callback to invoke in virtual scroll mode when scroll position and item's range in view changes.
+   * @param {TreeScrollIndexChangeEvent} event - Scroll index change event.
+   * @group Emits
+   */
+  onScrollIndexChange = new EventEmitter();
+  /**
+   * Callback to invoke when data is filtered.
+   * @param {TreeFilterEvent} event - Custom filter event.
+   * @group Emits
+   */
+  onFilter = new EventEmitter();
+  /**
+   * Filter template.
+   * @group Templates
+   */
+  filterTemplate;
+  /**
+   * Node template.
+   * @group Templates
+   */
+  nodeTemplate;
+  /**
+   * Header template.
+   * @group Templates
+   */
+  headerTemplate;
+  /**
+   * Footer template.
+   * @group Templates
+   */
+  footerTemplate;
+  /**
+   * Loader template.
+   * @group Templates
+   */
+  loaderTemplate;
+  /**
+   * Empty message template.
+   * @group Templates
+   */
+  emptyMessageTemplate;
+  /**
+   * Toggler icon template.
+   * @group Templates
+   */
+  togglerIconTemplate;
+  /**
+   * Checkbox icon template.
+   * @group Templates
+   */
+  checkboxIconTemplate;
+  /**
+   * Loading icon template.
+   * @group Templates
+   */
+  loadingIconTemplate;
+  /**
+   * Filter icon template.
+   * @group Templates
+   */
+  filterIconTemplate;
+  filterViewChild;
+  scroller;
+  wrapperViewChild;
+  templates;
+  _headerTemplate;
+  _emptyMessageTemplate;
+  _footerTemplate;
+  _loaderTemplate;
+  _togglerIconTemplate;
+  _checkboxIconTemplate;
+  _loadingIconTemplate;
+  _filterIconTemplate;
+  _filterTemplate;
+  ngAfterContentInit() {
+    if (this.templates.length) {
+      this._templateMap = {};
+    }
+    this.templates.forEach((item) => {
+      switch (item.getType()) {
+        case "header":
+          this._headerTemplate = item.template;
+          break;
+        case "empty":
+          this._emptyMessageTemplate = item.template;
+          break;
+        case "footer":
+          this._footerTemplate = item.template;
+          break;
+        case "loader":
+          this._loaderTemplate = item.template;
+          break;
+        case "togglericon":
+          this._togglerIconTemplate = item.template;
+          break;
+        case "checkboxicon":
+          this._checkboxIconTemplate = item.template;
+          break;
+        case "loadingicon":
+          this._loadingIconTemplate = item.template;
+          break;
+        case "filtericon":
+          this._filterIconTemplate = item.template;
+          break;
+        case "filter":
+          this._filterTemplate = item.template;
+          break;
+        default:
+          this._templateMap[item.name] = item.template;
+          break;
+      }
+    });
+  }
+  serializedValue;
+  nodeTouched;
+  dragNodeTree;
+  dragNode;
+  dragNodeSubNodes;
+  dragNodeIndex;
+  dragNodeScope;
+  dragHover;
+  dragStartSubscription;
+  dragStopSubscription;
+  _componentStyle = inject(TreeStyle);
+  constructor(dragDropService) {
+    super();
+    this.dragDropService = dragDropService;
+  }
+  ngOnInit() {
+    super.ngOnInit();
+    if (this.filterBy) {
+      this.filterOptions = {
+        filter: (value) => this._filter(value),
+        reset: () => this.resetFilter()
+      };
+    }
+    if (this.droppableNodes) {
+      this.dragStartSubscription = this.dragDropService.dragStart$.subscribe((event) => {
+        this.dragNodeTree = event.tree;
+        this.dragNode = event.node;
+        this.dragNodeSubNodes = event.subNodes;
+        this.dragNodeIndex = event.index;
+        this.dragNodeScope = event.scope;
+      });
+      this.dragStopSubscription = this.dragDropService.dragStop$.subscribe((event) => {
+        this.dragNodeTree = null;
+        this.dragNode = null;
+        this.dragNodeSubNodes = null;
+        this.dragNodeIndex = null;
+        this.dragNodeScope = null;
+        this.dragHover = false;
+      });
+    }
+  }
+  ngOnChanges(simpleChange) {
+    super.ngOnChanges(simpleChange);
+    if (simpleChange.value) {
+      this.updateSerializedValue();
+      if (this.hasFilterActive()) {
+        this._filter(this.filterViewChild.nativeElement.value);
+      }
+    }
+  }
+  get containerClass() {
+    return this._componentStyle.classes.root({
+      instance: this
+    });
+  }
+  get emptyMessageLabel() {
+    return this.emptyMessage || this.config.getTranslation(TranslationKeys.EMPTY_MESSAGE);
+  }
+  updateSerializedValue() {
+    this.serializedValue = [];
+    this.serializeNodes(null, this.getRootNode(), 0, true);
+  }
+  serializeNodes(parent, nodes, level, visible) {
+    if (nodes && nodes.length) {
+      for (let node of nodes) {
+        node.parent = parent;
+        const rowNode = {
+          node,
+          parent,
+          level,
+          visible: visible && (parent ? parent.expanded : true)
+        };
+        this.serializedValue.push(rowNode);
+        if (rowNode.visible && node.expanded) {
+          this.serializeNodes(node, node.children, level + 1, rowNode.visible);
+        }
+      }
+    }
+  }
+  onNodeClick(event, node) {
+    let eventTarget = event.target;
+    if (hasClass(eventTarget, "p-tree-toggler") || hasClass(eventTarget, "p-tree-toggler-icon")) {
+      return;
+    } else if (this.selectionMode) {
+      if (node.selectable === false) {
+        node.style = "--p-focus-ring-color: none;";
+        return;
+      } else {
+        if (!node.style?.includes("--p-focus-ring-color")) {
+          node.style = node.style ? `${node.style}--p-focus-ring-color: var(--primary-color)` : "--p-focus-ring-color: var(--primary-color)";
+        }
+      }
+      if (this.hasFilteredNodes()) {
+        node = this.getNodeWithKey(node.key, this.filteredNodes);
+        if (!node) {
+          return;
+        }
+      }
+      let index = this.findIndexInSelection(node);
+      let selected = index >= 0;
+      if (this.isCheckboxSelectionMode()) {
+        if (selected) {
+          if (this.propagateSelectionDown) this.propagateDown(node, false);
+          else this.selection = this.selection.filter((val, i) => i != index);
+          if (this.propagateSelectionUp && node.parent) {
+            this.propagateUp(node.parent, false);
+          }
+          this.selectionChange.emit(this.selection);
+          this.onNodeUnselect.emit({
+            originalEvent: event,
+            node
+          });
+        } else {
+          if (this.propagateSelectionDown) this.propagateDown(node, true);
+          else this.selection = [...this.selection || [], node];
+          if (this.propagateSelectionUp && node.parent) {
+            this.propagateUp(node.parent, true);
+          }
+          this.selectionChange.emit(this.selection);
+          this.onNodeSelect.emit({
+            originalEvent: event,
+            node
+          });
+        }
+      } else {
+        let metaSelection = this.nodeTouched ? false : this.metaKeySelection;
+        if (metaSelection) {
+          let metaKey = event.metaKey || event.ctrlKey;
+          if (selected && metaKey) {
+            if (this.isSingleSelectionMode()) {
+              this.selectionChange.emit(null);
+            } else {
+              this.selection = this.selection.filter((val, i) => i != index);
+              this.selectionChange.emit(this.selection);
+            }
+            this.onNodeUnselect.emit({
+              originalEvent: event,
+              node
+            });
+          } else {
+            if (this.isSingleSelectionMode()) {
+              this.selectionChange.emit(node);
+            } else if (this.isMultipleSelectionMode()) {
+              this.selection = !metaKey ? [] : this.selection || [];
+              this.selection = [...this.selection, node];
+              this.selectionChange.emit(this.selection);
+            }
+            this.onNodeSelect.emit({
+              originalEvent: event,
+              node
+            });
+          }
+        } else {
+          if (this.isSingleSelectionMode()) {
+            if (selected) {
+              this.selection = null;
+              this.onNodeUnselect.emit({
+                originalEvent: event,
+                node
+              });
+            } else {
+              this.selection = node;
+              setTimeout(() => {
+                this.onNodeSelect.emit({
+                  originalEvent: event,
+                  node
+                });
+              });
+            }
+          } else {
+            if (selected) {
+              this.selection = this.selection.filter((val, i) => i != index);
+              this.onNodeUnselect.emit({
+                originalEvent: event,
+                node
+              });
+            } else {
+              this.selection = [...this.selection || [], node];
+              setTimeout(() => {
+                this.onNodeSelect.emit({
+                  originalEvent: event,
+                  node
+                });
+              });
+            }
+          }
+          this.selectionChange.emit(this.selection);
+        }
+      }
+    }
+    this.nodeTouched = false;
+  }
+  onNodeTouchEnd() {
+    this.nodeTouched = true;
+  }
+  onNodeRightClick(event, node) {
+    if (this.contextMenu) {
+      let eventTarget = event.target;
+      if (eventTarget.className && eventTarget.className.indexOf("p-tree-toggler") === 0) {
+        return;
+      } else {
+        let index = this.findIndexInSelection(node);
+        let selected = index >= 0;
+        if (!selected) {
+          if (this.isSingleSelectionMode()) this.selectionChange.emit(node);
+          else this.selectionChange.emit([node]);
+        }
+        this.contextMenu.show(event);
+        this.onNodeContextMenuSelect.emit({
+          originalEvent: event,
+          node
+        });
+      }
+    }
+  }
+  onNodeDblClick(event, node) {
+    this.onNodeDoubleClick.emit({
+      originalEvent: event,
+      node
+    });
+  }
+  findIndexInSelection(node) {
+    let index = -1;
+    if (this.selectionMode && this.selection) {
+      if (this.isSingleSelectionMode()) {
+        let areNodesEqual = this.selection.key && this.selection.key === node.key || this.selection == node;
+        index = areNodesEqual ? 0 : -1;
+      } else {
+        for (let i = 0; i < this.selection.length; i++) {
+          let selectedNode = this.selection[i];
+          let areNodesEqual = selectedNode.key && selectedNode.key === node.key || selectedNode == node;
+          if (areNodesEqual) {
+            index = i;
+            break;
+          }
+        }
+      }
+    }
+    return index;
+  }
+  syncNodeOption(node, parentNodes, option, value) {
+    const _node = this.hasFilteredNodes() ? this.getNodeWithKey(node.key, parentNodes) : null;
+    if (_node) {
+      _node[option] = value || node[option];
+    }
+  }
+  hasFilteredNodes() {
+    return this.filter && this.filteredNodes && this.filteredNodes.length;
+  }
+  hasFilterActive() {
+    return this.filter && this.filterViewChild?.nativeElement?.value.length > 0;
+  }
+  getNodeWithKey(key2, nodes) {
+    for (let node of nodes) {
+      if (node.key === key2) {
+        return node;
+      }
+      if (node.children) {
+        let matchedNode = this.getNodeWithKey(key2, node.children);
+        if (matchedNode) {
+          return matchedNode;
+        }
+      }
+    }
+  }
+  propagateUp(node, select) {
+    if (node.children && node.children.length) {
+      let selectedCount = 0;
+      let childPartialSelected = false;
+      for (let child of node.children) {
+        if (this.isSelected(child)) {
+          selectedCount++;
+        } else if (child.partialSelected) {
+          childPartialSelected = true;
+        }
+      }
+      if (select && selectedCount == node.children.length) {
+        this.selection = [...this.selection || [], node];
+        node.partialSelected = false;
+      } else {
+        if (!select) {
+          let index = this.findIndexInSelection(node);
+          if (index >= 0) {
+            this.selection = this.selection.filter((val, i) => i != index);
+          }
+        }
+        if (childPartialSelected || selectedCount > 0 && selectedCount != node.children.length) node.partialSelected = true;
+        else node.partialSelected = false;
+      }
+      this.syncNodeOption(node, this.filteredNodes, "partialSelected");
+    }
+    let parent = node.parent;
+    if (parent) {
+      this.propagateUp(parent, select);
+    }
+  }
+  propagateDown(node, select) {
+    let index = this.findIndexInSelection(node);
+    if (select && index == -1) {
+      this.selection = [...this.selection || [], node];
+    } else if (!select && index > -1) {
+      this.selection = this.selection.filter((val, i) => i != index);
+    }
+    node.partialSelected = false;
+    this.syncNodeOption(node, this.filteredNodes, "partialSelected");
+    if (node.children && node.children.length) {
+      for (let child of node.children) {
+        this.propagateDown(child, select);
+      }
+    }
+  }
+  isSelected(node) {
+    return this.findIndexInSelection(node) != -1;
+  }
+  isSingleSelectionMode() {
+    return this.selectionMode && this.selectionMode == "single";
+  }
+  isMultipleSelectionMode() {
+    return this.selectionMode && this.selectionMode == "multiple";
+  }
+  isCheckboxSelectionMode() {
+    return this.selectionMode && this.selectionMode == "checkbox";
+  }
+  isNodeLeaf(node) {
+    return node.leaf == false ? false : !(node.children && node.children.length);
+  }
+  getRootNode() {
+    return this.filteredNodes ? this.filteredNodes : this.value;
+  }
+  getTemplateForNode(node) {
+    if (this._templateMap) return node.type ? this._templateMap[node.type] : this._templateMap["default"];
+    else return null;
+  }
+  onDragOver(event) {
+    if (this.droppableNodes && (!this.value || this.value.length === 0)) {
+      event.dataTransfer.dropEffect = "move";
+      event.preventDefault();
+    }
+  }
+  onDrop(event) {
+    if (this.droppableNodes && (!this.value || this.value.length === 0)) {
+      event.preventDefault();
+      let dragNode = this.dragNode;
+      if (this.allowDrop(dragNode, null, this.dragNodeScope)) {
+        let dragNodeIndex = this.dragNodeIndex;
+        this.value = this.value || [];
+        if (this.validateDrop) {
+          this.onNodeDrop.emit({
+            originalEvent: event,
+            dragNode,
+            dropNode: null,
+            index: dragNodeIndex,
+            accept: () => {
+              this.processTreeDrop(dragNode, dragNodeIndex);
+            }
+          });
+        } else {
+          this.onNodeDrop.emit({
+            originalEvent: event,
+            dragNode,
+            dropNode: null,
+            index: dragNodeIndex
+          });
+          this.processTreeDrop(dragNode, dragNodeIndex);
+        }
+      }
+    }
+  }
+  processTreeDrop(dragNode, dragNodeIndex) {
+    this.dragNodeSubNodes.splice(dragNodeIndex, 1);
+    this.value.push(dragNode);
+    this.dragDropService.stopDrag({
+      node: dragNode
+    });
+  }
+  onDragEnter() {
+    if (this.droppableNodes && this.allowDrop(this.dragNode, null, this.dragNodeScope)) {
+      this.dragHover = true;
+    }
+  }
+  onDragLeave(event) {
+    if (this.droppableNodes) {
+      let rect = event.currentTarget.getBoundingClientRect();
+      if (event.x > rect.left + rect.width || event.x < rect.left || event.y > rect.top + rect.height || event.y < rect.top) {
+        this.dragHover = false;
+      }
+    }
+  }
+  allowDrop(dragNode, dropNode, dragNodeScope) {
+    if (!dragNode) {
+      return false;
+    } else if (this.isValidDragScope(dragNodeScope)) {
+      let allow = true;
+      if (dropNode) {
+        if (dragNode === dropNode) {
+          allow = false;
+        } else {
+          let parent = dropNode.parent;
+          while (parent != null) {
+            if (parent === dragNode) {
+              allow = false;
+              break;
+            }
+            parent = parent.parent;
+          }
+        }
+      }
+      return allow;
+    } else {
+      return false;
+    }
+  }
+  isValidDragScope(dragScope) {
+    let dropScope = this.droppableScope;
+    if (dropScope) {
+      if (typeof dropScope === "string") {
+        if (typeof dragScope === "string") return dropScope === dragScope;
+        else if (Array.isArray(dragScope)) return dragScope.indexOf(dropScope) != -1;
+      } else if (Array.isArray(dropScope)) {
+        if (typeof dragScope === "string") {
+          return dropScope.indexOf(dragScope) != -1;
+        } else if (Array.isArray(dragScope)) {
+          for (let s of dropScope) {
+            for (let ds of dragScope) {
+              if (s === ds) {
+                return true;
+              }
+            }
+          }
+        }
+      }
+      return false;
+    } else {
+      return true;
+    }
+  }
+  _filter(value) {
+    let filterValue = value;
+    if (filterValue === "") {
+      this.filteredNodes = null;
+    } else {
+      this.filteredNodes = [];
+      const searchFields = this.filterBy.split(",");
+      const filterText = removeAccents(filterValue).toLocaleLowerCase(this.filterLocale);
+      const isStrictMode = this.filterMode === "strict";
+      for (let node of this.value) {
+        let copyNode = __spreadValues({}, node);
+        let paramsWithoutNode = {
+          searchFields,
+          filterText,
+          isStrictMode
+        };
+        if (isStrictMode && (this.findFilteredNodes(copyNode, paramsWithoutNode) || this.isFilterMatched(copyNode, paramsWithoutNode)) || !isStrictMode && (this.isFilterMatched(copyNode, paramsWithoutNode) || this.findFilteredNodes(copyNode, paramsWithoutNode))) {
+          this.filteredNodes.push(copyNode);
+        }
+      }
+    }
+    this.updateSerializedValue();
+    this.onFilter.emit({
+      filter: filterValue,
+      filteredValue: this.filteredNodes
+    });
+  }
+  /**
+   * Resets filter.
+   * @group Method
+   */
+  resetFilter() {
+    this.filteredNodes = null;
+    if (this.filterViewChild && this.filterViewChild.nativeElement) {
+      this.filterViewChild.nativeElement.value = "";
+    }
+  }
+  /**
+   * Scrolls to virtual index.
+   * @param {number} number - Index to be scrolled.
+   * @group Method
+   */
+  scrollToVirtualIndex(index) {
+    this.virtualScroll && this.scroller?.scrollToIndex(index);
+  }
+  /**
+   * Scrolls to virtual index.
+   * @param {ScrollToOptions} options - Scroll options.
+   * @group Method
+   */
+  scrollTo(options) {
+    if (this.virtualScroll) {
+      this.scroller?.scrollTo(options);
+    } else if (this.wrapperViewChild && this.wrapperViewChild.nativeElement) {
+      if (this.wrapperViewChild.nativeElement.scrollTo) {
+        this.wrapperViewChild.nativeElement.scrollTo(options);
+      } else {
+        this.wrapperViewChild.nativeElement.scrollLeft = options.left;
+        this.wrapperViewChild.nativeElement.scrollTop = options.top;
+      }
+    }
+  }
+  findFilteredNodes(node, paramsWithoutNode) {
+    if (node) {
+      let matched = false;
+      if (node.children) {
+        let childNodes = [...node.children];
+        node.children = [];
+        for (let childNode of childNodes) {
+          let copyChildNode = __spreadValues({}, childNode);
+          if (this.isFilterMatched(copyChildNode, paramsWithoutNode)) {
+            matched = true;
+            node.children.push(copyChildNode);
+          }
+        }
+      }
+      if (matched) {
+        node.expanded = true;
+        return true;
+      }
+    }
+  }
+  isFilterMatched(node, params) {
+    let {
+      searchFields,
+      filterText,
+      isStrictMode
+    } = params;
+    let matched = false;
+    for (let field of searchFields) {
+      let fieldValue = removeAccents(String(resolveFieldData(node, field))).toLocaleLowerCase(this.filterLocale);
+      if (fieldValue.indexOf(filterText) > -1) {
+        matched = true;
+      }
+    }
+    if (!matched || isStrictMode && !this.isNodeLeaf(node)) {
+      matched = this.findFilteredNodes(node, {
+        searchFields,
+        filterText,
+        isStrictMode
+      }) || matched;
+    }
+    return matched;
+  }
+  getIndex(options, index) {
+    const getItemOptions = options["getItemOptions"];
+    return getItemOptions ? getItemOptions(index).index : index;
+  }
+  getBlockableElement() {
+    return this.el.nativeElement.children[0];
+  }
+  ngOnDestroy() {
+    if (this.dragStartSubscription) {
+      this.dragStartSubscription.unsubscribe();
+    }
+    if (this.dragStopSubscription) {
+      this.dragStopSubscription.unsubscribe();
+    }
+    super.ngOnDestroy();
+  }
+  static \u0275fac = function Tree_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _Tree)(\u0275\u0275directiveInject(TreeDragDropService, 8));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _Tree,
+    selectors: [["p-tree"]],
+    contentQueries: function Tree_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c510, 4);
+        \u0275\u0275contentQuery(dirIndex, _c68, 4);
+        \u0275\u0275contentQuery(dirIndex, _c78, 4);
+        \u0275\u0275contentQuery(dirIndex, _c88, 4);
+        \u0275\u0275contentQuery(dirIndex, _c97, 4);
+        \u0275\u0275contentQuery(dirIndex, _c106, 4);
+        \u0275\u0275contentQuery(dirIndex, _c117, 4);
+        \u0275\u0275contentQuery(dirIndex, _c125, 4);
+        \u0275\u0275contentQuery(dirIndex, _c133, 4);
+        \u0275\u0275contentQuery(dirIndex, _c143, 4);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.filterTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.nodeTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.footerTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.loaderTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.emptyMessageTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.togglerIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.checkboxIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.loadingIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.filterIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    viewQuery: function Tree_Query(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275viewQuery(_c510, 5);
+        \u0275\u0275viewQuery(_c153, 5);
+        \u0275\u0275viewQuery(_c163, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.filterViewChild = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.scroller = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.wrapperViewChild = _t.first);
+      }
+    },
+    inputs: {
+      value: "value",
+      selectionMode: "selectionMode",
+      loadingMode: "loadingMode",
+      selection: "selection",
+      style: "style",
+      styleClass: "styleClass",
+      contextMenu: "contextMenu",
+      draggableScope: "draggableScope",
+      droppableScope: "droppableScope",
+      draggableNodes: [2, "draggableNodes", "draggableNodes", booleanAttribute],
+      droppableNodes: [2, "droppableNodes", "droppableNodes", booleanAttribute],
+      metaKeySelection: [2, "metaKeySelection", "metaKeySelection", booleanAttribute],
+      propagateSelectionUp: [2, "propagateSelectionUp", "propagateSelectionUp", booleanAttribute],
+      propagateSelectionDown: [2, "propagateSelectionDown", "propagateSelectionDown", booleanAttribute],
+      loading: [2, "loading", "loading", booleanAttribute],
+      loadingIcon: "loadingIcon",
+      emptyMessage: "emptyMessage",
+      ariaLabel: "ariaLabel",
+      togglerAriaLabel: "togglerAriaLabel",
+      ariaLabelledBy: "ariaLabelledBy",
+      validateDrop: [2, "validateDrop", "validateDrop", booleanAttribute],
+      filter: [2, "filter", "filter", booleanAttribute],
+      filterInputAutoFocus: [2, "filterInputAutoFocus", "filterInputAutoFocus", booleanAttribute],
+      filterBy: "filterBy",
+      filterMode: "filterMode",
+      filterOptions: "filterOptions",
+      filterPlaceholder: "filterPlaceholder",
+      filteredNodes: "filteredNodes",
+      filterLocale: "filterLocale",
+      scrollHeight: "scrollHeight",
+      lazy: [2, "lazy", "lazy", booleanAttribute],
+      virtualScroll: [2, "virtualScroll", "virtualScroll", booleanAttribute],
+      virtualScrollItemSize: [2, "virtualScrollItemSize", "virtualScrollItemSize", numberAttribute],
+      virtualScrollOptions: "virtualScrollOptions",
+      indentation: [2, "indentation", "indentation", numberAttribute],
+      _templateMap: "_templateMap",
+      trackBy: "trackBy",
+      highlightOnSelect: [2, "highlightOnSelect", "highlightOnSelect", booleanAttribute],
+      virtualNodeHeight: "virtualNodeHeight"
+    },
+    outputs: {
+      selectionChange: "selectionChange",
+      onNodeSelect: "onNodeSelect",
+      onNodeUnselect: "onNodeUnselect",
+      onNodeExpand: "onNodeExpand",
+      onNodeCollapse: "onNodeCollapse",
+      onNodeContextMenuSelect: "onNodeContextMenuSelect",
+      onNodeDoubleClick: "onNodeDoubleClick",
+      onNodeDrop: "onNodeDrop",
+      onLazyLoad: "onLazyLoad",
+      onScroll: "onScroll",
+      onScrollIndexChange: "onScrollIndexChange",
+      onFilter: "onFilter"
+    },
+    features: [\u0275\u0275ProvidersFeature([TreeStyle]), \u0275\u0275InheritDefinitionFeature, \u0275\u0275NgOnChangesFeature],
+    decls: 8,
+    vars: 10,
+    consts: [["filter", ""], ["scroller", ""], ["content", ""], ["treeNode", ""], ["loader", ""], ["wrapper", ""], ["emptyFilter", ""], [3, "drop", "dragover", "dragenter", "dragleave", "ngClass", "ngStyle"], ["class", "p-tree-mask p-overlay-mask", 4, "ngIf"], [4, "ngTemplateOutlet"], [4, "ngIf"], ["class", "p-tree-empty-message", 4, "ngIf"], [1, "p-tree-mask", "p-overlay-mask"], [3, "class", 4, "ngIf"], [3, "spin", "styleClass", 4, "ngIf"], ["class", "p-tree-loading-icon", 4, "ngIf"], [3, "spin", "styleClass"], [1, "p-tree-loading-icon"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["pInputText", "", "type", "search", "autocomplete", "off", 1, "p-tree-filter-input", 3, "keydown.enter", "input", "pAutoFocus"], ["class", "p-tree-filter-icon", 4, "ngIf"], [1, "p-tree-filter-icon"], ["styleClass", "p-tree-root", 3, "items", "tabindex", "style", "scrollHeight", "itemSize", "lazy", "options", "onScroll", "onScrollIndexChange", "onLazyLoad", 4, "ngIf"], ["styleClass", "p-tree-root", 3, "onScroll", "onScrollIndexChange", "onLazyLoad", "items", "tabindex", "scrollHeight", "itemSize", "lazy", "options"], ["class", "p-tree-root-children", "role", "tree", 3, "ngClass", "style", 4, "ngIf"], ["role", "tree", 1, "p-tree-root-children", 3, "ngClass"], [3, "level", "rowNode", "node", "parentNode", "firstChild", "lastChild", "index", "itemSize", "indentation", "loadingMode", 4, "ngFor", "ngForOf", "ngForTrackBy"], [3, "level", "rowNode", "node", "parentNode", "firstChild", "lastChild", "index", "itemSize", "indentation", "loadingMode"], [1, "p-tree-root"], ["class", "p-tree-root-children", "role", "tree", 4, "ngIf"], ["role", "tree", 1, "p-tree-root-children"], [3, "node", "firstChild", "lastChild", "index", "level", "loadingMode", 4, "ngFor", "ngForOf", "ngForTrackBy"], [3, "node", "firstChild", "lastChild", "index", "level", "loadingMode"], [1, "p-tree-empty-message"], [4, "ngIf", "ngIfElse"]],
+    template: function Tree_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275elementStart(0, "div", 7);
+        \u0275\u0275listener("drop", function Tree_Template_div_drop_0_listener($event) {
+          return ctx.onDrop($event);
+        })("dragover", function Tree_Template_div_dragover_0_listener($event) {
+          return ctx.onDragOver($event);
+        })("dragenter", function Tree_Template_div_dragenter_0_listener() {
+          return ctx.onDragEnter();
+        })("dragleave", function Tree_Template_div_dragleave_0_listener($event) {
+          return ctx.onDragLeave($event);
+        });
+        \u0275\u0275template(1, Tree_div_1_Template, 3, 2, "div", 8)(2, Tree_ng_container_2_Template, 1, 0, "ng-container", 9)(3, Tree_Conditional_3_Template, 1, 4, "ng-container")(4, Tree_Conditional_4_Template, 1, 1, "p-iconField")(5, Tree_ng_container_5_Template, 3, 2, "ng-container", 10)(6, Tree_div_6_Template, 3, 3, "div", 11)(7, Tree_ng_container_7_Template, 1, 0, "ng-container", 9);
+        \u0275\u0275elementEnd();
+      }
+      if (rf & 2) {
+        let tmp_6_0;
+        \u0275\u0275classMap(ctx.styleClass);
+        \u0275\u0275property("ngClass", ctx.containerClass)("ngStyle", ctx.style);
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.loading && ctx.loadingMode === "mask");
+        \u0275\u0275advance();
+        \u0275\u0275property("ngTemplateOutlet", ctx.headerTemplate || ctx._headerTemplate);
+        \u0275\u0275advance();
+        \u0275\u0275conditional(ctx.filterTemplate || ctx._filterTemplate ? 3 : 4);
+        \u0275\u0275advance(2);
+        \u0275\u0275property("ngIf", (tmp_6_0 = ctx.getRootNode()) == null ? null : tmp_6_0.length);
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", !ctx.loading && (ctx.getRootNode() == null || ctx.getRootNode().length === 0));
+        \u0275\u0275advance();
+        \u0275\u0275property("ngTemplateOutlet", ctx.footerTemplate || ctx._footerTemplate);
+      }
+    },
+    dependencies: [CommonModule, NgClass, NgForOf, NgIf, NgTemplateOutlet, NgStyle, Scroller, SharedModule, SearchIcon, SpinnerIcon, InputText, FormsModule, IconField, InputIcon, UITreeNode, AutoFocusModule, AutoFocus],
+    encapsulation: 2
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Tree, [{
+    type: Component,
+    args: [{
+      selector: "p-tree",
+      standalone: true,
+      imports: [CommonModule, Scroller, SharedModule, SearchIcon, SpinnerIcon, InputText, FormsModule, IconField, InputIcon, UITreeNode, AutoFocusModule],
+      template: `
+        <div [ngClass]="containerClass" [ngStyle]="style" [class]="styleClass" (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragenter)="onDragEnter()" (dragleave)="onDragLeave($event)">
+            <div class="p-tree-mask p-overlay-mask" *ngIf="loading && loadingMode === 'mask'">
+                <i *ngIf="loadingIcon" [class]="'p-tree-loading-icon pi-spin ' + loadingIcon"></i>
+                <ng-container *ngIf="!loadingIcon">
+                    <SpinnerIcon *ngIf="!loadingIconTemplate && !_loadingIconTemplate" [spin]="true" [styleClass]="'p-tree-loading-icon'" />
+                    <span *ngIf="loadingIconTemplate || _loadingIconTemplate" class="p-tree-loading-icon">
+                        <ng-template *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-template>
+                    </span>
+                </ng-container>
+            </div>
+            <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+            @if (filterTemplate || _filterTemplate) {
+                <ng-container *ngTemplateOutlet="filterTemplate || _filterTemplate; context: { $implicit: filterOptions }"></ng-container>
+            } @else {
+                <p-iconField *ngIf="filter">
+                    <input
+                        #filter
+                        [pAutoFocus]="filterInputAutoFocus"
+                        pInputText
+                        type="search"
+                        autocomplete="off"
+                        class="p-tree-filter-input"
+                        [attr.placeholder]="filterPlaceholder"
+                        (keydown.enter)="$event.preventDefault()"
+                        (input)="_filter($event.target.value)"
+                    />
+                    <p-inputIcon>
+                        <SearchIcon *ngIf="!filterIconTemplate && !_filterIconTemplate" class="p-tree-filter-icon" />
+                        <span *ngIf="filterIconTemplate || _filterIconTemplate">
+                            <ng-template *ngTemplateOutlet="filterIconTemplate || _filterIconTemplate"></ng-template>
+                        </span>
+                    </p-inputIcon>
+                </p-iconField>
+            }
+
+            <ng-container *ngIf="getRootNode()?.length">
+                <p-scroller
+                    #scroller
+                    *ngIf="virtualScroll"
+                    [items]="serializedValue"
+                    [tabindex]="-1"
+                    styleClass="p-tree-root"
+                    [style]="{ height: scrollHeight !== 'flex' ? scrollHeight : undefined }"
+                    [scrollHeight]="scrollHeight !== 'flex' ? undefined : '100%'"
+                    [itemSize]="virtualScrollItemSize || _virtualNodeHeight"
+                    [lazy]="lazy"
+                    (onScroll)="onScroll.emit($event)"
+                    (onScrollIndexChange)="onScrollIndexChange.emit($event)"
+                    (onLazyLoad)="onLazyLoad.emit($event)"
+                    [options]="virtualScrollOptions"
+                >
+                    <ng-template #content let-items let-scrollerOptions="options">
+                        <ul *ngIf="items" class="p-tree-root-children" [ngClass]="scrollerOptions.contentStyleClass" [style]="scrollerOptions.contentStyle" role="tree" [attr.aria-label]="ariaLabel" [attr.aria-labelledby]="ariaLabelledBy">
+                            <p-treeNode
+                                #treeNode
+                                *ngFor="let rowNode of items; let firstChild = first; let lastChild = last; let index = index; trackBy: trackBy"
+                                [level]="rowNode.level"
+                                [rowNode]="rowNode"
+                                [node]="rowNode.node"
+                                [parentNode]="rowNode.parent"
+                                [firstChild]="firstChild"
+                                [lastChild]="lastChild"
+                                [index]="getIndex(scrollerOptions, index)"
+                                [itemSize]="scrollerOptions.itemSize"
+                                [indentation]="indentation"
+                                [loadingMode]="loadingMode"
+                            ></p-treeNode>
+                        </ul>
+                    </ng-template>
+                    <ng-container *ngIf="loaderTemplate || _loaderTemplate">
+                        <ng-template #loader let-scrollerOptions="options">
+                            <ng-container *ngTemplateOutlet="loaderTemplate || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
+                        </ng-template>
+                    </ng-container>
+                </p-scroller>
+                <ng-container *ngIf="!virtualScroll">
+                    <div #wrapper class="p-tree-root" [style.max-height]="scrollHeight">
+                        <ul class="p-tree-root-children" *ngIf="getRootNode()" role="tree" [attr.aria-label]="ariaLabel" [attr.aria-labelledby]="ariaLabelledBy">
+                            <p-treeNode
+                                *ngFor="let node of getRootNode(); let firstChild = first; let lastChild = last; let index = index; trackBy: trackBy.bind(this)"
+                                [node]="node"
+                                [firstChild]="firstChild"
+                                [lastChild]="lastChild"
+                                [index]="index"
+                                [level]="0"
+                                [loadingMode]="loadingMode"
+                            ></p-treeNode>
+                        </ul>
+                    </div>
+                </ng-container>
+            </ng-container>
+
+            <div class="p-tree-empty-message" *ngIf="!loading && (getRootNode() == null || getRootNode().length === 0)">
+                <ng-container *ngIf="!emptyMessageTemplate && !_emptyMessageTemplate; else emptyFilter">
+                    {{ emptyMessageLabel }}
+                </ng-container>
+                <ng-template #emptyFilter *ngTemplateOutlet="emptyMessageTemplate || _emptyMessageTemplate"></ng-template>
+            </div>
+            <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+        </div>
+    `,
+      changeDetection: ChangeDetectionStrategy.Default,
+      encapsulation: ViewEncapsulation.None,
+      providers: [TreeStyle]
+    }]
+  }], () => [{
+    type: TreeDragDropService,
+    decorators: [{
+      type: Optional
+    }]
+  }], {
+    value: [{
+      type: Input
+    }],
+    selectionMode: [{
+      type: Input
+    }],
+    loadingMode: [{
+      type: Input
+    }],
+    selection: [{
+      type: Input
+    }],
+    style: [{
+      type: Input
+    }],
+    styleClass: [{
+      type: Input
+    }],
+    contextMenu: [{
+      type: Input
+    }],
+    draggableScope: [{
+      type: Input
+    }],
+    droppableScope: [{
+      type: Input
+    }],
+    draggableNodes: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    droppableNodes: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    metaKeySelection: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    propagateSelectionUp: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    propagateSelectionDown: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    loading: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    loadingIcon: [{
+      type: Input
+    }],
+    emptyMessage: [{
+      type: Input
+    }],
+    ariaLabel: [{
+      type: Input
+    }],
+    togglerAriaLabel: [{
+      type: Input
+    }],
+    ariaLabelledBy: [{
+      type: Input
+    }],
+    validateDrop: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    filter: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    filterInputAutoFocus: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    filterBy: [{
+      type: Input
+    }],
+    filterMode: [{
+      type: Input
+    }],
+    filterOptions: [{
+      type: Input
+    }],
+    filterPlaceholder: [{
+      type: Input
+    }],
+    filteredNodes: [{
+      type: Input
+    }],
+    filterLocale: [{
+      type: Input
+    }],
+    scrollHeight: [{
+      type: Input
+    }],
+    lazy: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    virtualScroll: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    virtualScrollItemSize: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    virtualScrollOptions: [{
+      type: Input
+    }],
+    indentation: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    _templateMap: [{
+      type: Input
+    }],
+    trackBy: [{
+      type: Input
+    }],
+    highlightOnSelect: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    virtualNodeHeight: [{
+      type: Input
+    }],
+    selectionChange: [{
+      type: Output
+    }],
+    onNodeSelect: [{
+      type: Output
+    }],
+    onNodeUnselect: [{
+      type: Output
+    }],
+    onNodeExpand: [{
+      type: Output
+    }],
+    onNodeCollapse: [{
+      type: Output
+    }],
+    onNodeContextMenuSelect: [{
+      type: Output
+    }],
+    onNodeDoubleClick: [{
+      type: Output
+    }],
+    onNodeDrop: [{
+      type: Output
+    }],
+    onLazyLoad: [{
+      type: Output
+    }],
+    onScroll: [{
+      type: Output
+    }],
+    onScrollIndexChange: [{
+      type: Output
+    }],
+    onFilter: [{
+      type: Output
+    }],
+    filterTemplate: [{
+      type: ContentChild,
+      args: ["filter", {
+        descendants: false
+      }]
+    }],
+    nodeTemplate: [{
+      type: ContentChild,
+      args: ["node", {
+        descendants: false
+      }]
+    }],
+    headerTemplate: [{
+      type: ContentChild,
+      args: ["header", {
+        descendants: false
+      }]
+    }],
+    footerTemplate: [{
+      type: ContentChild,
+      args: ["footer", {
+        descendants: false
+      }]
+    }],
+    loaderTemplate: [{
+      type: ContentChild,
+      args: ["loader", {
+        descendants: false
+      }]
+    }],
+    emptyMessageTemplate: [{
+      type: ContentChild,
+      args: ["empty", {
+        descendants: false
+      }]
+    }],
+    togglerIconTemplate: [{
+      type: ContentChild,
+      args: ["togglericon", {
+        descendants: false
+      }]
+    }],
+    checkboxIconTemplate: [{
+      type: ContentChild,
+      args: ["checkboxicon", {
+        descendants: false
+      }]
+    }],
+    loadingIconTemplate: [{
+      type: ContentChild,
+      args: ["loadingicon", {
+        descendants: false
+      }]
+    }],
+    filterIconTemplate: [{
+      type: ContentChild,
+      args: ["filtericon", {
+        descendants: false
+      }]
+    }],
+    filterViewChild: [{
+      type: ViewChild,
+      args: ["filter"]
+    }],
+    scroller: [{
+      type: ViewChild,
+      args: ["scroller"]
+    }],
+    wrapperViewChild: [{
+      type: ViewChild,
+      args: ["wrapper"]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }]
+  });
+})();
+var TreeModule = class _TreeModule {
+  static \u0275fac = function TreeModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _TreeModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _TreeModule,
+    imports: [Tree, SharedModule],
+    exports: [Tree, SharedModule]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [Tree, SharedModule, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(TreeModule, [{
+    type: NgModule,
+    args: [{
+      imports: [Tree, SharedModule],
+      exports: [Tree, SharedModule]
+    }]
+  }], null, null);
 })();
 
-// src/app/views/page-assistant/components/tools/link-report.component.ts
-var LinkReportComponent = class _LinkReportComponent {
-  static \u0275fac = function LinkReportComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _LinkReportComponent)();
-  };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LinkReportComponent, selectors: [["ca-link-report"]], decls: 2, vars: 0, consts: [[1, "m-0"]], template: function LinkReportComponent_Template(rf, ctx) {
-    if (rf & 1) {
-      \u0275\u0275elementStart(0, "p", 0);
-      \u0275\u0275text(1, "Unfinished. Check status of links on page and if destination text matches link text.");
-      \u0275\u0275elementEnd();
-    }
-  }, encapsulation: 2 });
+// node_modules/primeng/fesm2022/primeng-contextmenu.mjs
+var _c014 = ["sublist"];
+var _c118 = (a0, a1) => ({
+  "p-contextmenu-submenu": a0,
+  "p-contextmenu-root-list": a1
+});
+var _c212 = () => ({
+  "p-contextmenu-item-link": true
+});
+var _c312 = () => ({
+  class: "p-contextmenu-submenu-icon"
+});
+var _c412 = () => ({
+  exact: false
+});
+var _c511 = (a0) => ({
+  "p-contextmenu-item-link": true,
+  "p-disabled": a0
+});
+var _c69 = (a0) => ({
+  $implicit: a0
+});
+function ContextMenuSub_ul_0_ng_template_2_li_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "li", 8);
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext().$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275styleMap(ctx_r2.getItemProp(processedItem_r4, "style"));
+    \u0275\u0275property("ngClass", ctx_r2.getSeparatorItemClass(processedItem_r4));
+    \u0275\u0275attribute("id", ctx_r2.getItemId(processedItem_r4))("data-pc-section", "separator");
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_span_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span", 19);
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(4).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngClass", ctx_r2.getItemProp(processedItem_r4, "icon"))("ngStyle", ctx_r2.getItemProp(processedItem_r4, "iconStyle"));
+    \u0275\u0275attribute("data-pc-section", "icon")("aria-hidden", true)("tabindex", -1);
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 20);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(4).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275attribute("data-pc-section", "label");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", ctx_r2.getItemLabel(processedItem_r4), " ");
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span", 21);
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(4).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("innerHTML", ctx_r2.getItemLabel(processedItem_r4), \u0275\u0275sanitizeHtml);
+    \u0275\u0275attribute("data-pc-section", "label");
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_p_badge_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-badge", 22);
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(4).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("styleClass", ctx_r2.getItemProp(processedItem_r4, "badgeStyleClass"))("value", ctx_r2.getItemProp(processedItem_r4, "badge"));
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_container_6_AngleRightIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "AngleRightIcon");
+  }
+  if (rf & 2) {
+    \u0275\u0275classMap("p-contextmenu-submenu-icon");
+    \u0275\u0275attribute("data-pc-section", "submenuicon")("aria-hidden", true);
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_container_6_2_ng_template_0_Template(rf, ctx) {
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_container_6_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_container_6_2_ng_template_0_Template, 0, 0, "ng-template", 25);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("data-pc-section", "submenuicon")("aria-hidden", true);
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_container_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_container_6_AngleRightIcon_1_Template, 1, 4, "AngleRightIcon", 23)(2, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_container_6_2_Template, 1, 2, null, 24);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(6);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.contextMenu.submenuIconTemplate && !ctx_r2.contextMenu._submenuIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.contextMenu.submenuIconTemplate || ctx_r2.contextMenu._submenuIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction0(3, _c312));
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "a", 15);
+    \u0275\u0275template(1, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_span_1_Template, 1, 5, "span", 16)(2, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_span_2_Template, 2, 2, "span", 17)(3, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_template_3_Template, 1, 2, "ng-template", null, 2, \u0275\u0275templateRefExtractor)(5, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_p_badge_5_Template, 1, 2, "p-badge", 18)(6, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_ng_container_6_Template, 3, 4, "ng-container", 11);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const htmlLabel_r6 = \u0275\u0275reference(4);
+    const processedItem_r4 = \u0275\u0275nextContext(3).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("target", ctx_r2.getItemProp(processedItem_r4, "target"))("ngClass", \u0275\u0275pureFunction0(12, _c212));
+    \u0275\u0275attribute("href", ctx_r2.getItemProp(processedItem_r4, "url"), \u0275\u0275sanitizeUrl)("aria-hidden", true)("data-automationid", ctx_r2.getItemProp(processedItem_r4, "automationId"))("data-pc-section", "action")("tabindex", -1);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.getItemProp(processedItem_r4, "icon"));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.getItemProp(processedItem_r4, "escape"))("ngIfElse", htmlLabel_r6);
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngIf", ctx_r2.getItemProp(processedItem_r4, "badge"));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.isItemGroup(processedItem_r4));
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_span_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span", 19);
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(4).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngClass", ctx_r2.getItemProp(processedItem_r4, "icon"))("ngStyle", ctx_r2.getItemProp(processedItem_r4, "iconStyle"));
+    \u0275\u0275attribute("data-pc-section", "icon")("aria-hidden", true)("tabindex", -1);
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 20);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(4).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275attribute("data-pc-section", "label");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", ctx_r2.getItemLabel(processedItem_r4), " ");
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span", 21);
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(4).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("innerHTML", ctx_r2.getItemLabel(processedItem_r4), \u0275\u0275sanitizeHtml);
+    \u0275\u0275attribute("data-pc-section", "label");
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_p_badge_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-badge", 22);
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(4).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("styleClass", ctx_r2.getItemProp(processedItem_r4, "badgeStyleClass"))("value", ctx_r2.getItemProp(processedItem_r4, "badge"));
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_container_6_AngleRightIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "AngleRightIcon");
+  }
+  if (rf & 2) {
+    \u0275\u0275classMap("p-contextmenu-submenu-icon");
+    \u0275\u0275attribute("data-pc-section", "submenuicon")("aria-hidden", true);
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_container_6_2_ng_template_0_Template(rf, ctx) {
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_container_6_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_container_6_2_ng_template_0_Template, 0, 0, "ng-template", 25);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("data-pc-section", "submenuicon")("aria-hidden", true);
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_container_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_container_6_AngleRightIcon_1_Template, 1, 4, "AngleRightIcon", 23)(2, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_container_6_2_Template, 1, 2, null, 24);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(6);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.contextMenu.submenuIconTemplate && !ctx_r2.contextMenu._submenuIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", !ctx_r2.contextMenu.submenuIconTemplate || !ctx_r2.contextMenu._submenuIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction0(3, _c312));
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "a", 26);
+    \u0275\u0275template(1, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_span_1_Template, 1, 5, "span", 16)(2, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_span_2_Template, 2, 2, "span", 17)(3, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_template_3_Template, 1, 2, "ng-template", null, 2, \u0275\u0275templateRefExtractor)(5, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_p_badge_5_Template, 1, 2, "p-badge", 18)(6, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_ng_container_6_Template, 3, 4, "ng-container", 11);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const htmlLabel_r7 = \u0275\u0275reference(4);
+    const processedItem_r4 = \u0275\u0275nextContext(3).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("routerLink", ctx_r2.getItemProp(processedItem_r4, "routerLink"))("queryParams", ctx_r2.getItemProp(processedItem_r4, "queryParams"))("routerLinkActiveOptions", ctx_r2.getItemProp(processedItem_r4, "routerLinkActiveOptions") || \u0275\u0275pureFunction0(20, _c412))("target", ctx_r2.getItemProp(processedItem_r4, "target"))("ngClass", \u0275\u0275pureFunction1(21, _c511, ctx_r2.getItemProp(processedItem_r4, "disabled")))("fragment", ctx_r2.getItemProp(processedItem_r4, "fragment"))("queryParamsHandling", ctx_r2.getItemProp(processedItem_r4, "queryParamsHandling"))("preserveFragment", ctx_r2.getItemProp(processedItem_r4, "preserveFragment"))("skipLocationChange", ctx_r2.getItemProp(processedItem_r4, "skipLocationChange"))("replaceUrl", ctx_r2.getItemProp(processedItem_r4, "replaceUrl"))("state", ctx_r2.getItemProp(processedItem_r4, "state"));
+    \u0275\u0275attribute("data-automationid", ctx_r2.getItemProp(processedItem_r4, "automationId"))("tabindex", -1)("aria-hidden", true)("data-pc-section", "action");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.getItemProp(processedItem_r4, "icon"));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.getItemProp(processedItem_r4, "escape"))("ngIfElse", htmlLabel_r7);
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngIf", ctx_r2.getItemProp(processedItem_r4, "badge"));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.isItemGroup(processedItem_r4));
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_1_Template, 7, 13, "a", 13)(2, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_a_2_Template, 7, 23, "a", 14);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.getItemProp(processedItem_r4, "routerLink"));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.getItemProp(processedItem_r4, "routerLink"));
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_4_1_ng_template_0_Template(rf, ctx) {
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_4_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_4_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_4_1_Template, 1, 0, null, 24);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.itemTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c69, processedItem_r4.item));
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_p_contextmenu_sub_5_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-contextmenu-sub", 27);
+    \u0275\u0275listener("itemClick", function ContextMenuSub_ul_0_ng_template_2_li_1_p_contextmenu_sub_5_Template_p_contextmenu_sub_itemClick_0_listener($event) {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r2 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r2.itemClick.emit($event));
+    })("itemMouseEnter", function ContextMenuSub_ul_0_ng_template_2_li_1_p_contextmenu_sub_5_Template_p_contextmenu_sub_itemMouseEnter_0_listener($event) {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r2 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r2.onItemMouseEnter($event));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const processedItem_r4 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("items", processedItem_r4.items)("itemTemplate", ctx_r2.itemTemplate)("menuId", ctx_r2.menuId)("visible", ctx_r2.isItemActive(processedItem_r4) && ctx_r2.isItemGroup(processedItem_r4))("activeItemPath", ctx_r2.activeItemPath)("focusedItemId", ctx_r2.focusedItemId)("level", ctx_r2.level + 1);
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_li_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "li", 9, 1)(2, "div", 10);
+    \u0275\u0275listener("click", function ContextMenuSub_ul_0_ng_template_2_li_1_Template_div_click_2_listener($event) {
+      \u0275\u0275restoreView(_r5);
+      const processedItem_r4 = \u0275\u0275nextContext().$implicit;
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onItemClick($event, processedItem_r4));
+    })("mouseenter", function ContextMenuSub_ul_0_ng_template_2_li_1_Template_div_mouseenter_2_listener($event) {
+      \u0275\u0275restoreView(_r5);
+      const processedItem_r4 = \u0275\u0275nextContext().$implicit;
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onItemMouseEnter({
+        $event,
+        processedItem: processedItem_r4
+      }));
+    });
+    \u0275\u0275template(3, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_3_Template, 3, 2, "ng-container", 11)(4, ContextMenuSub_ul_0_ng_template_2_li_1_ng_container_4_Template, 2, 4, "ng-container", 11);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(5, ContextMenuSub_ul_0_ng_template_2_li_1_p_contextmenu_sub_5_Template, 1, 7, "p-contextmenu-sub", 12);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r8 = \u0275\u0275nextContext();
+    const processedItem_r4 = ctx_r8.$implicit;
+    const index_r10 = ctx_r8.index;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275classMap(ctx_r2.getItemProp(processedItem_r4, "styleClass"));
+    \u0275\u0275property("ngStyle", ctx_r2.getItemProp(processedItem_r4, "style"))("ngClass", ctx_r2.getItemClass(processedItem_r4))("tooltipOptions", ctx_r2.getItemProp(processedItem_r4, "tooltipOptions"));
+    \u0275\u0275attribute("id", ctx_r2.getItemId(processedItem_r4))("data-pc-section", "menuitem")("data-p-highlight", ctx_r2.isItemActive(processedItem_r4))("data-p-focused", ctx_r2.isItemFocused(processedItem_r4))("data-p-disabled", ctx_r2.isItemDisabled(processedItem_r4))("aria-label", ctx_r2.getItemLabel(processedItem_r4))("aria-disabled", ctx_r2.isItemDisabled(processedItem_r4) || void 0)("aria-haspopup", ctx_r2.isItemGroup(processedItem_r4) && !ctx_r2.getItemProp(processedItem_r4, "to") ? "menu" : void 0)("aria-expanded", ctx_r2.isItemGroup(processedItem_r4) ? ctx_r2.isItemActive(processedItem_r4) : void 0)("aria-level", ctx_r2.level + 1)("aria-setsize", ctx_r2.getAriaSetSize())("aria-posinset", ctx_r2.getAriaPosInset(index_r10));
+    \u0275\u0275advance(2);
+    \u0275\u0275attribute("data-pc-section", "content");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.itemTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.itemTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.isItemVisible(processedItem_r4) && ctx_r2.isItemGroup(processedItem_r4));
+  }
+}
+function ContextMenuSub_ul_0_ng_template_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, ContextMenuSub_ul_0_ng_template_2_li_0_Template, 1, 5, "li", 6)(1, ContextMenuSub_ul_0_ng_template_2_li_1_Template, 6, 21, "li", 7);
+  }
+  if (rf & 2) {
+    const processedItem_r4 = ctx.$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngIf", ctx_r2.isItemVisible(processedItem_r4) && ctx_r2.getItemProp(processedItem_r4, "separator"));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.isItemVisible(processedItem_r4) && !ctx_r2.getItemProp(processedItem_r4, "separator"));
+  }
+}
+function ContextMenuSub_ul_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "ul", 4, 0);
+    \u0275\u0275listener("@overlayAnimation.start", function ContextMenuSub_ul_0_Template_ul_animation_overlayAnimation_start_0_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const sublist_r2 = \u0275\u0275reference(1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onEnter($event, sublist_r2));
+    })("keydown", function ContextMenuSub_ul_0_Template_ul_keydown_0_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.menuKeydown.emit($event));
+    })("focus", function ContextMenuSub_ul_0_Template_ul_focus_0_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.menuFocus.emit($event));
+    })("blur", function ContextMenuSub_ul_0_Template_ul_blur_0_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.menuBlur.emit($event));
+    });
+    \u0275\u0275template(2, ContextMenuSub_ul_0_ng_template_2_Template, 2, 2, "ng-template", 5);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(10, _c118, !ctx_r2.root, ctx_r2.root))("@overlayAnimation", ctx_r2.visible)("tabindex", ctx_r2.tabindex);
+    \u0275\u0275attribute("id", ctx_r2.menuId + "_list")("aria-label", ctx_r2.ariaLabel)("aria-labelledBy", ctx_r2.ariaLabelledBy)("aria-activedescendant", ctx_r2.focusedItemId)("aria-orientation", "vertical")("data-pc-section", "menu");
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngForOf", ctx_r2.items);
+  }
+}
+var _c79 = ["item"];
+var _c89 = ["submenuicon"];
+var _c98 = ["rootmenu"];
+var _c107 = ["container"];
+var _c119 = (a0) => ({
+  "p-contextmenu p-component": true,
+  "p-contextmenu-mobile": a0
+});
+var _c126 = () => ({
+  value: "visible"
+});
+function ContextMenu_div_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 3, 0);
+    \u0275\u0275listener("@overlayAnimation.start", function ContextMenu_div_0_Template_div_animation_overlayAnimation_start_0_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onOverlayAnimationStart($event));
+    })("@overlayAnimation.done", function ContextMenu_div_0_Template_div_animation_overlayAnimation_done_0_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onOverlayAnimationEnd($event));
+    });
+    \u0275\u0275elementStart(2, "p-contextmenu-sub", 4, 1);
+    \u0275\u0275listener("itemClick", function ContextMenu_div_0_Template_p_contextmenu_sub_itemClick_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onItemClick($event));
+    })("menuFocus", function ContextMenu_div_0_Template_p_contextmenu_sub_menuFocus_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onMenuFocus($event));
+    })("menuBlur", function ContextMenu_div_0_Template_p_contextmenu_sub_menuBlur_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onMenuBlur($event));
+    })("menuKeydown", function ContextMenu_div_0_Template_p_contextmenu_sub_menuKeydown_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onKeyDown($event));
+    })("itemMouseEnter", function ContextMenu_div_0_Template_p_contextmenu_sub_itemMouseEnter_2_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onItemMouseEnter($event));
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275classMap(ctx_r1.styleClass);
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(20, _c119, ctx_r1.queryMatches))("ngStyle", ctx_r1.style)("@overlayAnimation", \u0275\u0275pureFunction0(22, _c126));
+    \u0275\u0275attribute("data-pc-section", "root")("data-pc-name", "contextmenu")("id", ctx_r1.id);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("root", true)("items", ctx_r1.processedItems)("itemTemplate", ctx_r1.itemTemplate || ctx_r1._itemTemplate)("menuId", ctx_r1.id)("tabindex", !ctx_r1.disabled ? ctx_r1.tabindex : -1)("ariaLabel", ctx_r1.ariaLabel)("ariaLabelledBy", ctx_r1.ariaLabelledBy)("baseZIndex", ctx_r1.baseZIndex)("autoZIndex", ctx_r1.autoZIndex)("visible", ctx_r1.submenuVisible())("focusedItemId", ctx_r1.focused ? ctx_r1.focusedItemId : void 0)("activeItemPath", ctx_r1.activeItemPath());
+  }
+}
+var theme12 = ({
+  dt
+}) => `
+.p-contextmenu {
+    position: absolute;
+    background: ${dt("contextmenu.background")};
+    color: ${dt("contextmenu.color")};
+    border: 1px solid ${dt("contextmenu.border.color")};
+    border-radius: ${dt("contextmenu.border.radius")};
+    box-shadow: ${dt("contextmenu.shadow")};
+    min-width: 12.5rem;
+}
+
+.p-contextmenu-root-list,
+.p-contextmenu-submenu {
+    margin: 0;
+    padding: ${dt("contextmenu.list.padding")};
+    list-style: none;
+    outline: 0 none;
+    display: flex;
+    flex-direction: column;
+    gap: ${dt("contextmenu.list.gap")};
+}
+
+.p-contextmenu-submenu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    z-index: 1;
+    background: ${dt("contextmenu.background")};
+    color: ${dt("contextmenu.color")};
+    border: 1px solid ${dt("contextmenu.border.color")};
+    border-radius: ${dt("contextmenu.border.radius")};
+    box-shadow: ${dt("contextmenu.shadow")};
+}
+
+.p-contextmenu-item {
+    position: relative;
+}
+
+.p-contextmenu-item-content {
+    transition: background ${dt("contextmenu.transition.duration")}, color ${dt("contextmenu.transition.duration")};
+    border-radius: ${dt("contextmenu.item.border.radius")};
+    color: ${dt("contextmenu.item.color")};
+}
+
+.p-contextmenu-item-link {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    overflow: hidden;
+    position: relative;
+    color: inherit;
+    padding: ${dt("contextmenu.item.padding")};
+    gap: ${dt("contextmenu.item.gap")};
+    user-select: none;
+}
+
+.p-contextmenu-item-label {
+    line-height: 1;
+}
+
+.p-contextmenu-item-icon {
+    color: ${dt("contextmenu.item.icon.color")};
+}
+
+.p-contextmenu-submenu-icon {
+    color: ${dt("contextmenu.submenu.icon.color")};
+    margin-left: auto;
+    font-size: ${dt("contextmenu.submenu.icon.size")};
+    width: ${dt("contextmenu.submenu.icon.size")};
+    height: ${dt("contextmenu.submenu.icon.size")};
+}
+
+.p-contextmenu-submenu-icon:dir(rtl) {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.p-contextmenu-item.p-focus > .p-contextmenu-item-content {
+    color: ${dt("contextmenu.item.focus.color")};
+    background: ${dt("contextmenu.item.focus.background")};
+}
+
+.p-contextmenu-item.p-focus > .p-contextmenu-item-content .p-contextmenu-item-icon {
+    color: ${dt("contextmenu.item.icon.focus.color")};
+}
+
+.p-contextmenu-item.p-focus > .p-contextmenu-item-content .p-contextmenu-submenu-icon {
+    color: ${dt("contextmenu.submenu.icon.focus.color")};
+}
+
+.p-contextmenu-item:not(.p-disabled) > .p-contextmenu-item-content:hover {
+    color: ${dt("contextmenu.item.focus.color")};
+    background: ${dt("contextmenu.item.focus.background")};
+}
+
+.p-contextmenu-item:not(.p-disabled) > .p-contextmenu-item-content:hover .p-contextmenu-item-icon {
+    color: ${dt("contextmenu.item.icon.focus.color")};
+}
+
+.p-contextmenu-item:not(.p-disabled) > .p-contextmenu-item-content:hover .p-contextmenu-submenu-icon {
+    color: ${dt("contextmenu.submenu.icon.focus.color")};
+}
+
+.p-contextmenu-item-active > .p-contextmenu-item-content {
+    color: ${dt("contextmenu.item.active.color")};
+    background: ${dt("contextmenu.item.active.background")};
+}
+
+.p-contextmenu-item-active > .p-contextmenu-item-content .p-contextmenu-item-icon {
+    color: ${dt("contextmenu.item.icon.active.color")};
+}
+
+.p-contextmenu-item-active > .p-contextmenu-item-content .p-contextmenu-submenu-icon {
+    color: ${dt("contextmenu.submenu.icon.active.color")};
+}
+
+.p-contextmenu-separator {
+    border-top: 1px solid  ${dt("contextmenu.separator.border.color")};
+}
+
+.p-contextmenu-enter-from,
+.p-contextmenu-leave-active {
+    opacity: 0;
+}
+
+.p-contextmenu-enter-active {
+    transition: opacity 250ms;
+}
+
+.p-contextmenu-mobile .p-contextmenu-submenu {
+    position: static;
+    box-shadow: none;
+    border: 0 none;
+    padding-left: ${dt("tieredmenu.submenu.mobile.indent")};
+    padding-right: 0;
+}
+
+.p-contextmenu-mobile .p-contextmenu-submenu-icon {
+    transition: transform 0.2s;
+    transform: rotate(90deg);
+}
+
+.p-contextmenu-mobile .p-contextmenu-item-active > .p-contextmenu-item-content .p-contextmenu-submenu-icon {
+    transform: rotate(-90deg);
+}
+
+/* For PrimeNG */
+.p-contextmenu-submenu-icon.p-iconwrapper {
+    margin-left: auto;
+}
+
+.p-contextmenu-submenu-icon.p-iconwrapper:dir(rtl) {
+    margin-left: 0;
+    margin-right: auto;
+}
+`;
+var classes12 = {
+  root: "p-contextmenu p-component",
+  rootList: "p-contextmenu-root-list",
+  item: ({
+    instance,
+    processedItem
+  }) => ["p-contextmenu-item", {
+    "p-contextmenu-item-active": instance.isItemActive(processedItem),
+    "p-focus": instance.isItemFocused(processedItem),
+    "p-disabled": instance.isItemDisabled(processedItem)
+  }],
+  itemContent: "p-contextmenu-item-content",
+  itemLink: "p-contextmenu-item-link",
+  itemIcon: "p-contextmenu-item-icon",
+  itemLabel: "p-contextmenu-item-label",
+  submenuIcon: "p-contextmenu-submenu-icon",
+  submenu: "p-contextmenu-submenu",
+  separator: "p-contextmenu-separator"
+};
+var ContextMenuStyle = class _ContextMenuStyle extends BaseStyle {
+  name = "contextmenu";
+  theme = theme12;
+  classes = classes12;
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275ContextMenuStyle_BaseFactory;
+    return function ContextMenuStyle_Factory(__ngFactoryType__) {
+      return (\u0275ContextMenuStyle_BaseFactory || (\u0275ContextMenuStyle_BaseFactory = \u0275\u0275getInheritedFactory(_ContextMenuStyle)))(__ngFactoryType__ || _ContextMenuStyle);
+    };
+  })();
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+    token: _ContextMenuStyle,
+    factory: _ContextMenuStyle.\u0275fac
+  });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LinkReportComponent, [{
-    type: Component,
-    args: [{ selector: "ca-link-report", imports: [], template: '<p class="m-0">Unfinished. Check status of links on page and if destination text matches link text.</p>' }]
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ContextMenuStyle, [{
+    type: Injectable
   }], null, null);
 })();
+var ContextMenuClasses;
+(function(ContextMenuClasses2) {
+  ContextMenuClasses2["root"] = "p-contextmenu";
+  ContextMenuClasses2["rootList"] = "p-contextmenu-root-list";
+  ContextMenuClasses2["item"] = "p-contextmenu-item";
+  ContextMenuClasses2["itemContent"] = "p-contextmenu-item-content";
+  ContextMenuClasses2["itemLink"] = "p-contextmenu-item-link";
+  ContextMenuClasses2["itemIcon"] = "p-contextmenu-item-icon";
+  ContextMenuClasses2["itemLabel"] = "p-contextmenu-item-label";
+  ContextMenuClasses2["submenuIcon"] = "p-contextmenu-submenu-icon";
+  ContextMenuClasses2["submenu"] = "p-contextmenu-submenu";
+  ContextMenuClasses2["separator"] = "p-contextmenu-separator";
+})(ContextMenuClasses || (ContextMenuClasses = {}));
+var ContextMenuSub = class _ContextMenuSub extends BaseComponent {
+  contextMenu;
+  visible = false;
+  items;
+  itemTemplate;
+  root = false;
+  autoZIndex = true;
+  baseZIndex = 0;
+  popup;
+  menuId;
+  ariaLabel;
+  ariaLabelledBy;
+  level = 0;
+  focusedItemId;
+  activeItemPath;
+  tabindex = 0;
+  itemClick = new EventEmitter();
+  itemMouseEnter = new EventEmitter();
+  menuFocus = new EventEmitter();
+  menuBlur = new EventEmitter();
+  menuKeydown = new EventEmitter();
+  sublistViewChild;
+  constructor(contextMenu) {
+    super();
+    this.contextMenu = contextMenu;
+  }
+  getItemProp(processedItem, name, params = null) {
+    return processedItem && processedItem.item ? resolve(processedItem.item[name], params) : void 0;
+  }
+  getItemId(processedItem) {
+    return processedItem.item && processedItem.item?.id ? processedItem.item.id : `${this.menuId}_${processedItem.key}`;
+  }
+  getItemKey(processedItem) {
+    return this.getItemId(processedItem);
+  }
+  getItemClass(processedItem) {
+    return __spreadProps(__spreadValues({}, this.getItemProp(processedItem, "class")), {
+      "p-contextmenu-item": true,
+      "p-contextmenu-item-active": this.isItemActive(processedItem),
+      "p-focus": this.isItemFocused(processedItem),
+      "p-disabled": this.isItemDisabled(processedItem)
+    });
+  }
+  getItemLabel(processedItem) {
+    return this.getItemProp(processedItem, "label");
+  }
+  getSeparatorItemClass(processedItem) {
+    return __spreadProps(__spreadValues({}, this.getItemProp(processedItem, "class")), {
+      "p-contextmenu-separator": true
+    });
+  }
+  getAriaSetSize() {
+    return this.items.filter((processedItem) => this.isItemVisible(processedItem) && !this.getItemProp(processedItem, "separator")).length;
+  }
+  getAriaPosInset(index) {
+    return index - this.items.slice(0, index).filter((processedItem) => this.isItemVisible(processedItem) && this.getItemProp(processedItem, "separator")).length + 1;
+  }
+  isItemVisible(processedItem) {
+    return this.getItemProp(processedItem, "visible") !== false;
+  }
+  isItemActive(processedItem) {
+    if (this.activeItemPath) {
+      return this.activeItemPath.some((path) => path.key === processedItem.key);
+    }
+  }
+  isItemDisabled(processedItem) {
+    return this.getItemProp(processedItem, "disabled");
+  }
+  isItemFocused(processedItem) {
+    return this.focusedItemId === this.getItemId(processedItem);
+  }
+  isItemGroup(processedItem) {
+    return isNotEmpty(processedItem.items);
+  }
+  onItemMouseEnter(param) {
+    const {
+      event,
+      processedItem
+    } = param;
+    this.itemMouseEnter.emit({
+      originalEvent: event,
+      processedItem
+    });
+  }
+  onItemClick(event, processedItem) {
+    this.getItemProp(processedItem, "command", {
+      originalEvent: event,
+      item: processedItem.item
+    });
+    this.itemClick.emit({
+      originalEvent: event,
+      processedItem,
+      isFocus: true
+    });
+  }
+  onEnter(event, sublist) {
+    if (event.fromState === "void" && event.toState) {
+      const sublist2 = event.element;
+      this.position(sublist2);
+    }
+  }
+  position(sublist) {
+    const parentItem = sublist.parentElement.parentElement;
+    const containerOffset = getOffset(sublist.parentElement.parentElement);
+    const viewport = getViewport();
+    const sublistWidth = sublist.offsetParent ? sublist.offsetWidth : getHiddenElementOuterWidth(sublist);
+    const itemOuterWidth = getOuterWidth(parentItem.children[0]);
+    sublist.style.top = "0px";
+    if (parseInt(containerOffset.left, 10) + itemOuterWidth + sublistWidth > viewport.width - calculateScrollbarWidth()) {
+      sublist.style.left = -1 * sublistWidth + "px";
+    } else {
+      sublist.style.left = itemOuterWidth + "px";
+    }
+  }
+  static \u0275fac = function ContextMenuSub_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ContextMenuSub)(\u0275\u0275directiveInject(forwardRef(() => ContextMenu)));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _ContextMenuSub,
+    selectors: [["p-contextMenuSub"], ["p-contextmenu-sub"]],
+    viewQuery: function ContextMenuSub_Query(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275viewQuery(_c014, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.sublistViewChild = _t.first);
+      }
+    },
+    inputs: {
+      visible: [2, "visible", "visible", booleanAttribute],
+      items: "items",
+      itemTemplate: "itemTemplate",
+      root: [2, "root", "root", booleanAttribute],
+      autoZIndex: [2, "autoZIndex", "autoZIndex", booleanAttribute],
+      baseZIndex: [2, "baseZIndex", "baseZIndex", numberAttribute],
+      popup: [2, "popup", "popup", booleanAttribute],
+      menuId: "menuId",
+      ariaLabel: "ariaLabel",
+      ariaLabelledBy: "ariaLabelledBy",
+      level: [2, "level", "level", numberAttribute],
+      focusedItemId: "focusedItemId",
+      activeItemPath: "activeItemPath",
+      tabindex: [2, "tabindex", "tabindex", numberAttribute]
+    },
+    outputs: {
+      itemClick: "itemClick",
+      itemMouseEnter: "itemMouseEnter",
+      menuFocus: "menuFocus",
+      menuBlur: "menuBlur",
+      menuKeydown: "menuKeydown"
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    decls: 1,
+    vars: 1,
+    consts: [["sublist", ""], ["listItem", ""], ["htmlLabel", ""], ["role", "menu", 3, "ngClass", "tabindex", "keydown", "focus", "blur", 4, "ngIf"], ["role", "menu", 3, "keydown", "focus", "blur", "ngClass", "tabindex"], ["ngFor", "", 3, "ngForOf"], ["role", "separator", 3, "style", "ngClass", 4, "ngIf"], ["role", "menuitem", "pTooltip", "", 3, "ngStyle", "ngClass", "class", "tooltipOptions", 4, "ngIf"], ["role", "separator", 3, "ngClass"], ["role", "menuitem", "pTooltip", "", 3, "ngStyle", "ngClass", "tooltipOptions"], [1, "p-contextmenu-item-content", 3, "click", "mouseenter"], [4, "ngIf"], [3, "items", "itemTemplate", "menuId", "visible", "activeItemPath", "focusedItemId", "level", "itemClick", "itemMouseEnter", 4, "ngIf"], ["pRipple", "", 3, "target", "ngClass", 4, "ngIf"], ["pRipple", "", 3, "routerLink", "queryParams", "routerLinkActiveOptions", "target", "ngClass", "fragment", "queryParamsHandling", "preserveFragment", "skipLocationChange", "replaceUrl", "state", 4, "ngIf"], ["pRipple", "", 3, "target", "ngClass"], ["class", "p-contextmenu-item-icon", 3, "ngClass", "ngStyle", 4, "ngIf"], ["class", "p-contextmenu-item-label", 4, "ngIf", "ngIfElse"], [3, "styleClass", "value", 4, "ngIf"], [1, "p-contextmenu-item-icon", 3, "ngClass", "ngStyle"], [1, "p-contextmenu-item-label"], [1, "p-contextmenu-item-label", 3, "innerHTML"], [3, "styleClass", "value"], [3, "class", 4, "ngIf"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [3, "data-pc-section", "aria-hidden"], ["pRipple", "", 3, "routerLink", "queryParams", "routerLinkActiveOptions", "target", "ngClass", "fragment", "queryParamsHandling", "preserveFragment", "skipLocationChange", "replaceUrl", "state"], [3, "itemClick", "itemMouseEnter", "items", "itemTemplate", "menuId", "visible", "activeItemPath", "focusedItemId", "level"]],
+    template: function ContextMenuSub_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275template(0, ContextMenuSub_ul_0_Template, 3, 13, "ul", 3);
+      }
+      if (rf & 2) {
+        \u0275\u0275property("ngIf", ctx.root ? true : ctx.visible);
+      }
+    },
+    dependencies: [_ContextMenuSub, CommonModule, NgClass, NgForOf, NgIf, NgTemplateOutlet, NgStyle, RouterModule, RouterLink, Ripple, TooltipModule, Tooltip, AngleRightIcon, BadgeModule, Badge, SharedModule],
+    encapsulation: 2,
+    data: {
+      animation: [trigger("overlayAnimation", [transition(":enter", [style({
+        opacity: 0
+      })]), transition(":leave", [style({
+        opacity: 0
+      })])])]
+    }
+  });
+};
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LinkReportComponent, { className: "LinkReportComponent", filePath: "src/app/views/page-assistant/components/tools/link-report.component.ts", lineNumber: 9 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ContextMenuSub, [{
+    type: Component,
+    args: [{
+      selector: "p-contextMenuSub, p-contextmenu-sub",
+      standalone: true,
+      imports: [CommonModule, RouterModule, Ripple, TooltipModule, AngleRightIcon, BadgeModule, SharedModule],
+      template: `
+        <ul
+            *ngIf="root ? true : visible"
+            #sublist
+            role="menu"
+            [ngClass]="{ 'p-contextmenu-submenu': !root, 'p-contextmenu-root-list': root }"
+            [@overlayAnimation]="visible"
+            (@overlayAnimation.start)="onEnter($event, sublist)"
+            [attr.id]="menuId + '_list'"
+            [tabindex]="tabindex"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-labelledBy]="ariaLabelledBy"
+            [attr.aria-activedescendant]="focusedItemId"
+            [attr.aria-orientation]="'vertical'"
+            [attr.data-pc-section]="'menu'"
+            (keydown)="menuKeydown.emit($event)"
+            (focus)="menuFocus.emit($event)"
+            (blur)="menuBlur.emit($event)"
+        >
+            <ng-template ngFor let-processedItem [ngForOf]="items" let-index="index">
+                <li
+                    *ngIf="isItemVisible(processedItem) && getItemProp(processedItem, 'separator')"
+                    [attr.id]="getItemId(processedItem)"
+                    [style]="getItemProp(processedItem, 'style')"
+                    [ngClass]="getSeparatorItemClass(processedItem)"
+                    role="separator"
+                    [attr.data-pc-section]="'separator'"
+                ></li>
+                <li
+                    #listItem
+                    *ngIf="isItemVisible(processedItem) && !getItemProp(processedItem, 'separator')"
+                    role="menuitem"
+                    [attr.id]="getItemId(processedItem)"
+                    [attr.data-pc-section]="'menuitem'"
+                    [attr.data-p-highlight]="isItemActive(processedItem)"
+                    [attr.data-p-focused]="isItemFocused(processedItem)"
+                    [attr.data-p-disabled]="isItemDisabled(processedItem)"
+                    [attr.aria-label]="getItemLabel(processedItem)"
+                    [attr.aria-disabled]="isItemDisabled(processedItem) || undefined"
+                    [attr.aria-haspopup]="isItemGroup(processedItem) && !getItemProp(processedItem, 'to') ? 'menu' : undefined"
+                    [attr.aria-expanded]="isItemGroup(processedItem) ? isItemActive(processedItem) : undefined"
+                    [attr.aria-level]="level + 1"
+                    [attr.aria-setsize]="getAriaSetSize()"
+                    [attr.aria-posinset]="getAriaPosInset(index)"
+                    [ngStyle]="getItemProp(processedItem, 'style')"
+                    [ngClass]="getItemClass(processedItem)"
+                    [class]="getItemProp(processedItem, 'styleClass')"
+                    pTooltip
+                    [tooltipOptions]="getItemProp(processedItem, 'tooltipOptions')"
+                >
+                    <div [attr.data-pc-section]="'content'" class="p-contextmenu-item-content" (click)="onItemClick($event, processedItem)" (mouseenter)="onItemMouseEnter({ $event, processedItem })">
+                        <ng-container *ngIf="!itemTemplate">
+                            <a
+                                *ngIf="!getItemProp(processedItem, 'routerLink')"
+                                [attr.href]="getItemProp(processedItem, 'url')"
+                                [attr.aria-hidden]="true"
+                                [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
+                                [attr.data-pc-section]="'action'"
+                                [target]="getItemProp(processedItem, 'target')"
+                                [ngClass]="{ 'p-contextmenu-item-link': true }"
+                                [attr.tabindex]="-1"
+                                pRipple
+                            >
+                                <span
+                                    *ngIf="getItemProp(processedItem, 'icon')"
+                                    class="p-contextmenu-item-icon"
+                                    [ngClass]="getItemProp(processedItem, 'icon')"
+                                    [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                                    [attr.data-pc-section]="'icon'"
+                                    [attr.aria-hidden]="true"
+                                    [attr.tabindex]="-1"
+                                >
+                                </span>
+                                <span *ngIf="getItemProp(processedItem, 'escape'); else htmlLabel" class="p-contextmenu-item-label" [attr.data-pc-section]="'label'">
+                                    {{ getItemLabel(processedItem) }}
+                                </span>
+                                <ng-template #htmlLabel>
+                                    <span class="p-contextmenu-item-label" [innerHTML]="getItemLabel(processedItem)" [attr.data-pc-section]="'label'"></span>
+                                </ng-template>
+                                <p-badge *ngIf="getItemProp(processedItem, 'badge')" [styleClass]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" />
+                                <ng-container *ngIf="isItemGroup(processedItem)">
+                                    <AngleRightIcon *ngIf="!contextMenu.submenuIconTemplate && !contextMenu._submenuIconTemplate" [class]="'p-contextmenu-submenu-icon'" [attr.data-pc-section]="'submenuicon'" [attr.aria-hidden]="true" />
+                                    <ng-template
+                                        *ngTemplateOutlet="contextMenu.submenuIconTemplate || contextMenu._submenuIconTemplate; context: { class: 'p-contextmenu-submenu-icon' }"
+                                        [attr.data-pc-section]="'submenuicon'"
+                                        [attr.aria-hidden]="true"
+                                    ></ng-template>
+                                </ng-container>
+                            </a>
+                            <a
+                                *ngIf="getItemProp(processedItem, 'routerLink')"
+                                [routerLink]="getItemProp(processedItem, 'routerLink')"
+                                [attr.data-automationid]="getItemProp(processedItem, 'automationId')"
+                                [attr.tabindex]="-1"
+                                [attr.aria-hidden]="true"
+                                [attr.data-pc-section]="'action'"
+                                [queryParams]="getItemProp(processedItem, 'queryParams')"
+                                [routerLinkActiveOptions]="getItemProp(processedItem, 'routerLinkActiveOptions') || { exact: false }"
+                                [target]="getItemProp(processedItem, 'target')"
+                                [ngClass]="{ 'p-contextmenu-item-link': true, 'p-disabled': getItemProp(processedItem, 'disabled') }"
+                                [fragment]="getItemProp(processedItem, 'fragment')"
+                                [queryParamsHandling]="getItemProp(processedItem, 'queryParamsHandling')"
+                                [preserveFragment]="getItemProp(processedItem, 'preserveFragment')"
+                                [skipLocationChange]="getItemProp(processedItem, 'skipLocationChange')"
+                                [replaceUrl]="getItemProp(processedItem, 'replaceUrl')"
+                                [state]="getItemProp(processedItem, 'state')"
+                                pRipple
+                            >
+                                <span
+                                    *ngIf="getItemProp(processedItem, 'icon')"
+                                    class="p-contextmenu-item-icon"
+                                    [ngClass]="getItemProp(processedItem, 'icon')"
+                                    [ngStyle]="getItemProp(processedItem, 'iconStyle')"
+                                    [attr.data-pc-section]="'icon'"
+                                    [attr.aria-hidden]="true"
+                                    [attr.tabindex]="-1"
+                                >
+                                </span>
+                                <span *ngIf="getItemProp(processedItem, 'escape'); else htmlLabel" class="p-contextmenu-item-label" [attr.data-pc-section]="'label'">
+                                    {{ getItemLabel(processedItem) }}
+                                </span>
+                                <ng-template #htmlLabel>
+                                    <span class="p-contextmenu-item-label" [innerHTML]="getItemLabel(processedItem)" [attr.data-pc-section]="'label'"></span>
+                                </ng-template>
+                                <p-badge *ngIf="getItemProp(processedItem, 'badge')" [styleClass]="getItemProp(processedItem, 'badgeStyleClass')" [value]="getItemProp(processedItem, 'badge')" />
+                                <ng-container *ngIf="isItemGroup(processedItem)">
+                                    <AngleRightIcon *ngIf="!contextMenu.submenuIconTemplate && !contextMenu._submenuIconTemplate" [class]="'p-contextmenu-submenu-icon'" [attr.data-pc-section]="'submenuicon'" [attr.aria-hidden]="true" />
+                                    <ng-template
+                                        *ngTemplateOutlet="!contextMenu.submenuIconTemplate || !contextMenu._submenuIconTemplate; context: { class: 'p-contextmenu-submenu-icon' }"
+                                        [attr.data-pc-section]="'submenuicon'"
+                                        [attr.aria-hidden]="true"
+                                    ></ng-template>
+                                </ng-container>
+                            </a>
+                        </ng-container>
+                        <ng-container *ngIf="itemTemplate">
+                            <ng-template *ngTemplateOutlet="itemTemplate; context: { $implicit: processedItem.item }"></ng-template>
+                        </ng-container>
+                    </div>
+
+                    <p-contextmenu-sub
+                        *ngIf="isItemVisible(processedItem) && isItemGroup(processedItem)"
+                        [items]="processedItem.items"
+                        [itemTemplate]="itemTemplate"
+                        [menuId]="menuId"
+                        [visible]="isItemActive(processedItem) && isItemGroup(processedItem)"
+                        [activeItemPath]="activeItemPath"
+                        [focusedItemId]="focusedItemId"
+                        [level]="level + 1"
+                        (itemClick)="itemClick.emit($event)"
+                        (itemMouseEnter)="onItemMouseEnter($event)"
+                    />
+                </li>
+            </ng-template>
+        </ul>
+    `,
+      animations: [trigger("overlayAnimation", [transition(":enter", [style({
+        opacity: 0
+      })]), transition(":leave", [style({
+        opacity: 0
+      })])])],
+      encapsulation: ViewEncapsulation.None
+    }]
+  }], () => [{
+    type: ContextMenu,
+    decorators: [{
+      type: Inject,
+      args: [forwardRef(() => ContextMenu)]
+    }]
+  }], {
+    visible: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    items: [{
+      type: Input
+    }],
+    itemTemplate: [{
+      type: Input
+    }],
+    root: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    autoZIndex: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    baseZIndex: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    popup: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    menuId: [{
+      type: Input
+    }],
+    ariaLabel: [{
+      type: Input
+    }],
+    ariaLabelledBy: [{
+      type: Input
+    }],
+    level: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    focusedItemId: [{
+      type: Input
+    }],
+    activeItemPath: [{
+      type: Input
+    }],
+    tabindex: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    itemClick: [{
+      type: Output
+    }],
+    itemMouseEnter: [{
+      type: Output
+    }],
+    menuFocus: [{
+      type: Output
+    }],
+    menuBlur: [{
+      type: Output
+    }],
+    menuKeydown: [{
+      type: Output
+    }],
+    sublistViewChild: [{
+      type: ViewChild,
+      args: ["sublist"]
+    }]
+  });
+})();
+var ContextMenu = class _ContextMenu extends BaseComponent {
+  overlayService;
+  /**
+   * An array of menuitems.
+   * @group Props
+   */
+  set model(value) {
+    this._model = value;
+    this._processedItems = this.createProcessedItems(this._model || []);
+  }
+  get model() {
+    return this._model;
+  }
+  /**
+   * Event for which the menu must be displayed.
+   * @group Props
+   */
+  triggerEvent = "contextmenu";
+  /**
+   * Local template variable name of the element to attach the context menu.
+   * @group Props
+   */
+  target;
+  /**
+   * Attaches the menu to document instead of a particular item.
+   * @group Props
+   */
+  global;
+  /**
+   * Inline style of the component.
+   * @group Props
+   */
+  style;
+  /**
+   * Style class of the component.
+   * @group Props
+   */
+  styleClass;
+  /**
+   * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element.
+   * @group Props
+   */
+  appendTo;
+  /**
+   * Whether to automatically manage layering.
+   * @group Props
+   */
+  autoZIndex = true;
+  /**
+   * Base zIndex value to use in layering.
+   * @group Props
+   */
+  baseZIndex = 0;
+  /**
+   * Current id state as a string.
+   * @group Props
+   */
+  id;
+  /**
+   * The breakpoint to define the maximum width boundary.
+   * @group Props
+   */
+  breakpoint = "960px";
+  /**
+   * Defines a string value that labels an interactive element.
+   * @group Props
+   */
+  ariaLabel;
+  /**
+   * Identifier of the underlying input element.
+   * @group Props
+   */
+  ariaLabelledBy;
+  /**
+   * Press delay in touch devices as miliseconds.
+   * @group Props
+   */
+  pressDelay = 500;
+  /**
+   * Callback to invoke when overlay menu is shown.
+   * @group Emits
+   */
+  onShow = new EventEmitter();
+  /**
+   * Callback to invoke when overlay menu is hidden.
+   * @group Emits
+   */
+  onHide = new EventEmitter();
+  rootmenu;
+  containerViewChild;
+  container;
+  outsideClickListener;
+  resizeListener;
+  triggerEventListener;
+  documentClickListener;
+  documentTriggerListener;
+  touchEndListener;
+  pageX;
+  pageY;
+  visible = signal(false);
+  relativeAlign;
+  window;
+  focused = false;
+  activeItemPath = signal([]);
+  focusedItemInfo = signal({
+    index: -1,
+    level: 0,
+    parentKey: "",
+    item: null
+  });
+  submenuVisible = signal(false);
+  searchValue = "";
+  searchTimeout;
+  _processedItems;
+  _model;
+  pressTimer;
+  matchMediaListener;
+  query;
+  queryMatches;
+  _componentStyle = inject(ContextMenuStyle);
+  get visibleItems() {
+    const processedItem = this.activeItemPath().find((p) => p.key === this.focusedItemInfo().parentKey);
+    return processedItem ? processedItem.items : this.processedItems;
+  }
+  get processedItems() {
+    if (!this._processedItems || !this._processedItems.length) {
+      this._processedItems = this.createProcessedItems(this.model || []);
+    }
+    return this._processedItems;
+  }
+  get focusedItemId() {
+    const focusedItem = this.focusedItemInfo();
+    return focusedItem.item && focusedItem.item?.id ? focusedItem.item.id : focusedItem.index !== -1 ? `${this.id}${isNotEmpty(focusedItem.parentKey) ? "_" + focusedItem.parentKey : ""}_${focusedItem.index}` : null;
+  }
+  constructor(overlayService) {
+    super();
+    this.overlayService = overlayService;
+    effect(() => {
+      const path = this.activeItemPath();
+      if (isNotEmpty(path)) {
+        this.bindGlobalListeners();
+      } else if (!this.visible()) {
+        this.unbindGlobalListeners();
+      }
+    });
+  }
+  ngOnInit() {
+    super.ngOnInit();
+    this.id = this.id || uuid("pn_id_");
+    this.bindMatchMediaListener();
+    this.bindTriggerEventListener();
+  }
+  isMobile() {
+    return isIOS() || isAndroid();
+  }
+  bindTriggerEventListener() {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.triggerEventListener) {
+        if (!this.isMobile()) {
+          if (this.global) {
+            this.triggerEventListener = this.renderer.listen(this.document, this.triggerEvent, (event) => {
+              this.show(event);
+            });
+          } else if (this.target) {
+            this.triggerEventListener = this.renderer.listen(this.target, this.triggerEvent, (event) => {
+              this.show(event);
+            });
+          }
+        } else {
+          if (this.global) {
+            this.triggerEventListener = this.renderer.listen(this.document, "touchstart", this.onTouchStart.bind(this));
+            this.touchEndListener = this.renderer.listen(this.document, "touchend", this.onTouchEnd.bind(this));
+          } else if (this.target) {
+            this.triggerEventListener = this.renderer.listen(this.target, "touchstart", this.onTouchStart.bind(this));
+            this.touchEndListener = this.renderer.listen(this.target, "touchend", this.onTouchEnd.bind(this));
+          }
+        }
+      }
+    }
+  }
+  bindGlobalListeners() {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.documentClickListener) {
+        const documentTarget = this.el ? this.el.nativeElement.ownerDocument : "document";
+        this.documentClickListener = this.renderer.listen(documentTarget, "click", (event) => {
+          if (this.containerViewChild.nativeElement.offsetParent && this.isOutsideClicked(event) && !event.ctrlKey && event.button !== 2 && this.triggerEvent !== "click") {
+            this.hide();
+          }
+        });
+        this.documentTriggerListener = this.renderer.listen(documentTarget, this.triggerEvent, (event) => {
+          if (this.containerViewChild.nativeElement.offsetParent && this.isOutsideClicked(event)) {
+            this.hide();
+          }
+        });
+      }
+      if (!this.resizeListener) {
+        this.resizeListener = this.renderer.listen(this.document.defaultView, "resize", (event) => {
+          this.hide();
+        });
+      }
+    }
+  }
+  /**
+   * Defines template option for item.
+   * @group Templates
+   */
+  itemTemplate;
+  /**
+   * Defines template option for submenuIcon.
+   * @group Templates
+   */
+  submenuIconTemplate;
+  templates;
+  _submenuIconTemplate;
+  _itemTemplate;
+  ngAfterContentInit() {
+    this.templates?.forEach((item) => {
+      switch (item.getType()) {
+        case "submenuicon":
+          this._submenuIconTemplate = item.template;
+          break;
+        case "item":
+          this._itemTemplate = item.template;
+          break;
+        default:
+          this._itemTemplate = item.template;
+          break;
+      }
+    });
+  }
+  createProcessedItems(items, level = 0, parent = {}, parentKey = "") {
+    const processedItems = [];
+    items && items.forEach((item, index) => {
+      const key2 = (parentKey !== "" ? parentKey + "_" : "") + index;
+      const newItem = {
+        item,
+        index,
+        level,
+        key: key2,
+        parent,
+        parentKey
+      };
+      newItem["items"] = this.createProcessedItems(item.items, level + 1, newItem, key2);
+      processedItems.push(newItem);
+    });
+    return processedItems;
+  }
+  bindMatchMediaListener() {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.matchMediaListener) {
+        const query = window.matchMedia(`(max-width: ${this.breakpoint})`);
+        this.query = query;
+        this.queryMatches = query.matches;
+        this.matchMediaListener = () => {
+          this.queryMatches = query.matches;
+        };
+        query.addEventListener("change", this.matchMediaListener);
+      }
+    }
+  }
+  unbindMatchMediaListener() {
+    if (this.matchMediaListener) {
+      this.query.removeEventListener("change", this.matchMediaListener);
+      this.matchMediaListener = null;
+    }
+  }
+  getItemProp(item, name) {
+    return item ? resolve(item[name]) : void 0;
+  }
+  getProccessedItemLabel(processedItem) {
+    return processedItem ? this.getItemLabel(processedItem.item) : void 0;
+  }
+  getItemLabel(item) {
+    return this.getItemProp(item, "label");
+  }
+  isProcessedItemGroup(processedItem) {
+    return processedItem && isNotEmpty(processedItem.items);
+  }
+  isSelected(processedItem) {
+    return this.activeItemPath().some((p) => p.key === processedItem.key);
+  }
+  isValidSelectedItem(processedItem) {
+    return this.isValidItem(processedItem) && this.isSelected(processedItem);
+  }
+  isValidItem(processedItem) {
+    return !!processedItem && !this.isItemDisabled(processedItem.item) && !this.isItemSeparator(processedItem.item);
+  }
+  isItemDisabled(item) {
+    return this.getItemProp(item, "disabled");
+  }
+  isItemSeparator(item) {
+    return this.getItemProp(item, "separator");
+  }
+  isItemMatched(processedItem) {
+    return this.isValidItem(processedItem) && this.getProccessedItemLabel(processedItem).toLocaleLowerCase().startsWith(this.searchValue.toLocaleLowerCase());
+  }
+  isProccessedItemGroup(processedItem) {
+    return processedItem && isNotEmpty(processedItem.items);
+  }
+  onItemClick(event) {
+    const {
+      processedItem
+    } = event;
+    const grouped = this.isProcessedItemGroup(processedItem);
+    const selected = this.isSelected(processedItem);
+    if (selected) {
+      const {
+        index,
+        key: key2,
+        level,
+        parentKey,
+        item
+      } = processedItem;
+      this.activeItemPath.set(this.activeItemPath().filter((p) => key2 !== p.key && key2.startsWith(p.key)));
+      this.focusedItemInfo.set({
+        index,
+        level,
+        parentKey,
+        item
+      });
+      focus(this.rootmenu.sublistViewChild.nativeElement);
+    } else {
+      grouped ? this.onItemChange(event) : this.hide();
+    }
+  }
+  onItemMouseEnter(event) {
+    this.onItemChange(event, "hover");
+  }
+  onKeyDown(event) {
+    const metaKey = event.metaKey || event.ctrlKey;
+    switch (event.code) {
+      case "ArrowDown":
+        this.onArrowDownKey(event);
+        break;
+      case "ArrowUp":
+        this.onArrowUpKey(event);
+        break;
+      case "ArrowLeft":
+        this.onArrowLeftKey(event);
+        break;
+      case "ArrowRight":
+        this.onArrowRightKey(event);
+        break;
+      case "Home":
+        this.onHomeKey(event);
+        break;
+      case "End":
+        this.onEndKey(event);
+        break;
+      case "Space":
+        this.onSpaceKey(event);
+        break;
+      case "Enter":
+        this.onEnterKey(event);
+        break;
+      case "Escape":
+        this.onEscapeKey(event);
+        break;
+      case "Tab":
+        this.onTabKey(event);
+        break;
+      case "PageDown":
+      case "PageUp":
+      case "Backspace":
+      case "ShiftLeft":
+      case "ShiftRight":
+        break;
+      default:
+        if (!metaKey && isPrintableCharacter(event.key)) {
+          this.searchItems(event, event.key);
+        }
+        break;
+    }
+  }
+  onArrowDownKey(event) {
+    const itemIndex = this.focusedItemInfo().index !== -1 ? this.findNextItemIndex(this.focusedItemInfo().index) : this.findFirstFocusedItemIndex();
+    this.changeFocusedItemIndex(event, itemIndex);
+    event.preventDefault();
+  }
+  onArrowRightKey(event) {
+    const processedItem = this.visibleItems[this.focusedItemInfo().index];
+    const grouped = this.isProccessedItemGroup(processedItem);
+    if (grouped) {
+      this.onItemChange({
+        originalEvent: event,
+        processedItem
+      });
+      this.focusedItemInfo.set({
+        index: -1,
+        parentKey: processedItem.key,
+        item: processedItem.item
+      });
+      this.searchValue = "";
+      this.onArrowDownKey(event);
+    }
+    event.preventDefault();
+  }
+  onArrowUpKey(event) {
+    if (event.altKey) {
+      if (this.focusedItemInfo().index !== -1) {
+        const processedItem = this.visibleItems[this.focusedItemInfo().index];
+        const grouped = this.isProccessedItemGroup(processedItem);
+        !grouped && this.onItemChange({
+          originalEvent: event,
+          processedItem
+        });
+      }
+      this.hide();
+      event.preventDefault();
+    } else {
+      const itemIndex = this.focusedItemInfo().index !== -1 ? this.findPrevItemIndex(this.focusedItemInfo().index) : this.findLastFocusedItemIndex();
+      this.changeFocusedItemIndex(event, itemIndex);
+      event.preventDefault();
+    }
+  }
+  onArrowLeftKey(event) {
+    const processedItem = this.visibleItems[this.focusedItemInfo().index];
+    const parentItem = this.activeItemPath().find((p) => p.key === processedItem.parentKey);
+    const root = isEmpty(processedItem.parent);
+    if (!root) {
+      this.focusedItemInfo.set({
+        index: -1,
+        parentKey: parentItem ? parentItem.parentKey : "",
+        item: processedItem.item
+      });
+      this.searchValue = "";
+      this.onArrowDownKey(event);
+    }
+    const activeItemPath = this.activeItemPath().filter((p) => p.parentKey !== this.focusedItemInfo().parentKey);
+    this.activeItemPath.set(activeItemPath);
+    event.preventDefault();
+  }
+  onHomeKey(event) {
+    this.changeFocusedItemIndex(event, this.findFirstItemIndex());
+    event.preventDefault();
+  }
+  onEndKey(event) {
+    this.changeFocusedItemIndex(event, this.findLastItemIndex());
+    event.preventDefault();
+  }
+  onSpaceKey(event) {
+    this.onEnterKey(event);
+  }
+  onEscapeKey(event) {
+    this.hide();
+    const processedItem = this.findVisibleItem(this.findFirstFocusedItemIndex());
+    const focusedItemInfo = this.focusedItemInfo();
+    this.focusedItemInfo.set(__spreadProps(__spreadValues({}, focusedItemInfo), {
+      index: this.findFirstFocusedItemIndex(),
+      item: processedItem.item
+    }));
+    event.preventDefault();
+  }
+  onTabKey(event) {
+    if (this.focusedItemInfo().index !== -1) {
+      const processedItem = this.visibleItems[this.focusedItemInfo().index];
+      const grouped = this.isProccessedItemGroup(processedItem);
+      !grouped && this.onItemChange({
+        originalEvent: event,
+        processedItem
+      });
+    }
+    this.hide();
+  }
+  onEnterKey(event) {
+    if (this.focusedItemInfo().index !== -1) {
+      const element = findSingle(this.rootmenu.el.nativeElement, `li[id="${`${this.focusedItemId}`}"]`);
+      const anchorElement = element && findSingle(element, 'a[data-pc-section="action"]');
+      anchorElement ? anchorElement.click() : element && element.click();
+      const processedItem = this.visibleItems[this.focusedItemInfo().index];
+      const grouped = this.isProccessedItemGroup(processedItem);
+      if (!grouped) {
+        const focusedItemInfo = this.focusedItemInfo();
+        this.focusedItemInfo.set(__spreadProps(__spreadValues({}, focusedItemInfo), {
+          index: this.findFirstFocusedItemIndex()
+        }));
+      }
+    }
+    event.preventDefault();
+  }
+  onItemChange(event, type) {
+    const {
+      processedItem,
+      isFocus
+    } = event;
+    if (isEmpty(processedItem)) return;
+    const {
+      index,
+      key: key2,
+      level,
+      parentKey,
+      items
+    } = processedItem;
+    const grouped = isNotEmpty(items);
+    const activeItemPath = this.activeItemPath().filter((p) => p.parentKey !== parentKey && p.parentKey !== key2);
+    if (grouped) {
+      activeItemPath.push(processedItem);
+      this.submenuVisible.set(true);
+    }
+    this.focusedItemInfo.set({
+      index,
+      level,
+      parentKey,
+      item: processedItem.item
+    });
+    isFocus && focus(this.rootmenu.sublistViewChild.nativeElement);
+    if (type === "hover" && this.queryMatches) {
+      return;
+    }
+    this.activeItemPath.set(activeItemPath);
+  }
+  onMenuFocus(event) {
+    this.focused = true;
+    const focusedItemInfo = this.focusedItemInfo().index !== -1 ? this.focusedItemInfo() : {
+      index: -1,
+      level: 0,
+      parentKey: "",
+      item: null
+    };
+    this.focusedItemInfo.set(focusedItemInfo);
+  }
+  onMenuBlur(event) {
+    this.focused = false;
+    this.focusedItemInfo.set({
+      index: -1,
+      level: 0,
+      parentKey: "",
+      item: null
+    });
+    this.searchValue = "";
+  }
+  onOverlayAnimationStart(event) {
+    switch (event.toState) {
+      case "visible":
+        this.container = event.element;
+        this.position();
+        this.moveOnTop();
+        this.appendOverlay();
+        this.bindGlobalListeners();
+        focus(this.rootmenu.sublistViewChild.nativeElement);
+        break;
+    }
+  }
+  onOverlayAnimationEnd(event) {
+    switch (event.toState) {
+      case "void":
+        this.onOverlayHide();
+        break;
+    }
+  }
+  appendOverlay() {
+    if (this.appendTo) {
+      if (this.appendTo === "body") this.renderer.appendChild(this.document.body, this.containerViewChild.nativeElement);
+      else appendChild(this.appendTo, this.containerViewChild.nativeElement);
+    }
+  }
+  moveOnTop() {
+    if (this.autoZIndex && this.containerViewChild) {
+      zindexutils.set("menu", this.containerViewChild.nativeElement, this.baseZIndex + this.config.zIndex.menu);
+    }
+  }
+  onOverlayHide() {
+    this.unbindGlobalListeners();
+    if (!this.cd.destroyed) {
+      this.target = null;
+    }
+    if (this.container && this.autoZIndex) {
+      zindexutils.clear(this.container);
+    }
+    this.container = null;
+  }
+  onTouchStart(event) {
+    this.pressTimer = setTimeout(() => {
+      this.show(event);
+    }, this.pressDelay);
+  }
+  onTouchEnd() {
+    clearTimeout(this.pressTimer);
+  }
+  hide() {
+    this.visible.set(false);
+    this.onHide.emit();
+    this.activeItemPath.set([]);
+    this.focusedItemInfo.set({
+      index: -1,
+      level: 0,
+      parentKey: "",
+      item: null
+    });
+  }
+  toggle(event) {
+    this.visible() ? this.hide() : this.show(event);
+  }
+  show(event) {
+    this.activeItemPath.set([]);
+    this.focusedItemInfo.set({
+      index: -1,
+      level: 0,
+      parentKey: "",
+      item: null
+    });
+    this.pageX = event.pageX;
+    this.pageY = event.pageY;
+    this.onShow.emit();
+    this.visible() ? this.position() : this.visible.set(true);
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  position() {
+    let left = this.pageX + 1;
+    let top = this.pageY + 1;
+    let width = this.containerViewChild.nativeElement.offsetParent ? this.containerViewChild.nativeElement.offsetWidth : getHiddenElementOuterWidth(this.containerViewChild.nativeElement);
+    let height = this.containerViewChild.nativeElement.offsetParent ? this.containerViewChild.nativeElement.offsetHeight : getHiddenElementOuterHeight(this.containerViewChild.nativeElement);
+    let viewport = getViewport();
+    if (left + width - this.document.scrollingElement.scrollLeft > viewport.width) {
+      left -= width;
+    }
+    if (top + height - this.document.scrollingElement.scrollTop > viewport.height) {
+      top -= height;
+    }
+    if (left < this.document.scrollingElement.scrollLeft) {
+      left = this.document.scrollingElement.scrollLeft;
+    }
+    if (top < this.document.scrollingElement.scrollTop) {
+      top = this.document.scrollingElement.scrollTop;
+    }
+    this.containerViewChild.nativeElement.style.left = left + "px";
+    this.containerViewChild.nativeElement.style.top = top + "px";
+  }
+  searchItems(event, char) {
+    this.searchValue = (this.searchValue || "") + char;
+    let itemIndex = -1;
+    let matched = false;
+    if (this.focusedItemInfo().index !== -1) {
+      itemIndex = this.visibleItems.slice(this.focusedItemInfo().index).findIndex((processedItem) => this.isItemMatched(processedItem));
+      itemIndex = itemIndex === -1 ? this.visibleItems.slice(0, this.focusedItemInfo().index).findIndex((processedItem) => this.isItemMatched(processedItem)) : itemIndex + this.focusedItemInfo().index;
+    } else {
+      itemIndex = this.visibleItems.findIndex((processedItem) => this.isItemMatched(processedItem));
+    }
+    if (itemIndex !== -1) {
+      matched = true;
+    }
+    if (itemIndex === -1 && this.focusedItemInfo().index === -1) {
+      itemIndex = this.findFirstFocusedItemIndex();
+    }
+    if (itemIndex !== -1) {
+      this.changeFocusedItemIndex(event, itemIndex);
+    }
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+    this.searchTimeout = setTimeout(() => {
+      this.searchValue = "";
+      this.searchTimeout = null;
+    }, 500);
+    return matched;
+  }
+  findVisibleItem(index) {
+    return isNotEmpty(this.visibleItems) ? this.visibleItems[index] : null;
+  }
+  findLastFocusedItemIndex() {
+    const selectedIndex = this.findSelectedItemIndex();
+    return selectedIndex < 0 ? this.findLastItemIndex() : selectedIndex;
+  }
+  findLastItemIndex() {
+    return findLastIndex(this.visibleItems, (processedItem) => this.isValidItem(processedItem));
+  }
+  findPrevItemIndex(index) {
+    const matchedItemIndex = index > 0 ? findLastIndex(this.visibleItems.slice(0, index), (processedItem) => this.isValidItem(processedItem)) : -1;
+    return matchedItemIndex > -1 ? matchedItemIndex : index;
+  }
+  findNextItemIndex(index) {
+    const matchedItemIndex = index < this.visibleItems.length - 1 ? this.visibleItems.slice(index + 1).findIndex((processedItem) => this.isValidItem(processedItem)) : -1;
+    return matchedItemIndex > -1 ? matchedItemIndex + index + 1 : index;
+  }
+  findFirstFocusedItemIndex() {
+    const selectedIndex = this.findSelectedItemIndex();
+    return selectedIndex < 0 ? this.findFirstItemIndex() : selectedIndex;
+  }
+  findFirstItemIndex() {
+    return this.visibleItems.findIndex((processedItem) => this.isValidItem(processedItem));
+  }
+  findSelectedItemIndex() {
+    return this.visibleItems.findIndex((processedItem) => this.isValidSelectedItem(processedItem));
+  }
+  changeFocusedItemIndex(event, index) {
+    const processedItem = this.findVisibleItem(index);
+    const focusedItemInfo = this.focusedItemInfo();
+    if (focusedItemInfo.index !== index) {
+      this.focusedItemInfo.set(__spreadProps(__spreadValues({}, focusedItemInfo), {
+        index,
+        item: processedItem.item
+      }));
+      this.scrollInView();
+    }
+  }
+  scrollInView(index = -1) {
+    const id = index !== -1 ? `${this.id}_${index}` : this.focusedItemId;
+    const element = findSingle(this.rootmenu.el.nativeElement, `li[id="${id}"]`);
+    if (element) {
+      element.scrollIntoView && element.scrollIntoView({
+        block: "nearest",
+        inline: "nearest"
+      });
+    }
+  }
+  bindResizeListener() {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.resizeListener) {
+        this.resizeListener = this.renderer.listen(this.document.defaultView, "resize", (event) => {
+          this.hide();
+        });
+      }
+    }
+  }
+  isOutsideClicked(event) {
+    return !(this.containerViewChild.nativeElement.isSameNode(event.target) || this.containerViewChild.nativeElement.contains(event.target));
+  }
+  unbindResizeListener() {
+    if (this.resizeListener) {
+      this.resizeListener();
+      this.resizeListener = null;
+    }
+  }
+  unbindGlobalListeners() {
+    if (this.documentClickListener) {
+      this.documentClickListener();
+      this.documentClickListener = null;
+    }
+    if (this.documentTriggerListener) {
+      this.documentTriggerListener();
+      this.documentTriggerListener = null;
+    }
+    if (this.resizeListener) {
+      this.resizeListener();
+      this.resizeListener = null;
+    }
+    if (this.touchEndListener) {
+      this.touchEndListener();
+      this.touchEndListener = null;
+    }
+  }
+  unbindTriggerEventListener() {
+    if (this.triggerEventListener) {
+      this.triggerEventListener();
+      this.triggerEventListener = null;
+    }
+  }
+  removeAppendedElements() {
+    if (this.appendTo && this.containerViewChild) {
+      if (this.appendTo === "body") {
+        this.renderer.removeChild(this.document.body, this.containerViewChild.nativeElement);
+      } else {
+        removeChild(this.containerViewChild.nativeElement, this.appendTo);
+      }
+    }
+  }
+  ngOnDestroy() {
+    this.unbindGlobalListeners();
+    this.unbindTriggerEventListener();
+    this.unbindMatchMediaListener();
+    this.removeAppendedElements();
+    super.ngOnDestroy();
+  }
+  static \u0275fac = function ContextMenu_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ContextMenu)(\u0275\u0275directiveInject(OverlayService));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _ContextMenu,
+    selectors: [["p-contextMenu"], ["p-contextmenu"], ["p-context-menu"]],
+    contentQueries: function ContextMenu_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c79, 4);
+        \u0275\u0275contentQuery(dirIndex, _c89, 4);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.itemTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.submenuIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    viewQuery: function ContextMenu_Query(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275viewQuery(_c98, 5);
+        \u0275\u0275viewQuery(_c107, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.rootmenu = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.containerViewChild = _t.first);
+      }
+    },
+    inputs: {
+      model: "model",
+      triggerEvent: "triggerEvent",
+      target: "target",
+      global: [2, "global", "global", booleanAttribute],
+      style: "style",
+      styleClass: "styleClass",
+      appendTo: "appendTo",
+      autoZIndex: [2, "autoZIndex", "autoZIndex", booleanAttribute],
+      baseZIndex: [2, "baseZIndex", "baseZIndex", numberAttribute],
+      id: "id",
+      breakpoint: "breakpoint",
+      ariaLabel: "ariaLabel",
+      ariaLabelledBy: "ariaLabelledBy",
+      pressDelay: [2, "pressDelay", "pressDelay", numberAttribute]
+    },
+    outputs: {
+      onShow: "onShow",
+      onHide: "onHide"
+    },
+    features: [\u0275\u0275ProvidersFeature([ContextMenuStyle]), \u0275\u0275InheritDefinitionFeature],
+    decls: 1,
+    vars: 1,
+    consts: [["container", ""], ["rootmenu", ""], [3, "ngClass", "class", "ngStyle", 4, "ngIf"], [3, "ngClass", "ngStyle"], [3, "itemClick", "menuFocus", "menuBlur", "menuKeydown", "itemMouseEnter", "root", "items", "itemTemplate", "menuId", "tabindex", "ariaLabel", "ariaLabelledBy", "baseZIndex", "autoZIndex", "visible", "focusedItemId", "activeItemPath"]],
+    template: function ContextMenu_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275template(0, ContextMenu_div_0_Template, 4, 23, "div", 2);
+      }
+      if (rf & 2) {
+        \u0275\u0275property("ngIf", ctx.visible());
+      }
+    },
+    dependencies: [CommonModule, NgClass, NgIf, NgStyle, ContextMenuSub, RouterModule, TooltipModule, BadgeModule, SharedModule],
+    encapsulation: 2,
+    data: {
+      animation: [trigger("overlayAnimation", [transition(":enter", [style({
+        opacity: 0
+      }), animate("250ms")]), transition(":leave", [animate(".1s linear", style({
+        opacity: 0
+      }))])])]
+    },
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ContextMenu, [{
+    type: Component,
+    args: [{
+      selector: "p-contextMenu, p-contextmenu, p-context-menu",
+      standalone: true,
+      imports: [CommonModule, ContextMenuSub, RouterModule, TooltipModule, BadgeModule, SharedModule],
+      template: `
+        <div
+            #container
+            [attr.data-pc-section]="'root'"
+            [attr.data-pc-name]="'contextmenu'"
+            [attr.id]="id"
+            [ngClass]="{ 'p-contextmenu p-component': true, 'p-contextmenu-mobile': queryMatches }"
+            [class]="styleClass"
+            [ngStyle]="style"
+            [@overlayAnimation]="{ value: 'visible' }"
+            (@overlayAnimation.start)="onOverlayAnimationStart($event)"
+            (@overlayAnimation.done)="onOverlayAnimationEnd($event)"
+            *ngIf="visible()"
+        >
+            <p-contextmenu-sub
+                #rootmenu
+                [root]="true"
+                [items]="processedItems"
+                [itemTemplate]="itemTemplate || _itemTemplate"
+                [menuId]="id"
+                [tabindex]="!disabled ? tabindex : -1"
+                [ariaLabel]="ariaLabel"
+                [ariaLabelledBy]="ariaLabelledBy"
+                [baseZIndex]="baseZIndex"
+                [autoZIndex]="autoZIndex"
+                [visible]="submenuVisible()"
+                [focusedItemId]="focused ? focusedItemId : undefined"
+                [activeItemPath]="activeItemPath()"
+                (itemClick)="onItemClick($event)"
+                (menuFocus)="onMenuFocus($event)"
+                (menuBlur)="onMenuBlur($event)"
+                (menuKeydown)="onKeyDown($event)"
+                (itemMouseEnter)="onItemMouseEnter($event)"
+            />
+        </div>
+    `,
+      animations: [trigger("overlayAnimation", [transition(":enter", [style({
+        opacity: 0
+      }), animate("250ms")]), transition(":leave", [animate(".1s linear", style({
+        opacity: 0
+      }))])])],
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      providers: [ContextMenuStyle]
+    }]
+  }], () => [{
+    type: OverlayService
+  }], {
+    model: [{
+      type: Input
+    }],
+    triggerEvent: [{
+      type: Input
+    }],
+    target: [{
+      type: Input
+    }],
+    global: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    style: [{
+      type: Input
+    }],
+    styleClass: [{
+      type: Input
+    }],
+    appendTo: [{
+      type: Input
+    }],
+    autoZIndex: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    baseZIndex: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    id: [{
+      type: Input
+    }],
+    breakpoint: [{
+      type: Input
+    }],
+    ariaLabel: [{
+      type: Input
+    }],
+    ariaLabelledBy: [{
+      type: Input
+    }],
+    pressDelay: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    onShow: [{
+      type: Output
+    }],
+    onHide: [{
+      type: Output
+    }],
+    rootmenu: [{
+      type: ViewChild,
+      args: ["rootmenu"]
+    }],
+    containerViewChild: [{
+      type: ViewChild,
+      args: ["container"]
+    }],
+    itemTemplate: [{
+      type: ContentChild,
+      args: ["item", {
+        descendants: false
+      }]
+    }],
+    submenuIconTemplate: [{
+      type: ContentChild,
+      args: ["submenuicon", {
+        descendants: false
+      }]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }]
+  });
+})();
+var ContextMenuModule = class _ContextMenuModule {
+  static \u0275fac = function ContextMenuModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ContextMenuModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _ContextMenuModule,
+    imports: [ContextMenu, SharedModule],
+    exports: [ContextMenu, SharedModule]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [ContextMenu, SharedModule, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ContextMenuModule, [{
+    type: NgModule,
+    args: [{
+      imports: [ContextMenu, SharedModule],
+      exports: [ContextMenu, SharedModule]
+    }]
+  }], null, null);
+})();
+
+// src/app/views/page-assistant/components/tools/ia-structure.component.ts
+var _c015 = ["chartContainer"];
+var _c120 = ["cm"];
+var _c213 = () => ({ "height": "1rem" });
+var _c313 = () => ({ "min-width": "50rem" });
+function IaStructureComponent_p_button_6_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-button", 11);
+    \u0275\u0275listener("click", function IaStructureComponent_p_button_6_Template_p_button_click_0_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.maximize(ctx_r1.chartContainer));
+    });
+    \u0275\u0275elementEnd();
+  }
+}
+function IaStructureComponent_p_progressbar_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-progressbar", 12);
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275styleMap(\u0275\u0275pureFunction0(4, _c213));
+    \u0275\u0275property("value", ctx_r1.iaProgress)("showValue", false);
+  }
+}
+function IaStructureComponent_ng_container_8_span_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 17);
+    \u0275\u0275element(1, "i", 18);
+    \u0275\u0275text(2, "Link found on parent page");
+    \u0275\u0275elementEnd();
+  }
+}
+function IaStructureComponent_ng_container_8_span_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 19);
+    \u0275\u0275element(1, "i", 20);
+    \u0275\u0275text(2, "IA Orphan");
+    \u0275\u0275elementEnd();
+  }
+}
+function IaStructureComponent_ng_container_8_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "h2");
+    \u0275\u0275text(2, "Breadcrumb");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "div", 13);
+    \u0275\u0275element(4, "p-breadcrumb", 14);
+    \u0275\u0275template(5, IaStructureComponent_ng_container_8_span_5_Template, 3, 0, "span", 15)(6, IaStructureComponent_ng_container_8_span_6_Template, 3, 0, "span", 16);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(4);
+    \u0275\u0275property("model", ctx_r1.breadcrumb);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.urlFound === true);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.urlFound === false);
+  }
+}
+function IaStructureComponent_ng_container_9_p_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p");
+    \u0275\u0275text(1, "No child pages found.");
+    \u0275\u0275elementEnd();
+  }
+}
+function IaStructureComponent_ng_container_9_div_4_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p")(1, "a", 25);
+    \u0275\u0275listener("click", function IaStructureComponent_ng_container_9_div_4_ng_template_3_Template_a_click_1_listener($event) {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.onNodeClick($event));
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const node_r4 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275property("href", node_r4.data.url, \u0275\u0275sanitizeUrl)("innerHTML", node_r4.label, \u0275\u0275sanitizeHtml);
+  }
+}
+function IaStructureComponent_ng_container_9_div_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 22, 0)(2, "p-organization-chart", 23);
+    \u0275\u0275template(3, IaStructureComponent_ng_container_9_div_4_ng_template_3_Template, 2, 2, "ng-template", 24);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("value", ctx_r1.iaChart);
+  }
+}
+function IaStructureComponent_ng_container_9_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "h2");
+    \u0275\u0275text(2, "IA structure");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(3, IaStructureComponent_ng_container_9_p_3_Template, 2, 0, "p", 10)(4, IaStructureComponent_ng_container_9_div_4_Template, 4, 1, "div", 21);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngIf", ctx_r1.iaChart.length === 0);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.iaChart.length > 0);
+  }
+}
+function IaStructureComponent_ng_container_10_ng_template_6_i_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 33);
+  }
+}
+function IaStructureComponent_ng_container_10_ng_template_6_i_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 34);
+  }
+}
+function IaStructureComponent_ng_container_10_ng_template_6_i_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 35);
+  }
+}
+function IaStructureComponent_ng_container_10_ng_template_6_i_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 36);
+  }
+}
+function IaStructureComponent_ng_container_10_ng_template_6_ng_container_5_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "a", 25);
+    \u0275\u0275listener("click", function IaStructureComponent_ng_container_10_ng_template_6_ng_container_5_Template_a_click_1_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.onNodeClick($event));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const node_r7 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275property("href", node_r7.data.url, \u0275\u0275sanitizeUrl)("innerHTML", node_r7.label, \u0275\u0275sanitizeHtml);
+  }
+}
+function IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_6_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-inputgroup")(1, "input", 37);
+    \u0275\u0275twoWayListener("ngModelChange", function IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_6_Template_input_ngModelChange_1_listener($event) {
+      \u0275\u0275restoreView(_r8);
+      const node_r7 = \u0275\u0275nextContext().$implicit;
+      \u0275\u0275twoWayBindingSet(node_r7.label, $event) || (node_r7.label = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275listener("keydown", function IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_6_Template_input_keydown_1_listener($event) {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.onInputKeydown($event));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "p-inputgroup-addon")(3, "p-button", 38);
+    \u0275\u0275listener("onClick", function IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_6_Template_p_button_onClick_3_listener() {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.saveNode());
+    });
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    const node_r7 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275twoWayProperty("ngModel", node_r7.label);
+  }
+}
+function IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_7_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-inputgroup")(1, "input", 37);
+    \u0275\u0275twoWayListener("ngModelChange", function IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_7_Template_input_ngModelChange_1_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const node_r7 = \u0275\u0275nextContext().$implicit;
+      \u0275\u0275twoWayBindingSet(node_r7.data.url, $event) || (node_r7.data.url = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275listener("keydown", function IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_7_Template_input_keydown_1_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.onInputKeydown($event));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "p-inputgroup-addon")(3, "p-button", 38);
+    \u0275\u0275listener("onClick", function IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_7_Template_p_button_onClick_3_listener() {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.saveNode());
+    });
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    const node_r7 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275twoWayProperty("ngModel", node_r7.data.url);
+  }
+}
+function IaStructureComponent_ng_container_10_ng_template_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 28);
+    \u0275\u0275template(1, IaStructureComponent_ng_container_10_ng_template_6_i_1_Template, 1, 0, "i", 29)(2, IaStructureComponent_ng_container_10_ng_template_6_i_2_Template, 1, 0, "i", 30)(3, IaStructureComponent_ng_container_10_ng_template_6_i_3_Template, 1, 0, "i", 31)(4, IaStructureComponent_ng_container_10_ng_template_6_i_4_Template, 1, 0, "i", 32)(5, IaStructureComponent_ng_container_10_ng_template_6_ng_container_5_Template, 2, 2, "ng-container", 10)(6, IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_6_Template, 4, 1, "p-inputgroup", 10)(7, IaStructureComponent_ng_container_10_ng_template_6_p_inputgroup_7_Template, 4, 1, "p-inputgroup", 10);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const node_r7 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", node_r7.children.length > 0 && !ctx_r1.draggable && !node_r7.data.editing);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", (node_r7.children.length === 0 || !node_r7.children) && !ctx_r1.draggable && !node_r7.data.editing);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.draggable);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", node_r7.data.editing);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !node_r7.data.editing);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", node_r7.data.editing === "label");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", node_r7.data.editing === "link");
+  }
+}
+function IaStructureComponent_ng_container_10_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275element(1, "p-contextMenu", 26, 1);
+    \u0275\u0275elementStart(3, "h2");
+    \u0275\u0275text(4, "IA structure tree");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "p-tree", 27);
+    \u0275\u0275twoWayListener("selectionChange", function IaStructureComponent_ng_container_10_Template_p_tree_selectionChange_5_listener($event) {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r1 = \u0275\u0275nextContext();
+      \u0275\u0275twoWayBindingSet(ctx_r1.selectedNode, $event) || (ctx_r1.selectedNode = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275listener("onNodeDrop", function IaStructureComponent_ng_container_10_Template_p_tree_onNodeDrop_5_listener($event) {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.handleNodeDrop($event));
+    })("onNodeContextMenuSelect", function IaStructureComponent_ng_container_10_Template_p_tree_onNodeContextMenuSelect_5_listener($event) {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onNodeContextMenu($event));
+    });
+    \u0275\u0275template(6, IaStructureComponent_ng_container_10_ng_template_6_Template, 8, 7, "ng-template", 24);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const cm_r10 = \u0275\u0275reference(2);
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("model", ctx_r1.options);
+    \u0275\u0275advance(4);
+    \u0275\u0275property("value", ctx_r1.iaChart)("selectionMode", ctx_r1.selectable ? "multiple" : null);
+    \u0275\u0275twoWayProperty("selection", ctx_r1.selectedNode);
+    \u0275\u0275property("draggableNodes", ctx_r1.draggable)("droppableNodes", true)("validateDrop", true)("contextMenu", cm_r10);
+  }
+}
+function IaStructureComponent_ng_container_11_ng_template_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr")(1, "th");
+    \u0275\u0275text(2, "H1");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "th");
+    \u0275\u0275text(4, "URL");
+    \u0275\u0275elementEnd()();
+  }
+}
+function IaStructureComponent_ng_container_11_ng_template_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr", 40)(1, "td");
+    \u0275\u0275element(2, "p-treetable-toggler", 41)(3, "span", 42);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "td");
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const rowNode_r11 = ctx.$implicit;
+    const rowData_r12 = ctx.rowData;
+    \u0275\u0275property("ttRow", rowNode_r11);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("rowNode", rowNode_r11);
+    \u0275\u0275advance();
+    \u0275\u0275property("innerHTML", rowData_r12.h1, \u0275\u0275sanitizeHtml);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(rowData_r12.url);
+  }
+}
+function IaStructureComponent_ng_container_11_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "h2");
+    \u0275\u0275text(2, "IA structure table");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "p-treeTable", 39);
+    \u0275\u0275template(4, IaStructureComponent_ng_container_11_ng_template_4_Template, 5, 0, "ng-template", null, 2, \u0275\u0275templateRefExtractor)(6, IaStructureComponent_ng_container_11_ng_template_6_Template, 6, 4, "ng-template", null, 3, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275property("value", ctx_r1.iaChart)("scrollable", true);
+  }
+}
+function IaStructureComponent_ng_container_12_p_3_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1, " or on any detected child pages");
+    \u0275\u0275elementEnd();
+  }
+}
+function IaStructureComponent_ng_container_12_p_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p");
+    \u0275\u0275text(1, "No broken links found on this page");
+    \u0275\u0275template(2, IaStructureComponent_ng_container_12_p_3_span_2_Template, 2, 0, "span", 10);
+    \u0275\u0275text(3, ".");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", ctx_r1.iaChart[0].children == null ? null : ctx_r1.iaChart[0].children.length);
+  }
+}
+function IaStructureComponent_ng_container_12_p_table_4_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr")(1, "th");
+    \u0275\u0275text(2, "Parent page");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "th");
+    \u0275\u0275text(4, "Broken link");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "th");
+    \u0275\u0275text(6, "Status");
+    \u0275\u0275elementEnd()();
+  }
+}
+function IaStructureComponent_ng_container_12_p_table_4_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr")(1, "td");
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "td");
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "td");
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const rowData_r13 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(rowData_r13.parentUrl);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(rowData_r13.url);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(rowData_r13.status);
+  }
+}
+function IaStructureComponent_ng_container_12_p_table_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p-table", 44);
+    \u0275\u0275template(1, IaStructureComponent_ng_container_12_p_table_4_ng_template_1_Template, 7, 0, "ng-template", null, 2, \u0275\u0275templateRefExtractor)(3, IaStructureComponent_ng_container_12_p_table_4_ng_template_3_Template, 7, 3, "ng-template", null, 3, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("value", ctx_r1.brokenLinks)("tableStyle", \u0275\u0275pureFunction0(2, _c313));
+  }
+}
+function IaStructureComponent_ng_container_12_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "h2");
+    \u0275\u0275text(2, "Broken links");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(3, IaStructureComponent_ng_container_12_p_3_Template, 4, 1, "p", 10)(4, IaStructureComponent_ng_container_12_p_table_4_Template, 5, 3, "p-table", 43);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngIf", ctx_r1.brokenLinks.length === 0);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.brokenLinks.length > 0);
+  }
+}
+var IaStructureComponent = class _IaStructureComponent {
+  uploadState;
+  translate;
+  locationStrategy;
+  theme;
+  constructor(uploadState, translate, locationStrategy, theme13) {
+    this.uploadState = uploadState;
+    this.translate = translate;
+    this.locationStrategy = locationStrategy;
+    this.theme = theme13;
+    effect(() => {
+      this.theme.darkMode();
+      this.updateNodeStyles(this.iaChart, 0);
+    });
+  }
+  ngOnInit() {
+    const data = this.uploadState.getUploadData();
+    this.breadcrumb = data?.breadcrumb || [];
+    this.originalUrl = data?.originalUrl || "";
+    this.options = [
+      ...this.baseMenu
+    ];
+    this.baseHref = this.locationStrategy.getBaseHref();
+  }
+  originalUrl = "";
+  //Breadcrumb & orphan status
+  breadcrumb = [];
+  urlFound = null;
+  //IA chart
+  iaChart = null;
+  brokenLinks = [];
+  depth = 4;
+  //default value
+  //For tracking progress while building IA chart
+  isChartLoading = false;
+  iaProgress = 0;
+  totalUrls = 0;
+  processedUrls = 0;
+  //Pages to skip children when building IA chart
+  skipFormsAndPubs = /* @__PURE__ */ new Set([
+    "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms.html",
+    "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/formulaires.html",
+    "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications.html",
+    "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/publications.html"
+  ]);
+  //Button fxn
+  checkIA() {
+    return __async(this, null, function* () {
+      this.urlFound = yield this.checkParentLinks(this.breadcrumb, this.originalUrl);
+      this.iaChart = yield this.buildIaTree([this.originalUrl], this.depth);
+      setTimeout(() => {
+        const firstNode = document.querySelector(".p-organizationchart-node a");
+        if (firstNode)
+          firstNode.focus();
+      });
+    });
+  }
+  //Step 1: Check if breadcrumb orphan via parent page
+  checkParentLinks(breadcrumbs, originalUrl) {
+    return __async(this, null, function* () {
+      if (!breadcrumbs?.length)
+        return false;
+      const lastBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
+      const targetUrl = lastBreadcrumb.url;
+      if (!targetUrl) {
+        console.error("Last breadcrumb has no URL");
+        return false;
+      }
+      try {
+        const response = yield fetch(targetUrl);
+        if (!response.ok) {
+          console.error(`Failed to fetch breadcrumb page: ${response.status}`);
+          return false;
+        }
+        const html = yield response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const links = Array.from(doc.querySelectorAll("a")).map((a) => a.getAttribute("href")).filter((href) => !!href);
+        const absoluteLinks = links.map((href) => {
+          try {
+            return new URL(href, targetUrl).href;
+          } catch {
+            return href;
+          }
+        });
+        const found = absoluteLinks.includes(originalUrl);
+        console.log(`Original URL ${found ? "found" : "NOT found"} in ${targetUrl}`);
+        return found;
+      } catch (err) {
+        console.error("Error checking breadcrumb target:", err);
+        return false;
+      }
+    });
+  }
+  //Set background color
+  get bgColors() {
+    return this.theme.darkMode() ? this.bgColorsDark : this.bgColorsLight;
+  }
+  bgColorsLight = [
+    "surface-0 hover:bg-primary-50",
+    "bg-primary-50 hover:bg-primary-100",
+    "bg-primary-100 hover:bg-primary-200",
+    "bg-primary-200 hover:bg-primary-300",
+    "bg-primary-300 hover:bg-primary-400",
+    "bg-primary-400 hover:bg-primary-500",
+    "bg-primary-500 hover:bg-primary-600 text-white",
+    "bg-primary-600 hover:bg-primary-700 text-white",
+    "bg-primary-700 hover:bg-primary-800 text-white",
+    "bg-primary-800 hover:bg-primary-900 text-white"
+  ];
+  bgColorsDark = [
+    "surface-0 hover:bg-primary-900",
+    "bg-primary-900 hover:bg-primary-800",
+    "bg-primary-800 hover:bg-primary-700",
+    "bg-primary-700 hover:bg-primary-600",
+    "bg-primary-600 hover:bg-primary-500",
+    "bg-primary-500 hover:bg-primary-400",
+    "bg-primary-400 hover:bg-primary-300  text-black",
+    "bg-primary-300 hover:bg-primary-200 text-black",
+    "bg-primary-200 hover:bg-primary-100 text-black",
+    "bg-primary-100 hover:bg-primary-50 text-black"
+  ];
+  get contextStyles() {
+    return this.theme.darkMode() ? this.contextStylesDark : this.contextStylesLight;
+  }
+  contextStylesLight = {
+    new: "bg-green-200 hover:bg-green-300 text-black",
+    rot: "bg-red-200 hover:bg-red-300 text-black",
+    move: "bg-yellow-200 hover:bg-yellow-300 text-black",
+    template: "surface-200 hover:surface-300 text-black"
+  };
+  contextStylesDark = {
+    new: "bg-green-700 hover:bg-green-600 text-white",
+    rot: "bg-red-700 hover:bg-red-600 text-white",
+    move: "bg-yellow-700 hover:bg-yellow-600 text-black",
+    template: "surface-700 hover:surface-600 text-white"
+  };
+  //Step 2a: Get single page IA data
+  getPageMetaAndLinks(url) {
+    return __async(this, null, function* () {
+      try {
+        const res = yield fetch(url);
+        const status = res.status;
+        if (!res.ok)
+          return { status };
+        const html = yield res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const h1Elements = Array.from(doc.querySelectorAll("h1"));
+        const h1 = h1Elements.map((e) => e.textContent?.trim()).filter(Boolean).join("<br>");
+        const breadcrumb = Array.from(doc.querySelectorAll(".breadcrumb li a")).map((a) => new URL(a.getAttribute("href") || "", url).href);
+        const anchors = Array.from(doc.querySelectorAll("main a[href]"));
+        const baseUrl = new URL(url).origin;
+        const links = Array.from(new Set(
+          //unique set
+          anchors.map((a) => {
+            const u = new URL(a.getAttribute("href") || "", url);
+            u.hash = "";
+            return u.href;
+          }).filter((u) => u.startsWith(baseUrl) && u !== url)
+          // on same domain but not self
+        ));
+        return { h1, breadcrumb, links, status };
+      } catch (err) {
+        console.error(`Failed to fetch ${url}`, err);
+        return { status: 0 };
+      }
+    });
+  }
+  //Step 2b: Crawl all child pages for IA data
+  buildIaTree(urls, depth, parentUrl, level = 0) {
+    return __async(this, null, function* () {
+      if (depth <= 0)
+        return [];
+      if (!parentUrl && level === 0) {
+        this.isChartLoading = true;
+        this.iaProgress = 5;
+        this.processedUrls = 0;
+        this.totalUrls = urls.length;
+      }
+      const nodes = [];
+      const bgClass = this.bgColors[level % this.bgColors.length];
+      for (const url of urls) {
+        const meta = yield this.getPageMetaAndLinks(url);
+        this.processedUrls++;
+        this.iaProgress = Math.round(this.processedUrls / this.totalUrls * 100);
+        if (!meta || meta.status !== 200) {
+          this.brokenLinks.push({
+            parentUrl,
+            url,
+            status: meta?.status || 0
+          });
+          continue;
+        }
+        if (!meta.breadcrumb || !meta.links)
+          continue;
+        if (parentUrl && meta.breadcrumb.at(-1) !== parentUrl) {
+          continue;
+        }
+        const node = {
+          label: meta.h1,
+          data: {
+            h1: meta.h1,
+            url,
+            originalParent: parentUrl,
+            editing: null,
+            customStyle: false,
+            customStyleKey: null,
+            borderStyle: "border-2 border-primary border-round shadow-2"
+          },
+          expanded: true,
+          styleClass: `border-2 border-primary border-round shadow-2 ${bgClass}`,
+          children: []
+        };
+        if (meta.links?.length && depth > 1) {
+          this.totalUrls += meta.links.length;
+          const total = meta.links.length;
+          let limit = total;
+          if (this.skipFormsAndPubs.has(url)) {
+            limit = 5;
+          }
+          const links = meta.links.slice(0, limit);
+          node.children = yield this.buildIaTree(links, depth - 1, url, level + 1);
+          if (total > limit) {
+            node.children?.push({
+              label: `+ ${total - limit} more...`,
+              data: {
+                h1: `+ ${total - limit} more...`,
+                url: null,
+                originalParent: parentUrl,
+                editing: null,
+                customStyle: true,
+                customStyleKey: "template",
+                borderStyle: "border-2 border-primary border-round shadow-2 border-dashed"
+              },
+              expanded: true,
+              styleClass: `border-2 border-primary border-round shadow-2 border-dashed surface-100 hover:surface-200`,
+              children: []
+            });
+          }
+        }
+        nodes.push(node);
+      }
+      if (!parentUrl && level === 0) {
+        this.iaProgress = 100;
+        setTimeout(() => {
+          this.isChartLoading = false;
+          this.iaProgress = 0;
+        }, 1e3);
+      }
+      return nodes;
+    });
+  }
+  //Prevent default click on org chart links <-- Do we want this?? 
+  onNodeClick(event) {
+    if (event.button === 0) {
+      event.preventDefault();
+    }
+  }
+  //Full screen element
+  chartContainer;
+  maximize(elRef) {
+    const element = elRef.nativeElement;
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  }
+  //Context menu
+  cm;
+  options = [];
+  //options for editing chart nodes
+  baseMenu = [
+    {
+      label: "Edit label",
+      icon: "pi pi-pen-to-square",
+      command: () => {
+        console.log("Edit ", this.selectedNode);
+        this.editNode("label");
+      }
+    },
+    {
+      label: "Edit url",
+      icon: "pi pi-link",
+      command: () => {
+        console.log("Edit ", this.selectedNode);
+        this.editNode("link");
+      }
+    },
+    {
+      separator: true
+    },
+    {
+      label: "Add child page",
+      icon: "pi pi-plus",
+      command: () => {
+        console.log("Add ", this.selectedNode);
+        this.addChildNode();
+      }
+    },
+    {
+      label: "Delete page",
+      icon: "pi pi-trash",
+      command: () => {
+        console.log("Delete ", this.selectedNode);
+        this.deleteNode();
+      }
+    },
+    {
+      separator: true
+    },
+    {
+      label: "Change template",
+      icon: "pi pi-sync",
+      items: [
+        {
+          label: "Split into subway pattern",
+          icon: "pi pi-sitemap",
+          command: () => {
+            console.log("Change template ", this.selectedNode);
+            this.addParentNode("subway");
+          }
+        },
+        {
+          label: "Combine into single page",
+          icon: "pi pi-file-check",
+          command: () => {
+            console.log("Change template ", this.selectedNode);
+            this.addParentNode("combine");
+          }
+        }
+      ]
+    },
+    {
+      label: "Change style",
+      icon: "pi pi-palette",
+      items: [
+        {
+          label: "New page",
+          icon: "pi pi-file-plus",
+          command: () => {
+            this.selectedNode.data.customStyleKey = "new";
+            this.selectedNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+            this.updateNodeStyles(this.iaChart, 0);
+            this.selectedNode = null;
+          }
+        },
+        {
+          label: "ROT",
+          icon: "pi pi-trash",
+          command: () => {
+            this.selectedNode.data.customStyleKey = "rot";
+            this.selectedNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+            this.updateNodeStyles(this.iaChart, 0);
+            this.selectedNode = null;
+          }
+        },
+        {
+          label: "Page move",
+          icon: "pi pi-sitemap",
+          command: () => {
+            this.selectedNode.data.customStyleKey = "move";
+            this.selectedNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+            this.updateNodeStyles(this.iaChart, 0);
+            this.selectedNode = null;
+          }
+        },
+        {
+          separator: true
+        },
+        {
+          label: "Reset custom style",
+          icon: "pi pi-replay",
+          command: () => {
+            this.selectedNode.data.customStyle = false;
+            this.selectedNode.data.customStyleKey = null;
+            this.selectedNode.data.borderStyle = "border-2 border-primary border-round shadow-2";
+            this.updateNodeStyles(this.iaChart, 0);
+            this.selectedNode = null;
+          }
+        }
+      ]
+    },
+    {
+      separator: true
+    },
+    {
+      label: "Export to CSV",
+      icon: "pi pi-file-export",
+      disabled: true,
+      // TODO: implement export
+      command: () => {
+        console.log("Export ", this.selectedNode);
+        this.exportTable();
+      }
+    },
+    {
+      separator: true
+    },
+    {
+      label: "Open page in new page assistant",
+      icon: "pi pi-sparkles",
+      command: () => {
+        console.log("Open link in page assistant ", this.selectedNode);
+        this.openInPageAssistant();
+      }
+    },
+    {
+      label: "Open page in new tab",
+      icon: "pi pi-external-link",
+      command: () => {
+        console.log("Open link in new tab ", this.selectedNode);
+        this.openNodeUrl();
+      }
+    }
+  ];
+  selectedNode;
+  draggable = true;
+  selectable = true;
+  //For tracking previous states
+  editingNode = null;
+  undoArray = [];
+  //for loading in page assistant
+  baseHref = null;
+  onNodeContextMenu(event) {
+    if (this.editingNode) {
+      this.editingNode.data.editing = null;
+    }
+    this.selectedNode = event.node;
+    const customStyle = this.selectedNode.data.customStyle;
+    this.options.forEach((item) => {
+      if (item.label === "Open page in new page assistant" || item.label === "Open page in new tab") {
+        item.disabled = !this.selectedNode?.data?.url?.trim();
+      }
+      if (item.label === "Change template" || item.label === "Change style") {
+        item.disabled = customStyle;
+      }
+    });
+  }
+  onInputKeydown(event) {
+    if (event.key === "Enter") {
+      this.saveNode();
+      console.log("Saved ", this.selectedNode);
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    if (event.key === " ") {
+      event.stopPropagation();
+    }
+  }
+  editNode(mode = "label") {
+    if (this.selectedNode) {
+      this.selectedNode.data.editing = mode;
+      this.editingNode = this.selectedNode;
+      this.draggable = false;
+      this.selectable = false;
+      setTimeout(() => {
+        const input2 = document.querySelector("input.ia-label");
+        input2?.focus();
+      });
+    }
+  }
+  saveNode() {
+    if (this.selectedNode) {
+      this.selectedNode.data.editing = null;
+    }
+    if (this.selectedNode.data.url === "https://www.canada.ca/") {
+      this.editNode("link");
+      return;
+    }
+    this.draggable = true;
+    this.selectable = false;
+  }
+  addChildNode() {
+    if (!this.selectedNode)
+      return;
+    if (!this.selectedNode.children) {
+      this.selectedNode.children = [];
+    }
+    const newNode = {
+      label: "New page",
+      data: {
+        h1: "New page",
+        url: "https://www.canada.ca/",
+        // default URL
+        editing: false,
+        customStyle: false,
+        customStyleKey: "new",
+        borderStyle: "border-2 border-primary border-round border-dashed shadow-2"
+      },
+      children: []
+    };
+    this.selectedNode.children.push(newNode);
+    this.selectedNode.expanded = true;
+    this.selectedNode = newNode;
+    this.editNode("label");
+    this.updateMenu();
+    this.updateNodeStyles(this.iaChart, 0);
+  }
+  //Will be used to create a container to mark pages for template change
+  addParentNode(action) {
+    if (!this.selectedNode)
+      return;
+    const findParent = (nodes, parentNode2) => {
+      for (const node of nodes) {
+        if (node === this.selectedNode) {
+          return {
+            parentContainer: nodes,
+            // found at this level
+            parentNode: parentNode2 ?? null
+          };
+        }
+        if (node.children) {
+          const searchChildNodes = findParent(node.children, node);
+          if (searchChildNodes)
+            return searchChildNodes;
+        }
+      }
+      return null;
+    };
+    const location = findParent(this.iaChart || []);
+    if (!location)
+      return;
+    const { parentContainer, parentNode } = location;
+    const label = action === "subway" ? "Split into subway pattern" : "Combine into single page";
+    const newParentNode = {
+      label,
+      data: {
+        h1: label,
+        url: "",
+        originalParent: parentNode?.data?.url ?? "",
+        editing: false,
+        customStyle: true,
+        // prevents style changes
+        customStyleKey: "template",
+        isContainer: true,
+        // used to keep child nodes at proper level and prevent drag/drop of these wrappers into each other
+        borderStyle: "border-2 border-primary border-round border-dashed shadow-2"
+      },
+      expanded: true,
+      children: [this.selectedNode]
+    };
+    const index = parentContainer.indexOf(this.selectedNode);
+    if (index !== -1) {
+      parentContainer.splice(index, 1, newParentNode);
+    }
+    this.selectedNode = newParentNode;
+    this.updateMenu();
+    this.updateNodeStyles(this.iaChart, 0);
+  }
+  deleteNode() {
+    if (!this.iaChart || !this.selectedNode)
+      return;
+    const nodeToDelete = this.selectedNode;
+    const rootIndex = this.iaChart.findIndex((n) => n === nodeToDelete);
+    if (rootIndex > -1) {
+      console.warn("Cannot delete root node.");
+      return;
+    }
+    const findAndDelete = (nodes) => {
+      for (let i = 0; i < nodes.length; i++) {
+        const children = nodes[i].children || [];
+        const childIndex = children.findIndex((c) => c === nodeToDelete);
+        if (childIndex > -1) {
+          this.undoArray.push({ node: nodeToDelete, parent: nodes[i], index: childIndex });
+          children.splice(childIndex, 1);
+          return true;
+        }
+        if (children.length && findAndDelete(children)) {
+          return true;
+        }
+      }
+      return false;
+    };
+    findAndDelete(this.iaChart);
+    this.updateMenu();
+  }
+  restoreNode() {
+    if (this.undoArray.length === 0)
+      return;
+    const last = this.undoArray.pop();
+    if (last.parent?.children) {
+      last.parent.children.splice(last.index, 0, last.node);
+    } else {
+      console.warn("Cannot restore node: parent missing.");
+      return;
+    }
+    this.selectedNode = last.node;
+    if (!this.selectedNode.data.customStyle) {
+      this.selectedNode.data.customStyleKey = "rot";
+      this.selectedNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+      this.updateNodeStyles(this.iaChart, 0);
+    }
+    this.updateMenu();
+  }
+  //Add undo option under delete if there is something to restore
+  updateMenu() {
+    this.options = [...this.baseMenu];
+    const deleteIndex = this.options.findIndex((option) => option.label === "Delete page");
+    if (this.undoArray.length > 0 && deleteIndex !== -1) {
+      this.options.splice(deleteIndex + 1, 0, {
+        label: "Restore page",
+        icon: "pi pi-history",
+        command: () => this.restoreNode()
+      });
+    }
+  }
+  //Placeholder for export function
+  exportTable() {
+  }
+  //Open link in new tab
+  openNodeUrl() {
+    window.open(this.selectedNode.data.url, "_blank");
+  }
+  //Make share link a service so it can be used on both share.component.ts and here
+  openInPageAssistant() {
+    const baseUrl = (window.location.origin + this.baseHref).replace(/\/+$/, "");
+    const urlParam = encodeURIComponent(this.selectedNode.data.url);
+    const shareLink = `${baseUrl}/page-assistant/share?url=${urlParam}`;
+    console.log("Open in page assistant: ", shareLink);
+    window.open(shareLink, "_blank");
+  }
+  handleNodeDrop(event) {
+    if ((event.dropNode.data.isContainer || event.dropNode.parent?.data?.isContainer) && event.dragNode.data.isContainer)
+      return;
+    event.accept();
+    if (event.dragNode.data.customStyleKey === "move") {
+      event.dragNode.data.customStyleKey = "";
+      event.dragNode.data.borderStyle = "border-2 border-primary border-round shadow-2";
+    }
+    const targetEl = event.originalEvent.target;
+    const tag = targetEl.tagName.toLowerCase();
+    const droppedOnNode = tag !== "li";
+    const dragParentUrl = event.dragNode.data.originalParent;
+    const dropUrl = event.dropNode.data.url;
+    const dropParentUrl = event.dropNode.parent?.data?.url ?? "";
+    const dropGrandparentUrl = event.dropNode.parent?.data?.originalParent ?? "";
+    console.log("Tag should be a if dropped on node:\n", tag);
+    if (droppedOnNode) {
+      console.log("Dropped on node");
+      console.log("Checking if parentUrl matches node Url:\n", dropUrl);
+    } else {
+      console.log("Dropped between nodes");
+      console.log("Checking if parentUrl matches sibling parent Url:\n", dropParentUrl);
+    }
+    console.log("Drag parentUrl:\n", dragParentUrl);
+    const droppedOnParent = droppedOnNode && dragParentUrl === dropUrl;
+    const reorderedSiblings = !droppedOnNode && dragParentUrl === dropParentUrl;
+    console.log("Sibling reorder: ", reorderedSiblings);
+    console.log("Dropped on parent: ", droppedOnParent);
+    const droppedOnContainerSibling = event.dropNode.data.isContainer && droppedOnNode && dragParentUrl === dropParentUrl;
+    const droppedBetweenContainerSibling = event.dropNode.parent?.data?.isContainer && !droppedOnNode && dragParentUrl === dropGrandparentUrl;
+    console.log("Dropped on container sibling: ", droppedOnContainerSibling);
+    console.log("Dropped between container sibling: ", droppedBetweenContainerSibling);
+    const isCustom = event.dragNode.data.customStyle;
+    console.log("Container or dummy node: ", isCustom);
+    console.log("Event drop", event);
+    if (!(droppedOnParent || reorderedSiblings || droppedOnContainerSibling || droppedBetweenContainerSibling || isCustom || event.dragNode.data.customStyleKey === "new")) {
+      event.dragNode.data.customStyleKey = "move";
+      event.dragNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+    }
+    console.log("Drag parent URL", event.dragNode.data.originalParent);
+    this.updateNodeStyles(this.iaChart, 0);
+  }
+  updateNodeStyles(nodes, level = 0) {
+    if (!nodes)
+      return;
+    for (const node of nodes) {
+      const borderStyle = node.data?.borderStyle || "border-2 border-primary border-round shadow-2";
+      const bgClass = this.bgColors[level % this.bgColors.length];
+      const bgStyle = this.contextStyles[node.data?.customStyleKey] ?? bgClass;
+      node.styleClass = `${borderStyle} ${bgStyle}`;
+      if (node.children && node.children.length > 0) {
+        const nextLevel = node.data.isContainer ? level : level + 1;
+        this.updateNodeStyles(node.children, nextLevel);
+      }
+    }
+  }
+  static \u0275fac = function IaStructureComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _IaStructureComponent)(\u0275\u0275directiveInject(UploadStateService), \u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(LocationStrategy), \u0275\u0275directiveInject(ThemeService));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _IaStructureComponent, selectors: [["ca-ia-structure"]], viewQuery: function IaStructureComponent_Query(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275viewQuery(_c015, 5);
+      \u0275\u0275viewQuery(_c120, 5);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.chartContainer = _t.first);
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.cm = _t.first);
+    }
+  }, features: [\u0275\u0275ProvidersFeature([TreeDragDropService])], decls: 13, vars: 12, consts: [["chartContainer", ""], ["cm", ""], ["header", ""], ["body", ""], [1, "flex", "flex-row", "flex-wrap", "align-items-center", "gap-3", "mt-0"], ["inputId", "depth", "mode", "decimal", 3, "ngModelChange", "ngModel", "showButtons", "min", "max"], ["for", "depth"], ["label", "Verify IA", "severity", "help", "icon", "pi pi-info-circle", 3, "click", "loading"], ["label", "Maximize IA chart", "severity", "secondary", "icon", "pi pi-window-maximize", 3, "click", 4, "ngIf"], ["styleClass", "mt-3", 3, "value", "showValue", "style", 4, "ngIf"], [4, "ngIf"], ["label", "Maximize IA chart", "severity", "secondary", "icon", "pi pi-window-maximize", 3, "click"], ["styleClass", "mt-3", 3, "value", "showValue"], [1, "flex", "flex-row", "align-items-center", "gap-3"], ["styleClass", "pl-1", 1, "max-w-full", 3, "model"], ["class", "flex align-items-center gap-2 text-green-400", 4, "ngIf"], ["class", "flex align-items-center gap-2 text-red-400", 4, "ngIf"], [1, "flex", "align-items-center", "gap-2", "text-green-400"], [1, "pi", "pi-check-circle"], [1, "flex", "align-items-center", "gap-2", "text-red-400"], [1, "pi", "pi-times-circle"], ["class", "overflow-auto max-h-75vh surface-ground surface-border border-1 py-3 mb-3 ia-chart-container", 4, "ngIf"], [1, "overflow-auto", "max-h-75vh", "surface-ground", "surface-border", "border-1", "py-3", "mb-3", "ia-chart-container"], [3, "value"], ["pTemplate", "default"], ["target", "_blank", 1, "ia-label", 3, "click", "href", "innerHTML"], [3, "model"], ["styleClass", "w-full md:w-[30rem]", "draggableScope", "self", "droppableScope", "self", 3, "selectionChange", "onNodeDrop", "onNodeContextMenuSelect", "value", "selectionMode", "selection", "draggableNodes", "droppableNodes", "validateDrop", "contextMenu"], [1, "flex", "flex-row", "align-items-center", "gap-2", "w-full"], ["class", "pi pi-folder", 4, "ngIf"], ["class", "pi pi-file", 4, "ngIf"], ["class", "pi pi-arrows-alt cursor-move text-color-secondary", 4, "ngIf"], ["class", "pi pi-pencil text-color-secondary", 4, "ngIf"], [1, "pi", "pi-folder"], [1, "pi", "pi-file"], [1, "pi", "pi-arrows-alt", "cursor-move", "text-color-secondary"], [1, "pi", "pi-pencil", "text-color-secondary"], ["type", "text", "pInputText", "", "pSize", "small", 1, "ia-label", 3, "ngModelChange", "keydown", "ngModel"], ["icon", "pi pi-check", "severity", "secondary", "size", "small", 3, "onClick"], ["styleClass", "p-treetable-sm", 3, "value", "scrollable"], [3, "ttRow"], [3, "rowNode"], [1, "ia-label", 3, "innerHTML"], ["size", "small", "stripedRows", "", 3, "value", "tableStyle", 4, "ngIf"], ["size", "small", "stripedRows", "", 3, "value", "tableStyle"]], template: function IaStructureComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "div", 4)(1, "p-iftalabel")(2, "p-inputnumber", 5);
+      \u0275\u0275twoWayListener("ngModelChange", function IaStructureComponent_Template_p_inputnumber_ngModelChange_2_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.depth, $event) || (ctx.depth = $event);
+        return $event;
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(3, "label", 6);
+      \u0275\u0275text(4, "Depth");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(5, "p-button", 7);
+      \u0275\u0275listener("click", function IaStructureComponent_Template_p_button_click_5_listener() {
+        return ctx.checkIA();
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(6, IaStructureComponent_p_button_6_Template, 1, 0, "p-button", 8);
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(7, IaStructureComponent_p_progressbar_7_Template, 1, 5, "p-progressbar", 9)(8, IaStructureComponent_ng_container_8_Template, 7, 3, "ng-container", 10)(9, IaStructureComponent_ng_container_9_Template, 5, 2, "ng-container", 10)(10, IaStructureComponent_ng_container_10_Template, 7, 8, "ng-container", 10)(11, IaStructureComponent_ng_container_11_Template, 8, 2, "ng-container", 10)(12, IaStructureComponent_ng_container_12_Template, 5, 2, "ng-container", 10);
+    }
+    if (rf & 2) {
+      \u0275\u0275advance(2);
+      \u0275\u0275twoWayProperty("ngModel", ctx.depth);
+      \u0275\u0275property("showButtons", true)("min", 2)("max", 6);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("loading", ctx.isChartLoading);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.iaChart && ctx.iaChart.length > 0);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.isChartLoading);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.breadcrumb.length > 0);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.iaChart);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.iaChart);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.iaChart);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.iaChart);
+    }
+  }, dependencies: [
+    CommonModule,
+    NgIf,
+    FormsModule,
+    DefaultValueAccessor,
+    NgControlStatus,
+    NgModel,
+    TranslateModule,
+    TableModule,
+    Table,
+    PrimeTemplate,
+    ButtonModule,
+    Button,
+    IftaLabel,
+    BreadcrumbModule,
+    Breadcrumb,
+    OrganizationChartModule,
+    OrganizationChart,
+    ProgressBarModule,
+    ProgressBar,
+    InputNumberModule,
+    InputNumber,
+    InputTextModule,
+    InputText,
+    TreeTableModule,
+    TreeTable,
+    TreeTableToggler,
+    TTRow,
+    Tree,
+    ContextMenuModule,
+    ContextMenu,
+    InputGroup,
+    InputGroupAddonModule,
+    InputGroupAddon
+  ], styles: ["\n\n.ia-label[_ngcontent-%COMP%] {\n  white-space: pre-line;\n  display: inline-block;\n  color: var(--text-color) !important;\n  text-decoration: none !important;\n}\n  .p-tree li[class*=text-white] > .p-tree-node-content .ia-label {\n  color: #ffffff !important;\n}\n  .p-tree li[class*=text-black] > .p-tree-node-content .ia-label {\n  color: #000000 !important;\n}\n  .p-tree .p-tree-node-content:hover {\n  background-color: unset !important;\n}\n  .ia-chart-container .p-organizationchart-node a {\n  color: var(--text-color) !important;\n  text-decoration: none !important;\n}\n  .ia-chart-container .p-organizationchart-node.text-white a {\n  color: #ffffff !important;\n}\n  .ia-chart-container .p-organizationchart-node.text-black a {\n  color: #000000 !important;\n}\n/*# sourceMappingURL=ia-structure.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(IaStructureComponent, [{
+    type: Component,
+    args: [{ selector: "ca-ia-structure", imports: [
+      CommonModule,
+      FormsModule,
+      TranslateModule,
+      TableModule,
+      ButtonModule,
+      IftaLabel,
+      BreadcrumbModule,
+      OrganizationChartModule,
+      ProgressBarModule,
+      InputNumberModule,
+      InputTextModule,
+      TreeTableModule,
+      Tree,
+      ContextMenuModule,
+      InputGroup,
+      InputGroupAddonModule
+    ], providers: [TreeDragDropService], template: `<!--UI-->
+<div class="flex flex-row flex-wrap align-items-center gap-3 mt-0">
+    <p-iftalabel>
+        <p-inputnumber [(ngModel)]="depth" inputId="depth" mode="decimal" [showButtons]="true" [min]="2" [max]="6" />
+        <label for="depth">Depth</label>
+    </p-iftalabel>
+    <p-button label="Verify IA" severity="help" (click)="checkIA()" [loading]="isChartLoading" icon="pi pi-info-circle" />
+    <p-button label="Maximize IA chart" severity="secondary" (click)="maximize(chartContainer)" icon="pi pi-window-maximize" *ngIf="iaChart && iaChart.length > 0" />
+</div>
+<p-progressbar *ngIf="isChartLoading" [value]="iaProgress" [showValue]="false" [style]="{'height': '1rem'}" styleClass="mt-3" />
+
+<!--Breadcrumb-->
+<ng-container *ngIf="breadcrumb.length > 0">
+    <h2>Breadcrumb</h2>
+    <div class="flex flex-row align-items-center gap-3">
+        <p-breadcrumb class="max-w-full" styleClass="pl-1" [model]="breadcrumb" />
+        <span class="flex align-items-center gap-2 text-green-400" *ngIf="urlFound===true"><i class="pi pi-check-circle"></i>Link found on parent page</span>
+        <span class="flex align-items-center gap-2 text-red-400" *ngIf="urlFound===false"><i class="pi pi-times-circle"></i>IA Orphan</span>
+    </div>
+</ng-container>
+
+<!--IA Chart-->
+<ng-container *ngIf="iaChart">
+    <h2>IA structure</h2>
+    <p *ngIf="iaChart.length === 0">No child pages found.</p>
+    <div #chartContainer *ngIf="iaChart.length > 0" class="overflow-auto max-h-75vh surface-ground surface-border border-1 py-3 mb-3 ia-chart-container">
+        <p-organization-chart [value]="iaChart">
+            <ng-template let-node pTemplate="default">
+                <p><a [href]="node.data.url" target="_blank" (click)="onNodeClick($event)" [innerHTML]="node.label" class="ia-label"></a></p>
+            </ng-template>
+        </p-organization-chart>
+    </div>
+</ng-container>
+
+<!--IA Tree-->
+
+<ng-container *ngIf="iaChart">
+    <p-contextMenu #cm [model]="options"></p-contextMenu>
+    <h2>IA structure tree</h2>
+    <p-tree [value]="iaChart" styleClass="w-full md:w-[30rem]"
+            [selectionMode]="selectable ? 'multiple' : null" [(selection)]="selectedNode"
+            [draggableNodes]="draggable" [droppableNodes]="true" draggableScope="self" droppableScope="self" (onNodeDrop)="handleNodeDrop($event)" [validateDrop]="true"
+            [contextMenu]="cm" (onNodeContextMenuSelect)="onNodeContextMenu($event)">
+        <ng-template pTemplate="default" let-node>
+            <div class="flex flex-row align-items-center gap-2 w-full">
+                <i class="pi pi-folder" *ngIf="node.children.length > 0 && !draggable && !node.data.editing"></i>
+                <i class="pi pi-file" *ngIf="(node.children.length === 0 || !node.children) && !draggable && !node.data.editing"></i>
+                <i *ngIf="draggable" class="pi pi-arrows-alt cursor-move text-color-secondary"></i>
+                <i *ngIf="node.data.editing" class="pi pi-pencil text-color-secondary"></i>
+                <ng-container *ngIf="!node.data.editing"><a [href]="node.data.url" target="_blank" (click)="onNodeClick($event)" [innerHTML]="node.label" class="ia-label"></a></ng-container>
+                <p-inputgroup *ngIf="node.data.editing === 'label'">
+                    <input type="text" pInputText [(ngModel)]="node.label" pSize="small" class="ia-label" (keydown)="onInputKeydown($event)" />
+                    <p-inputgroup-addon><p-button icon="pi pi-check" severity="secondary" size="small" (onClick)="saveNode()" /></p-inputgroup-addon>
+                </p-inputgroup>
+                <p-inputgroup *ngIf="node.data.editing === 'link'">
+                    <input type="text" pInputText [(ngModel)]="node.data.url" pSize="small" class="ia-label" (keydown)="onInputKeydown($event)" />
+                    <p-inputgroup-addon><p-button icon="pi pi-check" severity="secondary" size="small" (onClick)="saveNode()" /></p-inputgroup-addon>
+                </p-inputgroup>
+            </div>
+        </ng-template>
+    </p-tree>
+</ng-container>
+
+<!--IA Table-->
+<ng-container *ngIf="iaChart">
+    <h2>IA structure table</h2>
+    <p-treeTable [value]="iaChart" styleClass="p-treetable-sm" [scrollable]="true">
+        <ng-template #header>
+            <tr>
+                <th>H1</th>
+                <th>URL</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-rowNode let-rowData="rowData">
+            <tr [ttRow]="rowNode">
+                <td>
+                    <p-treetable-toggler [rowNode]="rowNode" />
+                    <span [innerHTML]="rowData.h1" class="ia-label"></span>
+                </td>
+                <td>{{ rowData.url }}</td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
+</ng-container>
+
+<!--Broken Links-->
+<ng-container *ngIf="iaChart">
+    <h2>Broken links</h2>
+    <p *ngIf="brokenLinks.length === 0">No broken links found on this page<span *ngIf="iaChart[0].children?.length"> or on any detected child pages</span>.</p>
+    <p-table *ngIf="brokenLinks.length > 0" [value]="brokenLinks" size="small" stripedRows [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+            <tr>
+                <th>Parent page</th>
+                <th>Broken link</th>
+                <th>Status</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-rowData>
+            <tr>
+                <td>{{ rowData.parentUrl }}</td>
+                <td>{{ rowData.url }}</td>
+                <td>{{ rowData.status }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</ng-container>`, styles: ["/* angular:styles/component:css;282dc0c926a358c7e7f17f3e75bfd07f4819790983dec331bff836691565b3ef;/home/naomi/content-assistant/src/app/views/page-assistant/components/tools/ia-structure.component.ts */\n.ia-label {\n  white-space: pre-line;\n  display: inline-block;\n  color: var(--text-color) !important;\n  text-decoration: none !important;\n}\n::ng-deep .p-tree li[class*=text-white] > .p-tree-node-content .ia-label {\n  color: #ffffff !important;\n}\n::ng-deep .p-tree li[class*=text-black] > .p-tree-node-content .ia-label {\n  color: #000000 !important;\n}\n::ng-deep .p-tree .p-tree-node-content:hover {\n  background-color: unset !important;\n}\n::ng-deep .ia-chart-container .p-organizationchart-node a {\n  color: var(--text-color) !important;\n  text-decoration: none !important;\n}\n::ng-deep .ia-chart-container .p-organizationchart-node.text-white a {\n  color: #ffffff !important;\n}\n::ng-deep .ia-chart-container .p-organizationchart-node.text-black a {\n  color: #000000 !important;\n}\n/*# sourceMappingURL=ia-structure.component.css.map */\n"] }]
+  }], () => [{ type: UploadStateService }, { type: TranslateService }, { type: LocationStrategy }, { type: ThemeService }], { chartContainer: [{
+    type: ViewChild,
+    args: ["chartContainer"]
+  }], cm: [{
+    type: ViewChild,
+    args: ["cm"]
+  }] });
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(IaStructureComponent, { className: "IaStructureComponent", filePath: "src/app/views/page-assistant/components/tools/ia-structure.component.ts", lineNumber: 76 });
+})();
+
+// src/app/views/page-assistant/data/css-list.config.ts
+var allowedElements = [
+  "header",
+  "footer",
+  "main",
+  "body",
+  "div",
+  "span",
+  "section",
+  "nav",
+  "time",
+  "abbr",
+  "p",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "ul",
+  "ol",
+  "li",
+  "dl",
+  "dt",
+  "dd",
+  "table",
+  "thead",
+  "tbody",
+  "tfoot",
+  "tr",
+  "td",
+  "th",
+  "form",
+  "input",
+  "label",
+  "fieldset",
+  "legend",
+  "button",
+  "strong",
+  "aside",
+  "summary",
+  "details",
+  "a",
+  "img",
+  "figure",
+  "figcaption"
+];
+var allowedClasses = [
+  //AEM
+  /^(mwsgeneric-base-html|mwstitle|mwsbodytext|parbase)$/,
+  // Alerts / Status
+  /^alert(-(danger|dismissable|dismissible|info|link|success|warning))?$/,
+  /^(danger|success|warning|info|secondary|error|errmsg|has-(error|feedback|success|warning))$/,
+  // Alignment / Layout / Display
+  /^align-(bottom|middle|top|items-(center|sm-center)|self-(center|end))$/,
+  /\b(center|full-width|flex(-column|-sm-wrap)?|hide|invisible|left|pre-scrollable|right|row-no-gutters|show|stretched-link|text-hide|small|sm|xxsmallview|xlargeview)\b/,
+  /^d(-(sm-)?flex)?$/,
+  /^pull-(left|right)$/,
+  /^(top(-(left|right))?|bottom(-(left|right))?)$/,
+  /^mrgn-(tp|bttm|lft|rght)-(0|xs|sm|md|lg|xl)$/,
+  /^(m|p)([trblxy]?)-(auto|[0-5])$/,
+  /^(m|p)([trblxy]?)-(lg|md|sm)-?(auto|[0-5])$/,
+  /^pstn-(bttm|lft|rght|tp)-(lg|md|sm|xs)$/,
+  /^margin-(top|bottom)-(none|large|medium)$/,
+  /^(cnt-wdth-lmtd|container(-fluid)?|max-content|allow-wrap|nowrap|position-relative|grow|)$/,
+  /^(hght-inhrt|eqht-trgt)$/,
+  // Backgrounds
+  /^bg-(center|cover|danger|dark(er)?|gctheme|img-hdng|info|light|norepeat|pnkDy|primary|success|warning)$/,
+  /(no-)?backgroundsize/,
+  // Borders
+  /^brdr-(0|bttm|lft|rght|tp|rds-0)$/,
+  // Calendar
+  /^cal-(cnt-fluid|curr-day|days|evt|evt-lnk|nav)$/,
+  // Carousel / Slideshows
+  /^carousel(-(caption|control|indicators|inner|s[12]))?$/,
+  /\b(fd-(slider|wdgt)(-(bar|handle|range))?|slide|slidefade|slidevert)\b/,
+  // Clearfix
+  /^clr-(lft|rght)-(lg|md|sm)$/,
+  // Columns / Grid system
+  /^col-?(xs|sm|md|lg)?-?([0-9]{1,2}|auto)?$/,
+  /^col-(xs|sm|md|lg)-(offset|push|pull)-[0-9]{1,2}$/,
+  /^colcount-(xxs|xs|sm|md|lg|xl)-[2-4]$/,
+  "colcount-no-break",
+  /^row(border)?$/,
+  // Embeds
+  /^embed-responsive(-(16by9|4by3|item))?$/,
+  // Headings
+  /^h(1|2|3|4|5|6)$/,
+  // File extensions
+  /\b(jpg|png|woff2?|ttf|eot|svg)\b/,
+  // Forms / Inputs / UI controls
+  /^btn(-(block|call-to-action|cnt|danger|default|group(-(justified|lg|sm|vertical|xs))?|info|lg|link|primary|sm|success|toolbar|warning|xs|all-services))?$/,
+  /^form-(control(-(feedback|static))?|group(-(lg|sm))?|horizontal|inline)$/,
+  /\b(checkbox(-inline|-standalone)?|radio(-inline)?|control(-label)?|controls|inputs-zone|submit|reset|picker-overlay|datepicker-format)\b/,
+  /^(input-(group(-(addon|btn|lg|sm))?|lg|sm)|form-(control(-(feedback|static))?|group(-(lg|sm))?|horizontal|inline))$/,
+  /\b(active|disabled|selected|hover|required(-no-asterisk)?)\b/,
+  /\b(buttons|basic-link|legend-brdr-bttm|legend-label-only)\b/,
+  /^dropdown-?(backdrop|header|menu-?(left|right)?|toggle)?$|^dropup$/,
+  // Geomap
+  /^geomap-(aoi|clear-format|geoloc(-aoi-btn)?|help-(btn|dialog)|legend-(detail|element|label|symbol(-text)?)|lgnd(-layer)?|progress)$/,
+  "geoloc-progress",
+  // Labels
+  /^label(-(danger|default|info|inline|primary|success|warning))?$/,
+  // Lists
+  /^list-col-(xs|sm|md|lg)-[1-4]$/,
+  /^list-group(?:-item(?:-(?:danger|heading|info|success|text|warning))?)?$/,
+  /^list-(advanced|inline|responsive|unstyled)$/,
+  /^lst-(?:spcd(?:-2)?|lwr-(?:alph|rmn)|upr-(?:alph|rmn)|none|num)$/,
+  /^dl-(horizontal|inline)$/,
+  "disc",
+  // Media & Images
+  /\b(media(-(body|bottom|heading|left|middle|object|right))?|audio|video|feed|feeds-(cont|date)|figcaption|pln|highlighted|fun|quiz|question|mark)\b/,
+  /^(thumbnail|badge(-dept)?|avatar|cmpgn-(img|sctns)|cndwrdmrk)$/,
+  /^img-(circle|responsive|rounded|thumbnail)$/,
+  // Modals
+  /^modal-?(backdrop|body|content|dialog|footer|header|lg|open|scrollbar-measure|sm|title)?$/,
+  /^mfp-[a-z0-9-]+$/,
+  /^overlay(-bg|-close|-def)?$/,
+  // Navbar
+  /^navbar-?(brand|btn|collapse|default|fixed-(bottom|top)|form|header|inverse|left|link|nav|right|static-top|text|toggle)?$/,
+  /^nav-?(tabs|justified|pills|stacked|divider)?$/,
+  /^(nvbar|current)$/,
+  // Opacity
+  /^opct-(10|20|30|40|50|60|70|80|90|100)$/,
+  // Pagination / Sorting
+  /^(paginate-?(next|prev)|pagntn-prv-nxt|pgntn-lbl|pager|page-(header|type-(ilp|nav|search|theme))|_button)$/,
+  /^pagination(-lg)?$/,
+  /^sorting(_(1|2|3|asc(_disabled)?|desc(_disabled)?)|(-cnt|-icons))?$/,
+  /^(next|nxt|previous|prev)$/,
+  // Panels
+  /^panel-?(body|collapse|danger|default|footer|group|heading|info|primary|success|title|warning)?$/,
+  /^well(-(bold|lg|sm))?$/,
+  /\b(sm-pnl|lastpnl|tgl-panel|frstpnl|sec-pnl|info-pnl)\b/,
+  /^tab-?(content|count|pane|panels|acc)$/,
+  "expanded",
+  // Progress bar
+  /^progress(-bar(-(danger|info|striped|success|warning))?|Striped|Bar|Text)?$/,
+  // Tables
+  /^table-?(bordered|columnfloat|condensed|hover|responsive|striped)?$/,
+  /^(data(T|t)ables?_?(empty|filter|info|length|paginate|processing|scroll(Body|Head)?|sizing|wrapper)?)$/,
+  /^nws-tbl-?(date|dept|desc|ttl|type)?$/,
+  // Tooltips / Popovers
+  /^(tooltip-?(arrow|inner|txt)|popover-?(content|title)?)?$/,
+  // Text
+  /^text-(center|left|right|sm-left|sm-right|danger|info|justify|lowercase|muted|nowrap|primary|success|uppercase|warning|white|capitalize)$/,
+  "lead",
+  // Visibility
+  /^visible-(xs|sm|md|lg|print)(-(block|inline|inline-block))?$/,
+  /^hidden(-(xs|sm|md|lg|print|hd))?$/,
+  /^sr-only(-focusable)?$/,
+  // Skeleton
+  /^skeleton-lgnd-(1|2|3)$/,
+  // Multi-step UI
+  /\b(steps-wrapper|stepsquiz|expand-collapse-buttons)\b/,
+  // Social media
+  /\b(facebook|twitter(-timeline(-loading|-rendered)?)?|instagram|linkedin|tumblr|reddit|pinterest|youtube|gmail|yahoomail|googleplus|diigo|foursquare|myspace|periscope|x(-social)?|whatsapp|github|social-lnk)\b/,
+  // Framework / WET / GC
+  /^wb-[a-z0-9-]+$/,
+  /^gc-[a-z0-9-]+$/,
+  /^gcds[a-z0-9-]*$/,
+  /^ol(-[a-z0-9-]+)?$/,
+  // Page elements
+  /\b(pagebrand|pagedetails|section|sect-lnks|sctn-desc|breadcrumb|caption|title|subtitle|datemod|departments|features|followus|gcweb-menu|menu|profile|intro|most-requested-bullets)\b/,
+  // Product elements
+  /\bproduct(-data-(compressed|expanded|hidden)|-department|-icon|-language|-link(-container|-list)?|-listing|-name|-platforms|-record|-shortdescription|-longdescription)?\b/,
+  // Icons
+  /^glyphicon(-[a-z0-9-]+)?$/,
+  /^icon-?(bar|next|prev|warning-light)$/
+];
+var disallowedAttributes = [
+  /^on.*/
+  // inline JS handler like onclick, onmouseover
+  //'style'      // inline styles, these are added by page assistant so needs extra check or change added styles to a class
+];
+var guidanceMap = [
+  {
+    name: "page.tools.guidance.craSpecific.andor.title",
+    url: "page.tools.guidance.craSpecific.andor.url",
+    patterns: [/^cnjnctn-(type-(or|and)|xs|sm|md|lg|col(-[2-9][05])?)$/]
+  },
+  {
+    name: "page.tools.guidance.craVariant.alerts.title",
+    url: "page.tools.guidance.craVariant.alerts.url",
+    patterns: [/^alert(-(danger|dismissable|dismissible|info|link|success|warning))?$/]
+  },
+  {
+    name: "page.tools.guidance.craVariant.headings.title",
+    url: "page.tools.guidance.craVariant.headings.url",
+    patterns: [/^h[1-6]$/]
+  },
+  {
+    name: "page.tools.guidance.craVariant.fieldflow.title",
+    url: "page.tools.guidance.craVariant.fieldflow.url",
+    patterns: ["wb-fieldflow"]
+  },
+  {
+    name: "page.tools.guidance.craVariant.lists.title",
+    url: "page.tools.guidance.craVariant.lists.url",
+    patterns: [
+      /^list-col-(xs|sm|md|lg)-[1-4]$/,
+      /^list-group(?:-item(?:-(?:danger|heading|info|success|text|warning))?)?$/,
+      /^list-(advanced|inline|responsive|unstyled)$/,
+      /^lst-(?:spcd(?:-2)?|lwr-(?:alph|rmn)|upr-(?:alph|rmn)|none|num)$/,
+      /^dl-(horizontal|inline)$/,
+      "disc"
+    ]
+  },
+  {
+    name: "page.tools.guidance.craVariant.subway.title",
+    url: "page.tools.guidance.craVariant.subway.url",
+    patterns: [/^gc-subway(-pagination)?$/]
+  },
+  {
+    name: "page.tools.guidance.craVariant.tables.title",
+    url: "page.tools.guidance.craVariant.tables.url",
+    patterns: [
+      /^table-?(bordered|columnfloat|condensed|hover|responsive|striped)?$/,
+      /^(data(T|t)ables?_?(empty|filter|info|length|paginate|processing|scroll(Body|Head)?|sizing|wrapper)?)$/
+    ]
+  },
+  {
+    name: "page.tools.guidance.gcCore.badges.title",
+    url: "page.tools.guidance.gcCore.badges.url",
+    patterns: ["badge"]
+  },
+  {
+    name: "page.tools.guidance.gcCore.borders.title",
+    url: "page.tools.guidance.gcCore.borders.url",
+    patterns: [/^brdr-(0|bttm|lft|rght|tp|rds-0)$/]
+  },
+  {
+    name: "page.tools.guidance.gcCore.buttons.title",
+    url: "page.tools.guidance.gcCore.buttons.url",
+    patterns: [/^btn(-(block|call-to-action|cnt|danger|default|group(-(justified|lg|sm|vertical|xs))?|info|lg|link|primary|sm|success|toolbar|warning|xs|all-services))?$/]
+  },
+  {
+    name: "page.tools.guidance.gcCore.calendar.title",
+    url: "page.tools.guidance.gcCore.calendar.url",
+    patterns: ["wb-calevt"]
+  }
+];
+var guidanceContentMap = [
+  {
+    name: "page.tools.guidance.craSpecific.contact.title",
+    url: "page.tools.guidance.craSpecific.contact.url",
+    tag: "dt",
+    patterns: [/^Online$/i, /^By phone$/i, /^By mail$/i]
+  },
+  {
+    name: "page.tools.guidance.craSpecific.toc.title",
+    url: "page.tools.guidance.craSpecific.toc.url",
+    tag: "h2",
+    patterns: [/^On this page$/i, /^Table of contents$/i]
+  },
+  {
+    name: "page.tools.guidance.craVariant.doormats.title",
+    url: "page.tools.guidance.craVariant.doormats.url",
+    tag: "section",
+    patterns: [/^BANANA$/]
+  },
+  {
+    name: "page.tools.guidance.craVariant.links.title",
+    url: "page.tools.guidance.craVariant.links.url",
+    tag: "a",
+    patterns: [/^.*?$/]
+  },
+  {
+    name: "page.tools.guidance.craVariant.basicPage.title",
+    url: "page.tools.guidance.craVariant.basicPage.url",
+    tag: "p",
+    patterns: [/^BANANA$/]
+  },
+  {
+    name: "page.tools.guidance.craVariant.borders.title",
+    url: "page.tools.guidance.craVariant.borders.url",
+    tag: "br",
+    patterns: [/^.*?$/]
+  }
+];
+
+// src/app/views/page-assistant/services/validator.service.ts
+var ValidatorService = class _ValidatorService {
+  validateHtml(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const violations = [];
+    this.walkNodes(doc.body, violations);
+    return violations;
+  }
+  walkNodes(node, violations) {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const tagName = node.tagName.toLowerCase();
+      if (!allowedElements.includes(tagName)) {
+        violations.push({
+          type: "element",
+          detail: `Unexpected element <${tagName}>`,
+          node
+        });
+      }
+      node.classList.forEach((cls) => {
+        if (!this.isClassAllowed(cls)) {
+          violations.push({
+            type: "class",
+            detail: `Unexpected class "${cls}" on <${tagName}>`,
+            node
+          });
+        }
+      });
+      Array.from(node.attributes).forEach((attr) => {
+        if (this.isAttributeDisallowed(attr.name)) {
+          violations.push({
+            type: "attribute",
+            detail: `Disallowed attribute "${attr.name}" on <${tagName}>`,
+            node
+          });
+        }
+      });
+    }
+    node.childNodes.forEach((child) => {
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        this.walkNodes(child, violations);
+      }
+    });
+  }
+  isClassAllowed(cls) {
+    return allowedClasses.some((allowed) => {
+      if (typeof allowed === "string")
+        return allowed === cls;
+      if (allowed instanceof RegExp)
+        return allowed.test(cls);
+      return false;
+    });
+  }
+  isAttributeDisallowed(attr) {
+    return disallowedAttributes.some((bad) => {
+      if (typeof bad === "string")
+        return bad === attr;
+      if (bad instanceof RegExp)
+        return bad.test(attr);
+      return false;
+    });
+  }
+  collectGuidanceUrls(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const found = /* @__PURE__ */ new Map();
+    this.walkForGuidance(doc.body, found);
+    this.walkForContentGuidance(doc.body, found);
+    return Array.from(found.values());
+  }
+  walkForGuidance(node, found) {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      node.classList.forEach((cls) => {
+        for (const group of guidanceMap) {
+          if (group.patterns.some((pat) => typeof pat === "string" ? pat === cls : pat.test(cls))) {
+            found.set(group.url, { name: group.name, url: group.url });
+          }
+        }
+      });
+    }
+    node.childNodes.forEach((child) => {
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        this.walkForGuidance(child, found);
+      }
+    });
+  }
+  walkForContentGuidance(node, found) {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const tagName = node.tagName.toLowerCase();
+      const text = node.textContent?.trim();
+      if (text) {
+        for (const group of guidanceContentMap) {
+          if (group.tag === tagName && group.patterns.some((pat) => typeof pat === "string" ? pat === text : pat.test(text))) {
+            found.set(group.url, { name: group.name, url: group.url });
+          }
+        }
+      }
+    }
+    node.childNodes.forEach((child) => {
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        this.walkForContentGuidance(child, found);
+      }
+    });
+  }
+  static \u0275fac = function ValidatorService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ValidatorService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ValidatorService, factory: _ValidatorService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ValidatorService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/views/page-assistant/components/tools/component-guidance.component.ts
+function ComponentGuidanceComponent_li_12_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li")(1, "a", 3);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275element(5, "i", 4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const item_r1 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275property("href", \u0275\u0275pipeBind1(2, 2, item_r1.url), \u0275\u0275sanitizeUrl);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 4, item_r1.name));
+  }
+}
+function ComponentGuidanceComponent_li_18_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const v_r2 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate2(" ", v_r2.type, ": ", v_r2.detail, " ");
+  }
+}
+var ComponentGuidanceComponent = class _ComponentGuidanceComponent {
+  uploadState;
+  translate;
+  validator;
+  http;
+  constructor(uploadState, translate, validator, http) {
+    this.uploadState = uploadState;
+    this.translate = translate;
+    this.validator = validator;
+    this.http = http;
+  }
+  ngOnInit() {
+    const data = this.uploadState.getUploadData();
+    if (data?.originalHtml) {
+      this.guidanceList = this.validator.collectGuidanceUrls(data.originalHtml);
+      console.log(this.guidanceList);
+    }
+  }
+  guidanceList = [];
+  violations = [];
+  allClassesForQA = '<p class="active affix alert alert-danger alert-dismissable alert-dismissible alert-info alert-link alert-success alert-warning align-bottom align-items-center align-items-sm-center align-middle align-self-center align-self-end align-top allow-wrap application-bar arrow atn atv audio avatar backgroundsize badge badge-dept basic-link bg-center bg-cover bg-danger bg-dark bg-darker bg-gctheme bg-img-hdng bg-info bg-light bg-norepeat bg-pnkDy bg-primary bg-success bg-warning blockquote-reverse blog blogger bluesky body bold-content bottom bottom-left bottom-right brand brdr-0 brdr-bttm brdr-lft brdr-rds-0 brdr-rght brdr-tp breadcrumb btn btn-all-services btn-block btn-call-to-action btn-cnt btn-danger btn-default btn-group btn-group-justified btn-group-lg btn-group-sm btn-group-vertical btn-group-xs btn-info btn-lg btn-link btn-primary btn-sm btn-success btn-toolbar btn-warning btn-xs bubble buttons ca cal-cnt-fluid cal-curr-day cal-days cal-evt cal-evt-lnk cal-nav canada caption caret carousel carousel-caption carousel-control carousel-indicators carousel-inner carousel-s1 carousel-s2 cc cc_on cell-border center center-block checkbox checkbox-inline checkbox-standalone chkbxrdio-grp choices chvrn circle clearfix clo close clr-lft-lg clr-lft-md clr-lft-sm clr-rght-lg clr-rght-md clr-rght-sm cmpgn-img cmpgn-sctns cndwrdmrk cnt-wdth-lmtd cntnt cntrls col-lg-1 col-lg-10 col-lg-11 col-lg-12 col-lg-2 col-lg-3 col-lg-4 col-lg-5 col-lg-6 col-lg-7 col-lg-8 col-lg-9 col-lg-auto col-lg-offset-0 col-lg-offset-1 col-lg-offset-10 col-lg-offset-11 col-lg-offset-12 col-lg-offset-2 col-lg-offset-3 col-lg-offset-4 col-lg-offset-5 col-lg-offset-6 col-lg-offset-7 col-lg-offset-8 col-lg-offset-9 col-lg-pull-0 col-lg-pull-1 col-lg-pull-10 col-lg-pull-11 col-lg-pull-12 col-lg-pull-2 col-lg-pull-3 col-lg-pull-4 col-lg-pull-5 col-lg-pull-6 col-lg-pull-7 col-lg-pull-8 col-lg-pull-9 col-lg-push-0 col-lg-push-1 col-lg-push-10 col-lg-push-11 col-lg-push-12 col-lg-push-2 col-lg-push-3 col-lg-push-4 col-lg-push-5 col-lg-push-6 col-lg-push-7 col-lg-push-8 col-lg-push-9 col-md-1 col-md-10 col-md-11 col-md-12 col-md-2 col-md-3 col-md-4 col-md-5 col-md-6 col-md-7 col-md-8 col-md-9 col-md-auto col-md-offset-0 col-md-offset-1 col-md-offset-10 col-md-offset-11 col-md-offset-12 col-md-offset-2 col-md-offset-3 col-md-offset-4 col-md-offset-5 col-md-offset-6 col-md-offset-7 col-md-offset-8 col-md-offset-9 col-md-pull-0 col-md-pull-1 col-md-pull-10 col-md-pull-11 col-md-pull-12 col-md-pull-2 col-md-pull-3 col-md-pull-4 col-md-pull-5 col-md-pull-6 col-md-pull-7 col-md-pull-8 col-md-pull-9 col-md-push-0 col-md-push-1 col-md-push-10 col-md-push-11 col-md-push-12 col-md-push-2 col-md-push-3 col-md-push-4 col-md-push-5 col-md-push-6 col-md-push-7 col-md-push-8 col-md-push-9 col-sm-1 col-sm-10 col-sm-11 col-sm-12 col-sm-2 col-sm-3 col-sm-4 col-sm-5 col-sm-6 col-sm-7 col-sm-8 col-sm-9 col-sm-auto col-sm-offset-0 col-sm-offset-1 col-sm-offset-10 col-sm-offset-11 col-sm-offset-12 col-sm-offset-2 col-sm-offset-3 col-sm-offset-4 col-sm-offset-5 col-sm-offset-6 col-sm-offset-7 col-sm-offset-8 col-sm-offset-9 col-sm-pull-0 col-sm-pull-1 col-sm-pull-10 col-sm-pull-11 col-sm-pull-12 col-sm-pull-2 col-sm-pull-3 col-sm-pull-4 col-sm-pull-5 col-sm-pull-6 col-sm-pull-7 col-sm-pull-8 col-sm-pull-9 col-sm-push-0 col-sm-push-1 col-sm-push-10 col-sm-push-11 col-sm-push-12 col-sm-push-2 col-sm-push-3 col-sm-push-4 col-sm-push-5 col-sm-push-6 col-sm-push-7 col-sm-push-8 col-sm-push-9 col-xs-1 col-xs-10 col-xs-11 col-xs-12 col-xs-2 col-xs-3 col-xs-4 col-xs-5 col-xs-6 col-xs-7 col-xs-8 col-xs-9 col-xs-auto col-xs-offset-0 col-xs-offset-1 col-xs-offset-10 col-xs-offset-11 col-xs-offset-12 col-xs-offset-2 col-xs-offset-3 col-xs-offset-4 col-xs-offset-5 col-xs-offset-6 col-xs-offset-7 col-xs-offset-8 col-xs-offset-9 col-xs-pull-0 col-xs-pull-1 col-xs-pull-10 col-xs-pull-11 col-xs-pull-12 col-xs-pull-2 col-xs-pull-3 col-xs-pull-4 col-xs-pull-5 col-xs-pull-6 col-xs-pull-7 col-xs-pull-8 col-xs-pull-9 col-xs-push-0 col-xs-push-1 col-xs-push-10 col-xs-push-11 col-xs-push-12 col-xs-push-2 col-xs-push-3 col-xs-push-4 col-xs-push-5 col-xs-push-6 col-xs-push-7 col-xs-push-8 col-xs-push-9 colcount-lg-2 colcount-lg-3 colcount-lg-4 colcount-md-2 colcount-md-3 colcount-md-4 colcount-no-break colcount-sm-2 colcount-sm-3 colcount-sm-4 colcount-xl-2 colcount-xl-3 colcount-xl-4 colcount-xs-2 colcount-xs-3 colcount-xs-4 colcount-xxs-2 colcount-xxs-3 colcount-xxs-4 collapse collapsing com commit compact container container-fluid context-labels control control-label controls conversation css css-implicite-input csstransitions curr-count current d-flex d-sm-flex danger dark-theme dataTable dataTables_empty dataTables_filter dataTables_info dataTables_length dataTables_paginate dataTables_processing dataTables_scroll dataTables_scrollBody dataTables_scrollHead dataTables_sizing dataTables_wrapper datatables_wrapper datemod datepicker-format dbl dec departments diigo disabled disc display divider dl-horizontal dl-inline dot1 dot2 dot3 dropdown dropdown-backdrop dropdown-header dropdown-menu dropdown-menu-left dropdown-menu-right dropdown-toggle dropup dshbrd dt-max email embed-responsive embed-responsive-16by9 embed-responsive-4by3 embed-responsive-item eot errmsg error ev-details even exclude-controls expand-collapse-buttons expanded expicon facebook fade fd-slider fd-slider-bar fd-slider-handle fd-slider-range fd-wdgt features feed feeds-cont feeds-date figcaption filterEmphasis flex-column flex-sm-wrap flickr fn-lnk fn-rtn fnt-hdng fnt-nrml focus followus force-style-gcweb-4-0-29 form-control form-control-feedback form-control-static form-group form-group-lg form-group-sm form-horizontal form-inline foursquare frstpnl fs full-width fun gc-advnc-srvc gc-arch gc-archv gc-byline gc-chckbxrdio gc-cntct-lst gc-contextual gc-contributors gc-crprt gc-drmt gc-dwnld gc-dwnld-img gc-dwnld-txt gc-featured-link gc-features gc-fld-srvy-container gc-fld-srvy-mbd gc-followus gc-font-2019 gc-instttn gc-main-footer gc-minister gc-most-requested gc-nttvs gc-nws gc-orgnztn gc-pft-no gc-prtts gc-rms-lngth gc-rprt-prblm-frm gc-rprt-prblm-tggl gc-rprt-prblm-thnk gc-srvinfo gc-stp-stp gc-sub-footer gc-subway gc-subway-index gc-subway-landmark-end gc-subway-pagination gc-subway-section gc-subway-wrapper gc-table gc-theme gc-topic-bg gcdscard gcdscardcontainer gcweb-menu generated geoloc-progress geomap-aoi geomap-clear-format geomap-geoloc geomap-geoloc-aoi-btn geomap-help-btn geomap-help-dialog geomap-legend-detail geomap-legend-element geomap-legend-label geomap-legend-symbol geomap-legend-symbol-text geomap-lgnd geomap-lgnd-layer geomap-progress github glyphicon glyphicon-adjust glyphicon-alert glyphicon-align-center glyphicon-align-justify glyphicon-align-left glyphicon-align-right glyphicon-apple glyphicon-arrow-down glyphicon-arrow-left glyphicon-arrow-right glyphicon-arrow-up glyphicon-asterisk glyphicon-baby-formula glyphicon-backward glyphicon-ban-circle glyphicon-barcode glyphicon-bed glyphicon-bell glyphicon-bishop glyphicon-bitcoin glyphicon-blackboard glyphicon-bold glyphicon-book glyphicon-bookmark glyphicon-briefcase glyphicon-btc glyphicon-bullhorn glyphicon-calendar glyphicon-camera glyphicon-cd glyphicon-certificate glyphicon-check glyphicon-chevron-down glyphicon-chevron-left glyphicon-chevron-right glyphicon-chevron-up glyphicon-circle-arrow-down glyphicon-circle-arrow-left glyphicon-circle-arrow-right glyphicon-circle-arrow-up glyphicon-cloud glyphicon-cloud-download glyphicon-cloud-upload glyphicon-cog glyphicon-collapse-down glyphicon-collapse-up glyphicon-comment glyphicon-compressed glyphicon-console glyphicon-copy glyphicon-copyright-mark glyphicon-credit-card glyphicon-cutlery glyphicon-dashboard glyphicon-download glyphicon-download-alt glyphicon-duplicate glyphicon-earphone glyphicon-edit glyphicon-education glyphicon-eject glyphicon-envelope glyphicon-equalizer glyphicon-erase glyphicon-error glyphicon-eur glyphicon-euro glyphicon-exclamation-sign glyphicon-expand glyphicon-export glyphicon-eye-close glyphicon-eye-open glyphicon-facetime-video glyphicon-fast-backward glyphicon-fast-forward glyphicon-file glyphicon-film glyphicon-filter glyphicon-fire glyphicon-flag glyphicon-flash glyphicon-floppy-disk glyphicon-floppy-open glyphicon-floppy-remove glyphicon-floppy-save glyphicon-floppy-saved glyphicon-folder-close glyphicon-folder-open glyphicon-font glyphicon-forward glyphicon-fullscreen glyphicon-gbp glyphicon-gift glyphicon-glass glyphicon-globe glyphicon-grain glyphicon-hand-down glyphicon-hand-left glyphicon-hand-right glyphicon-hand-up glyphicon-hd-video glyphicon-hdd glyphicon-header glyphicon-headphones glyphicon-heart glyphicon-heart-empty glyphicon-home glyphicon-hourglass glyphicon-ice-lolly glyphicon-ice-lolly-tasted glyphicon-import glyphicon-inbox glyphicon-indent-left glyphicon-indent-right glyphicon-info-sign glyphicon-italic glyphicon-jpy glyphicon-king glyphicon-knight glyphicon-lamp glyphicon-leaf glyphicon-level-up glyphicon-link glyphicon-list glyphicon-list-alt glyphicon-lock glyphicon-log-in glyphicon-log-out glyphicon-magnet glyphicon-map-marker glyphicon-menu-down glyphicon-menu-hamburger glyphicon-menu-left glyphicon-menu-right glyphicon-menu-up glyphicon-minus glyphicon-minus-sign glyphicon-modal-window glyphicon-move glyphicon-music glyphicon-new-window glyphicon-object-align-bottom glyphicon-object-align-horizontal glyphicon-object-align-left glyphicon-object-align-right glyphicon-object-align-top glyphicon-object-align-vertical glyphicon-off glyphicon-oil glyphicon-ok glyphicon-ok-circle glyphicon-ok-sign glyphicon-open glyphicon-open-file glyphicon-option-horizontal glyphicon-option-vertical glyphicon-paperclip glyphicon-paste glyphicon-pause glyphicon-pawn glyphicon-pencil glyphicon-phone glyphicon-phone-alt glyphicon-picture glyphicon-piggy-bank glyphicon-plane glyphicon-play glyphicon-play-circle glyphicon-plus glyphicon-plus-sign glyphicon-print glyphicon-pushpin glyphicon-qrcode glyphicon-queen glyphicon-question-sign glyphicon-random glyphicon-record glyphicon-refresh glyphicon-registration-mark glyphicon-remove glyphicon-remove-circle glyphicon-remove-sign glyphicon-repeat glyphicon-resize-full glyphicon-resize-horizontal glyphicon-resize-small glyphicon-resize-vertical glyphicon-retweet glyphicon-road glyphicon-rub glyphicon-ruble glyphicon-save glyphicon-save-file glyphicon-saved glyphicon-scale glyphicon-scissors glyphicon-screenshot glyphicon-sd-video glyphicon-search glyphicon-send glyphicon-share glyphicon-share-alt glyphicon-shopping-cart glyphicon-signal glyphicon-sort glyphicon-sort-by-alphabet glyphicon-sort-by-alphabet-alt glyphicon-sort-by-attributes glyphicon-sort-by-attributes-alt glyphicon-sort-by-order glyphicon-sort-by-order-alt glyphicon-sound-5-1 glyphicon-sound-6-1 glyphicon-sound-7-1 glyphicon-sound-dolby glyphicon-sound-stereo glyphicon-spin glyphicon-star glyphicon-star-empty glyphicon-stats glyphicon-step-backward glyphicon-step-forward glyphicon-stop glyphicon-subscript glyphicon-subtitles glyphicon-sunglasses glyphicon-superscript glyphicon-tag glyphicon-tags glyphicon-tasks glyphicon-tent glyphicon-text-background glyphicon-text-color glyphicon-text-height glyphicon-text-size glyphicon-text-width glyphicon-th glyphicon-th-large glyphicon-th-list glyphicon-thumbs-down glyphicon-thumbs-up glyphicon-time glyphicon-tint glyphicon-tower glyphicon-transfer glyphicon-trash glyphicon-tree-conifer glyphicon-tree-deciduous glyphicon-triangle-bottom glyphicon-triangle-left glyphicon-triangle-right glyphicon-triangle-top glyphicon-unchecked glyphicon-upload glyphicon-usd glyphicon-user glyphicon-volume-down glyphicon-volume-off glyphicon-volume-up glyphicon-warning-sign glyphicon-wrench glyphicon-xbt glyphicon-yen glyphicon-zoom-in glyphicon-zoom-out gmail googleplus grow gstatic h-100 h1 h2 h3 h4 h5 h6 has-error has-feedback has-success has-warning header header-rwd help-block hght-inhrt hidden hidden-hd hidden-lg hidden-md hidden-print hidden-sm hidden-xs hide history home home-most-requested home-your-gov hover html icn-sig-en icn-sig-fr icon icon-bar icon-next icon-prev icon-warning-light img-circle img-responsive img-rounded img-thumbnail in info info-banner info-banner-actions info-pnl infostripe initialism input-group input-group-addon input-group-btn input-group-lg input-group-sm input-lg input-sm inputs-zone instagram invisible io item jpg jumbotron kwd label label-danger label-default label-info label-inline label-primary label-success label-warning landscape largeview lastpnl lbx-hide-gal lead learnmore left legend-brdr-bttm legend-label-only linenums linkedin list-advanced list-col-lg-1 list-col-lg-2 list-col-lg-3 list-col-lg-4 list-col-md-1 list-col-md-2 list-col-md-3 list-col-md-4 list-col-sm-1 list-col-sm-2 list-col-sm-3 list-col-sm-4 list-col-xs-1 list-col-xs-2 list-col-xs-3 list-col-xs-4 list-group list-group-item list-group-item-danger list-group-item-heading list-group-item-info list-group-item-success list-group-item-text list-group-item-warning list-inline list-responsive list-unstyled lit lng-ofr lnkbx loader-dot loader-typing location lst-lwr-alph lst-lwr-rmn lst-none lst-num lst-spcd lst-spcd-2 lst-upr-alph lst-upr-rmn lt-ie9 m-0 m-1 m-2 m-3 m-4 m-5 m-auto m-lg-0 m-lg-1 m-lg-2 m-lg-3 m-lg-4 m-lg-5 m-lg-auto m-md-0 m-md-1 m-md-2 m-md-3 m-md-4 m-md-5 m-md-auto m-sm-0 m-sm-1 m-sm-2 m-sm-3 m-sm-4 m-sm-5 m-sm-auto margin-bottom-none margin-bottom-small margin-top-large margin-top-medium mark mathml max-content mb-0 mb-1 mb-2 mb-3 mb-4 mb-5 mb-auto mb-lg-0 mb-lg-1 mb-lg-2 mb-lg-3 mb-lg-4 mb-lg-5 mb-lg-auto mb-md-0 mb-md-1 mb-md-2 mb-md-3 mb-md-4 mb-md-5 mb-md-auto mb-menu mb-sm-0 mb-sm-1 mb-sm-2 mb-sm-3 mb-sm-4 mb-sm-5 mb-sm-auto media media-body media-bottom media-heading media-left media-list media-middle media-object media-right menu message mfp-ajax-cur mfp-ajax-holder mfp-align-top mfp-arrow mfp-arrow-left mfp-arrow-right mfp-auto-cursor mfp-b mfp-bg mfp-bottom-bar mfp-close mfp-close-btn-in mfp-container mfp-content mfp-counter mfp-figure mfp-gallery mfp-hide mfp-iframe-holder mfp-iframe-scaler mfp-image-holder mfp-img mfp-img-mobile mfp-inline-holder mfp-loading mfp-preloader mfp-s-error mfp-s-ready mfp-title mfp-wrap mfp-zoom mfp-zoom-out-cur minimize ml-0 ml-1 ml-2 ml-3 ml-4 ml-5 ml-auto ml-lg-0 ml-lg-1 ml-lg-2 ml-lg-3 ml-lg-4 ml-lg-5 ml-lg-auto ml-md-0 ml-md-1 ml-md-2 ml-md-3 ml-md-4 ml-md-5 ml-md-auto ml-sm-0 ml-sm-1 ml-sm-2 ml-sm-3 ml-sm-4 ml-sm-5 ml-sm-auto modal modal-backdrop modal-body modal-content modal-dialog modal-footer modal-header modal-lg modal-open modal-scrollbar-measure modal-sm modal-title more-ways mr-0 mr-1 mr-2 mr-3 mr-4 mr-5 mr-auto mr-lg-0 mr-lg-1 mr-lg-2 mr-lg-3 mr-lg-4 mr-lg-5 mr-lg-auto mr-md-0 mr-md-1 mr-md-2 mr-md-3 mr-md-4 mr-md-5 mr-md-auto mr-sm-0 mr-sm-1 mr-sm-2 mr-sm-3 mr-sm-4 mr-sm-5 mr-sm-auto mrgn-bttm-0 mrgn-bttm-lg mrgn-bttm-md mrgn-bttm-sm mrgn-bttm-xl mrgn-lft-0 mrgn-lft-lg mrgn-lft-md mrgn-lft-sm mrgn-lft-xl mrgn-rght-0 mrgn-rght-lg mrgn-rght-md mrgn-rght-sm mrgn-rght-xl mrgn-tp-0 mrgn-tp-lg mrgn-tp-md mrgn-tp-sm mrgn-tp-xl mt-0 mt-1 mt-2 mt-3 mt-4 mt-5 mt-auto mt-lg-0 mt-lg-1 mt-lg-2 mt-lg-3 mt-lg-4 mt-lg-5 mt-lg-auto mt-md-0 mt-md-1 mt-md-2 mt-md-3 mt-md-4 mt-md-5 mt-md-auto mt-sm-0 mt-sm-1 mt-sm-2 mt-sm-3 mt-sm-4 mt-sm-5 mt-sm-auto mx-0 mx-1 mx-2 mx-3 mx-4 mx-5 mx-auto mx-lg-0 mx-lg-1 mx-lg-2 mx-lg-3 mx-lg-4 mx-lg-5 mx-lg-auto mx-md-0 mx-md-1 mx-md-2 mx-md-3 mx-md-4 mx-md-5 mx-md-auto mx-sm-0 mx-sm-1 mx-sm-2 mx-sm-3 mx-sm-4 mx-sm-5 mx-sm-auto my-0 my-1 my-2 my-3 my-4 my-5 my-auto my-lg-0 my-lg-1 my-lg-2 my-lg-3 my-lg-4 my-lg-5 my-lg-auto my-md-0 my-md-1 my-md-2 my-md-3 my-md-4 my-md-5 my-md-auto my-sm-0 my-sm-1 my-sm-2 my-sm-3 my-sm-4 my-sm-5 my-sm-auto myspace nav nav-divider nav-justified nav-pills nav-stacked nav-tabs nav-tabs-justified navbar navbar-brand navbar-btn navbar-collapse navbar-default navbar-fixed-bottom navbar-fixed-top navbar-form navbar-header navbar-inverse navbar-left navbar-link navbar-nav navbar-right navbar-static-top navbar-text navbar-toggle next no-backgroundsize no-blink no-csstransitions no-details no-footer no-js no-mathml no-print no-sect no-undrln noheight nojs-col-sm-12 nojs-hide nojs-show nojs-text-left noline notif notif-close nowrap nvbar nws-tbl nws-tbl-date nws-tbl-dept nws-tbl-desc nws-tbl-ttl nws-tbl-type nxt odd ol-attribution ol-box ol-collapsed ol-compass ol-control ol-dragbox ol-full-screen ol-geolocate ol-hidden ol-logo-only ol-mouse-position ol-mouse-position-inner ol-overlay-container ol-overviewmap ol-overviewmap-box ol-overviewmap-map ol-popup ol-popup-closer ol-rotate ol-scale-line ol-scale-line-inner ol-touch ol-uncollapsible ol-unselectable ol-unsupported ol-viewport ol-zoom ol-zoom-extent ol-zoom-in ol-zoom-out olControlMousePosition olControlPanZoomBar one-dot opct-10 opct-100 opct-20 opct-30 opct-40 opct-50 opct-60 opct-70 opct-80 opct-90 open opn order-column out overlay-bg overlay-close overlay-def p-0 p-1 p-2 p-3 p-4 p-5 p-lg-0 p-lg-1 p-lg-2 p-lg-3 p-lg-4 p-lg-5 p-md-0 p-md-1 p-md-2 p-md-3 p-md-4 p-md-5 p-sm-0 p-sm-1 p-sm-2 p-sm-3 p-sm-4 p-sm-5 page-header page-type-ilp page-type-nav page-type-search page-type-theme pagebrand pagedetails pager paginate-next paginate-prev paginate_button pagination pagination-lg pagination-sm pagntn-prv-nxt panel panel-body panel-collapse panel-danger panel-default panel-footer panel-group panel-heading panel-info panel-primary panel-success panel-title panel-warning pb-0 pb-1 pb-2 pb-3 pb-4 pb-5 pb-lg-0 pb-lg-1 pb-lg-2 pb-lg-3 pb-lg-4 pb-lg-5 pb-md-0 pb-md-1 pb-md-2 pb-md-3 pb-md-4 pb-md-5 pb-sm-0 pb-sm-1 pb-sm-2 pb-sm-3 pb-sm-4 pb-sm-5 periscope pg-brk-aft pgntn-lbl picker-overlay pieLabel pinterest pl-0 pl-1 pl-2 pl-3 pl-4 pl-5 pl-lg-0 pl-lg-1 pl-lg-2 pl-lg-3 pl-lg-4 pl-lg-5 pl-md-0 pl-md-1 pl-md-2 pl-md-3 pl-md-4 pl-md-5 pl-sm-0 pl-sm-1 pl-sm-2 pl-sm-3 pl-sm-4 pl-sm-5 playing pln plypause png pnkDy-theme pop popover popover-content popover-title popup-content position-relative pr-0 pr-1 pr-2 pr-3 pr-4 pr-5 pr-lg-0 pr-lg-1 pr-lg-2 pr-lg-3 pr-lg-4 pr-lg-5 pr-md-0 pr-md-1 pr-md-2 pr-md-3 pr-md-4 pr-md-5 pr-sm-0 pr-sm-1 pr-sm-2 pr-sm-3 pr-sm-4 pr-sm-5 pre-scrollable prettyprint prev previous print-active priorities prm-flpr product-data-compressed product-data-expanded product-data-hidden product-department product-icon product-language product-link product-link-container product-link-list product-links product-listing product-longdescription product-name product-platforms product-record product-shortdescription profile progress progress-bar progress-bar-danger progress-bar-info progress-bar-striped progress-bar-success progress-bar-warning progress-striped progressBar progressText provisional prv pstn-bttm-lg pstn-bttm-md pstn-bttm-sm pstn-bttm-xs pstn-lft-lg pstn-lft-md pstn-lft-sm pstn-lft-xs pstn-rght-lg pstn-rght-md pstn-rght-sm pstn-rght-xs pstn-tp-lg pstn-tp-md pstn-tp-sm pstn-tp-xs pt-0 pt-1 pt-2 pt-3 pt-4 pt-5 pt-lg-0 pt-lg-1 pt-lg-2 pt-lg-3 pt-lg-4 pt-lg-5 pt-md-0 pt-md-1 pt-md-2 pt-md-3 pt-md-4 pt-md-5 pt-sm-0 pt-sm-1 pt-sm-2 pt-sm-3 pt-sm-4 pt-sm-5 pull-left pull-right pun px-0 px-1 px-2 px-3 px-4 px-5 px-lg-0 px-lg-1 px-lg-2 px-lg-3 px-lg-4 px-lg-5 px-md-0 px-md-1 px-md-2 px-md-3 px-md-4 px-md-5 px-sm-0 px-sm-1 px-sm-2 px-sm-3 px-sm-4 px-sm-5 py-0 py-1 py-2 py-3 py-4 py-5 py-lg-0 py-lg-1 py-lg-2 py-lg-3 py-lg-4 py-lg-5 py-md-0 py-md-1 py-md-2 py-md-3 py-md-4 py-md-5 py-sm-0 py-sm-1 py-sm-2 py-sm-3 py-sm-4 py-sm-5 question quiz radio radio-inline record-close record-expand redacted reddit required required-no-asterisk reset results reverse right row row-no-gutters rowborder rss sctn-desc search-description sec-pnl secondary sect-lnks section selected show show-thumbs shr-dscl shr-lnk shr-opn shr-pg site-related skeleton-lgnd-1 skeleton-lgnd-2 skeleton-lgnd-3 skn-lt slflnk slide slidefade slidevert sm sm-open sm-pnl small sorting sorting-cnt sorting-icons sorting_1 sorting_2 sorting_3 sorting_asc sorting_asc_disabled sorting_desc sorting_desc_disabled square sr-only sr-only-focusable srch-pnl srchbox steps-wrapper stepsquiz str stretched-link stripe subfields submit subtitle success svg tab-content tab-count tab-pane table table-bordered table-columnfloat table-condensed table-hover table-responsive table-striped tabpanels tabs-acc tag tbl-gridify test-textSpacing text-capitalize text-center text-danger text-hide text-info text-justify text-left text-lowercase text-muted text-nowrap text-primary text-right text-sm-left text-sm-right text-success text-uppercase text-warning text-white tgl-panel thumbnail tinyurl title tline toc tofpg tooltip tooltip-arrow tooltip-inner tooltip-txt top top-left top-right tp-rail trans-left trans-pulse trpl ttf tumblr twitter twitter-timeline twitter-timeline-loading twitter-timeline-rendered typ var video visible-lg visible-lg-block visible-lg-inline visible-lg-inline-block visible-md visible-md-block visible-md-inline visible-md-inline-block visible-print visible-print-block visible-print-inline visible-print-inline-block visible-sm visible-sm-block visible-sm-inline visible-sm-inline-block visible-xs visible-xs-block visible-xs-inline visible-xs-inline-block waiting warning wb-bar-b wb-bar-t wb-calevt-cal wb-cell-desc wb-cell-key wb-cell-layout wb-chtwzrd wb-chtwzrd-btn-extrnl wb-chtwzrd-bubble-wrap wb-chtwzrd-contained wb-chtwzrd-container wb-chtwzrd-mrgn wb-chtwzrd-noscroll wb-clndr wb-disable wb-dismissable-container wb-dismissable-wrapper wb-elps wb-enable wb-eqht-grd wb-feeds wb-fieldflow-form wb-fieldflow-label wb-filter wb-fltr-out wb-fnote wb-frm wb-frmvld wb-geomap wb-geomap-detail wb-geomap-geoloc-al wb-geomap-geoloc-al-cnt wb-geomap-map wb-group-summary wb-init wb-inv wb-inview wb-invisible wb-lng-lnk wb-lng-lnks-horiz wb-lng-lnks-rtl wb-lng-lnks-vert wb-menu wb-mltmd wb-mm-cc wb-mm-ctrls wb-mm-ovrly wb-mm-prgrss wb-mm-tmln-crrnt wb-mm-txtonly wb-modal wb-navcurr wb-overlay wb-overlay-dlg wb-paginate-pager wb-panel-l wb-panel-r wb-pgfltr-out wb-popup-full wb-popup-mid wb-progress-inited wb-server-error wb-share wb-share-inited wb-show-onfocus wb-sl wb-slc wb-srch-qry wb-steps wb-steps-active wb-steps-error wb-tabs wb-tagfilter-items wb-tagfilter-noresult wb-tgfltr-out wb-tggle-fildst wb-twitter wb-twitter-notice-end wb-twitter-notice-start wb-twitter-skip wb-twitter-skip-end wb-twitter-skip-start wb-zebra wb-zebra-col-hover well well-bold well-lg well-sm whatsapp whtwedo woff woff2 wtrmrk x x-social xlargeview xxsmallview yahoomail youtube zbra"> Banana </p>';
+  runValidation() {
+    const data = this.uploadState.getUploadData();
+    if (!data || !data.originalHtml)
+      return;
+    this.violations = this.validator.validateHtml(data.originalHtml);
+  }
+  //TEMP FXN FOR BUILDING WHITELIST
+  classes = [];
+  extractCSS(url) {
+    return __async(this, null, function* () {
+      const css = yield firstValueFrom(this.http.get(url, { responseType: "text" }));
+      const classPattern = /\.([a-zA-Z0-9_-]+)/g;
+      const classes13 = /* @__PURE__ */ new Set();
+      let match;
+      while ((match = classPattern.exec(css)) !== null) {
+        classes13.add(match[1]);
+      }
+      return [...classes13].sort();
+    });
+  }
+  static \u0275fac = function ComponentGuidanceComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ComponentGuidanceComponent)(\u0275\u0275directiveInject(UploadStateService), \u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(ValidatorService), \u0275\u0275directiveInject(HttpClient));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ComponentGuidanceComponent, selectors: [["ca-component-guidance"]], decls: 19, vars: 2, consts: [[1, "m-0"], [4, "ngFor", "ngForOf"], ["severity", "primary", 1, "mt-2", 3, "click"], ["target", "_blank", "rel", "noopener", 3, "href"], [1, "pi", "pi-external-link", "ml-1", 2, "font-size", ".75rem"]], template: function ComponentGuidanceComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "p", 0);
+      \u0275\u0275text(1, "Unfinished. Will add fxn to:");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(2, "ul")(3, "li");
+      \u0275\u0275text(4, "detect which components are used on the page and link to relevant UCDG guidance (in progress)");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(5, "li");
+      \u0275\u0275text(6, "warn user if they are using a depracated version of a component");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(7, "li");
+      \u0275\u0275text(8, "auto-fix deprecated code w/ option to accept & merge with page");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(9, "h2");
+      \u0275\u0275text(10, "Guidance");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(11, "ul");
+      \u0275\u0275template(12, ComponentGuidanceComponent_li_12_Template, 6, 6, "li", 1);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(13, "p");
+      \u0275\u0275text(14, "This button just checks if you have any classes or elements that aren't in theme.min.css");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(15, "p-button", 2);
+      \u0275\u0275listener("click", function ComponentGuidanceComponent_Template_p_button_click_15_listener() {
+        return ctx.runValidation();
+      });
+      \u0275\u0275text(16, "Check classes and elements");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(17, "ul");
+      \u0275\u0275template(18, ComponentGuidanceComponent_li_18_Template, 2, 2, "li", 1);
+      \u0275\u0275elementEnd();
+    }
+    if (rf & 2) {
+      \u0275\u0275advance(12);
+      \u0275\u0275property("ngForOf", ctx.guidanceList);
+      \u0275\u0275advance(6);
+      \u0275\u0275property("ngForOf", ctx.violations);
+    }
+  }, dependencies: [
+    CommonModule,
+    NgForOf,
+    FormsModule,
+    TranslateModule,
+    TranslatePipe,
+    ButtonModule,
+    Button
+  ], encapsulation: 2 });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ComponentGuidanceComponent, [{
+    type: Component,
+    args: [{ selector: "ca-component-guidance", imports: [
+      CommonModule,
+      FormsModule,
+      TranslateModule,
+      ButtonModule
+    ], template: `<p class="m-0">Unfinished. Will add fxn to:</p>
+<ul>
+    <li>detect which components are used on the page and link to relevant UCDG guidance (in progress)</li>
+    <li>warn user if they are using a depracated version of a component</li>
+    <li>auto-fix deprecated code w/ option to accept & merge with page</li>
+</ul>
+<h2>Guidance</h2>
+<ul>
+    <li *ngFor="let item of guidanceList">
+        <a [href]="item.url | translate" target="_blank" rel="noopener">{{ item.name | translate }}<i class="pi pi-external-link ml-1" style="font-size: .75rem"></i></a>
+    </li>
+</ul>
+<p>This button just checks if you have any classes or elements that aren't in theme.min.css</p>
+<p-button severity="primary" (click)="runValidation()" class="mt-2">Check classes and elements</p-button>
+<ul>
+    <li *ngFor="let v of violations">
+        {{v.type}}: {{v.detail}}
+    </li>
+</ul>` }]
+  }], () => [{ type: UploadStateService }, { type: TranslateService }, { type: ValidatorService }, { type: HttpClient }], null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ComponentGuidanceComponent, { className: "ComponentGuidanceComponent", filePath: "src/app/views/page-assistant/components/tools/component-guidance.component.ts", lineNumber: 23 });
 })();
 
 // src/app/views/page-assistant/components/tools/seo.component.ts
@@ -38804,1526 +45393,243 @@ var UserInsightsComponent = class _UserInsightsComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(UserInsightsComponent, { className: "UserInsightsComponent", filePath: "src/app/views/page-assistant/components/tools/user-insights.component.ts", lineNumber: 19 });
 })();
 
-// src/app/views/page-assistant/data/css-list.config.ts
-var allowedElements = [
-  "header",
-  "footer",
-  "main",
-  "body",
-  "div",
-  "span",
-  "section",
-  "nav",
-  "time",
-  "abbr",
-  "p",
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-  "ul",
-  "ol",
-  "li",
-  "dl",
-  "dt",
-  "dd",
-  "table",
-  "thead",
-  "tbody",
-  "tfoot",
-  "tr",
-  "td",
-  "th",
-  "form",
-  "input",
-  "label",
-  "fieldset",
-  "legend",
-  "button",
-  "strong",
-  "aside",
-  "summary",
-  "details",
-  "a",
-  "img",
-  "figure",
-  "figcaption"
-];
-var allowedClasses = [
-  //AEM
-  /^(mwsgeneric-base-html|mwstitle|mwsbodytext|parbase)$/,
-  // Alerts / Status
-  /^alert(-(danger|dismissable|dismissible|info|link|success|warning))?$/,
-  /^(danger|success|warning|info|secondary|error|errmsg|has-(error|feedback|success|warning))$/,
-  // Alignment / Layout / Display
-  /^align-(bottom|middle|top|items-(center|sm-center)|self-(center|end))$/,
-  /\b(center|full-width|flex(-column|-sm-wrap)?|hide|invisible|left|pre-scrollable|right|row-no-gutters|show|stretched-link|text-hide|small|sm|xxsmallview|xlargeview)\b/,
-  /^d(-(sm-)?flex)?$/,
-  /^pull-(left|right)$/,
-  /^(top(-(left|right))?|bottom(-(left|right))?)$/,
-  /^mrgn-(tp|bttm|lft|rght)-(0|xs|sm|md|lg|xl)$/,
-  /^(m|p)([trblxy]?)-(auto|[0-5])$/,
-  /^(m|p)([trblxy]?)-(lg|md|sm)-?(auto|[0-5])$/,
-  /^pstn-(bttm|lft|rght|tp)-(lg|md|sm|xs)$/,
-  /^margin-(top|bottom)-(none|large|medium)$/,
-  /^(cnt-wdth-lmtd|container(-fluid)?|max-content|allow-wrap|nowrap|position-relative|grow|)$/,
-  /^(hght-inhrt|eqht-trgt)$/,
-  // Backgrounds
-  /^bg-(center|cover|danger|dark(er)?|gctheme|img-hdng|info|light|norepeat|pnkDy|primary|success|warning)$/,
-  /(no-)?backgroundsize/,
-  // Borders
-  /^brdr-(0|bttm|lft|rght|tp|rds-0)$/,
-  // Calendar
-  /^cal-(cnt-fluid|curr-day|days|evt|evt-lnk|nav)$/,
-  // Carousel / Slideshows
-  /^carousel(-(caption|control|indicators|inner|s[12]))?$/,
-  /\b(fd-(slider|wdgt)(-(bar|handle|range))?|slide|slidefade|slidevert)\b/,
-  // Clearfix
-  /^clr-(lft|rght)-(lg|md|sm)$/,
-  // Columns / Grid system
-  /^col-?(xs|sm|md|lg)?-?([0-9]{1,2}|auto)?$/,
-  /^col-(xs|sm|md|lg)-(offset|push|pull)-[0-9]{1,2}$/,
-  /^colcount-(xxs|xs|sm|md|lg|xl)-[2-4]$/,
-  "colcount-no-break",
-  /^row(border)?$/,
-  // Embeds
-  /^embed-responsive(-(16by9|4by3|item))?$/,
-  // Headings
-  /^h(1|2|3|4|5|6)$/,
-  // File extensions
-  /\b(jpg|png|woff2?|ttf|eot|svg)\b/,
-  // Forms / Inputs / UI controls
-  /^btn(-(block|call-to-action|cnt|danger|default|group(-(justified|lg|sm|vertical|xs))?|info|lg|link|primary|sm|success|toolbar|warning|xs|all-services))?$/,
-  /^form-(control(-(feedback|static))?|group(-(lg|sm))?|horizontal|inline)$/,
-  /\b(checkbox(-inline|-standalone)?|radio(-inline)?|control(-label)?|controls|inputs-zone|submit|reset|picker-overlay|datepicker-format)\b/,
-  /^(input-(group(-(addon|btn|lg|sm))?|lg|sm)|form-(control(-(feedback|static))?|group(-(lg|sm))?|horizontal|inline))$/,
-  /\b(active|disabled|selected|hover|required(-no-asterisk)?)\b/,
-  /\b(buttons|basic-link|legend-brdr-bttm|legend-label-only)\b/,
-  /^dropdown-?(backdrop|header|menu-?(left|right)?|toggle)?$|^dropup$/,
-  // Geomap
-  /^geomap-(aoi|clear-format|geoloc(-aoi-btn)?|help-(btn|dialog)|legend-(detail|element|label|symbol(-text)?)|lgnd(-layer)?|progress)$/,
-  "geoloc-progress",
-  // Labels
-  /^label(-(danger|default|info|inline|primary|success|warning))?$/,
-  // Lists
-  /^list-col-(xs|sm|md|lg)-[1-4]$/,
-  /^list-group(?:-item(?:-(?:danger|heading|info|success|text|warning))?)?$/,
-  /^list-(advanced|inline|responsive|unstyled)$/,
-  /^lst-(?:spcd(?:-2)?|lwr-(?:alph|rmn)|upr-(?:alph|rmn)|none|num)$/,
-  /^dl-(horizontal|inline)$/,
-  "disc",
-  // Media & Images
-  /\b(media(-(body|bottom|heading|left|middle|object|right))?|audio|video|feed|feeds-(cont|date)|figcaption|pln|highlighted|fun|quiz|question|mark)\b/,
-  /^(thumbnail|badge(-dept)?|avatar|cmpgn-(img|sctns)|cndwrdmrk)$/,
-  /^img-(circle|responsive|rounded|thumbnail)$/,
-  // Modals
-  /^modal-?(backdrop|body|content|dialog|footer|header|lg|open|scrollbar-measure|sm|title)?$/,
-  /^mfp-[a-z0-9-]+$/,
-  /^overlay(-bg|-close|-def)?$/,
-  // Navbar
-  /^navbar-?(brand|btn|collapse|default|fixed-(bottom|top)|form|header|inverse|left|link|nav|right|static-top|text|toggle)?$/,
-  /^nav-?(tabs|justified|pills|stacked|divider)?$/,
-  /^(nvbar|current)$/,
-  // Opacity
-  /^opct-(10|20|30|40|50|60|70|80|90|100)$/,
-  // Pagination / Sorting
-  /^(paginate-?(next|prev)|pagntn-prv-nxt|pgntn-lbl|pager|page-(header|type-(ilp|nav|search|theme))|_button)$/,
-  /^pagination(-lg)?$/,
-  /^sorting(_(1|2|3|asc(_disabled)?|desc(_disabled)?)|(-cnt|-icons))?$/,
-  /^(next|nxt|previous|prev)$/,
-  // Panels
-  /^panel-?(body|collapse|danger|default|footer|group|heading|info|primary|success|title|warning)?$/,
-  /^well(-(bold|lg|sm))?$/,
-  /\b(sm-pnl|lastpnl|tgl-panel|frstpnl|sec-pnl|info-pnl)\b/,
-  /^tab-?(content|count|pane|panels|acc)$/,
-  "expanded",
-  // Progress bar
-  /^progress(-bar(-(danger|info|striped|success|warning))?|Striped|Bar|Text)?$/,
-  // Tables
-  /^table-?(bordered|columnfloat|condensed|hover|responsive|striped)?$/,
-  /^(data(T|t)ables?_?(empty|filter|info|length|paginate|processing|scroll(Body|Head)?|sizing|wrapper)?)$/,
-  /^nws-tbl-?(date|dept|desc|ttl|type)?$/,
-  // Tooltips / Popovers
-  /^(tooltip-?(arrow|inner|txt)|popover-?(content|title)?)?$/,
-  // Text
-  /^text-(center|left|right|sm-left|sm-right|danger|info|justify|lowercase|muted|nowrap|primary|success|uppercase|warning|white|capitalize)$/,
-  "lead",
-  // Visibility
-  /^visible-(xs|sm|md|lg|print)(-(block|inline|inline-block))?$/,
-  /^hidden(-(xs|sm|md|lg|print|hd))?$/,
-  /^sr-only(-focusable)?$/,
-  // Skeleton
-  /^skeleton-lgnd-(1|2|3)$/,
-  // Multi-step UI
-  /\b(steps-wrapper|stepsquiz|expand-collapse-buttons)\b/,
-  // Social media
-  /\b(facebook|twitter(-timeline(-loading|-rendered)?)?|instagram|linkedin|tumblr|reddit|pinterest|youtube|gmail|yahoomail|googleplus|diigo|foursquare|myspace|periscope|x(-social)?|whatsapp|github|social-lnk)\b/,
-  // Framework / WET / GC
-  /^wb-[a-z0-9-]+$/,
-  /^gc-[a-z0-9-]+$/,
-  /^gcds[a-z0-9-]*$/,
-  /^ol(-[a-z0-9-]+)?$/,
-  // Page elements
-  /\b(pagebrand|pagedetails|section|sect-lnks|sctn-desc|breadcrumb|caption|title|subtitle|datemod|departments|features|followus|gcweb-menu|menu|profile|intro|most-requested-bullets)\b/,
-  // Product elements
-  /\bproduct(-data-(compressed|expanded|hidden)|-department|-icon|-language|-link(-container|-list)?|-listing|-name|-platforms|-record|-shortdescription|-longdescription)?\b/,
-  // Icons
-  /^glyphicon(-[a-z0-9-]+)?$/,
-  /^icon-?(bar|next|prev|warning-light)$/
-];
-var disallowedAttributes = [
-  /^on.*/
-  // inline JS handler like onclick, onmouseover
-  //'style'      // inline styles, these are added by page assistant so needs extra check or change added styles to a class
-];
-var guidanceMap = [
-  {
-    name: "page.tools.guidance.craSpecific.andor.title",
-    url: "page.tools.guidance.craSpecific.andor.url",
-    patterns: [/^cnjnctn-(type-(or|and)|xs|sm|md|lg|col(-[2-9][05])?)$/]
-  },
-  {
-    name: "page.tools.guidance.craVariant.alerts.title",
-    url: "page.tools.guidance.craVariant.alerts.url",
-    patterns: [/^alert(-(danger|dismissable|dismissible|info|link|success|warning))?$/]
-  },
-  {
-    name: "page.tools.guidance.craVariant.headings.title",
-    url: "page.tools.guidance.craVariant.headings.url",
-    patterns: [/^h[1-6]$/]
-  },
-  {
-    name: "page.tools.guidance.craVariant.fieldflow.title",
-    url: "page.tools.guidance.craVariant.fieldflow.url",
-    patterns: ["wb-fieldflow"]
-  },
-  {
-    name: "page.tools.guidance.craVariant.lists.title",
-    url: "page.tools.guidance.craVariant.lists.url",
-    patterns: [
-      /^list-col-(xs|sm|md|lg)-[1-4]$/,
-      /^list-group(?:-item(?:-(?:danger|heading|info|success|text|warning))?)?$/,
-      /^list-(advanced|inline|responsive|unstyled)$/,
-      /^lst-(?:spcd(?:-2)?|lwr-(?:alph|rmn)|upr-(?:alph|rmn)|none|num)$/,
-      /^dl-(horizontal|inline)$/,
-      "disc"
-    ]
-  },
-  {
-    name: "page.tools.guidance.craVariant.subway.title",
-    url: "page.tools.guidance.craVariant.subway.url",
-    patterns: [/^gc-subway(-pagination)?$/]
-  },
-  {
-    name: "page.tools.guidance.craVariant.tables.title",
-    url: "page.tools.guidance.craVariant.tables.url",
-    patterns: [
-      /^table-?(bordered|columnfloat|condensed|hover|responsive|striped)?$/,
-      /^(data(T|t)ables?_?(empty|filter|info|length|paginate|processing|scroll(Body|Head)?|sizing|wrapper)?)$/
-    ]
-  },
-  {
-    name: "page.tools.guidance.gcCore.badges.title",
-    url: "page.tools.guidance.gcCore.badges.url",
-    patterns: ["badge"]
-  },
-  {
-    name: "page.tools.guidance.craVariant.borders.title",
-    url: "page.tools.guidance.craVariant.borders.url",
-    patterns: [/^brdr-(0|bttm|lft|rght|tp|rds-0)$/]
-  },
-  {
-    name: "page.tools.guidance.gcCore.buttons.title",
-    url: "page.tools.guidance.gcCore.buttons.url",
-    patterns: [/^btn(-(block|call-to-action|cnt|danger|default|group(-(justified|lg|sm|vertical|xs))?|info|lg|link|primary|sm|success|toolbar|warning|xs|all-services))?$/]
-  },
-  {
-    name: "page.tools.guidance.gcCore.calendar.title",
-    url: "page.tools.guidance.gcCore.calendar.url",
-    patterns: ["wb-calevt"]
-  }
-];
-var guidanceContentMap = [
-  {
-    name: "page.tools.guidance.craSpecific.contact.title",
-    url: "page.tools.guidance.craSpecific.contact.url",
-    tag: "dt",
-    patterns: [/^Online$/i, /^By phone$/i, /^By mail$/i]
-  },
-  {
-    name: "page.tools.guidance.craSpecific.toc.title",
-    url: "page.tools.guidance.craSpecific.toc.url",
-    tag: "h2",
-    patterns: [/^On this page$/i, /^Table of contents$/i]
-  },
-  {
-    name: "page.tools.guidance.craVariant.doormats.title",
-    url: "page.tools.guidance.craVariant.doormats.url",
-    tag: "section",
-    patterns: [/^BANANA$/]
-  },
-  {
-    name: "page.tools.guidance.craVariant.links.title",
-    url: "page.tools.guidance.craVariant.links.url",
-    tag: "a",
-    patterns: [/^.*?$/]
-  },
-  {
-    name: "page.tools.guidance.craVariant.basicPage.title",
-    url: "page.tools.guidance.craVariant.basicPage.url",
-    tag: "p",
-    patterns: [/^BANANA$/]
-  },
-  {
-    name: "page.tools.guidance.craVariant.borders.title",
-    url: "page.tools.guidance.craVariant.borders.url",
-    tag: "br",
-    patterns: [/^.*?$/]
-  }
-];
-
-// src/app/views/page-assistant/services/validator.service.ts
-var ValidatorService = class _ValidatorService {
-  validateHtml(html) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    const violations = [];
-    this.walkNodes(doc.body, violations);
-    return violations;
-  }
-  walkNodes(node, violations) {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      const tagName = node.tagName.toLowerCase();
-      if (!allowedElements.includes(tagName)) {
-        violations.push({
-          type: "element",
-          detail: `Unexpected element <${tagName}>`,
-          node
-        });
-      }
-      node.classList.forEach((cls) => {
-        if (!this.isClassAllowed(cls)) {
-          violations.push({
-            type: "class",
-            detail: `Unexpected class "${cls}" on <${tagName}>`,
-            node
-          });
-        }
-      });
-      Array.from(node.attributes).forEach((attr) => {
-        if (this.isAttributeDisallowed(attr.name)) {
-          violations.push({
-            type: "attribute",
-            detail: `Disallowed attribute "${attr.name}" on <${tagName}>`,
-            node
-          });
-        }
-      });
-    }
-    node.childNodes.forEach((child) => {
-      if (child.nodeType === Node.ELEMENT_NODE) {
-        this.walkNodes(child, violations);
-      }
-    });
-  }
-  isClassAllowed(cls) {
-    return allowedClasses.some((allowed) => {
-      if (typeof allowed === "string")
-        return allowed === cls;
-      if (allowed instanceof RegExp)
-        return allowed.test(cls);
-      return false;
-    });
-  }
-  isAttributeDisallowed(attr) {
-    return disallowedAttributes.some((bad) => {
-      if (typeof bad === "string")
-        return bad === attr;
-      if (bad instanceof RegExp)
-        return bad.test(attr);
-      return false;
-    });
-  }
-  collectGuidanceUrls(html) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    const found = /* @__PURE__ */ new Map();
-    this.walkForGuidance(doc.body, found);
-    this.walkForContentGuidance(doc.body, found);
-    return Array.from(found.values());
-  }
-  walkForGuidance(node, found) {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      node.classList.forEach((cls) => {
-        for (const group of guidanceMap) {
-          if (group.patterns.some((pat) => typeof pat === "string" ? pat === cls : pat.test(cls))) {
-            found.set(group.url, { name: group.name, url: group.url });
-          }
-        }
-      });
-    }
-    node.childNodes.forEach((child) => {
-      if (child.nodeType === Node.ELEMENT_NODE) {
-        this.walkForGuidance(child, found);
-      }
-    });
-  }
-  walkForContentGuidance(node, found) {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      const tagName = node.tagName.toLowerCase();
-      const text = node.textContent?.trim();
-      if (text) {
-        for (const group of guidanceContentMap) {
-          if (group.tag === tagName && group.patterns.some((pat) => typeof pat === "string" ? pat === text : pat.test(text))) {
-            found.set(group.url, { name: group.name, url: group.url });
-          }
-        }
-      }
-    }
-    node.childNodes.forEach((child) => {
-      if (child.nodeType === Node.ELEMENT_NODE) {
-        this.walkForContentGuidance(child, found);
-      }
-    });
-  }
-  static \u0275fac = function ValidatorService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ValidatorService)();
+// src/app/views/page-assistant/components/tools/link-report.component.ts
+var LinkReportComponent = class _LinkReportComponent {
+  static \u0275fac = function LinkReportComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _LinkReportComponent)();
   };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ValidatorService, factory: _ValidatorService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ValidatorService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
-})();
-
-// src/app/views/page-assistant/components/tools/component-guidance.component.ts
-function ComponentGuidanceComponent_li_12_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "li")(1, "a", 3);
-    \u0275\u0275pipe(2, "translate");
-    \u0275\u0275text(3);
-    \u0275\u0275pipe(4, "translate");
-    \u0275\u0275element(5, "i", 4);
-    \u0275\u0275elementEnd()();
-  }
-  if (rf & 2) {
-    const item_r1 = ctx.$implicit;
-    \u0275\u0275advance();
-    \u0275\u0275property("href", \u0275\u0275pipeBind1(2, 2, item_r1.url), \u0275\u0275sanitizeUrl);
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 4, item_r1.name));
-  }
-}
-function ComponentGuidanceComponent_li_18_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "li");
-    \u0275\u0275text(1);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const v_r2 = ctx.$implicit;
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate2(" ", v_r2.type, ": ", v_r2.detail, " ");
-  }
-}
-var ComponentGuidanceComponent = class _ComponentGuidanceComponent {
-  uploadState;
-  translate;
-  validator;
-  http;
-  constructor(uploadState, translate, validator, http) {
-    this.uploadState = uploadState;
-    this.translate = translate;
-    this.validator = validator;
-    this.http = http;
-  }
-  ngOnInit() {
-    const data = this.uploadState.getUploadData();
-    if (data?.originalHtml) {
-      this.guidanceList = this.validator.collectGuidanceUrls(data.originalHtml);
-      console.log(this.guidanceList);
-    }
-  }
-  guidanceList = [];
-  violations = [];
-  allClassesForQA = '<p class="active affix alert alert-danger alert-dismissable alert-dismissible alert-info alert-link alert-success alert-warning align-bottom align-items-center align-items-sm-center align-middle align-self-center align-self-end align-top allow-wrap application-bar arrow atn atv audio avatar backgroundsize badge badge-dept basic-link bg-center bg-cover bg-danger bg-dark bg-darker bg-gctheme bg-img-hdng bg-info bg-light bg-norepeat bg-pnkDy bg-primary bg-success bg-warning blockquote-reverse blog blogger bluesky body bold-content bottom bottom-left bottom-right brand brdr-0 brdr-bttm brdr-lft brdr-rds-0 brdr-rght brdr-tp breadcrumb btn btn-all-services btn-block btn-call-to-action btn-cnt btn-danger btn-default btn-group btn-group-justified btn-group-lg btn-group-sm btn-group-vertical btn-group-xs btn-info btn-lg btn-link btn-primary btn-sm btn-success btn-toolbar btn-warning btn-xs bubble buttons ca cal-cnt-fluid cal-curr-day cal-days cal-evt cal-evt-lnk cal-nav canada caption caret carousel carousel-caption carousel-control carousel-indicators carousel-inner carousel-s1 carousel-s2 cc cc_on cell-border center center-block checkbox checkbox-inline checkbox-standalone chkbxrdio-grp choices chvrn circle clearfix clo close clr-lft-lg clr-lft-md clr-lft-sm clr-rght-lg clr-rght-md clr-rght-sm cmpgn-img cmpgn-sctns cndwrdmrk cnt-wdth-lmtd cntnt cntrls col-lg-1 col-lg-10 col-lg-11 col-lg-12 col-lg-2 col-lg-3 col-lg-4 col-lg-5 col-lg-6 col-lg-7 col-lg-8 col-lg-9 col-lg-auto col-lg-offset-0 col-lg-offset-1 col-lg-offset-10 col-lg-offset-11 col-lg-offset-12 col-lg-offset-2 col-lg-offset-3 col-lg-offset-4 col-lg-offset-5 col-lg-offset-6 col-lg-offset-7 col-lg-offset-8 col-lg-offset-9 col-lg-pull-0 col-lg-pull-1 col-lg-pull-10 col-lg-pull-11 col-lg-pull-12 col-lg-pull-2 col-lg-pull-3 col-lg-pull-4 col-lg-pull-5 col-lg-pull-6 col-lg-pull-7 col-lg-pull-8 col-lg-pull-9 col-lg-push-0 col-lg-push-1 col-lg-push-10 col-lg-push-11 col-lg-push-12 col-lg-push-2 col-lg-push-3 col-lg-push-4 col-lg-push-5 col-lg-push-6 col-lg-push-7 col-lg-push-8 col-lg-push-9 col-md-1 col-md-10 col-md-11 col-md-12 col-md-2 col-md-3 col-md-4 col-md-5 col-md-6 col-md-7 col-md-8 col-md-9 col-md-auto col-md-offset-0 col-md-offset-1 col-md-offset-10 col-md-offset-11 col-md-offset-12 col-md-offset-2 col-md-offset-3 col-md-offset-4 col-md-offset-5 col-md-offset-6 col-md-offset-7 col-md-offset-8 col-md-offset-9 col-md-pull-0 col-md-pull-1 col-md-pull-10 col-md-pull-11 col-md-pull-12 col-md-pull-2 col-md-pull-3 col-md-pull-4 col-md-pull-5 col-md-pull-6 col-md-pull-7 col-md-pull-8 col-md-pull-9 col-md-push-0 col-md-push-1 col-md-push-10 col-md-push-11 col-md-push-12 col-md-push-2 col-md-push-3 col-md-push-4 col-md-push-5 col-md-push-6 col-md-push-7 col-md-push-8 col-md-push-9 col-sm-1 col-sm-10 col-sm-11 col-sm-12 col-sm-2 col-sm-3 col-sm-4 col-sm-5 col-sm-6 col-sm-7 col-sm-8 col-sm-9 col-sm-auto col-sm-offset-0 col-sm-offset-1 col-sm-offset-10 col-sm-offset-11 col-sm-offset-12 col-sm-offset-2 col-sm-offset-3 col-sm-offset-4 col-sm-offset-5 col-sm-offset-6 col-sm-offset-7 col-sm-offset-8 col-sm-offset-9 col-sm-pull-0 col-sm-pull-1 col-sm-pull-10 col-sm-pull-11 col-sm-pull-12 col-sm-pull-2 col-sm-pull-3 col-sm-pull-4 col-sm-pull-5 col-sm-pull-6 col-sm-pull-7 col-sm-pull-8 col-sm-pull-9 col-sm-push-0 col-sm-push-1 col-sm-push-10 col-sm-push-11 col-sm-push-12 col-sm-push-2 col-sm-push-3 col-sm-push-4 col-sm-push-5 col-sm-push-6 col-sm-push-7 col-sm-push-8 col-sm-push-9 col-xs-1 col-xs-10 col-xs-11 col-xs-12 col-xs-2 col-xs-3 col-xs-4 col-xs-5 col-xs-6 col-xs-7 col-xs-8 col-xs-9 col-xs-auto col-xs-offset-0 col-xs-offset-1 col-xs-offset-10 col-xs-offset-11 col-xs-offset-12 col-xs-offset-2 col-xs-offset-3 col-xs-offset-4 col-xs-offset-5 col-xs-offset-6 col-xs-offset-7 col-xs-offset-8 col-xs-offset-9 col-xs-pull-0 col-xs-pull-1 col-xs-pull-10 col-xs-pull-11 col-xs-pull-12 col-xs-pull-2 col-xs-pull-3 col-xs-pull-4 col-xs-pull-5 col-xs-pull-6 col-xs-pull-7 col-xs-pull-8 col-xs-pull-9 col-xs-push-0 col-xs-push-1 col-xs-push-10 col-xs-push-11 col-xs-push-12 col-xs-push-2 col-xs-push-3 col-xs-push-4 col-xs-push-5 col-xs-push-6 col-xs-push-7 col-xs-push-8 col-xs-push-9 colcount-lg-2 colcount-lg-3 colcount-lg-4 colcount-md-2 colcount-md-3 colcount-md-4 colcount-no-break colcount-sm-2 colcount-sm-3 colcount-sm-4 colcount-xl-2 colcount-xl-3 colcount-xl-4 colcount-xs-2 colcount-xs-3 colcount-xs-4 colcount-xxs-2 colcount-xxs-3 colcount-xxs-4 collapse collapsing com commit compact container container-fluid context-labels control control-label controls conversation css css-implicite-input csstransitions curr-count current d-flex d-sm-flex danger dark-theme dataTable dataTables_empty dataTables_filter dataTables_info dataTables_length dataTables_paginate dataTables_processing dataTables_scroll dataTables_scrollBody dataTables_scrollHead dataTables_sizing dataTables_wrapper datatables_wrapper datemod datepicker-format dbl dec departments diigo disabled disc display divider dl-horizontal dl-inline dot1 dot2 dot3 dropdown dropdown-backdrop dropdown-header dropdown-menu dropdown-menu-left dropdown-menu-right dropdown-toggle dropup dshbrd dt-max email embed-responsive embed-responsive-16by9 embed-responsive-4by3 embed-responsive-item eot errmsg error ev-details even exclude-controls expand-collapse-buttons expanded expicon facebook fade fd-slider fd-slider-bar fd-slider-handle fd-slider-range fd-wdgt features feed feeds-cont feeds-date figcaption filterEmphasis flex-column flex-sm-wrap flickr fn-lnk fn-rtn fnt-hdng fnt-nrml focus followus force-style-gcweb-4-0-29 form-control form-control-feedback form-control-static form-group form-group-lg form-group-sm form-horizontal form-inline foursquare frstpnl fs full-width fun gc-advnc-srvc gc-arch gc-archv gc-byline gc-chckbxrdio gc-cntct-lst gc-contextual gc-contributors gc-crprt gc-drmt gc-dwnld gc-dwnld-img gc-dwnld-txt gc-featured-link gc-features gc-fld-srvy-container gc-fld-srvy-mbd gc-followus gc-font-2019 gc-instttn gc-main-footer gc-minister gc-most-requested gc-nttvs gc-nws gc-orgnztn gc-pft-no gc-prtts gc-rms-lngth gc-rprt-prblm-frm gc-rprt-prblm-tggl gc-rprt-prblm-thnk gc-srvinfo gc-stp-stp gc-sub-footer gc-subway gc-subway-index gc-subway-landmark-end gc-subway-pagination gc-subway-section gc-subway-wrapper gc-table gc-theme gc-topic-bg gcdscard gcdscardcontainer gcweb-menu generated geoloc-progress geomap-aoi geomap-clear-format geomap-geoloc geomap-geoloc-aoi-btn geomap-help-btn geomap-help-dialog geomap-legend-detail geomap-legend-element geomap-legend-label geomap-legend-symbol geomap-legend-symbol-text geomap-lgnd geomap-lgnd-layer geomap-progress github glyphicon glyphicon-adjust glyphicon-alert glyphicon-align-center glyphicon-align-justify glyphicon-align-left glyphicon-align-right glyphicon-apple glyphicon-arrow-down glyphicon-arrow-left glyphicon-arrow-right glyphicon-arrow-up glyphicon-asterisk glyphicon-baby-formula glyphicon-backward glyphicon-ban-circle glyphicon-barcode glyphicon-bed glyphicon-bell glyphicon-bishop glyphicon-bitcoin glyphicon-blackboard glyphicon-bold glyphicon-book glyphicon-bookmark glyphicon-briefcase glyphicon-btc glyphicon-bullhorn glyphicon-calendar glyphicon-camera glyphicon-cd glyphicon-certificate glyphicon-check glyphicon-chevron-down glyphicon-chevron-left glyphicon-chevron-right glyphicon-chevron-up glyphicon-circle-arrow-down glyphicon-circle-arrow-left glyphicon-circle-arrow-right glyphicon-circle-arrow-up glyphicon-cloud glyphicon-cloud-download glyphicon-cloud-upload glyphicon-cog glyphicon-collapse-down glyphicon-collapse-up glyphicon-comment glyphicon-compressed glyphicon-console glyphicon-copy glyphicon-copyright-mark glyphicon-credit-card glyphicon-cutlery glyphicon-dashboard glyphicon-download glyphicon-download-alt glyphicon-duplicate glyphicon-earphone glyphicon-edit glyphicon-education glyphicon-eject glyphicon-envelope glyphicon-equalizer glyphicon-erase glyphicon-error glyphicon-eur glyphicon-euro glyphicon-exclamation-sign glyphicon-expand glyphicon-export glyphicon-eye-close glyphicon-eye-open glyphicon-facetime-video glyphicon-fast-backward glyphicon-fast-forward glyphicon-file glyphicon-film glyphicon-filter glyphicon-fire glyphicon-flag glyphicon-flash glyphicon-floppy-disk glyphicon-floppy-open glyphicon-floppy-remove glyphicon-floppy-save glyphicon-floppy-saved glyphicon-folder-close glyphicon-folder-open glyphicon-font glyphicon-forward glyphicon-fullscreen glyphicon-gbp glyphicon-gift glyphicon-glass glyphicon-globe glyphicon-grain glyphicon-hand-down glyphicon-hand-left glyphicon-hand-right glyphicon-hand-up glyphicon-hd-video glyphicon-hdd glyphicon-header glyphicon-headphones glyphicon-heart glyphicon-heart-empty glyphicon-home glyphicon-hourglass glyphicon-ice-lolly glyphicon-ice-lolly-tasted glyphicon-import glyphicon-inbox glyphicon-indent-left glyphicon-indent-right glyphicon-info-sign glyphicon-italic glyphicon-jpy glyphicon-king glyphicon-knight glyphicon-lamp glyphicon-leaf glyphicon-level-up glyphicon-link glyphicon-list glyphicon-list-alt glyphicon-lock glyphicon-log-in glyphicon-log-out glyphicon-magnet glyphicon-map-marker glyphicon-menu-down glyphicon-menu-hamburger glyphicon-menu-left glyphicon-menu-right glyphicon-menu-up glyphicon-minus glyphicon-minus-sign glyphicon-modal-window glyphicon-move glyphicon-music glyphicon-new-window glyphicon-object-align-bottom glyphicon-object-align-horizontal glyphicon-object-align-left glyphicon-object-align-right glyphicon-object-align-top glyphicon-object-align-vertical glyphicon-off glyphicon-oil glyphicon-ok glyphicon-ok-circle glyphicon-ok-sign glyphicon-open glyphicon-open-file glyphicon-option-horizontal glyphicon-option-vertical glyphicon-paperclip glyphicon-paste glyphicon-pause glyphicon-pawn glyphicon-pencil glyphicon-phone glyphicon-phone-alt glyphicon-picture glyphicon-piggy-bank glyphicon-plane glyphicon-play glyphicon-play-circle glyphicon-plus glyphicon-plus-sign glyphicon-print glyphicon-pushpin glyphicon-qrcode glyphicon-queen glyphicon-question-sign glyphicon-random glyphicon-record glyphicon-refresh glyphicon-registration-mark glyphicon-remove glyphicon-remove-circle glyphicon-remove-sign glyphicon-repeat glyphicon-resize-full glyphicon-resize-horizontal glyphicon-resize-small glyphicon-resize-vertical glyphicon-retweet glyphicon-road glyphicon-rub glyphicon-ruble glyphicon-save glyphicon-save-file glyphicon-saved glyphicon-scale glyphicon-scissors glyphicon-screenshot glyphicon-sd-video glyphicon-search glyphicon-send glyphicon-share glyphicon-share-alt glyphicon-shopping-cart glyphicon-signal glyphicon-sort glyphicon-sort-by-alphabet glyphicon-sort-by-alphabet-alt glyphicon-sort-by-attributes glyphicon-sort-by-attributes-alt glyphicon-sort-by-order glyphicon-sort-by-order-alt glyphicon-sound-5-1 glyphicon-sound-6-1 glyphicon-sound-7-1 glyphicon-sound-dolby glyphicon-sound-stereo glyphicon-spin glyphicon-star glyphicon-star-empty glyphicon-stats glyphicon-step-backward glyphicon-step-forward glyphicon-stop glyphicon-subscript glyphicon-subtitles glyphicon-sunglasses glyphicon-superscript glyphicon-tag glyphicon-tags glyphicon-tasks glyphicon-tent glyphicon-text-background glyphicon-text-color glyphicon-text-height glyphicon-text-size glyphicon-text-width glyphicon-th glyphicon-th-large glyphicon-th-list glyphicon-thumbs-down glyphicon-thumbs-up glyphicon-time glyphicon-tint glyphicon-tower glyphicon-transfer glyphicon-trash glyphicon-tree-conifer glyphicon-tree-deciduous glyphicon-triangle-bottom glyphicon-triangle-left glyphicon-triangle-right glyphicon-triangle-top glyphicon-unchecked glyphicon-upload glyphicon-usd glyphicon-user glyphicon-volume-down glyphicon-volume-off glyphicon-volume-up glyphicon-warning-sign glyphicon-wrench glyphicon-xbt glyphicon-yen glyphicon-zoom-in glyphicon-zoom-out gmail googleplus grow gstatic h-100 h1 h2 h3 h4 h5 h6 has-error has-feedback has-success has-warning header header-rwd help-block hght-inhrt hidden hidden-hd hidden-lg hidden-md hidden-print hidden-sm hidden-xs hide history home home-most-requested home-your-gov hover html icn-sig-en icn-sig-fr icon icon-bar icon-next icon-prev icon-warning-light img-circle img-responsive img-rounded img-thumbnail in info info-banner info-banner-actions info-pnl infostripe initialism input-group input-group-addon input-group-btn input-group-lg input-group-sm input-lg input-sm inputs-zone instagram invisible io item jpg jumbotron kwd label label-danger label-default label-info label-inline label-primary label-success label-warning landscape largeview lastpnl lbx-hide-gal lead learnmore left legend-brdr-bttm legend-label-only linenums linkedin list-advanced list-col-lg-1 list-col-lg-2 list-col-lg-3 list-col-lg-4 list-col-md-1 list-col-md-2 list-col-md-3 list-col-md-4 list-col-sm-1 list-col-sm-2 list-col-sm-3 list-col-sm-4 list-col-xs-1 list-col-xs-2 list-col-xs-3 list-col-xs-4 list-group list-group-item list-group-item-danger list-group-item-heading list-group-item-info list-group-item-success list-group-item-text list-group-item-warning list-inline list-responsive list-unstyled lit lng-ofr lnkbx loader-dot loader-typing location lst-lwr-alph lst-lwr-rmn lst-none lst-num lst-spcd lst-spcd-2 lst-upr-alph lst-upr-rmn lt-ie9 m-0 m-1 m-2 m-3 m-4 m-5 m-auto m-lg-0 m-lg-1 m-lg-2 m-lg-3 m-lg-4 m-lg-5 m-lg-auto m-md-0 m-md-1 m-md-2 m-md-3 m-md-4 m-md-5 m-md-auto m-sm-0 m-sm-1 m-sm-2 m-sm-3 m-sm-4 m-sm-5 m-sm-auto margin-bottom-none margin-bottom-small margin-top-large margin-top-medium mark mathml max-content mb-0 mb-1 mb-2 mb-3 mb-4 mb-5 mb-auto mb-lg-0 mb-lg-1 mb-lg-2 mb-lg-3 mb-lg-4 mb-lg-5 mb-lg-auto mb-md-0 mb-md-1 mb-md-2 mb-md-3 mb-md-4 mb-md-5 mb-md-auto mb-menu mb-sm-0 mb-sm-1 mb-sm-2 mb-sm-3 mb-sm-4 mb-sm-5 mb-sm-auto media media-body media-bottom media-heading media-left media-list media-middle media-object media-right menu message mfp-ajax-cur mfp-ajax-holder mfp-align-top mfp-arrow mfp-arrow-left mfp-arrow-right mfp-auto-cursor mfp-b mfp-bg mfp-bottom-bar mfp-close mfp-close-btn-in mfp-container mfp-content mfp-counter mfp-figure mfp-gallery mfp-hide mfp-iframe-holder mfp-iframe-scaler mfp-image-holder mfp-img mfp-img-mobile mfp-inline-holder mfp-loading mfp-preloader mfp-s-error mfp-s-ready mfp-title mfp-wrap mfp-zoom mfp-zoom-out-cur minimize ml-0 ml-1 ml-2 ml-3 ml-4 ml-5 ml-auto ml-lg-0 ml-lg-1 ml-lg-2 ml-lg-3 ml-lg-4 ml-lg-5 ml-lg-auto ml-md-0 ml-md-1 ml-md-2 ml-md-3 ml-md-4 ml-md-5 ml-md-auto ml-sm-0 ml-sm-1 ml-sm-2 ml-sm-3 ml-sm-4 ml-sm-5 ml-sm-auto modal modal-backdrop modal-body modal-content modal-dialog modal-footer modal-header modal-lg modal-open modal-scrollbar-measure modal-sm modal-title more-ways mr-0 mr-1 mr-2 mr-3 mr-4 mr-5 mr-auto mr-lg-0 mr-lg-1 mr-lg-2 mr-lg-3 mr-lg-4 mr-lg-5 mr-lg-auto mr-md-0 mr-md-1 mr-md-2 mr-md-3 mr-md-4 mr-md-5 mr-md-auto mr-sm-0 mr-sm-1 mr-sm-2 mr-sm-3 mr-sm-4 mr-sm-5 mr-sm-auto mrgn-bttm-0 mrgn-bttm-lg mrgn-bttm-md mrgn-bttm-sm mrgn-bttm-xl mrgn-lft-0 mrgn-lft-lg mrgn-lft-md mrgn-lft-sm mrgn-lft-xl mrgn-rght-0 mrgn-rght-lg mrgn-rght-md mrgn-rght-sm mrgn-rght-xl mrgn-tp-0 mrgn-tp-lg mrgn-tp-md mrgn-tp-sm mrgn-tp-xl mt-0 mt-1 mt-2 mt-3 mt-4 mt-5 mt-auto mt-lg-0 mt-lg-1 mt-lg-2 mt-lg-3 mt-lg-4 mt-lg-5 mt-lg-auto mt-md-0 mt-md-1 mt-md-2 mt-md-3 mt-md-4 mt-md-5 mt-md-auto mt-sm-0 mt-sm-1 mt-sm-2 mt-sm-3 mt-sm-4 mt-sm-5 mt-sm-auto mx-0 mx-1 mx-2 mx-3 mx-4 mx-5 mx-auto mx-lg-0 mx-lg-1 mx-lg-2 mx-lg-3 mx-lg-4 mx-lg-5 mx-lg-auto mx-md-0 mx-md-1 mx-md-2 mx-md-3 mx-md-4 mx-md-5 mx-md-auto mx-sm-0 mx-sm-1 mx-sm-2 mx-sm-3 mx-sm-4 mx-sm-5 mx-sm-auto my-0 my-1 my-2 my-3 my-4 my-5 my-auto my-lg-0 my-lg-1 my-lg-2 my-lg-3 my-lg-4 my-lg-5 my-lg-auto my-md-0 my-md-1 my-md-2 my-md-3 my-md-4 my-md-5 my-md-auto my-sm-0 my-sm-1 my-sm-2 my-sm-3 my-sm-4 my-sm-5 my-sm-auto myspace nav nav-divider nav-justified nav-pills nav-stacked nav-tabs nav-tabs-justified navbar navbar-brand navbar-btn navbar-collapse navbar-default navbar-fixed-bottom navbar-fixed-top navbar-form navbar-header navbar-inverse navbar-left navbar-link navbar-nav navbar-right navbar-static-top navbar-text navbar-toggle next no-backgroundsize no-blink no-csstransitions no-details no-footer no-js no-mathml no-print no-sect no-undrln noheight nojs-col-sm-12 nojs-hide nojs-show nojs-text-left noline notif notif-close nowrap nvbar nws-tbl nws-tbl-date nws-tbl-dept nws-tbl-desc nws-tbl-ttl nws-tbl-type nxt odd ol-attribution ol-box ol-collapsed ol-compass ol-control ol-dragbox ol-full-screen ol-geolocate ol-hidden ol-logo-only ol-mouse-position ol-mouse-position-inner ol-overlay-container ol-overviewmap ol-overviewmap-box ol-overviewmap-map ol-popup ol-popup-closer ol-rotate ol-scale-line ol-scale-line-inner ol-touch ol-uncollapsible ol-unselectable ol-unsupported ol-viewport ol-zoom ol-zoom-extent ol-zoom-in ol-zoom-out olControlMousePosition olControlPanZoomBar one-dot opct-10 opct-100 opct-20 opct-30 opct-40 opct-50 opct-60 opct-70 opct-80 opct-90 open opn order-column out overlay-bg overlay-close overlay-def p-0 p-1 p-2 p-3 p-4 p-5 p-lg-0 p-lg-1 p-lg-2 p-lg-3 p-lg-4 p-lg-5 p-md-0 p-md-1 p-md-2 p-md-3 p-md-4 p-md-5 p-sm-0 p-sm-1 p-sm-2 p-sm-3 p-sm-4 p-sm-5 page-header page-type-ilp page-type-nav page-type-search page-type-theme pagebrand pagedetails pager paginate-next paginate-prev paginate_button pagination pagination-lg pagination-sm pagntn-prv-nxt panel panel-body panel-collapse panel-danger panel-default panel-footer panel-group panel-heading panel-info panel-primary panel-success panel-title panel-warning pb-0 pb-1 pb-2 pb-3 pb-4 pb-5 pb-lg-0 pb-lg-1 pb-lg-2 pb-lg-3 pb-lg-4 pb-lg-5 pb-md-0 pb-md-1 pb-md-2 pb-md-3 pb-md-4 pb-md-5 pb-sm-0 pb-sm-1 pb-sm-2 pb-sm-3 pb-sm-4 pb-sm-5 periscope pg-brk-aft pgntn-lbl picker-overlay pieLabel pinterest pl-0 pl-1 pl-2 pl-3 pl-4 pl-5 pl-lg-0 pl-lg-1 pl-lg-2 pl-lg-3 pl-lg-4 pl-lg-5 pl-md-0 pl-md-1 pl-md-2 pl-md-3 pl-md-4 pl-md-5 pl-sm-0 pl-sm-1 pl-sm-2 pl-sm-3 pl-sm-4 pl-sm-5 playing pln plypause png pnkDy-theme pop popover popover-content popover-title popup-content position-relative pr-0 pr-1 pr-2 pr-3 pr-4 pr-5 pr-lg-0 pr-lg-1 pr-lg-2 pr-lg-3 pr-lg-4 pr-lg-5 pr-md-0 pr-md-1 pr-md-2 pr-md-3 pr-md-4 pr-md-5 pr-sm-0 pr-sm-1 pr-sm-2 pr-sm-3 pr-sm-4 pr-sm-5 pre-scrollable prettyprint prev previous print-active priorities prm-flpr product-data-compressed product-data-expanded product-data-hidden product-department product-icon product-language product-link product-link-container product-link-list product-links product-listing product-longdescription product-name product-platforms product-record product-shortdescription profile progress progress-bar progress-bar-danger progress-bar-info progress-bar-striped progress-bar-success progress-bar-warning progress-striped progressBar progressText provisional prv pstn-bttm-lg pstn-bttm-md pstn-bttm-sm pstn-bttm-xs pstn-lft-lg pstn-lft-md pstn-lft-sm pstn-lft-xs pstn-rght-lg pstn-rght-md pstn-rght-sm pstn-rght-xs pstn-tp-lg pstn-tp-md pstn-tp-sm pstn-tp-xs pt-0 pt-1 pt-2 pt-3 pt-4 pt-5 pt-lg-0 pt-lg-1 pt-lg-2 pt-lg-3 pt-lg-4 pt-lg-5 pt-md-0 pt-md-1 pt-md-2 pt-md-3 pt-md-4 pt-md-5 pt-sm-0 pt-sm-1 pt-sm-2 pt-sm-3 pt-sm-4 pt-sm-5 pull-left pull-right pun px-0 px-1 px-2 px-3 px-4 px-5 px-lg-0 px-lg-1 px-lg-2 px-lg-3 px-lg-4 px-lg-5 px-md-0 px-md-1 px-md-2 px-md-3 px-md-4 px-md-5 px-sm-0 px-sm-1 px-sm-2 px-sm-3 px-sm-4 px-sm-5 py-0 py-1 py-2 py-3 py-4 py-5 py-lg-0 py-lg-1 py-lg-2 py-lg-3 py-lg-4 py-lg-5 py-md-0 py-md-1 py-md-2 py-md-3 py-md-4 py-md-5 py-sm-0 py-sm-1 py-sm-2 py-sm-3 py-sm-4 py-sm-5 question quiz radio radio-inline record-close record-expand redacted reddit required required-no-asterisk reset results reverse right row row-no-gutters rowborder rss sctn-desc search-description sec-pnl secondary sect-lnks section selected show show-thumbs shr-dscl shr-lnk shr-opn shr-pg site-related skeleton-lgnd-1 skeleton-lgnd-2 skeleton-lgnd-3 skn-lt slflnk slide slidefade slidevert sm sm-open sm-pnl small sorting sorting-cnt sorting-icons sorting_1 sorting_2 sorting_3 sorting_asc sorting_asc_disabled sorting_desc sorting_desc_disabled square sr-only sr-only-focusable srch-pnl srchbox steps-wrapper stepsquiz str stretched-link stripe subfields submit subtitle success svg tab-content tab-count tab-pane table table-bordered table-columnfloat table-condensed table-hover table-responsive table-striped tabpanels tabs-acc tag tbl-gridify test-textSpacing text-capitalize text-center text-danger text-hide text-info text-justify text-left text-lowercase text-muted text-nowrap text-primary text-right text-sm-left text-sm-right text-success text-uppercase text-warning text-white tgl-panel thumbnail tinyurl title tline toc tofpg tooltip tooltip-arrow tooltip-inner tooltip-txt top top-left top-right tp-rail trans-left trans-pulse trpl ttf tumblr twitter twitter-timeline twitter-timeline-loading twitter-timeline-rendered typ var video visible-lg visible-lg-block visible-lg-inline visible-lg-inline-block visible-md visible-md-block visible-md-inline visible-md-inline-block visible-print visible-print-block visible-print-inline visible-print-inline-block visible-sm visible-sm-block visible-sm-inline visible-sm-inline-block visible-xs visible-xs-block visible-xs-inline visible-xs-inline-block waiting warning wb-bar-b wb-bar-t wb-calevt-cal wb-cell-desc wb-cell-key wb-cell-layout wb-chtwzrd wb-chtwzrd-btn-extrnl wb-chtwzrd-bubble-wrap wb-chtwzrd-contained wb-chtwzrd-container wb-chtwzrd-mrgn wb-chtwzrd-noscroll wb-clndr wb-disable wb-dismissable-container wb-dismissable-wrapper wb-elps wb-enable wb-eqht-grd wb-feeds wb-fieldflow-form wb-fieldflow-label wb-filter wb-fltr-out wb-fnote wb-frm wb-frmvld wb-geomap wb-geomap-detail wb-geomap-geoloc-al wb-geomap-geoloc-al-cnt wb-geomap-map wb-group-summary wb-init wb-inv wb-inview wb-invisible wb-lng-lnk wb-lng-lnks-horiz wb-lng-lnks-rtl wb-lng-lnks-vert wb-menu wb-mltmd wb-mm-cc wb-mm-ctrls wb-mm-ovrly wb-mm-prgrss wb-mm-tmln-crrnt wb-mm-txtonly wb-modal wb-navcurr wb-overlay wb-overlay-dlg wb-paginate-pager wb-panel-l wb-panel-r wb-pgfltr-out wb-popup-full wb-popup-mid wb-progress-inited wb-server-error wb-share wb-share-inited wb-show-onfocus wb-sl wb-slc wb-srch-qry wb-steps wb-steps-active wb-steps-error wb-tabs wb-tagfilter-items wb-tagfilter-noresult wb-tgfltr-out wb-tggle-fildst wb-twitter wb-twitter-notice-end wb-twitter-notice-start wb-twitter-skip wb-twitter-skip-end wb-twitter-skip-start wb-zebra wb-zebra-col-hover well well-bold well-lg well-sm whatsapp whtwedo woff woff2 wtrmrk x x-social xlargeview xxsmallview yahoomail youtube zbra"> Banana </p>';
-  runValidation() {
-    const data = this.uploadState.getUploadData();
-    if (!data || !data.originalHtml)
-      return;
-    this.violations = this.validator.validateHtml(data.originalHtml);
-  }
-  //TEMP FXN FOR BUILDING WHITELIST
-  classes = [];
-  extractCSS(url) {
-    return __async(this, null, function* () {
-      const css = yield firstValueFrom(this.http.get(url, { responseType: "text" }));
-      const classPattern = /\.([a-zA-Z0-9_-]+)/g;
-      const classes12 = /* @__PURE__ */ new Set();
-      let match;
-      while ((match = classPattern.exec(css)) !== null) {
-        classes12.add(match[1]);
-      }
-      return [...classes12].sort();
-    });
-  }
-  static \u0275fac = function ComponentGuidanceComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ComponentGuidanceComponent)(\u0275\u0275directiveInject(UploadStateService), \u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(ValidatorService), \u0275\u0275directiveInject(HttpClient));
-  };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ComponentGuidanceComponent, selectors: [["ca-component-guidance"]], decls: 19, vars: 2, consts: [[1, "m-0"], [4, "ngFor", "ngForOf"], ["severity", "primary", 1, "mt-2", 3, "click"], ["target", "_blank", "rel", "noopener", 3, "href"], [1, "pi", "pi-external-link", "ml-1", 2, "font-size", ".75rem"]], template: function ComponentGuidanceComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LinkReportComponent, selectors: [["ca-link-report"]], decls: 2, vars: 0, consts: [[1, "m-0"]], template: function LinkReportComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "p", 0);
-      \u0275\u0275text(1, "Unfinished. Will add fxn to:");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(2, "ul")(3, "li");
-      \u0275\u0275text(4, "detect which components are used on the page and link to relevant UCDG guidance (in progress)");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(5, "li");
-      \u0275\u0275text(6, "warn user if they are using a depracated version of a component");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(7, "li");
-      \u0275\u0275text(8, "auto-fix deprecated code w/ option to accept & merge with page");
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(9, "h2");
-      \u0275\u0275text(10, "Guidance");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(11, "ul");
-      \u0275\u0275template(12, ComponentGuidanceComponent_li_12_Template, 6, 6, "li", 1);
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(13, "p");
-      \u0275\u0275text(14, "This button just checks if you have any classes or elements that aren't in theme.min.css");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(15, "p-button", 2);
-      \u0275\u0275listener("click", function ComponentGuidanceComponent_Template_p_button_click_15_listener() {
-        return ctx.runValidation();
-      });
-      \u0275\u0275text(16, "Check classes and elements");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(17, "ul");
-      \u0275\u0275template(18, ComponentGuidanceComponent_li_18_Template, 2, 2, "li", 1);
+      \u0275\u0275text(1, "Unfinished. Check status of links on page and if destination text matches link text.");
       \u0275\u0275elementEnd();
     }
-    if (rf & 2) {
-      \u0275\u0275advance(12);
-      \u0275\u0275property("ngForOf", ctx.guidanceList);
-      \u0275\u0275advance(6);
-      \u0275\u0275property("ngForOf", ctx.violations);
-    }
-  }, dependencies: [
-    CommonModule,
-    NgForOf,
-    FormsModule,
-    TranslateModule,
-    TranslatePipe,
-    ButtonModule,
-    Button
-  ], encapsulation: 2 });
+  }, encapsulation: 2 });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ComponentGuidanceComponent, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LinkReportComponent, [{
     type: Component,
-    args: [{ selector: "ca-component-guidance", imports: [
-      CommonModule,
-      FormsModule,
-      TranslateModule,
-      ButtonModule
-    ], template: `<p class="m-0">Unfinished. Will add fxn to:</p>
-<ul>
-    <li>detect which components are used on the page and link to relevant UCDG guidance (in progress)</li>
-    <li>warn user if they are using a depracated version of a component</li>
-    <li>auto-fix deprecated code w/ option to accept & merge with page</li>
-</ul>
-<h2>Guidance</h2>
-<ul>
-    <li *ngFor="let item of guidanceList">
-        <a [href]="item.url | translate" target="_blank" rel="noopener">{{ item.name | translate }}<i class="pi pi-external-link ml-1" style="font-size: .75rem"></i></a>
-    </li>
-</ul>
-<p>This button just checks if you have any classes or elements that aren't in theme.min.css</p>
-<p-button severity="primary" (click)="runValidation()" class="mt-2">Check classes and elements</p-button>
-<ul>
-    <li *ngFor="let v of violations">
-        {{v.type}}: {{v.detail}}
-    </li>
-</ul>` }]
-  }], () => [{ type: UploadStateService }, { type: TranslateService }, { type: ValidatorService }, { type: HttpClient }], null);
+    args: [{ selector: "ca-link-report", imports: [], template: '<p class="m-0">Unfinished. Check status of links on page and if destination text matches link text.</p>' }]
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ComponentGuidanceComponent, { className: "ComponentGuidanceComponent", filePath: "src/app/views/page-assistant/components/tools/component-guidance.component.ts", lineNumber: 23 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LinkReportComponent, { className: "LinkReportComponent", filePath: "src/app/views/page-assistant/components/tools/link-report.component.ts", lineNumber: 9 });
 })();
 
-// src/app/views/page-assistant/components/tools/heading-structure.component.ts
-var _c013 = () => ({ "min-width": "50rem" });
-function HeadingStructureComponent_ng_template_1_th_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "th");
-    \u0275\u0275text(1);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const col_r2 = ctx.$implicit;
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", col_r2.header, " ");
-  }
-}
-function HeadingStructureComponent_ng_template_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "tr");
-    \u0275\u0275element(1, "th", 3);
-    \u0275\u0275template(2, HeadingStructureComponent_ng_template_1_th_2_Template, 2, 1, "th", 4);
-    \u0275\u0275elementStart(3, "th");
-    \u0275\u0275text(4, "Action");
-    \u0275\u0275elementEnd()();
-  }
-  if (rf & 2) {
-    const columns_r3 = ctx.$implicit;
-    \u0275\u0275advance(2);
-    \u0275\u0275property("ngForOf", columns_r3);
-  }
-}
-function HeadingStructureComponent_ng_template_3_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "tr", 5)(1, "td");
-    \u0275\u0275element(2, "span", 6);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "td");
-    \u0275\u0275text(4);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "td");
-    \u0275\u0275text(6);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "td", 7);
-    \u0275\u0275text(8);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(9, "td");
-    \u0275\u0275text(10, "Add buttons!");
-    \u0275\u0275elementEnd()();
-  }
-  if (rf & 2) {
-    const rowData_r4 = ctx.$implicit;
-    const index_r5 = ctx.rowIndex;
-    const ctx_r5 = \u0275\u0275nextContext();
-    \u0275\u0275property("pReorderableRow", index_r5)("pSelectableRow", rowData_r4);
-    \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate(rowData_r4.order);
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(rowData_r4.type);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngClass", ctx_r5.getTextClass(rowData_r4))("ngStyle", ctx_r5.getTextStyle(rowData_r4));
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate(rowData_r4.text);
-  }
-}
-var HeadingStructureComponent = class _HeadingStructureComponent {
-  uploadState;
-  translate;
-  constructor(uploadState, translate) {
-    this.uploadState = uploadState;
-    this.translate = translate;
-  }
-  ngOnInit() {
-    this.fetchHeadings();
-    this.cols = [
-      { field: "order", header: "Original order" },
-      { field: "type", header: "Heading type" },
-      { field: "text", header: "Text" }
-    ];
-  }
-  headings = [];
-  selectedHeading;
-  cols;
-  headingTypes = ["h1", "h2", "h3", "h4", "h5", "h6", "summary"];
-  fetchHeadings() {
-    try {
-      const data = this.uploadState.getUploadData();
-      if (!data || !data.originalHtml)
-        return;
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(data.originalHtml, "text/html");
-      const selector = this.headingTypes.join(", ");
-      const elements = doc.querySelectorAll(selector);
-      this.headings = Array.from(elements).map((el, index) => ({
-        order: index + 1,
-        //this is so we can track the original order
-        type: el.tagName.toLowerCase(),
-        text: el.textContent?.trim() || ""
-      }));
-    } catch (err) {
-      console.error("Failed to get heading from HTML data", err);
-    }
-  }
-  //In-line styles
-  getTextStyle(row) {
-    switch (row.type) {
-      case "h1":
-        return { fontWeight: "bold" };
-      case "h2":
-        return { fontWeight: "bold" };
-      case "h6":
-        return { color: "gray" };
-      case "summary":
-        return { color: "blue" };
-      default:
-        return {};
-    }
-  }
-  //Classes
-  getTextClass(heading) {
-    switch (heading.type) {
-      case "h1":
-        return { "": heading.type === "h1" };
-      case "h2":
-        return { "pl-4": heading.type === "h2" };
-      case "h3":
-        return { "pl-6": heading.type === "h3" };
-      case "h4":
-        return { "pl-7": heading.type === "h4" };
-      case "h5":
-        return { "pl-8": heading.type === "h5" };
-      case "h6":
-        return { "pl-8": heading.type === "h6" };
-      case "summary":
-        return { "pl-8": heading.type === "summary" };
-      default:
-        return {};
-    }
-  }
-  static \u0275fac = function HeadingStructureComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _HeadingStructureComponent)(\u0275\u0275directiveInject(UploadStateService), \u0275\u0275directiveInject(TranslateService));
+// src/app/views/page-assistant/components/tools/template-conversion.component.ts
+var TemplateConversionComponent = class _TemplateConversionComponent {
+  static \u0275fac = function TemplateConversionComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _TemplateConversionComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeadingStructureComponent, selectors: [["ca-heading-structure"]], decls: 5, vars: 6, consts: [["header", ""], ["body", ""], ["size", "small", "stripedRows", "", "selectionMode", "single", "dataKey", "order", "metaKeySelection", "false", 3, "selectionChange", "columns", "value", "tableStyle", "reorderableColumns", "selection"], [2, "width", "3rem"], [4, "ngFor", "ngForOf"], [3, "pReorderableRow", "pSelectableRow"], ["pReorderableRowHandle", "", 1, "pi", "pi-bars"], [3, "ngClass", "ngStyle"]], template: function HeadingStructureComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TemplateConversionComponent, selectors: [["ca-template-conversion"]], decls: 4, vars: 0, consts: [[1, "m-0"]], template: function TemplateConversionComponent_Template(rf, ctx) {
     if (rf & 1) {
-      const _r1 = \u0275\u0275getCurrentView();
-      \u0275\u0275elementStart(0, "p-table", 2);
-      \u0275\u0275twoWayListener("selectionChange", function HeadingStructureComponent_Template_p_table_selectionChange_0_listener($event) {
-        \u0275\u0275restoreView(_r1);
-        \u0275\u0275twoWayBindingSet(ctx.selectedHeading, $event) || (ctx.selectedHeading = $event);
-        return \u0275\u0275resetView($event);
-      });
-      \u0275\u0275template(1, HeadingStructureComponent_ng_template_1_Template, 5, 1, "ng-template", null, 0, \u0275\u0275templateRefExtractor)(3, HeadingStructureComponent_ng_template_3_Template, 11, 7, "ng-template", null, 1, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementStart(0, "p", 0);
+      \u0275\u0275text(1, "Unfinished. Will add auto-detect page template fxn and option to choose a template to inform GenAI what kind of page it is or should be.");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(2, "p");
+      \u0275\u0275text(3, "Should this be part of the heading structure tool?");
       \u0275\u0275elementEnd();
     }
-    if (rf & 2) {
-      \u0275\u0275property("columns", ctx.cols)("value", ctx.headings)("tableStyle", \u0275\u0275pureFunction0(5, _c013))("reorderableColumns", true);
-      \u0275\u0275twoWayProperty("selection", ctx.selectedHeading);
-    }
-  }, dependencies: [
-    CommonModule,
-    NgClass,
-    NgForOf,
-    NgStyle,
-    FormsModule,
-    TranslateModule,
-    TableModule,
-    Table,
-    SelectableRow,
-    ReorderableRowHandle,
-    ReorderableRow,
-    ButtonModule
-  ], encapsulation: 2 });
+  }, encapsulation: 2 });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(HeadingStructureComponent, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(TemplateConversionComponent, [{
     type: Component,
-    args: [{ selector: "ca-heading-structure", imports: [
-      CommonModule,
-      FormsModule,
-      TranslateModule,
-      TableModule,
-      ButtonModule
-    ], template: `<p-table [columns]="cols" [value]="headings"
-         size="small" stripedRows [tableStyle]="{ 'min-width': '50rem' }"
-         [reorderableColumns]="true"
-         selectionMode="single" [(selection)]="selectedHeading" dataKey="order" metaKeySelection="false">
-    <ng-template #header let-columns>
-        <tr>
-            <th style="width:3rem"></th>
-            <th *ngFor="let col of columns">
-                {{ col.header }}
-            </th>
-            <th>Action</th>
-        </tr>
-    </ng-template>
-    <ng-template #body let-rowData let-columns="columns" let-index="rowIndex">
-        <tr [pReorderableRow]="index" [pSelectableRow]="rowData">
-            <td>
-                <span class="pi pi-bars" pReorderableRowHandle></span>
-            </td>
-            <td>{{ rowData.order }}</td>
-            <td>{{ rowData.type }}</td>
-            <td [ngClass]="getTextClass(rowData)" [ngStyle]="getTextStyle(rowData)">{{ rowData.text }}</td>
-            <td>Add buttons!</td>
-        </tr>
-    </ng-template>
-</p-table>` }]
-  }], () => [{ type: UploadStateService }, { type: TranslateService }], null);
+    args: [{ selector: "ca-template-conversion", imports: [], template: '<p class="m-0">Unfinished. Will add auto-detect page template fxn and option to choose a template to inform GenAI what kind of page it is or should be.</p>\n<p>Should this be part of the heading structure tool?</p>' }]
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HeadingStructureComponent, { className: "HeadingStructureComponent", filePath: "src/app/views/page-assistant/components/tools/heading-structure.component.ts", lineNumber: 33 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TemplateConversionComponent, { className: "TemplateConversionComponent", filePath: "src/app/views/page-assistant/components/tools/template-conversion.component.ts", lineNumber: 9 });
 })();
 
 // src/app/views/page-assistant/components/tools.component.ts
-var _c014 = ["chartContainer"];
-var _c117 = () => [];
-var _c212 = () => ({ "height": "1rem" });
-var _c312 = () => ({ "min-width": "50rem" });
-function PageToolsComponent_p_button_18_Template(rf, ctx) {
+function PageToolsComponent_p_6_Template(rf, ctx) {
   if (rf & 1) {
-    const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "p-button", 20);
-    \u0275\u0275listener("click", function PageToolsComponent_p_button_18_Template_p_button_click_0_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.maximize(ctx_r1.chartContainer));
-    });
+    \u0275\u0275elementStart(0, "p", 4);
+    \u0275\u0275text(1, "View or reorganize your heading structure.");
     \u0275\u0275elementEnd();
   }
 }
-function PageToolsComponent_p_progressbar_19_Template(rf, ctx) {
+function PageToolsComponent_p_12_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "p-progressbar", 21);
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275styleMap(\u0275\u0275pureFunction0(4, _c212));
-    \u0275\u0275property("value", ctx_r1.iaProgress)("showValue", false);
-  }
-}
-function PageToolsComponent_ng_container_20_i_5_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "i", 26)(1, "span", 27);
-    \u0275\u0275text(2, "Link found on parent page");
-    \u0275\u0275elementEnd()();
-  }
-}
-function PageToolsComponent_ng_container_20_i_6_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "i", 28)(1, "span", 27);
-    \u0275\u0275text(2, "IA Orphan");
-    \u0275\u0275elementEnd()();
-  }
-}
-function PageToolsComponent_ng_container_20_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275elementStart(1, "h2");
-    \u0275\u0275text(2, "Breadcrumb");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "div", 22);
-    \u0275\u0275element(4, "p-breadcrumb", 23);
-    \u0275\u0275template(5, PageToolsComponent_ng_container_20_i_5_Template, 3, 0, "i", 24)(6, PageToolsComponent_ng_container_20_i_6_Template, 3, 0, "i", 25);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275advance(4);
-    \u0275\u0275property("model", ctx_r1.breadcrumb);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r1.urlFound === true);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r1.urlFound === false);
-  }
-}
-function PageToolsComponent_h2_21_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "h2");
-    \u0275\u0275text(1, "IA structure");
+    \u0275\u0275elementStart(0, "p", 4);
+    \u0275\u0275text(1, "Check if your page is an IA orphan and view its current IA diagram.");
     \u0275\u0275elementEnd();
   }
 }
-function PageToolsComponent_p_22_Template(rf, ctx) {
+function PageToolsComponent_p_18_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p");
-    \u0275\u0275text(1, "No child pages found.");
+    \u0275\u0275elementStart(0, "p", 4);
+    \u0275\u0275text(1, "Find guidance on the components used on your page and check for deprecated code or unexpected classes or elements.");
     \u0275\u0275elementEnd();
   }
 }
-function PageToolsComponent_div_23_ng_template_3_Template(rf, ctx) {
+function PageToolsComponent_p_24_Template(rf, ctx) {
   if (rf & 1) {
-    const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "p")(1, "a", 32);
-    \u0275\u0275listener("click", function PageToolsComponent_div_23_ng_template_3_Template_a_click_1_listener($event) {
-      \u0275\u0275restoreView(_r3);
-      const ctx_r1 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r1.onNodeClick($event));
-    });
-    \u0275\u0275elementEnd()();
-  }
-  if (rf & 2) {
-    const node_r4 = ctx.$implicit;
-    \u0275\u0275advance();
-    \u0275\u0275property("href", node_r4.data, \u0275\u0275sanitizeUrl)("innerHTML", node_r4.label, \u0275\u0275sanitizeHtml);
-  }
-}
-function PageToolsComponent_div_23_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 29, 0)(2, "p-organization-chart", 30);
-    \u0275\u0275template(3, PageToolsComponent_div_23_ng_template_3_Template, 2, 2, "ng-template", 31);
-    \u0275\u0275elementEnd()();
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275advance(2);
-    \u0275\u0275property("value", ctx_r1.iaChart);
-  }
-}
-function PageToolsComponent_h2_24_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "h2");
-    \u0275\u0275text(1, "IA structure table");
+    \u0275\u0275elementStart(0, "p", 4);
+    \u0275\u0275text(1, "Add doormat text.");
     \u0275\u0275elementEnd();
   }
 }
-function PageToolsComponent_p_treeTable_25_ng_template_1_Template(rf, ctx) {
+function PageToolsComponent_p_30_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "tr")(1, "th");
-    \u0275\u0275text(2, "H1");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "th");
-    \u0275\u0275text(4, "URL");
-    \u0275\u0275elementEnd()();
-  }
-}
-function PageToolsComponent_p_treeTable_25_ng_template_3_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "tr", 34)(1, "td");
-    \u0275\u0275element(2, "p-treetable-toggler", 35)(3, "span", 36);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "td");
-    \u0275\u0275text(5);
-    \u0275\u0275elementEnd()();
-  }
-  if (rf & 2) {
-    const rowNode_r5 = ctx.$implicit;
-    const rowData_r6 = ctx.rowData;
-    \u0275\u0275property("ttRow", rowNode_r5);
-    \u0275\u0275advance(2);
-    \u0275\u0275property("rowNode", rowNode_r5);
-    \u0275\u0275advance();
-    \u0275\u0275property("innerHTML", rowData_r6.h1, \u0275\u0275sanitizeHtml);
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(rowData_r6.url);
-  }
-}
-function PageToolsComponent_p_treeTable_25_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "p-treeTable", 33);
-    \u0275\u0275template(1, PageToolsComponent_p_treeTable_25_ng_template_1_Template, 5, 0, "ng-template", null, 1, \u0275\u0275templateRefExtractor)(3, PageToolsComponent_p_treeTable_25_ng_template_3_Template, 6, 4, "ng-template", null, 2, \u0275\u0275templateRefExtractor);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275property("value", ctx_r1.iaChart)("scrollable", true);
-  }
-}
-function PageToolsComponent_ng_container_26_p_3_span_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "span");
-    \u0275\u0275text(1, " or on any detected child pages");
+    \u0275\u0275elementStart(0, "p", 4);
+    \u0275\u0275text(1, "Add doormat text.");
     \u0275\u0275elementEnd();
   }
 }
-function PageToolsComponent_ng_container_26_p_3_Template(rf, ctx) {
+function PageToolsComponent_p_36_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "p");
-    \u0275\u0275text(1, "No broken links found on this page");
-    \u0275\u0275template(2, PageToolsComponent_ng_container_26_p_3_span_2_Template, 2, 0, "span", 12);
-    \u0275\u0275text(3, ".");
+    \u0275\u0275elementStart(0, "p", 4);
+    \u0275\u0275text(1, "Add doormat text.");
     \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance(2);
-    \u0275\u0275property("ngIf", ctx_r1.iaChart[0].children == null ? null : ctx_r1.iaChart[0].children.length);
   }
 }
-function PageToolsComponent_ng_container_26_p_table_4_ng_template_1_Template(rf, ctx) {
+function PageToolsComponent_p_42_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "tr")(1, "th");
-    \u0275\u0275text(2, "Parent page");
+    \u0275\u0275elementStart(0, "p", 4);
+    \u0275\u0275text(1, "Add doormat text.");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "th");
-    \u0275\u0275text(4, "Broken link");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "th");
-    \u0275\u0275text(6, "Status");
-    \u0275\u0275elementEnd()();
-  }
-}
-function PageToolsComponent_ng_container_26_p_table_4_ng_template_3_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "tr")(1, "td");
-    \u0275\u0275text(2);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "td");
-    \u0275\u0275text(4);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(5, "td");
-    \u0275\u0275text(6);
-    \u0275\u0275elementEnd()();
-  }
-  if (rf & 2) {
-    const rowData_r7 = ctx.$implicit;
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(rowData_r7.parentUrl);
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(rowData_r7.url);
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate(rowData_r7.status);
-  }
-}
-function PageToolsComponent_ng_container_26_p_table_4_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "p-table", 38);
-    \u0275\u0275template(1, PageToolsComponent_ng_container_26_p_table_4_ng_template_1_Template, 7, 0, "ng-template", null, 1, \u0275\u0275templateRefExtractor)(3, PageToolsComponent_ng_container_26_p_table_4_ng_template_3_Template, 7, 3, "ng-template", null, 2, \u0275\u0275templateRefExtractor);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275property("value", ctx_r1.brokenLinks)("tableStyle", \u0275\u0275pureFunction0(2, _c312));
-  }
-}
-function PageToolsComponent_ng_container_26_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275elementStart(1, "h2");
-    \u0275\u0275text(2, "Broken links");
-    \u0275\u0275elementEnd();
-    \u0275\u0275template(3, PageToolsComponent_ng_container_26_p_3_Template, 4, 1, "p", 12)(4, PageToolsComponent_ng_container_26_p_table_4_Template, 5, 3, "p-table", 37);
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275advance(3);
-    \u0275\u0275property("ngIf", ctx_r1.iaChart && ctx_r1.brokenLinks.length === 0);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r1.brokenLinks.length > 0);
   }
 }
 var PageToolsComponent = class _PageToolsComponent {
-  urlDataService;
-  uploadState;
-  translate;
-  validator;
-  http;
-  constructor(urlDataService, uploadState, translate, validator, http) {
-    this.urlDataService = urlDataService;
-    this.uploadState = uploadState;
-    this.translate = translate;
-    this.validator = validator;
-    this.http = http;
-  }
-  ngOnInit() {
-    const data = this.uploadState.getUploadData();
-    this.breadcrumb = data?.breadcrumb || [];
-    this.originalUrl = data?.originalUrl || "";
-  }
-  //Initialize metadata & breadcrumb arrays (note: this data is part of UploadData)
-  originalUrl = "";
-  /********************************
-   * Start of breadcrumb analysis *
-   *******************************/
-  //Breadcrumb & orphan status
-  breadcrumb = [];
-  urlFound = null;
-  //IA chart
-  iaChart = null;
-  brokenLinks = [];
-  depth = 4;
-  //default value
-  //For tracking progress while building IA chart
-  isChartLoading = false;
-  iaProgress = 0;
-  totalUrls = 0;
-  processedUrls = 0;
-  //Pages to skip children when building IA chart
-  skipFormsAndPubs = /* @__PURE__ */ new Set([
-    "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms.html",
-    "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/formulaires.html",
-    "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications.html",
-    "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/publications.html"
-  ]);
-  //Button fxn
-  checkIA() {
-    return __async(this, null, function* () {
-      this.urlFound = yield this.checkParentLinks(this.breadcrumb, this.originalUrl);
-      this.iaChart = yield this.buildIaTree([this.originalUrl], this.depth);
-      setTimeout(() => {
-        const firstNode = document.querySelector(".p-organizationchart-node a");
-        if (firstNode)
-          firstNode.focus();
-      });
-    });
-  }
-  //Step 1: Check if breadcrumb orphan via parent page
-  checkParentLinks(breadcrumbs, originalUrl) {
-    return __async(this, null, function* () {
-      if (!breadcrumbs?.length)
-        return false;
-      const lastBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
-      const targetUrl = lastBreadcrumb.url;
-      if (!targetUrl) {
-        console.error("Last breadcrumb has no URL");
-        return false;
-      }
-      try {
-        const response = yield fetch(targetUrl);
-        if (!response.ok) {
-          console.error(`Failed to fetch breadcrumb page: ${response.status}`);
-          return false;
-        }
-        const html = yield response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const links = Array.from(doc.querySelectorAll("a")).map((a) => a.getAttribute("href")).filter((href) => !!href);
-        const absoluteLinks = links.map((href) => {
-          try {
-            return new URL(href, targetUrl).href;
-          } catch {
-            return href;
-          }
-        });
-        const found = absoluteLinks.includes(originalUrl);
-        console.log(`Original URL ${found ? "found" : "NOT found"} in ${targetUrl}`);
-        return found;
-      } catch (err) {
-        console.error("Error checking breadcrumb target:", err);
-        return false;
-      }
-    });
-  }
-  //Step 2a: Get single page IA data
-  getPageMetaAndLinks(url) {
-    return __async(this, null, function* () {
-      try {
-        const res = yield fetch(url);
-        const status = res.status;
-        if (!res.ok)
-          return { status };
-        const html = yield res.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-        const h1Elements = Array.from(doc.querySelectorAll("h1"));
-        const h1 = h1Elements.map((e) => e.textContent?.trim()).filter(Boolean).join("<br>");
-        const breadcrumb = Array.from(doc.querySelectorAll(".breadcrumb li a")).map((a) => new URL(a.getAttribute("href") || "", url).href);
-        const anchors = Array.from(doc.querySelectorAll("main a[href]"));
-        const baseUrl = new URL(url).origin;
-        const links = Array.from(new Set(
-          //unique set
-          anchors.map((a) => {
-            const u = new URL(a.getAttribute("href") || "", url);
-            u.hash = "";
-            return u.href;
-          }).filter((u) => u.startsWith(baseUrl) && u !== url)
-          // on same domain but not self
-        ));
-        return { h1, breadcrumb, links, status };
-      } catch (err) {
-        console.error(`Failed to fetch ${url}`, err);
-        return { status: 0 };
-      }
-    });
-  }
-  //Step 2b: Crawl all child pages for IA data
-  buildIaTree(urls, depth, parentUrl, level = 0) {
-    return __async(this, null, function* () {
-      if (depth <= 0)
-        return [];
-      if (!parentUrl && level === 0) {
-        this.isChartLoading = true;
-        this.iaProgress = 5;
-        this.processedUrls = 0;
-        this.totalUrls = urls.length;
-      }
-      const nodes = [];
-      const bgColors = [
-        "bg-purple-50",
-        "bg-blue-50",
-        "bg-green-50",
-        "bg-yellow-50",
-        "bg-orange-50",
-        "bg-red-50"
-      ];
-      const bgClass = bgColors[level % bgColors.length];
-      for (const url of urls) {
-        const meta = yield this.getPageMetaAndLinks(url);
-        this.processedUrls++;
-        this.iaProgress = Math.round(this.processedUrls / this.totalUrls * 100);
-        if (!meta || meta.status !== 200) {
-          this.brokenLinks.push({
-            parentUrl,
-            url,
-            status: meta?.status || 0
-          });
-          continue;
-        }
-        if (!meta.breadcrumb || !meta.links)
-          continue;
-        if (parentUrl && meta.breadcrumb.at(-1) !== parentUrl) {
-          continue;
-        }
-        const node = {
-          label: meta.h1,
-          data: {
-            h1: meta.h1,
-            url
-          },
-          expanded: true,
-          styleClass: `border-2 border-primary border-round ${bgClass} shadow-2`,
-          children: []
-        };
-        if (meta.links?.length && depth > 1) {
-          this.totalUrls += meta.links.length;
-          const total = meta.links.length;
-          let limit = total;
-          if (this.skipFormsAndPubs.has(url)) {
-            limit = 5;
-          }
-          const links = meta.links.slice(0, limit);
-          node.children = yield this.buildIaTree(links, depth - 1, url, level + 1);
-          if (total > limit) {
-            node.children?.push({
-              label: `+ ${total - limit} more...`,
-              data: null,
-              styleClass: `border-2 border-primary border-round surface-100 shadow-2`,
-              children: []
-            });
-          }
-        }
-        nodes.push(node);
-      }
-      if (!parentUrl && level === 0) {
-        this.iaProgress = 100;
-        setTimeout(() => {
-          this.isChartLoading = false;
-          this.iaProgress = 0;
-        }, 1e3);
-      }
-      return nodes;
-    });
-  }
-  //Prevent default click on org chart links <-- Do we want this?? 
-  onNodeClick(event) {
-    if (event.button === 0) {
-      event.preventDefault();
-    }
-  }
-  //Full screen element
-  chartContainer;
-  maximize(elRef) {
-    const element = elRef.nativeElement;
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    }
+  activePanels = [];
+  isPanelOpen(panelIndex) {
+    return this.activePanels.includes(panelIndex);
   }
   static \u0275fac = function PageToolsComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _PageToolsComponent)(\u0275\u0275directiveInject(UrlDataService), \u0275\u0275directiveInject(UploadStateService), \u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(ValidatorService), \u0275\u0275directiveInject(HttpClient));
+    return new (__ngFactoryType__ || _PageToolsComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PageToolsComponent, selectors: [["ca-page-tools"]], viewQuery: function PageToolsComponent_Query(rf, ctx) {
-    if (rf & 1) {
-      \u0275\u0275viewQuery(_c014, 5);
-    }
-    if (rf & 2) {
-      let _t;
-      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.chartContainer = _t.first);
-    }
-  }, decls: 52, vars: 17, consts: [["chartContainer", ""], ["header", ""], ["body", ""], [1, "flex", "flex-column", "gap-3", 3, "value", "multiple"], ["value", "0", 1, "border-1", "border-round-md", "border-surface"], ["value", "1", 1, "border-1", "border-round-md", "border-surface"], [1, "flex", "flex-row", "flex-wrap", "align-items-center", "gap-3", "mt-0"], ["inputId", "depth", "mode", "decimal", 3, "ngModelChange", "ngModel", "showButtons", "min", "max"], ["for", "depth"], ["label", "Verify IA", "severity", "help", "icon", "pi pi-info-circle", 3, "click", "loading"], ["label", "Maximize IA chart", "severity", "secondary", "icon", "pi pi-window-maximize", 3, "click", 4, "ngIf"], ["styleClass", "mt-3", 3, "value", "showValue", "style", 4, "ngIf"], [4, "ngIf"], ["class", "overflow-auto max-h-75vh surface-ground surface-border border-1 py-3 mb-3", 4, "ngIf"], ["styleClass", "p-treetable-sm", 3, "value", "scrollable", 4, "ngIf"], ["value", "2", 1, "border-1", "border-round-sm", "border-surface"], ["value", "3", 1, "border-1", "border-round-sm", "border-surface"], ["value", "4", 1, "border-1", "border-round-sm", "border-surface"], ["value", "5", 1, "border-1", "border-round-sm", "border-surface"], ["value", "6", 1, "border-1", "border-round-md", "border-surface"], ["label", "Maximize IA chart", "severity", "secondary", "icon", "pi pi-window-maximize", 3, "click"], ["styleClass", "mt-3", 3, "value", "showValue"], [1, "flex", "flex-row", "align-items-center", "gap-3"], ["styleClass", "pl-1", 1, "max-w-full", 3, "model"], ["class", "pi pi-check-circle text-green-400", 4, "ngIf"], ["class", "pi pi-times-circle text-red-400", 4, "ngIf"], [1, "pi", "pi-check-circle", "text-green-400"], [1, "ml-1"], [1, "pi", "pi-times-circle", "text-red-400"], [1, "overflow-auto", "max-h-75vh", "surface-ground", "surface-border", "border-1", "py-3", "mb-3"], [3, "value"], ["pTemplate", "default"], ["target", "_blank", 3, "click", "href", "innerHTML"], ["styleClass", "p-treetable-sm", 3, "value", "scrollable"], [3, "ttRow"], [3, "rowNode"], [1, "ia-label", 3, "innerHTML"], ["size", "small", "stripedRows", "", 3, "value", "tableStyle", 4, "ngIf"], ["size", "small", "stripedRows", "", 3, "value", "tableStyle"]], template: function PageToolsComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PageToolsComponent, selectors: [["ca-page-tools"]], decls: 45, vars: 16, consts: [[1, "flex", "flex-column", "gap-3", 3, "valueChange", "value", "multiple"], [1, "border-1", "border-round-md", "border-surface", 3, "value"], ["class", "mt-0 ml-4 text-color-secondary", 4, "ngIf"], [1, "border-1", "border-round-sm", "border-surface", 3, "value"], [1, "mt-0", "ml-4", "text-color-secondary"]], template: function PageToolsComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "p");
       \u0275\u0275text(1, "Use these tools to analyze and improve your web page. You can restructure headings, generate an IA diagram, find guidance on the components used in your page, integrate SEO and user insights into your updates, check your link quality, or convert your page to a different template.");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(2, "p-accordion", 3)(3, "p-accordion-panel", 4)(4, "p-accordion-header");
-      \u0275\u0275text(5, "Heading structure");
-      \u0275\u0275elementEnd();
-      \u0275\u0275element(6, "ca-heading-structure")(7, "p-accordion-content");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "p-accordion-panel", 5)(9, "p-accordion-header");
-      \u0275\u0275text(10, "IA structure");
-      \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(11, "p-accordion-content")(12, "div", 6)(13, "p-iftalabel")(14, "p-inputnumber", 7);
-      \u0275\u0275twoWayListener("ngModelChange", function PageToolsComponent_Template_p_inputnumber_ngModelChange_14_listener($event) {
-        \u0275\u0275twoWayBindingSet(ctx.depth, $event) || (ctx.depth = $event);
+      \u0275\u0275elementStart(2, "p-accordion", 0);
+      \u0275\u0275twoWayListener("valueChange", function PageToolsComponent_Template_p_accordion_valueChange_2_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.activePanels, $event) || (ctx.activePanels = $event);
         return $event;
       });
+      \u0275\u0275elementStart(3, "p-accordion-panel", 1)(4, "p-accordion-header");
+      \u0275\u0275text(5, "Heading structure");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(15, "label", 8);
-      \u0275\u0275text(16, "Depth");
+      \u0275\u0275template(6, PageToolsComponent_p_6_Template, 2, 0, "p", 2);
+      \u0275\u0275elementStart(7, "p-accordion-content");
+      \u0275\u0275element(8, "ca-heading-structure");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(17, "p-button", 9);
-      \u0275\u0275listener("click", function PageToolsComponent_Template_p_button_click_17_listener() {
-        return ctx.checkIA();
-      });
+      \u0275\u0275elementStart(9, "p-accordion-panel", 1)(10, "p-accordion-header");
+      \u0275\u0275text(11, "IA structure");
       \u0275\u0275elementEnd();
-      \u0275\u0275template(18, PageToolsComponent_p_button_18_Template, 1, 0, "p-button", 10);
-      \u0275\u0275elementEnd();
-      \u0275\u0275template(19, PageToolsComponent_p_progressbar_19_Template, 1, 5, "p-progressbar", 11)(20, PageToolsComponent_ng_container_20_Template, 7, 3, "ng-container", 12)(21, PageToolsComponent_h2_21_Template, 2, 0, "h2", 12)(22, PageToolsComponent_p_22_Template, 2, 0, "p", 12)(23, PageToolsComponent_div_23_Template, 4, 1, "div", 13)(24, PageToolsComponent_h2_24_Template, 2, 0, "h2", 12)(25, PageToolsComponent_p_treeTable_25_Template, 5, 2, "p-treeTable", 14)(26, PageToolsComponent_ng_container_26_Template, 5, 2, "ng-container", 12);
+      \u0275\u0275template(12, PageToolsComponent_p_12_Template, 2, 0, "p", 2);
+      \u0275\u0275elementStart(13, "p-accordion-content");
+      \u0275\u0275element(14, "ca-ia-structure");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(27, "p-accordion-panel", 15)(28, "p-accordion-header");
-      \u0275\u0275text(29, "Component guidance");
+      \u0275\u0275elementStart(15, "p-accordion-panel", 3)(16, "p-accordion-header");
+      \u0275\u0275text(17, "Component guidance");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(30, "p-accordion-content");
-      \u0275\u0275element(31, "ca-component-guidance");
+      \u0275\u0275template(18, PageToolsComponent_p_18_Template, 2, 0, "p", 2);
+      \u0275\u0275elementStart(19, "p-accordion-content");
+      \u0275\u0275element(20, "ca-component-guidance");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(32, "p-accordion-panel", 16)(33, "p-accordion-header");
-      \u0275\u0275text(34, "SEO");
+      \u0275\u0275elementStart(21, "p-accordion-panel", 3)(22, "p-accordion-header");
+      \u0275\u0275text(23, "SEO");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(35, "p-accordion-content");
-      \u0275\u0275element(36, "ca-seo");
+      \u0275\u0275template(24, PageToolsComponent_p_24_Template, 2, 0, "p", 2);
+      \u0275\u0275elementStart(25, "p-accordion-content");
+      \u0275\u0275element(26, "ca-seo");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(37, "p-accordion-panel", 17)(38, "p-accordion-header");
-      \u0275\u0275text(39, "User insights");
+      \u0275\u0275elementStart(27, "p-accordion-panel", 3)(28, "p-accordion-header");
+      \u0275\u0275text(29, "User insights");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(40, "p-accordion-content");
-      \u0275\u0275element(41, "ca-user-insights");
+      \u0275\u0275template(30, PageToolsComponent_p_30_Template, 2, 0, "p", 2);
+      \u0275\u0275elementStart(31, "p-accordion-content");
+      \u0275\u0275element(32, "ca-user-insights");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(42, "p-accordion-panel", 18)(43, "p-accordion-header");
-      \u0275\u0275text(44, "Link report");
+      \u0275\u0275elementStart(33, "p-accordion-panel", 3)(34, "p-accordion-header");
+      \u0275\u0275text(35, "Link report");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(45, "p-accordion-content");
-      \u0275\u0275element(46, "ca-link-report");
+      \u0275\u0275template(36, PageToolsComponent_p_36_Template, 2, 0, "p", 2);
+      \u0275\u0275elementStart(37, "p-accordion-content");
+      \u0275\u0275element(38, "ca-link-report");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(47, "p-accordion-panel", 19)(48, "p-accordion-header");
-      \u0275\u0275text(49, "Template conversion");
+      \u0275\u0275elementStart(39, "p-accordion-panel", 1)(40, "p-accordion-header");
+      \u0275\u0275text(41, "Template conversion");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(50, "p-accordion-content");
-      \u0275\u0275element(51, "ca-template-conversion");
+      \u0275\u0275template(42, PageToolsComponent_p_42_Template, 2, 0, "p", 2);
+      \u0275\u0275elementStart(43, "p-accordion-content");
+      \u0275\u0275element(44, "ca-template-conversion");
       \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
       \u0275\u0275advance(2);
-      \u0275\u0275property("value", \u0275\u0275pureFunction0(16, _c117))("multiple", true);
-      \u0275\u0275advance(12);
-      \u0275\u0275twoWayProperty("ngModel", ctx.depth);
-      \u0275\u0275property("showButtons", true)("min", 2)("max", 6);
+      \u0275\u0275twoWayProperty("value", ctx.activePanels);
+      \u0275\u0275property("multiple", true);
+      \u0275\u0275advance();
+      \u0275\u0275property("value", 0);
       \u0275\u0275advance(3);
-      \u0275\u0275property("loading", ctx.isChartLoading);
-      \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.iaChart && ctx.iaChart.length > 0);
-      \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.isChartLoading);
-      \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.breadcrumb.length > 0);
-      \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.iaChart);
-      \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.iaChart && ctx.iaChart.length === 0);
-      \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.iaChart && ctx.iaChart.length > 0);
-      \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.iaChart);
-      \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.iaChart);
-      \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.iaChart);
+      \u0275\u0275property("ngIf", !ctx.isPanelOpen(0));
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 1);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("ngIf", !ctx.isPanelOpen(1));
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 2);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("ngIf", !ctx.isPanelOpen(2));
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 3);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("ngIf", !ctx.isPanelOpen(3));
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 4);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("ngIf", !ctx.isPanelOpen(4));
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 5);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("ngIf", !ctx.isPanelOpen(5));
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 6);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("ngIf", !ctx.isPanelOpen(6));
     }
   }, dependencies: [
     CommonModule,
     NgIf,
-    FormsModule,
-    NgControlStatus,
-    NgModel,
     TranslateModule,
-    TableModule,
-    Table,
-    PrimeTemplate,
-    ButtonModule,
-    Button,
-    IftaLabel,
-    TextareaModule,
-    FieldsetModule,
-    PanelModule,
     AccordionModule,
     Accordion,
     AccordionPanel,
     AccordionHeader,
     AccordionContent,
-    BreadcrumbModule,
-    Breadcrumb,
-    OrganizationChartModule,
-    OrganizationChart,
-    ProgressBarModule,
-    ProgressBar,
-    InputNumberModule,
-    InputNumber,
-    TooltipModule,
-    TreeTableModule,
-    TreeTable,
-    TreeTableToggler,
-    TTRow,
     TemplateConversionComponent,
     LinkReportComponent,
     SeoComponent,
     UserInsightsComponent,
     ComponentGuidanceComponent,
-    HeadingStructureComponent
-  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n.ia-label[_ngcontent-%COMP%] {\n  white-space: pre-line;\n  display: inline-block;\n}\n/*# sourceMappingURL=tools.component.css.map */"] });
+    HeadingStructureComponent,
+    IaStructureComponent
+  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n/*# sourceMappingURL=tools.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PageToolsComponent, [{
     type: Component,
     args: [{ selector: "ca-page-tools", imports: [
       CommonModule,
-      FormsModule,
       TranslateModule,
-      TableModule,
-      ButtonModule,
-      IftaLabel,
-      TextareaModule,
-      FieldsetModule,
-      PanelModule,
       AccordionModule,
-      BreadcrumbModule,
-      OrganizationChartModule,
-      ProgressBarModule,
-      InputNumberModule,
-      TooltipModule,
-      TreeTableModule,
       TemplateConversionComponent,
       LinkReportComponent,
       SeoComponent,
       UserInsightsComponent,
       ComponentGuidanceComponent,
-      HeadingStructureComponent
-    ], template: `<p>Use these tools to analyze and improve your web page. You can restructure headings, generate an IA diagram, find guidance on the components used in your page, integrate SEO and user insights into your updates, check your link quality, or convert your page to a different template.</p>
-
-<p-accordion [value]="[]" [multiple]="true" class="flex flex-column gap-3">
-    <p-accordion-panel value="0" class="border-1 border-round-md border-surface">
-        <p-accordion-header>Heading structure</p-accordion-header>
-        <ca-heading-structure></ca-heading-structure>
-        <p-accordion-content>
-
-        </p-accordion-content>
-    </p-accordion-panel>
-    <p-accordion-panel value="1" class="border-1 border-round-md border-surface">
-        <p-accordion-header>IA structure</p-accordion-header>
-        <p-accordion-content>
-
-            <!--UI-->
-            <div class="flex flex-row flex-wrap align-items-center gap-3 mt-0">
-                <p-iftalabel>
-                    <p-inputnumber [(ngModel)]="depth" inputId="depth" mode="decimal" [showButtons]="true" [min]="2" [max]="6" />
-                    <label for="depth">Depth</label>
-                </p-iftalabel>
-                <p-button label="Verify IA" severity="help" (click)="checkIA()" [loading]="isChartLoading" icon="pi pi-info-circle" />
-                <p-button label="Maximize IA chart" severity="secondary" (click)="maximize(chartContainer)" icon="pi pi-window-maximize" *ngIf="iaChart && iaChart.length > 0" />
-            </div>
-            <p-progressbar *ngIf="isChartLoading" [value]="iaProgress" [showValue]="false" [style]="{'height': '1rem'}" styleClass="mt-3" />
-
-            <!--Breadcrumb-->
-            <ng-container *ngIf="breadcrumb.length > 0">
-                <h2>Breadcrumb</h2>
-                <div class="flex flex-row align-items-center gap-3">
-                    <p-breadcrumb class="max-w-full" styleClass="pl-1" [model]="breadcrumb" />
-                    <i class="pi pi-check-circle text-green-400" *ngIf="urlFound===true"><span class="ml-1">Link found on parent page</span></i>
-                    <i class="pi pi-times-circle text-red-400" *ngIf="urlFound===false"><span class="ml-1">IA Orphan</span></i>
-                </div>
-            </ng-container>
-
-            <!--IA Chart-->
-            <h2 *ngIf="iaChart">IA structure</h2>
-            <p *ngIf="iaChart && iaChart.length === 0">No child pages found.</p>
-            <div #chartContainer *ngIf="iaChart && iaChart.length > 0" class="overflow-auto max-h-75vh surface-ground surface-border border-1 py-3 mb-3">
-                <p-organization-chart [value]="iaChart">
-                    <ng-template let-node pTemplate="default">
-                        <p><a [href]="node.data" target="_blank" (click)="onNodeClick($event)" [innerHTML]="node.label"></a></p>
-                    </ng-template>
-                </p-organization-chart>
-            </div>
-
-            <!--IA Table-->
-            <h2 *ngIf="iaChart">IA structure table</h2>
-            <p-treeTable *ngIf="iaChart" [value]="iaChart" styleClass="p-treetable-sm" [scrollable]="true">
-                <ng-template #header>
-                    <tr>
-                        <th>H1</th>
-                        <th>URL</th>
-                    </tr>
-                </ng-template>
-                <ng-template #body let-rowNode let-rowData="rowData">
-                    <tr [ttRow]="rowNode">
-                        <td>
-                            <p-treetable-toggler [rowNode]="rowNode" />
-                            <span [innerHTML]="rowData.h1" class="ia-label"></span>
-                        </td>
-                        <td>{{ rowData.url }}</td>
-                    </tr>
-                </ng-template>
-            </p-treeTable>
-
-            <!--Broken Links-->
-            <ng-container *ngIf="iaChart">
-                <h2>Broken links</h2>
-                <p *ngIf="iaChart && brokenLinks.length === 0">No broken links found on this page<span *ngIf="iaChart[0].children?.length"> or on any detected child pages</span>.</p>
-                <p-table [value]="brokenLinks" size="small" stripedRows [tableStyle]="{ 'min-width': '50rem' }" *ngIf="brokenLinks.length > 0">
-                    <ng-template #header>
-                        <tr>
-                            <th>Parent page</th>
-                            <th>Broken link</th>
-                            <th>Status</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template #body let-rowData>
-                        <tr>
-                            <td>{{ rowData.parentUrl }}</td>
-                            <td>{{ rowData.url }}</td>
-                            <td>{{ rowData.status }}</td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </ng-container>
-
-        </p-accordion-content>
-    </p-accordion-panel>
-    <p-accordion-panel value="2" class="border-1 border-round-sm border-surface">
-        <p-accordion-header>Component guidance</p-accordion-header>
-        <p-accordion-content>
-            <ca-component-guidance></ca-component-guidance>
-        </p-accordion-content>
-    </p-accordion-panel>
-    <p-accordion-panel value="3" class="border-1 border-round-sm border-surface">
-        <p-accordion-header>SEO</p-accordion-header>
-        <p-accordion-content>
-            <ca-seo></ca-seo>
-        </p-accordion-content>
-    </p-accordion-panel>
-    <p-accordion-panel value="4" class="border-1 border-round-sm border-surface">
-        <p-accordion-header>User insights</p-accordion-header>
-        <p-accordion-content>
-            <ca-user-insights></ca-user-insights>
-        </p-accordion-content>
-    </p-accordion-panel>
-    <p-accordion-panel value="5" class="border-1 border-round-sm border-surface">
-        <p-accordion-header>Link report</p-accordion-header>
-        <p-accordion-content>
-            <ca-link-report></ca-link-report>
-        </p-accordion-content>
-    </p-accordion-panel>
-    <p-accordion-panel value="6" class="border-1 border-round-md border-surface">
-        <p-accordion-header>Template conversion</p-accordion-header>
-        <p-accordion-content>
-            <ca-template-conversion></ca-template-conversion>
-        </p-accordion-content>
-    </p-accordion-panel>
-
-</p-accordion>`, styles: ["/* angular:styles/component:css;9e7cc5950e5373289b39e42a6f357dbd841e9544565ec76a3393527901935000;/home/naomi/content-assistant/src/app/views/page-assistant/components/tools.component.ts */\n:host {\n  display: block;\n}\n.ia-label {\n  white-space: pre-line;\n  display: inline-block;\n}\n/*# sourceMappingURL=tools.component.css.map */\n"] }]
-  }], () => [{ type: UrlDataService }, { type: UploadStateService }, { type: TranslateService }, { type: ValidatorService }, { type: HttpClient }], { chartContainer: [{
-    type: ViewChild,
-    args: ["chartContainer"]
-  }] });
+      HeadingStructureComponent,
+      IaStructureComponent
+    ], template: '<p>Use these tools to analyze and improve your web page. You can restructure headings, generate an IA diagram, find guidance on the components used in your page, integrate SEO and user insights into your updates, check your link quality, or convert your page to a different template.</p>\n\n<p-accordion [(value)]="activePanels" [multiple]="true" class="flex flex-column gap-3">\n\n    <p-accordion-panel [value]="0" class="border-1 border-round-md border-surface">\n        <p-accordion-header>Heading structure</p-accordion-header>\n        <p class="mt-0 ml-4 text-color-secondary" *ngIf="!isPanelOpen(0)">View or reorganize your heading structure.</p>\n        <p-accordion-content>\n            <ca-heading-structure></ca-heading-structure>\n        </p-accordion-content>\n    </p-accordion-panel>\n\n    <p-accordion-panel [value]="1" class="border-1 border-round-md border-surface">\n        <p-accordion-header>IA structure</p-accordion-header>\n        <p class="mt-0 ml-4 text-color-secondary" *ngIf="!isPanelOpen(1)">Check if your page is an IA orphan and view its current IA diagram.</p>\n        <p-accordion-content>\n            <ca-ia-structure></ca-ia-structure>\n        </p-accordion-content>\n    </p-accordion-panel>\n\n    <p-accordion-panel [value]="2" class="border-1 border-round-sm border-surface">\n        <p-accordion-header>Component guidance</p-accordion-header>\n        <p class="mt-0 ml-4 text-color-secondary" *ngIf="!isPanelOpen(2)">Find guidance on the components used on your page and check for deprecated code or unexpected classes or elements.</p>\n        <p-accordion-content>\n            <ca-component-guidance></ca-component-guidance>\n        </p-accordion-content>\n    </p-accordion-panel>\n\n    <p-accordion-panel [value]="3" class="border-1 border-round-sm border-surface">\n        <p-accordion-header>SEO</p-accordion-header>\n        <p class="mt-0 ml-4 text-color-secondary" *ngIf="!isPanelOpen(3)">Add doormat text.</p>\n        <p-accordion-content>\n            <ca-seo></ca-seo>\n        </p-accordion-content>\n    </p-accordion-panel>\n\n    <p-accordion-panel [value]="4" class="border-1 border-round-sm border-surface">\n        <p-accordion-header>User insights</p-accordion-header>\n        <p class="mt-0 ml-4 text-color-secondary" *ngIf="!isPanelOpen(4)">Add doormat text.</p>\n        <p-accordion-content>\n            <ca-user-insights></ca-user-insights>\n        </p-accordion-content>\n    </p-accordion-panel>\n\n    <p-accordion-panel [value]="5" class="border-1 border-round-sm border-surface">\n        <p-accordion-header>Link report</p-accordion-header>\n        <p class="mt-0 ml-4 text-color-secondary" *ngIf="!isPanelOpen(5)">Add doormat text.</p>\n        <p-accordion-content>\n            <ca-link-report></ca-link-report>\n        </p-accordion-content>\n    </p-accordion-panel>\n\n    <p-accordion-panel [value]="6" class="border-1 border-round-md border-surface">\n        <p-accordion-header>Template conversion</p-accordion-header>\n        <p class="mt-0 ml-4 text-color-secondary" *ngIf="!isPanelOpen(6)">Add doormat text.</p>\n        <p-accordion-content>\n            <ca-template-conversion></ca-template-conversion>\n        </p-accordion-content>\n    </p-accordion-panel>\n\n</p-accordion>', styles: ["/* angular:styles/component:css;219558ef63f119a92210704329b58a3cdceaa4fb296db559e672f74512827dc7;/home/naomi/content-assistant/src/app/views/page-assistant/components/tools.component.ts */\n:host {\n  display: block;\n}\n/*# sourceMappingURL=tools.component.css.map */\n"] }]
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PageToolsComponent, { className: "PageToolsComponent", filePath: "src/app/views/page-assistant/components/tools.component.ts", lineNumber: 54 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PageToolsComponent, { className: "PageToolsComponent", filePath: "src/app/views/page-assistant/components/tools.component.ts", lineNumber: 31 });
 })();
 
 // src/app/views/page-assistant/services/source-diff.service.ts
@@ -41464,13 +46770,13 @@ var ShadowDomService = class _ShadowDomService {
 })();
 
 // src/app/views/page-assistant/page-assistant.component.ts
-var _c015 = ["liveContainer"];
-var _c118 = ["sourceContainer"];
-var _c213 = () => ({ "ariaLabel": "Accept selected changes" });
-var _c313 = () => ({ "ariaLabel": "More accept options" });
-var _c412 = () => ({ "ariaLabel": "Reject selected changes" });
-var _c511 = () => ({ "ariaLabel": "More reject options" });
-var _c69 = (a0, a1) => ({ "background-color": a0, border: a1 });
+var _c016 = ["liveContainer"];
+var _c121 = ["sourceContainer"];
+var _c214 = () => ({ "ariaLabel": "Accept selected changes" });
+var _c314 = () => ({ "ariaLabel": "More accept options" });
+var _c413 = () => ({ "ariaLabel": "Reject selected changes" });
+var _c512 = () => ({ "ariaLabel": "More reject options" });
+var _c610 = (a0, a1) => ({ "background-color": a0, border: a1 });
 function PageAssistantCompareComponent_p_button_11_Template(rf, ctx) {
   if (rf & 1) {
     const _r2 = \u0275\u0275getCurrentView();
@@ -41562,9 +46868,9 @@ function PageAssistantCompareComponent_ng_template_34_ng_container_0_Template(rf
     \u0275\u0275advance(5);
     \u0275\u0275textInterpolate(ctx_r2.displayCounter);
     \u0275\u0275advance(2);
-    \u0275\u0275property("model", ctx_r2.acceptItems)("buttonProps", \u0275\u0275pureFunction0(8, _c213))("menuButtonProps", \u0275\u0275pureFunction0(9, _c313));
+    \u0275\u0275property("model", ctx_r2.acceptItems)("buttonProps", \u0275\u0275pureFunction0(8, _c214))("menuButtonProps", \u0275\u0275pureFunction0(9, _c314));
     \u0275\u0275advance();
-    \u0275\u0275property("model", ctx_r2.rejectItems)("buttonProps", \u0275\u0275pureFunction0(10, _c412))("menuButtonProps", \u0275\u0275pureFunction0(11, _c511));
+    \u0275\u0275property("model", ctx_r2.rejectItems)("buttonProps", \u0275\u0275pureFunction0(10, _c413))("menuButtonProps", \u0275\u0275pureFunction0(11, _c512));
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", ctx_r2.displayNumHighlighted);
   }
@@ -41633,7 +46939,7 @@ function PageAssistantCompareComponent_ng_template_38_div_1_Template(rf, ctx) {
   if (rf & 2) {
     const item_r7 = ctx.$implicit;
     \u0275\u0275advance();
-    \u0275\u0275property("ngStyle", \u0275\u0275pureFunction2(2, _c69, item_r7.style === "highlight" ? item_r7.colour : "transparent", item_r7.style === "line" ? "2px " + (item_r7.lineStyle || "solid") + " " + item_r7.colour : "none"));
+    \u0275\u0275property("ngStyle", \u0275\u0275pureFunction2(2, _c610, item_r7.style === "highlight" ? item_r7.colour : "transparent", item_r7.style === "line" ? "2px " + (item_r7.lineStyle || "solid") + " " + item_r7.colour : "none"));
     \u0275\u0275advance(2);
     \u0275\u0275textInterpolate(item_r7.text);
   }
@@ -42344,8 +47650,8 @@ ${base}`;
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PageAssistantCompareComponent, selectors: [["ca-page-assistant-compare"]], viewQuery: function PageAssistantCompareComponent_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275viewQuery(_c015, 5);
-      \u0275\u0275viewQuery(_c118, 5);
+      \u0275\u0275viewQuery(_c016, 5);
+      \u0275\u0275viewQuery(_c121, 5);
     }
     if (rf & 2) {
       let _t;
@@ -42616,4 +47922,4 @@ ${base}`;
 export {
   PageAssistantCompareComponent
 };
-//# sourceMappingURL=chunk-H3E6CZ2C.js.map
+//# sourceMappingURL=chunk-FI4GJSN5.js.map

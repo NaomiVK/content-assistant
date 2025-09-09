@@ -26,6 +26,7 @@ import {
   DomSanitizer,
   FileUploadModule,
   FilterService,
+  Footer,
   FormsModule,
   HorizontalRadioButtonsComponent,
   HttpClient,
@@ -42,6 +43,7 @@ import {
   Message,
   MessageModule,
   MessageService,
+  MinusIcon,
   NG_VALUE_ACCESSOR,
   NgClass,
   NgControl,
@@ -55,7 +57,7 @@ import {
   NgTemplateOutlet,
   Overlay,
   OverlayModule,
-  PanelModule,
+  PlusIcon,
   PrimeNG,
   PrimeTemplate,
   ProgressBar,
@@ -75,6 +77,7 @@ import {
   Table,
   TableModule,
   Textarea,
+  ThemeService,
   TimesCircleIcon,
   TimesIcon,
   Title,
@@ -118,7 +121,7 @@ import {
   scrollInView,
   unblockBodyScroll,
   uuid
-} from "./chunk-DJEXFAMN.js";
+} from "./chunk-GL6NV25R.js";
 import {
   ANIMATION_MODULE_TYPE,
   BehaviorSubject,
@@ -149,6 +152,7 @@ import {
   Subject,
   ViewChild,
   ViewEncapsulation,
+  animate,
   booleanAttribute,
   catchError,
   computed,
@@ -166,10 +170,14 @@ import {
   retry,
   setClassMetadata,
   signal,
+  state,
+  style,
   switchMap,
   takeUntil,
   throwError,
   timeout,
+  transition,
+  trigger,
   ɵsetClassDebugInfo,
   ɵɵInheritDefinitionFeature,
   ɵɵNgOnChangesFeature,
@@ -504,11 +512,11 @@ var DynamicDelegationRenderer = class {
   removeClass(el, name) {
     this.delegate.removeClass(el, name);
   }
-  setStyle(el, style, value, flags) {
-    this.delegate.setStyle(el, style, value, flags);
+  setStyle(el, style2, value, flags) {
+    this.delegate.setStyle(el, style2, value, flags);
   }
-  removeStyle(el, style, flags) {
-    this.delegate.removeStyle(el, style, flags);
+  removeStyle(el, style2, flags) {
+    this.delegate.removeStyle(el, style2, flags);
   }
   setProperty(el, name, value) {
     if (this.shouldReplay(name)) {
@@ -8934,12 +8942,12 @@ var classes2 = {
   option: ({
     instance,
     props,
-    state,
+    state: state2,
     option,
     focusedOption
   }) => ["p-select-option", {
     "p-select-option-selected": instance.isSelected(option) && props.highlightOnSelect,
-    "p-focus": state.focusedOptionIndex === focusedOption,
+    "p-focus": state2.focusedOptionIndex === focusedOption,
     "p-disabled": instance.isOptionDisabled(option)
   }],
   optionLabel: "p-select-option-label",
@@ -9616,7 +9624,7 @@ var Dropdown = class _Dropdown extends BaseComponent {
   lastHiddenFocusableElementOnOverlay;
   // @todo to be refactored
   get hostClass() {
-    const classes7 = this._componentStyle.classes.root({
+    const classes8 = this._componentStyle.classes.root({
       instance: this
     }).map((cls) => {
       if (typeof cls === "string") {
@@ -9625,7 +9633,7 @@ var Dropdown = class _Dropdown extends BaseComponent {
         return Object.keys(cls).filter((key) => cls[key]).join(" ");
       }
     }).join(" ");
-    return classes7 + " " + this.styleClass;
+    return classes8 + " " + this.styleClass;
   }
   get hostStyle() {
     return this.style;
@@ -13121,12 +13129,12 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
         };
         this.stateService.addResult(displayName, result);
       }
-      const state = this.stateService.getCurrentState();
+      const state2 = this.stateService.getCurrentState();
       this.stateService.updateState({
         progressText: this.translate.instant("image.progress.processing", {
           fileName: displayName,
-          current: state.processedCount + 1,
-          total: state.filesInProgress
+          current: state2.processedCount + 1,
+          total: state2.filesInProgress
         })
       });
       try {
@@ -13221,9 +13229,9 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
     });
   }
   finalizeProcessing() {
-    const state = this.stateService.getCurrentState();
+    const state2 = this.stateService.getCurrentState();
     this.stateService.updateState({
-      progressText: this.translate.instant("image.progress.complete", { count: state.processedCount })
+      progressText: this.translate.instant("image.progress.complete", { count: state2.processedCount })
     });
     console.timeEnd("Image processing time");
     const endTime = performance.now();
@@ -13411,6 +13419,913 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
 })();
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ImageAssistantComponent, { className: "ImageAssistantComponent", filePath: "src/app/views/image-assistant/image-assistant.component.ts", lineNumber: 47 });
+})();
+
+// node_modules/primeng/fesm2022/primeng-panel.mjs
+var _c04 = ["header"];
+var _c18 = ["icons"];
+var _c22 = ["content"];
+var _c32 = ["footer"];
+var _c42 = ["headericons"];
+var _c52 = ["contentWrapper"];
+var _c62 = ["*", [["p-header"]], [["p-footer"]]];
+var _c72 = ["*", "p-header", "p-footer"];
+var _c82 = (a0, a1) => ({
+  "p-panel p-component": true,
+  "p-panel-toggleable": a0,
+  "p-panel-expanded": a1
+});
+var _c92 = (a0) => ({
+  transitionParams: a0,
+  height: "0",
+  opacity: "0"
+});
+var _c102 = (a0) => ({
+  value: "hidden",
+  params: a0
+});
+var _c112 = (a0) => ({
+  transitionParams: a0,
+  height: "*",
+  opacity: "1"
+});
+var _c122 = (a0) => ({
+  value: "visible",
+  params: a0
+});
+var _c132 = (a0, a1, a2) => ({
+  "p-panel-icons-start": a0,
+  "p-panel-icons-end": a1,
+  "p-panel-icons-center": a2
+});
+var _c142 = (a0) => ({
+  $implicit: a0
+});
+function Panel_div_1_span_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 12);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275attribute("id", ctx_r2.id + "_header");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r2._header);
+  }
+}
+function Panel_div_1_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Panel_div_1_5_ng_template_0_Template(rf, ctx) {
+}
+function Panel_div_1_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Panel_div_1_5_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_span_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span");
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(6);
+    \u0275\u0275classMap(ctx_r2.expandIcon);
+  }
+}
+function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_MinusIcon_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "MinusIcon");
+  }
+}
+function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_span_1_Template, 1, 2, "span", 16)(2, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_MinusIcon_2_Template, 1, 0, "MinusIcon", 14);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(5);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.expandIcon);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.expandIcon);
+  }
+}
+function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_span_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span");
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(6);
+    \u0275\u0275classMap(ctx_r2.collapseIcon);
+  }
+}
+function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_PlusIcon_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "PlusIcon");
+  }
+}
+function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_span_1_Template, 1, 2, "span", 16)(2, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_PlusIcon_2_Template, 1, 0, "PlusIcon", 14);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(5);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.collapseIcon);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.collapseIcon);
+  }
+}
+function Panel_div_1_p_button_6_ng_template_1_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_Template, 3, 2, "ng-container", 14)(2, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_Template, 3, 2, "ng-container", 14);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(4);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.collapsed);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.collapsed);
+  }
+}
+function Panel_div_1_p_button_6_ng_template_1_1_ng_template_0_Template(rf, ctx) {
+}
+function Panel_div_1_p_button_6_ng_template_1_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Panel_div_1_p_button_6_ng_template_1_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function Panel_div_1_p_button_6_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Panel_div_1_p_button_6_ng_template_1_ng_container_0_Template, 3, 2, "ng-container", 14)(1, Panel_div_1_p_button_6_ng_template_1_1_Template, 1, 0, null, 15);
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("ngIf", !ctx_r2.headerIconsTemplate && !ctx_r2._headerIconsTemplate && !(ctx_r2.toggleButtonProps == null ? null : ctx_r2.toggleButtonProps.icon));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.headerIconsTemplate || ctx_r2._headerIconsTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(3, _c142, ctx_r2.collapsed));
+  }
+}
+function Panel_div_1_p_button_6_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-button", 13);
+    \u0275\u0275listener("click", function Panel_div_1_p_button_6_Template_p_button_click_0_listener($event) {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onIconClick($event));
+    })("keydown", function Panel_div_1_p_button_6_Template_p_button_keydown_0_listener($event) {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onKeyDown($event));
+    });
+    \u0275\u0275template(1, Panel_div_1_p_button_6_ng_template_1_Template, 2, 5, "ng-template", null, 1, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("text", true)("rounded", true)("buttonProps", ctx_r2.toggleButtonProps);
+    \u0275\u0275attribute("id", ctx_r2.id + "_header")("aria-label", ctx_r2.buttonAriaLabel)("aria-controls", ctx_r2.id + "_content")("aria-expanded", !ctx_r2.collapsed);
+  }
+}
+function Panel_div_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 8);
+    \u0275\u0275listener("click", function Panel_div_1_Template_div_click_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onHeaderClick($event));
+    });
+    \u0275\u0275template(1, Panel_div_1_span_1_Template, 2, 2, "span", 9);
+    \u0275\u0275projection(2, 1);
+    \u0275\u0275template(3, Panel_div_1_ng_container_3_Template, 1, 0, "ng-container", 6);
+    \u0275\u0275elementStart(4, "div", 10);
+    \u0275\u0275template(5, Panel_div_1_5_Template, 1, 0, null, 6)(6, Panel_div_1_p_button_6_Template, 3, 7, "p-button", 11);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275attribute("id", ctx_r2.id + "-titlebar");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2._header);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.headerTemplate || ctx_r2._headerTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction3(6, _c132, ctx_r2.iconPos === "start", ctx_r2.iconPos === "end", ctx_r2.iconPos === "center"));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.iconTemplate || ctx_r2._iconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.toggleable);
+  }
+}
+function Panel_ng_container_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Panel_div_7_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Panel_div_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 17);
+    \u0275\u0275projection(1, 2);
+    \u0275\u0275template(2, Panel_div_7_ng_container_2_Template, 1, 0, "ng-container", 6);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.footerTemplate || ctx_r2._footerTemplate);
+  }
+}
+var theme4 = ({
+  dt
+}) => `
+.p-panel {
+    border: 1px solid ${dt("panel.border.color")};
+    border-radius: ${dt("panel.border.radius")};
+    background: ${dt("panel.background")};
+    color: ${dt("panel.color")};
+}
+
+.p-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: ${dt("panel.header.padding")};
+    background: ${dt("panel.header.background")};
+    color: ${dt("panel.header.color")};
+    border-style: solid;
+    border-width: ${dt("panel.header.border.width")};
+    border-color: ${dt("panel.header.border.color")};
+    border-radius: ${dt("panel.header.border.radius")};
+}
+
+.p-panel-toggleable .p-panel-header {
+    padding: ${dt("panel.toggleable.header.padding")};
+}
+
+.p-panel-title {
+    line-height: 1;
+    font-weight: ${dt("panel.title.font.weight")};
+}
+
+.p-panel-content {
+    padding: ${dt("panel.content.padding")};
+}
+
+.p-panel-footer {
+    padding: ${dt("panel.footer.padding")};
+}
+
+/* For PrimeNG */
+.p-panel-toggleable.p-panel-expanded > .p-panel-content-container:not(.ng-animating) {
+    overflow: visible
+}
+
+.p-panel-toggleable .p-panel-content-container {
+    overflow: hidden;
+}
+`;
+var classes4 = {
+  root: ({
+    props
+  }) => ["p-panel p-component", {
+    "p-panel-toggleable": props.toggleable
+  }],
+  header: "p-panel-header",
+  title: "p-panel-title",
+  headerActions: "p-panel-header-actions",
+  pcToggleButton: "p-panel-toggle-button",
+  contentContainer: "p-panel-content-container",
+  content: "p-panel-content",
+  footer: "p-panel-footer"
+};
+var PanelStyle = class _PanelStyle extends BaseStyle {
+  name = "panel";
+  theme = theme4;
+  classes = classes4;
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275PanelStyle_BaseFactory;
+    return function PanelStyle_Factory(__ngFactoryType__) {
+      return (\u0275PanelStyle_BaseFactory || (\u0275PanelStyle_BaseFactory = \u0275\u0275getInheritedFactory(_PanelStyle)))(__ngFactoryType__ || _PanelStyle);
+    };
+  })();
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+    token: _PanelStyle,
+    factory: _PanelStyle.\u0275fac
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PanelStyle, [{
+    type: Injectable
+  }], null, null);
+})();
+var PanelClasses;
+(function(PanelClasses2) {
+  PanelClasses2["root"] = "p-panel";
+  PanelClasses2["header"] = "p-panel-header";
+  PanelClasses2["title"] = "p-panel-title";
+  PanelClasses2["headerActions"] = "p-panel-header-actions";
+  PanelClasses2["pcToggleButton"] = "p-panel-toggle-button";
+  PanelClasses2["contentContainer"] = "p-panel-content-container";
+  PanelClasses2["content"] = "p-panel-content";
+  PanelClasses2["footer"] = "p-panel-footer";
+})(PanelClasses || (PanelClasses = {}));
+var Panel = class _Panel extends BaseComponent {
+  /**
+   * Defines if content of panel can be expanded and collapsed.
+   * @group Props
+   */
+  toggleable;
+  /**
+   * Header text of the panel.
+   * @group Props
+   */
+  _header;
+  /**
+   * Defines the initial state of panel content, supports one or two-way binding as well.
+   * @group Props
+   */
+  collapsed;
+  /**
+   * Inline style of the component.
+   * @group Props
+   */
+  style;
+  /**
+   * Style class of the component.
+   * @group Props
+   */
+  styleClass;
+  /**
+   * Position of the icons.
+   * @group Props
+   */
+  iconPos = "end";
+  /**
+   * Expand icon of the toggle button.
+   * @group Props
+   * @deprecated since v15.4.2, use `headericons` template instead.
+   */
+  expandIcon;
+  /**
+   * Collapse icon of the toggle button.
+   * @group Props
+   * @deprecated since v15.4.2, use `headericons` template instead.
+   */
+  collapseIcon;
+  /**
+   * Specifies if header of panel cannot be displayed.
+   * @group Props
+   */
+  showHeader = true;
+  /**
+   * Specifies the toggler element to toggle the panel content.
+   * @group Props
+   */
+  toggler = "icon";
+  /**
+   * Transition options of the animation.
+   * @group Props
+   */
+  transitionOptions = "400ms cubic-bezier(0.86, 0, 0.07, 1)";
+  /**
+   * Used to pass all properties of the ButtonProps to the Button component.
+   * @group Props
+   */
+  toggleButtonProps;
+  /**
+   * Emitted when the collapsed changes.
+   * @param {boolean} value - New Value.
+   * @group Emits
+   */
+  collapsedChange = new EventEmitter();
+  /**
+   * Callback to invoke before panel toggle.
+   * @param {PanelBeforeToggleEvent} event - Custom panel toggle event
+   * @group Emits
+   */
+  onBeforeToggle = new EventEmitter();
+  /**
+   * Callback to invoke after panel toggle.
+   * @param {PanelAfterToggleEvent} event - Custom panel toggle event
+   * @group Emits
+   */
+  onAfterToggle = new EventEmitter();
+  footerFacet;
+  animating;
+  /**
+   * Defines template option for header.
+   * @group Templates
+   */
+  headerTemplate;
+  /**
+   * Defines template option for icon.
+   * @example
+   * ```html
+   * <ng-template #icon> </ng-template>
+   * ```
+   * @group Templates
+   */
+  iconTemplate;
+  /**
+   * Defines template option for content.
+   * @example
+   * ```html
+   * <ng-template #content> </ng-template>
+   * ```
+   * @group Templates
+   */
+  contentTemplate;
+  /**
+   * Defines template option for footer.
+   * @example
+   * ```html
+   * <ng-template #footer> </ng-template>
+   * ```
+   * @group Templates
+   */
+  footerTemplate;
+  /**
+   * Defines template option for headerIcon.
+   * @type {TemplateRef<PanelHeaderIconsTemplateContext>} context - context of the template.
+   * @example
+   * ```html
+   * <ng-template #headericons let-collapsed> </ng-template>
+   * ```
+   * @see {@link PanelHeaderIconsTemplateContext}
+   * @group Templates
+   */
+  headerIconsTemplate;
+  _headerTemplate;
+  _iconTemplate;
+  _contentTemplate;
+  _footerTemplate;
+  _headerIconsTemplate;
+  contentWrapperViewChild;
+  id = uuid("pn_id_");
+  get buttonAriaLabel() {
+    return this._header;
+  }
+  _componentStyle = inject(PanelStyle);
+  onHeaderClick(event) {
+    if (this.toggler === "header") {
+      this.toggle(event);
+    }
+  }
+  onIconClick(event) {
+    if (this.toggler === "icon") {
+      this.toggle(event);
+    }
+  }
+  toggle(event) {
+    if (this.animating) {
+      return false;
+    }
+    this.animating = true;
+    this.onBeforeToggle.emit({
+      originalEvent: event,
+      collapsed: this.collapsed
+    });
+    if (this.toggleable) {
+      if (this.collapsed) this.expand();
+      else this.collapse();
+    }
+    this.cd.markForCheck();
+    event.preventDefault();
+  }
+  expand() {
+    this.collapsed = false;
+    this.collapsedChange.emit(this.collapsed);
+    this.updateTabIndex();
+  }
+  collapse() {
+    this.collapsed = true;
+    this.collapsedChange.emit(this.collapsed);
+    this.updateTabIndex();
+  }
+  getBlockableElement() {
+    return this.el.nativeElement.children[0];
+  }
+  updateTabIndex() {
+    if (this.contentWrapperViewChild) {
+      const focusableElements = this.contentWrapperViewChild.nativeElement.querySelectorAll('input, button, select, a, textarea, [tabindex]:not([tabindex="-1"])');
+      focusableElements.forEach((element) => {
+        if (this.collapsed) {
+          element.setAttribute("tabindex", "-1");
+        } else {
+          element.removeAttribute("tabindex");
+        }
+      });
+    }
+  }
+  onKeyDown(event) {
+    if (event.code === "Enter" || event.code === "Space") {
+      this.toggle(event);
+      event.preventDefault();
+    }
+  }
+  onToggleDone(event) {
+    this.animating = false;
+    this.onAfterToggle.emit({
+      originalEvent: event,
+      collapsed: this.collapsed
+    });
+  }
+  templates;
+  ngAfterContentInit() {
+    this.templates.forEach((item) => {
+      switch (item.getType()) {
+        case "header":
+          this._headerTemplate = item.template;
+          break;
+        case "content":
+          this._contentTemplate = item.template;
+          break;
+        case "footer":
+          this._footerTemplate = item.template;
+          break;
+        case "icons":
+          this._iconTemplate = item.template;
+          break;
+        case "headericons":
+          this._headerIconsTemplate = item.template;
+          break;
+        default:
+          this._contentTemplate = item.template;
+          break;
+      }
+    });
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275Panel_BaseFactory;
+    return function Panel_Factory(__ngFactoryType__) {
+      return (\u0275Panel_BaseFactory || (\u0275Panel_BaseFactory = \u0275\u0275getInheritedFactory(_Panel)))(__ngFactoryType__ || _Panel);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _Panel,
+    selectors: [["p-panel"]],
+    contentQueries: function Panel_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, Footer, 5);
+        \u0275\u0275contentQuery(dirIndex, _c04, 4);
+        \u0275\u0275contentQuery(dirIndex, _c18, 4);
+        \u0275\u0275contentQuery(dirIndex, _c22, 4);
+        \u0275\u0275contentQuery(dirIndex, _c32, 4);
+        \u0275\u0275contentQuery(dirIndex, _c42, 4);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.footerFacet = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.iconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.footerTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerIconsTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    viewQuery: function Panel_Query(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275viewQuery(_c52, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentWrapperViewChild = _t.first);
+      }
+    },
+    inputs: {
+      toggleable: [2, "toggleable", "toggleable", booleanAttribute],
+      _header: [0, "header", "_header"],
+      collapsed: [2, "collapsed", "collapsed", booleanAttribute],
+      style: "style",
+      styleClass: "styleClass",
+      iconPos: "iconPos",
+      expandIcon: "expandIcon",
+      collapseIcon: "collapseIcon",
+      showHeader: [2, "showHeader", "showHeader", booleanAttribute],
+      toggler: "toggler",
+      transitionOptions: "transitionOptions",
+      toggleButtonProps: "toggleButtonProps"
+    },
+    outputs: {
+      collapsedChange: "collapsedChange",
+      onBeforeToggle: "onBeforeToggle",
+      onAfterToggle: "onAfterToggle"
+    },
+    features: [\u0275\u0275ProvidersFeature([PanelStyle]), \u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c72,
+    decls: 8,
+    vars: 25,
+    consts: [["contentWrapper", ""], ["icon", ""], [3, "ngClass", "ngStyle"], ["class", "p-panel-header", 3, "click", 4, "ngIf"], ["role", "region", 1, "p-panel-content-container", 3, "id"], [1, "p-panel-content"], [4, "ngTemplateOutlet"], ["class", "p-panel-footer", 4, "ngIf"], [1, "p-panel-header", 3, "click"], ["class", "p-panel-title", 4, "ngIf"], [1, "p-panel-icons", 3, "ngClass"], ["severity", "secondary", "type", "button", "role", "button", "styleClass", "p-panel-header-icon p-panel-toggler p-link", 3, "text", "rounded", "buttonProps", "click", "keydown", 4, "ngIf"], [1, "p-panel-title"], ["severity", "secondary", "type", "button", "role", "button", "styleClass", "p-panel-header-icon p-panel-toggler p-link", 3, "click", "keydown", "text", "rounded", "buttonProps"], [4, "ngIf"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [3, "class", 4, "ngIf"], [1, "p-panel-footer"]],
+    template: function Panel_Template(rf, ctx) {
+      if (rf & 1) {
+        const _r1 = \u0275\u0275getCurrentView();
+        \u0275\u0275projectionDef(_c62);
+        \u0275\u0275elementStart(0, "div", 2);
+        \u0275\u0275template(1, Panel_div_1_Template, 7, 10, "div", 3);
+        \u0275\u0275elementStart(2, "div", 4);
+        \u0275\u0275listener("@panelContent.done", function Panel_Template_div_animation_panelContent_done_2_listener($event) {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onToggleDone($event));
+        });
+        \u0275\u0275elementStart(3, "div", 5, 0);
+        \u0275\u0275projection(5);
+        \u0275\u0275template(6, Panel_ng_container_6_Template, 1, 0, "ng-container", 6);
+        \u0275\u0275elementEnd();
+        \u0275\u0275template(7, Panel_div_7_Template, 3, 1, "div", 7);
+        \u0275\u0275elementEnd()();
+      }
+      if (rf & 2) {
+        \u0275\u0275classMap(ctx.styleClass);
+        \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(14, _c82, ctx.toggleable, !ctx.collapsed && ctx.toggleable))("ngStyle", ctx.style);
+        \u0275\u0275attribute("id", ctx.id)("data-pc-name", "panel");
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.showHeader);
+        \u0275\u0275advance();
+        \u0275\u0275property("id", ctx.id + "_content")("@panelContent", ctx.collapsed ? \u0275\u0275pureFunction1(19, _c102, \u0275\u0275pureFunction1(17, _c92, ctx.animating ? ctx.transitionOptions : "0ms")) : \u0275\u0275pureFunction1(23, _c122, \u0275\u0275pureFunction1(21, _c112, ctx.animating ? ctx.transitionOptions : "0ms")));
+        \u0275\u0275attribute("aria-labelledby", ctx.id + "_header")("aria-hidden", ctx.collapsed)("tabindex", ctx.collapsed ? "-1" : void 0);
+        \u0275\u0275advance(4);
+        \u0275\u0275property("ngTemplateOutlet", ctx.contentTemplate || ctx._contentTemplate);
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.footerFacet || ctx.footerTemplate || ctx._footerTemplate);
+      }
+    },
+    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, PlusIcon, MinusIcon, ButtonModule, Button, SharedModule],
+    encapsulation: 2,
+    data: {
+      animation: [trigger("panelContent", [state("hidden", style({
+        height: "0"
+      })), state("void", style({
+        height: "{{height}}"
+      }), {
+        params: {
+          height: "0"
+        }
+      }), state("visible", style({
+        height: "*"
+      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => hidden", animate("{{transitionParams}}")), transition("void => visible", animate("{{transitionParams}}"))])]
+    },
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Panel, [{
+    type: Component,
+    args: [{
+      selector: "p-panel",
+      standalone: true,
+      imports: [CommonModule, PlusIcon, MinusIcon, ButtonModule, SharedModule],
+      template: `
+        <div
+            [attr.id]="id"
+            [attr.data-pc-name]="'panel'"
+            [ngClass]="{
+                'p-panel p-component': true,
+                'p-panel-toggleable': toggleable,
+                'p-panel-expanded': !collapsed && toggleable
+            }"
+            [ngStyle]="style"
+            [class]="styleClass"
+        >
+            <div class="p-panel-header" *ngIf="showHeader" (click)="onHeaderClick($event)" [attr.id]="id + '-titlebar'">
+                <span class="p-panel-title" *ngIf="_header" [attr.id]="id + '_header'">{{ _header }}</span>
+                <ng-content select="p-header"></ng-content>
+                <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+                <div
+                    class="p-panel-icons"
+                    [ngClass]="{
+                        'p-panel-icons-start': iconPos === 'start',
+                        'p-panel-icons-end': iconPos === 'end',
+                        'p-panel-icons-center': iconPos === 'center'
+                    }"
+                >
+                    <ng-template *ngTemplateOutlet="iconTemplate || _iconTemplate"></ng-template>
+                    <p-button
+                        *ngIf="toggleable"
+                        [attr.id]="id + '_header'"
+                        severity="secondary"
+                        [text]="true"
+                        [rounded]="true"
+                        type="button"
+                        role="button"
+                        styleClass="p-panel-header-icon p-panel-toggler p-link"
+                        [attr.aria-label]="buttonAriaLabel"
+                        [attr.aria-controls]="id + '_content'"
+                        [attr.aria-expanded]="!collapsed"
+                        (click)="onIconClick($event)"
+                        (keydown)="onKeyDown($event)"
+                        [buttonProps]="toggleButtonProps"
+                    >
+                        <ng-template #icon>
+                            <ng-container *ngIf="!headerIconsTemplate && !_headerIconsTemplate && !toggleButtonProps?.icon">
+                                <ng-container *ngIf="!collapsed">
+                                    <span *ngIf="expandIcon" [class]="expandIcon"></span>
+                                    <MinusIcon *ngIf="!expandIcon" />
+                                </ng-container>
+
+                                <ng-container *ngIf="collapsed">
+                                    <span *ngIf="collapseIcon" [class]="collapseIcon"></span>
+                                    <PlusIcon *ngIf="!collapseIcon" />
+                                </ng-container>
+                            </ng-container>
+
+                            <ng-template *ngTemplateOutlet="headerIconsTemplate || _headerIconsTemplate; context: { $implicit: collapsed }"></ng-template>
+                        </ng-template>
+                    </p-button>
+                </div>
+            </div>
+            <div
+                class="p-panel-content-container"
+                [id]="id + '_content'"
+                role="region"
+                [attr.aria-labelledby]="id + '_header'"
+                [attr.aria-hidden]="collapsed"
+                [attr.tabindex]="collapsed ? '-1' : undefined"
+                [@panelContent]="
+                    collapsed
+                        ? {
+                              value: 'hidden',
+                              params: {
+                                  transitionParams: animating ? transitionOptions : '0ms',
+                                  height: '0',
+                                  opacity: '0'
+                              }
+                          }
+                        : {
+                              value: 'visible',
+                              params: {
+                                  transitionParams: animating ? transitionOptions : '0ms',
+                                  height: '*',
+                                  opacity: '1'
+                              }
+                          }
+                "
+                (@panelContent.done)="onToggleDone($event)"
+            >
+                <div class="p-panel-content" #contentWrapper>
+                    <ng-content></ng-content>
+                    <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
+                </div>
+
+                <div class="p-panel-footer" *ngIf="footerFacet || footerTemplate || _footerTemplate">
+                    <ng-content select="p-footer"></ng-content>
+                    <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+                </div>
+            </div>
+        </div>
+    `,
+      animations: [trigger("panelContent", [state("hidden", style({
+        height: "0"
+      })), state("void", style({
+        height: "{{height}}"
+      }), {
+        params: {
+          height: "0"
+        }
+      }), state("visible", style({
+        height: "*"
+      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => hidden", animate("{{transitionParams}}")), transition("void => visible", animate("{{transitionParams}}"))])],
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      providers: [PanelStyle]
+    }]
+  }], null, {
+    toggleable: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    _header: [{
+      type: Input,
+      args: ["header"]
+    }],
+    collapsed: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    style: [{
+      type: Input
+    }],
+    styleClass: [{
+      type: Input
+    }],
+    iconPos: [{
+      type: Input
+    }],
+    expandIcon: [{
+      type: Input
+    }],
+    collapseIcon: [{
+      type: Input
+    }],
+    showHeader: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    toggler: [{
+      type: Input
+    }],
+    transitionOptions: [{
+      type: Input
+    }],
+    toggleButtonProps: [{
+      type: Input
+    }],
+    collapsedChange: [{
+      type: Output
+    }],
+    onBeforeToggle: [{
+      type: Output
+    }],
+    onAfterToggle: [{
+      type: Output
+    }],
+    footerFacet: [{
+      type: ContentChild,
+      args: [Footer]
+    }],
+    headerTemplate: [{
+      type: ContentChild,
+      args: ["header", {
+        descendants: false
+      }]
+    }],
+    iconTemplate: [{
+      type: ContentChild,
+      args: ["icons", {
+        descendants: false
+      }]
+    }],
+    contentTemplate: [{
+      type: ContentChild,
+      args: ["content", {
+        descendants: false
+      }]
+    }],
+    footerTemplate: [{
+      type: ContentChild,
+      args: ["footer", {
+        descendants: false
+      }]
+    }],
+    headerIconsTemplate: [{
+      type: ContentChild,
+      args: ["headericons", {
+        descendants: false
+      }]
+    }],
+    contentWrapperViewChild: [{
+      type: ViewChild,
+      args: ["contentWrapper"]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }]
+  });
+})();
+var PanelModule = class _PanelModule {
+  static \u0275fac = function PanelModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _PanelModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _PanelModule,
+    imports: [Panel, SharedModule],
+    exports: [Panel, SharedModule]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [Panel, SharedModule, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PanelModule, [{
+    type: NgModule,
+    args: [{
+      imports: [Panel, SharedModule],
+      exports: [Panel, SharedModule]
+    }]
+  }], null, null);
 })();
 
 // node_modules/@fortawesome/fontawesome-svg-core/index.mjs
@@ -13940,9 +14855,9 @@ function insertCss(css2) {
   if (!css2 || !IS_DOM) {
     return;
   }
-  const style = DOCUMENT2.createElement("style");
-  style.setAttribute("type", "text/css");
-  style.innerHTML = css2;
+  const style2 = DOCUMENT2.createElement("style");
+  style2.setAttribute("type", "text/css");
+  style2.innerHTML = css2;
   const headChildren = DOCUMENT2.head.childNodes;
   let beforeChild = null;
   for (let i = headChildren.length - 1; i > -1; i--) {
@@ -13952,7 +14867,7 @@ function insertCss(css2) {
       beforeChild = child;
     }
   }
-  DOCUMENT2.head.insertBefore(style, beforeChild);
+  DOCUMENT2.head.insertBefore(style2, beforeChild);
   return css2;
 }
 var idPool = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -14234,8 +15149,8 @@ function getIconName(cssPrefix, cls) {
 }
 var build = () => {
   const lookup = (reducer) => {
-    return reduce(styles, (o$$1, style, prefix) => {
-      o$$1[prefix] = reduce(style, reducer, {});
+    return reduce(styles, (o$$1, style2, prefix) => {
+      o$$1[prefix] = reduce(style2, reducer, {});
       return o$$1;
     }, {});
   };
@@ -14364,11 +15279,11 @@ function getCanonicalPrefix(styleOrPrefix) {
   const {
     family = s
   } = params;
-  const style = PREFIX_TO_STYLE[family][styleOrPrefix];
+  const style2 = PREFIX_TO_STYLE[family][styleOrPrefix];
   if (family === t && !styleOrPrefix) {
     return "fad";
   }
-  const prefix = STYLE_TO_PREFIX[family][styleOrPrefix] || STYLE_TO_PREFIX[family][style];
+  const prefix = STYLE_TO_PREFIX[family][styleOrPrefix] || STYLE_TO_PREFIX[family][style2];
   const defined = styleOrPrefix in namespace.styles ? styleOrPrefix : null;
   const result = prefix || defined || null;
   return result;
@@ -15202,11 +16117,11 @@ function disconnect() {
   mo.disconnect();
 }
 function styleParser(node) {
-  const style = node.getAttribute("style");
+  const style2 = node.getAttribute("style");
   let val = [];
-  if (style) {
-    val = style.split(";").reduce((acc, style2) => {
-      const styles2 = style2.split(":");
+  if (style2) {
+    val = style2.split(";").reduce((acc, style3) => {
+      const styles2 = style3.split(":");
       const prop = styles2[0];
       const value = styles2.slice(1);
       if (prop && value.length > 0) {
@@ -15417,7 +16332,7 @@ var render = function(iconDefinition) {
     maskId = null,
     title = null,
     titleId = null,
-    classes: classes7 = [],
+    classes: classes8 = [],
     attributes = {},
     styles: styles2 = {}
   } = params;
@@ -15462,7 +16377,7 @@ var render = function(iconDefinition) {
       extra: {
         attributes,
         styles: styles2,
-        classes: classes7
+        classes: classes8
       }
     });
   });
@@ -15564,7 +16479,7 @@ var Layers = {
       layer(assembler) {
         let params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
         const {
-          classes: classes7 = []
+          classes: classes8 = []
         } = params;
         return domVariants({
           type: "layer"
@@ -15582,7 +16497,7 @@ var Layers = {
           return [{
             tag: "span",
             attributes: {
-              class: ["".concat(config.cssPrefix, "-layers"), ...classes7].join(" ")
+              class: ["".concat(config.cssPrefix, "-layers"), ...classes8].join(" ")
             },
             children
           }];
@@ -15598,7 +16513,7 @@ var LayersCounter = {
         let params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
         const {
           title = null,
-          classes: classes7 = [],
+          classes: classes8 = [],
           attributes = {},
           styles: styles2 = {}
         } = params;
@@ -15616,7 +16531,7 @@ var LayersCounter = {
             extra: {
               attributes,
               styles: styles2,
-              classes: ["".concat(config.cssPrefix, "-layers-counter"), ...classes7]
+              classes: ["".concat(config.cssPrefix, "-layers-counter"), ...classes8]
             }
           });
         });
@@ -15632,7 +16547,7 @@ var LayersText = {
         const {
           transform = meaninglessTransform,
           title = null,
-          classes: classes7 = [],
+          classes: classes8 = [],
           attributes = {},
           styles: styles2 = {}
         } = params;
@@ -15651,7 +16566,7 @@ var LayersText = {
             extra: {
               attributes,
               styles: styles2,
-              classes: ["".concat(config.cssPrefix, "-layers-text"), ...classes7]
+              classes: ["".concat(config.cssPrefix, "-layers-text"), ...classes8]
             }
           });
         });
@@ -16216,7 +17131,7 @@ var text = api.text;
 var counter = api.counter;
 
 // node_modules/@fortawesome/angular-fontawesome/fesm2022/angular-fontawesome.mjs
-var _c04 = ["*"];
+var _c05 = ["*"];
 var faWarnIfIconDefinitionMissing = (iconSpec) => {
   throw new Error(`Could not find icon with iconName=${iconSpec.iconName} and prefix=${iconSpec.prefix} in the icon library.`);
 };
@@ -16226,7 +17141,7 @@ var faWarnIfIconSpecMissing = () => {
 var isKnownRotateValue = (rotate) => rotate != null && (rotate === 90 || rotate === 180 || rotate === 270 || rotate === "90" || rotate === "180" || rotate === "270");
 var faClassList = (props) => {
   const knownRotateValue = isKnownRotateValue(props.rotate);
-  const classes7 = {
+  const classes8 = {
     [`fa-${props.animation}`]: props.animation != null && !props.animation.startsWith("spin"),
     "fa-spin": props.animation === "spin" || props.animation === "spin-reverse",
     "fa-spin-pulse": props.animation === "spin-pulse" || props.animation === "spin-pulse-reverse",
@@ -16247,7 +17162,7 @@ var faClassList = (props) => {
     [`fa-pull-${props.pull}`]: props.pull !== null,
     [`fa-stack-${props.stackItemSize}`]: props.stackItemSize != null
   };
-  return Object.keys(classes7).map((key) => classes7[key] ? key : null).filter((key) => key);
+  return Object.keys(classes8).map((key) => classes8[key] ? key : null).filter((key) => key);
 };
 var cssInserted = /* @__PURE__ */ new WeakSet();
 var autoCssId = "fa-auto-css";
@@ -16263,10 +17178,10 @@ function ensureCss2(document2, config2) {
     cssInserted.add(document2);
     return;
   }
-  const style = document2.createElement("style");
-  style.setAttribute("type", "text/css");
-  style.setAttribute("id", autoCssId);
-  style.innerHTML = dom$1.css();
+  const style2 = document2.createElement("style");
+  style2.setAttribute("type", "text/css");
+  style2.setAttribute("id", autoCssId);
+  style2.innerHTML = dom$1.css();
   const headChildren = document2.head.childNodes;
   let beforeChild = null;
   for (let i = headChildren.length - 1; i > -1; i--) {
@@ -16276,7 +17191,7 @@ function ensureCss2(document2, config2) {
       beforeChild = child;
     }
   }
-  document2.head.insertBefore(style, beforeChild);
+  document2.head.insertBefore(style2, beforeChild);
   config2.autoAddCss = false;
   cssInserted.add(document2);
 }
@@ -16463,7 +17378,7 @@ var FaStackComponent = class _FaStackComponent {
         size: "size"
       },
       features: [\u0275\u0275NgOnChangesFeature],
-      ngContentSelectors: _c04,
+      ngContentSelectors: _c05,
       decls: 1,
       vars: 0,
       template: function FaStackComponent_Template(rf, ctx) {
@@ -16824,7 +17739,7 @@ var FaLayersComponent = class _FaLayersComponent {
         fixedWidth: "fixedWidth"
       },
       features: [\u0275\u0275NgOnChangesFeature],
-      ngContentSelectors: _c04,
+      ngContentSelectors: _c05,
       decls: 1,
       vars: 0,
       template: function FaLayersComponent_Template(rf, ctx) {
@@ -17380,7 +18295,7 @@ var FileParseService = class _FileParseService {
 })();
 
 // src/app/views/translation-assistant/translation-assistant.component.ts
-var _c05 = (a0, a1) => ({ "pi-plus": a0, "pi-minus": a1 });
+var _c06 = (a0, a1) => ({ "pi-plus": a0, "pi-minus": a1 });
 function TranslationAssistantComponent_ng_container_12_i_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "i", 18);
@@ -17462,7 +18377,7 @@ function TranslationAssistantComponent_div_17_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext();
     \u0275\u0275advance(4);
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(2, _c05, !ctx_r2.isExpanded, ctx_r2.isExpanded));
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(2, _c06, !ctx_r2.isExpanded, ctx_r2.isExpanded));
     \u0275\u0275advance(5);
     \u0275\u0275property("ngIf", ctx_r2.isExpanded);
   }
@@ -18186,7 +19101,7 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
 })();
 
 // src/app/views/project-assistant/project-assistant.component.ts
-var _c06 = () => ["/metadata-assistant"];
+var _c07 = () => ["/metadata-assistant"];
 function ProjectAssistantComponent_ng_template_9_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 7)(1, "h3", 8);
@@ -18208,7 +19123,7 @@ function ProjectAssistantComponent_ng_template_13_Template(rf, ctx) {
   }
   if (rf & 2) {
     \u0275\u0275advance();
-    \u0275\u0275property("label", \u0275\u0275pipeBind1(2, 2, "common.goTo"))("routerLink", \u0275\u0275pureFunction0(4, _c06));
+    \u0275\u0275property("label", \u0275\u0275pipeBind1(2, 2, "common.goTo"))("routerLink", \u0275\u0275pureFunction0(4, _c07));
   }
 }
 var ProjectAssistantComponent = class _ProjectAssistantComponent {
@@ -18828,7 +19743,7 @@ var InventoryAssistantComponent = class _InventoryAssistantComponent {
 })();
 
 // node_modules/primeng/fesm2022/primeng-inputtextarea.mjs
-var theme4 = ({
+var theme5 = ({
   dt
 }) => `
 .p-textarea {
@@ -18895,7 +19810,7 @@ var theme4 = ({
 .p-textarea.ng-invalid.ng-dirty::placeholder {
     color: ${dt("textarea.invalid.placeholder.color")};
 }`;
-var classes4 = {
+var classes5 = {
   root: ({
     instance,
     props
@@ -18909,8 +19824,8 @@ var classes4 = {
 };
 var TextareaStyle = class _TextareaStyle extends BaseStyle {
   name = "textarea";
-  theme = theme4;
-  classes = classes4;
+  theme = theme5;
+  classes = classes5;
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275TextareaStyle_BaseFactory;
     return function TextareaStyle_Factory(__ngFactoryType__) {
@@ -19123,8 +20038,8 @@ var Textarea2 = class _Textarea {
 })();
 
 // node_modules/primeng/fesm2022/primeng-chip.mjs
-var _c07 = ["removeicon"];
-var _c18 = ["*"];
+var _c08 = ["removeicon"];
+var _c19 = ["*"];
 function Chip_img_1_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
@@ -19275,7 +20190,7 @@ function Chip_ng_container_5_Template(rf, ctx) {
     \u0275\u0275property("ngIf", ctx_r1.removeIconTemplate || ctx_r1._removeIconTemplate);
   }
 }
-var theme5 = ({
+var theme6 = ({
   dt
 }) => `
 .p-chip {
@@ -19328,7 +20243,7 @@ var theme5 = ({
     outline-offset: ${dt("chip.remove.icon.focus.ring.offset")};
 }
 `;
-var classes5 = {
+var classes6 = {
   root: "p-chip p-component",
   image: "p-chip-image",
   icon: "p-chip-icon",
@@ -19337,8 +20252,8 @@ var classes5 = {
 };
 var ChipStyle = class _ChipStyle extends BaseStyle {
   name = "chip";
-  theme = theme5;
-  classes = classes5;
+  theme = theme6;
+  classes = classes6;
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275ChipStyle_BaseFactory;
     return function ChipStyle_Factory(__ngFactoryType__) {
@@ -19483,11 +20398,11 @@ var Chip = class _Chip extends BaseComponent {
     }
   }
   containerClass() {
-    let classes7 = "p-chip p-component";
+    let classes8 = "p-chip p-component";
     if (this.styleClass) {
-      classes7 += ` ${this.styleClass}`;
+      classes8 += ` ${this.styleClass}`;
     }
-    return classes7;
+    return classes8;
   }
   close(event) {
     this.visible = false;
@@ -19512,7 +20427,7 @@ var Chip = class _Chip extends BaseComponent {
     selectors: [["p-chip"]],
     contentQueries: function Chip_ContentQueries(rf, ctx, dirIndex) {
       if (rf & 1) {
-        \u0275\u0275contentQuery(dirIndex, _c07, 4);
+        \u0275\u0275contentQuery(dirIndex, _c08, 4);
         \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
       }
       if (rf & 2) {
@@ -19546,7 +20461,7 @@ var Chip = class _Chip extends BaseComponent {
       onImageError: "onImageError"
     },
     features: [\u0275\u0275ProvidersFeature([ChipStyle]), \u0275\u0275InheritDefinitionFeature, \u0275\u0275NgOnChangesFeature],
-    ngContentSelectors: _c18,
+    ngContentSelectors: _c19,
     decls: 6,
     vars: 4,
     consts: [["iconTemplate", ""], ["class", "p-chip-image", 3, "src", "alt", "error", 4, "ngIf", "ngIfElse"], ["class", "p-chip-label", 4, "ngIf"], [4, "ngIf"], [1, "p-chip-image", 3, "error", "src", "alt"], [3, "class", "ngClass", 4, "ngIf"], [3, "ngClass"], [1, "p-chip-label"], ["tabindex", "0", "class", "p-chip-remove-icon", "role", "button", 3, "click", "keydown", 4, "ngIf"], ["tabindex", "0", "role", "button", 3, "class", "ngClass", "click", "keydown", 4, "ngIf"], ["tabindex", "0", "role", "button", 3, "class", "click", "keydown", 4, "ngIf"], ["tabindex", "0", "role", "button", 3, "click", "keydown", "ngClass"], ["tabindex", "0", "role", "button", 3, "click", "keydown"], ["tabindex", "0", "role", "button", 1, "p-chip-remove-icon", 3, "click", "keydown"], [4, "ngTemplateOutlet"]],
@@ -20037,8 +20952,8 @@ var UrlInputComponent = class _UrlInputComponent {
 })();
 
 // node_modules/primeng/fesm2022/primeng-tag.mjs
-var _c08 = ["icon"];
-var _c19 = ["*"];
+var _c09 = ["icon"];
+var _c110 = ["*"];
 function Tag_ng_container_1_span_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275element(0, "span", 4);
@@ -20079,7 +20994,7 @@ function Tag_span_2_Template(rf, ctx) {
     \u0275\u0275property("ngTemplateOutlet", ctx_r0.iconTemplate || ctx_r0._iconTemplate);
   }
 }
-var theme6 = ({
+var theme7 = ({
   dt
 }) => `
 .p-tag {
@@ -20135,7 +21050,7 @@ var theme6 = ({
     color: ${dt("tag.contrast.color")};
 }
 `;
-var classes6 = {
+var classes7 = {
   root: ({
     props
   }) => ["p-tag p-component", {
@@ -20152,8 +21067,8 @@ var classes6 = {
 };
 var TagStyle = class _TagStyle extends BaseStyle {
   name = "tag";
-  theme = theme6;
-  classes = classes6;
+  theme = theme7;
+  classes = classes7;
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275TagStyle_BaseFactory;
     return function TagStyle_Factory(__ngFactoryType__) {
@@ -20228,17 +21143,17 @@ var Tag = class _Tag extends BaseComponent {
     });
   }
   containerClass() {
-    let classes7 = "p-tag p-component";
+    let classes8 = "p-tag p-component";
     if (this.severity) {
-      classes7 += ` p-tag-${this.severity}`;
+      classes8 += ` p-tag-${this.severity}`;
     }
     if (this.rounded) {
-      classes7 += " p-tag-rounded";
+      classes8 += " p-tag-rounded";
     }
     if (this.styleClass) {
-      classes7 += ` ${this.styleClass}`;
+      classes8 += ` ${this.styleClass}`;
     }
-    return classes7;
+    return classes8;
   }
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275Tag_BaseFactory;
@@ -20251,7 +21166,7 @@ var Tag = class _Tag extends BaseComponent {
     selectors: [["p-tag"]],
     contentQueries: function Tag_ContentQueries(rf, ctx, dirIndex) {
       if (rf & 1) {
-        \u0275\u0275contentQuery(dirIndex, _c08, 4);
+        \u0275\u0275contentQuery(dirIndex, _c09, 4);
         \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
       }
       if (rf & 2) {
@@ -20276,7 +21191,7 @@ var Tag = class _Tag extends BaseComponent {
       rounded: [2, "rounded", "rounded", booleanAttribute]
     },
     features: [\u0275\u0275ProvidersFeature([TagStyle]), \u0275\u0275InheritDefinitionFeature],
-    ngContentSelectors: _c19,
+    ngContentSelectors: _c110,
     decls: 5,
     vars: 3,
     consts: [[4, "ngIf"], ["class", "p-tag-icon", 4, "ngIf"], [1, "p-tag-label"], ["class", "p-tag-icon", 3, "ngClass", 4, "ngIf"], [1, "p-tag-icon", 3, "ngClass"], [1, "p-tag-icon"], [4, "ngTemplateOutlet"]],
@@ -20386,7 +21301,7 @@ var TagModule = class _TagModule {
 })();
 
 // src/app/views/metadata-assistant/components/metadata-result/metadata-result.component.ts
-var _c09 = () => ({ "font-size": "0.75rem" });
+var _c010 = () => ({ "font-size": "0.75rem" });
 function MetadataResultComponent_div_0_ng_template_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 6)(1, "div", 7);
@@ -20421,7 +21336,7 @@ function MetadataResultComponent_div_0_p_accordionTab_5_ng_template_1_Template(r
     \u0275\u0275advance(3);
     \u0275\u0275textInterpolate(ctx_r0.getDomainFromUrl(result_r3.url));
     \u0275\u0275advance();
-    \u0275\u0275styleMap(\u0275\u0275pureFunction0(5, _c09));
+    \u0275\u0275styleMap(\u0275\u0275pureFunction0(5, _c010));
     \u0275\u0275property("value", result_r3.language === "en" ? "English" : "Fran\xE7ais")("severity", result_r3.language === "en" ? "success" : "info");
   }
 }
@@ -20826,7 +21741,7 @@ var MetadataResultComponent = class _MetadataResultComponent {
 })();
 
 // src/app/views/metadata-assistant/components/csv-export/csv-export.component.ts
-var _c010 = (a0) => ({ count: a0 });
+var _c011 = (a0) => ({ count: a0 });
 function CsvExportComponent_div_0_ng_template_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div", 27);
@@ -20920,7 +21835,7 @@ function CsvExportComponent_div_0_div_40_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ... ", \u0275\u0275pipeBind2(2, 1, "metadata.csv.andMore", \u0275\u0275pureFunction1(4, _c010, ctx_r1.results.length - 2)), " ");
+    \u0275\u0275textInterpolate1(" ... ", \u0275\u0275pipeBind2(2, 1, "metadata.csv.andMore", \u0275\u0275pureFunction1(4, _c011, ctx_r1.results.length - 2)), " ");
   }
 }
 function CsvExportComponent_div_0_Template(rf, ctx) {
@@ -21232,8 +22147,6 @@ var ALLOWED_HOSTS = /* @__PURE__ */ new Set([
   "www.canada.ca"
 ]);
 var MetadataAssistantService = class _MetadataAssistantService {
-  http;
-  apiKeyService;
   OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
   SCRAPING_TIMEOUT = 3e4;
   // 30 seconds
@@ -21247,10 +22160,8 @@ var MetadataAssistantService = class _MetadataAssistantService {
     "meta-llama/llama-3.3-70b-instruct:free",
     "google/gemma-3-27b-it:free"
   ];
-  constructor(http, apiKeyService) {
-    this.http = http;
-    this.apiKeyService = apiKeyService;
-  }
+  http = inject(HttpClient);
+  apiKeyService = inject(ApiKeyService);
   processUrls(options) {
     const results = [];
     const fallbackModels = options.fallbackModels || this.DEFAULT_FALLBACK_MODELS;
@@ -21672,7 +22583,7 @@ French keywords (comma-separated):`;
     return keywords.join(", ");
   }
   static \u0275fac = function MetadataAssistantService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _MetadataAssistantService)(\u0275\u0275inject(HttpClient), \u0275\u0275inject(ApiKeyService));
+    return new (__ngFactoryType__ || _MetadataAssistantService)();
   };
   static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _MetadataAssistantService, factory: _MetadataAssistantService.\u0275fac, providedIn: "root" });
 };
@@ -21682,7 +22593,7 @@ French keywords (comma-separated):`;
     args: [{
       providedIn: "root"
     }]
-  }], () => [{ type: HttpClient }, { type: ApiKeyService }], null);
+  }], null, null);
 })();
 
 // src/app/services/metadata-assistant-state.service.ts
@@ -21724,10 +22635,10 @@ var MetadataAssistantStateService = class _MetadataAssistantStateService {
     });
   }
   updateProgress(currentUrl, step) {
-    const state = this.getState();
+    const state2 = this.getState();
     const stepProgress = step === "scraping" ? 0.3 : step === "generating" ? 0.6 : 0.9;
-    const urlProgress = state.processedUrls / Math.max(state.totalUrls, 1);
-    const currentUrlProgress = stepProgress / Math.max(state.totalUrls, 1);
+    const urlProgress = state2.processedUrls / Math.max(state2.totalUrls, 1);
+    const currentUrlProgress = stepProgress / Math.max(state2.totalUrls, 1);
     this.updateState({
       currentUrl,
       currentStep: step,
@@ -21735,11 +22646,11 @@ var MetadataAssistantStateService = class _MetadataAssistantStateService {
     });
   }
   addResult(result) {
-    const state = this.getState();
+    const state2 = this.getState();
     this.updateState({
-      results: [...state.results, result],
-      processedUrls: state.processedUrls + 1,
-      progress: (state.processedUrls + 1) / Math.max(state.totalUrls, 1) * 100
+      results: [...state2.results, result],
+      processedUrls: state2.processedUrls + 1,
+      progress: (state2.processedUrls + 1) / Math.max(state2.totalUrls, 1) * 100
     });
   }
   completeProcessing() {
@@ -21990,8 +22901,8 @@ var MetadataAssistantComponent = class _MetadataAssistantComponent {
     this.messageService = messageService;
   }
   ngOnInit() {
-    this.stateService.state$.pipe(takeUntil(this.destroy$)).subscribe((state) => {
-      this.state = state;
+    this.stateService.state$.pipe(takeUntil(this.destroy$)).subscribe((state2) => {
+      this.state = state2;
     });
   }
   ngOnDestroy() {
@@ -22585,7 +23496,7 @@ var routes = [
       }
       return true;
     }],
-    loadComponent: () => import("./chunk-H3E6CZ2C.js").then((m) => m.PageAssistantCompareComponent)
+    loadComponent: () => import("./chunk-FI4GJSN5.js").then((m) => m.PageAssistantCompareComponent)
   },
   {
     path: "page-assistant/share",
@@ -22720,15 +23631,15 @@ function HeaderComponent_ca_api_reset_6_Template(rf, ctx) {
 var HeaderComponent = class _HeaderComponent {
   translate;
   localStore;
-  darkModeToggled = new EventEmitter();
-  darkMode = false;
+  theme;
   get logoSrc() {
-    return this.darkMode ? "cra-logo-dark.png" : "cra-logo.png";
+    return this.theme.darkMode() ? "cra-logo-dark.png" : "cra-logo.png";
   }
   // constructor(public langToggle: LangToggleService){} //putting the code below into a service works but we aren't calling it anywhere else
-  constructor(translate, localStore) {
+  constructor(translate, localStore, theme8) {
     this.translate = translate;
     this.localStore = localStore;
+    this.theme = theme8;
     var curLang = this.localStore.getData("lang") || this.translate.getBrowserLang() || "en";
     console.log(this.translate.getBrowserLang());
     this.translate.addLangs(["en", "fr"]);
@@ -22745,17 +23656,10 @@ var HeaderComponent = class _HeaderComponent {
     this.translate.use(oppLang);
     this.localStore.saveData("lang", oppLang);
   }
-  toggleDarkMode() {
-    this.darkModeToggled.emit();
-    const element = document.querySelector("html");
-    if (element) {
-      element.classList.toggle("dark-mode");
-    }
-  }
   static \u0275fac = function HeaderComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _HeaderComponent)(\u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(LocalStorageService));
+    return new (__ngFactoryType__ || _HeaderComponent)(\u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(LocalStorageService), \u0275\u0275directiveInject(ThemeService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeaderComponent, selectors: [["ca-header"]], inputs: { darkMode: "darkMode" }, outputs: { darkModeToggled: "darkModeToggled" }, decls: 11, vars: 8, consts: [["id", "header", 1, "pb-2"], [1, "flex", "align-items-center", "hidden", "md:block"], ["id", "cra-logo", "priority", "true", 1, "img-fluid", "fip-colour", "w-28rem", 3, "src", "alt"], [1, "flex", "align-items-center", "gap-3"], [4, "ngIf"], ["offIcon", "pi pi-moon", "offLabel", "", "onIcon", "pi pi-sun", "onLabel", "", "ariaLabel", "Toggle between dark and light mode", 1, "p-button-rounded", "p-button-secondary", "p-button-outlined", "p-button-sm", "surface-border", "pr-0", "darkmode-toggle", 3, "click"], ["tabindex", "0", 1, "cursor-pointer", "underline", "font-medium", "text-blue-600", "hover:text-blue-700", 3, "click"]], template: function HeaderComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeaderComponent, selectors: [["ca-header"]], decls: 11, vars: 9, consts: [["id", "header", 1, "pb-2"], [1, "flex", "align-items-center", "hidden", "md:block"], ["id", "cra-logo", "priority", "true", 1, "img-fluid", "fip-colour", "w-28rem", 3, "src", "alt"], [1, "flex", "align-items-center", "gap-3"], [4, "ngIf"], ["offIcon", "pi pi-moon", "offLabel", "", "onIcon", "pi pi-sun", "onLabel", "", "ariaLabel", "Toggle between dark and light mode", 1, "p-button-rounded", "p-button-secondary", "p-button-outlined", "p-button-sm", "surface-border", "pr-0", "darkmode-toggle", 3, "click", "ngModel"], ["tabindex", "0", 1, "cursor-pointer", "underline", "font-medium", "text-blue-600", "hover:text-blue-700", 3, "click"]], template: function HeaderComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "header", 0)(1, "p-toolbar")(2, "div", 1);
       \u0275\u0275element(3, "img", 2);
@@ -22765,7 +23669,7 @@ var HeaderComponent = class _HeaderComponent {
       \u0275\u0275template(6, HeaderComponent_ca_api_reset_6_Template, 1, 0, "ca-api-reset", 4);
       \u0275\u0275elementStart(7, "p-togglebutton", 5);
       \u0275\u0275listener("click", function HeaderComponent_Template_p_togglebutton_click_7_listener() {
-        return ctx.toggleDarkMode();
+        return ctx.theme.toggle();
       });
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(8, "a", 6);
@@ -22778,18 +23682,20 @@ var HeaderComponent = class _HeaderComponent {
     }
     if (rf & 2) {
       \u0275\u0275advance(3);
-      \u0275\u0275property("src", ctx.logoSrc, \u0275\u0275sanitizeUrl)("alt", \u0275\u0275pipeBind1(4, 4, "CRA"));
+      \u0275\u0275property("src", ctx.logoSrc, \u0275\u0275sanitizeUrl)("alt", \u0275\u0275pipeBind1(4, 5, "CRA"));
       \u0275\u0275advance(3);
       \u0275\u0275property("ngIf", ctx.localStore.getData("apiKey") != null);
-      \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(10, 6, "opp.lang"), " ");
+      \u0275\u0275advance();
+      \u0275\u0275property("ngModel", ctx.theme.darkMode());
+      \u0275\u0275advance(2);
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(10, 7, "opp.lang"), " ");
     }
-  }, dependencies: [CommonModule, NgIf, TranslateModule, TranslatePipe, ToolbarModule, Toolbar, ButtonModule, ToggleButtonModule, ToggleButton, ApiResetComponent], styles: ["\n\n  .p-toolbar {\n  background-color: transparent !important;\n  border: none !important;\n}\nheader[_ngcontent-%COMP%] {\n  border-bottom-style: solid;\n  border-bottom-color: var(--p-gray-400);\n  border-width: 1px;\n  margin-top: -4rem;\n}\n  .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-cyan-400) !important;\n}\n  html.dark-mode .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-amber-400) !important;\n}\n/*# sourceMappingURL=header.component.css.map */"] });
+  }, dependencies: [CommonModule, NgIf, FormsModule, NgControlStatus, NgModel, TranslateModule, TranslatePipe, ToolbarModule, Toolbar, ButtonModule, ToggleButtonModule, ToggleButton, ApiResetComponent], styles: ["\n\n  .p-toolbar {\n  background-color: transparent !important;\n  border: none !important;\n}\nheader[_ngcontent-%COMP%] {\n  border-bottom-style: solid;\n  border-bottom-color: var(--p-gray-400);\n  border-width: 1px;\n  margin-top: -4rem;\n}\n  .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-cyan-400) !important;\n}\n  html.dark-mode .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-amber-400) !important;\n}\n/*# sourceMappingURL=header.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(HeaderComponent, [{
     type: Component,
-    args: [{ selector: "ca-header", imports: [CommonModule, TranslateModule, ToolbarModule, ButtonModule, ToggleButtonModule, ApiResetComponent], template: `
+    args: [{ selector: "ca-header", imports: [CommonModule, FormsModule, TranslateModule, ToolbarModule, ButtonModule, ToggleButtonModule, ApiResetComponent], template: `
   <header id="header" class="pb-2">
   <p-toolbar>
     <div class="flex align-items-center hidden md:block">
@@ -22812,7 +23718,8 @@ var HeaderComponent = class _HeaderComponent {
         onIcon="pi pi-sun"
         onLabel=""
         class="p-button-rounded p-button-secondary p-button-outlined p-button-sm surface-border pr-0 darkmode-toggle"
-        (click)="toggleDarkMode()"
+        [ngModel] = "theme.darkMode()"
+        (click)="theme.toggle()"
         ariaLabel="Toggle between dark and light mode">
       </p-togglebutton>
 
@@ -22826,24 +23733,20 @@ var HeaderComponent = class _HeaderComponent {
   </p-toolbar>
 </header>
   `, styles: ["/* angular:styles/component:css;607ff6dd9fa2de823f98ca3db927b4c2688fafc0a7c156a199ce40df64b470ce;/home/naomi/content-assistant/src/app/template/header.component.ts */\n::ng-deep .p-toolbar {\n  background-color: transparent !important;\n  border: none !important;\n}\nheader {\n  border-bottom-style: solid;\n  border-bottom-color: var(--p-gray-400);\n  border-width: 1px;\n  margin-top: -4rem;\n}\n::ng-deep .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-cyan-400) !important;\n}\n::ng-deep html.dark-mode .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-amber-400) !important;\n}\n/*# sourceMappingURL=header.component.css.map */\n"] }]
-  }], () => [{ type: TranslateService }, { type: LocalStorageService }], { darkModeToggled: [{
-    type: Output
-  }], darkMode: [{
-    type: Input
-  }] });
+  }], () => [{ type: TranslateService }, { type: LocalStorageService }, { type: ThemeService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HeaderComponent, { className: "HeaderComponent", filePath: "src/app/template/header.component.ts", lineNumber: 74 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HeaderComponent, { className: "HeaderComponent", filePath: "src/app/template/header.component.ts", lineNumber: 77 });
 })();
 
 // src/app/template/sidebar.component.ts
-var _c011 = () => ["/"];
-var _c110 = () => ["/page-assistant"];
-var _c22 = () => ["/image-assistant"];
-var _c32 = () => ["/translation-assistant"];
-var _c42 = () => ["/inventory-assistant"];
-var _c52 = () => ["/metadata-assistant"];
-var _c62 = () => ["/about-us"];
+var _c012 = () => ["/"];
+var _c111 = () => ["/page-assistant"];
+var _c23 = () => ["/image-assistant"];
+var _c33 = () => ["/translation-assistant"];
+var _c43 = () => ["/inventory-assistant"];
+var _c53 = () => ["/metadata-assistant"];
+var _c63 = () => ["/about-us"];
 var SidebarComponent = class _SidebarComponent {
   // Section toggle state
   isExpanded = {
@@ -22953,7 +23856,7 @@ var SidebarComponent = class _SidebarComponent {
     }
     if (rf & 2) {
       \u0275\u0275advance(3);
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(52, _c011));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(52, _c012));
       \u0275\u0275advance(4);
       \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 28, "title.landing"));
       \u0275\u0275advance(5);
@@ -22963,15 +23866,15 @@ var SidebarComponent = class _SidebarComponent {
       \u0275\u0275advance();
       \u0275\u0275classProp("hidden", !ctx.isExpanded.main);
       \u0275\u0275advance();
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(53, _c110));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(53, _c111));
       \u0275\u0275advance(4);
       \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(22, 32, "menu.page"));
       \u0275\u0275advance(2);
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(54, _c22));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(54, _c23));
       \u0275\u0275advance(4);
       \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(28, 34, "menu.image"));
       \u0275\u0275advance(2);
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(55, _c32));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(55, _c33));
       \u0275\u0275advance(4);
       \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(34, 36, "menu.translation"));
       \u0275\u0275advance(5);
@@ -22981,11 +23884,11 @@ var SidebarComponent = class _SidebarComponent {
       \u0275\u0275advance();
       \u0275\u0275classProp("hidden", !ctx.isExpanded.project);
       \u0275\u0275advance();
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(56, _c42));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(56, _c43));
       \u0275\u0275advance(4);
       \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(48, 40, "menu.inventory"));
       \u0275\u0275advance(2);
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(57, _c52));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(57, _c53));
       \u0275\u0275advance(4);
       \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(54, 42, "menu.metadata"));
       \u0275\u0275advance(5);
@@ -22995,7 +23898,7 @@ var SidebarComponent = class _SidebarComponent {
       \u0275\u0275advance();
       \u0275\u0275classProp("hidden", !ctx.isExpanded.info);
       \u0275\u0275advance();
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(58, _c62));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(58, _c63));
       \u0275\u0275advance(4);
       \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(68, 46, "menu.about"));
       \u0275\u0275advance(2);
@@ -23092,14 +23995,17 @@ var SidebarComponent = class _SidebarComponent {
 
 // src/app/template/footer.component.ts
 var FooterComponent = class _FooterComponent {
-  darkMode = false;
+  theme;
+  constructor(theme8) {
+    this.theme = theme8;
+  }
   get logoSrc() {
-    return this.darkMode ? "canada-logo-dark.png" : "canada-logo.png";
+    return this.theme.darkMode() ? "canada-logo-dark.png" : "canada-logo.png";
   }
   static \u0275fac = function FooterComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _FooterComponent)();
+    return new (__ngFactoryType__ || _FooterComponent)(\u0275\u0275directiveInject(ThemeService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["ca-footer"]], inputs: { darkMode: "darkMode" }, decls: 9, vars: 7, consts: [[1, "container"], [1, "flex", "align-items-end"], [1, "text-color-secondary", "text-sm", "pt-5"], [1, "img-fluid", "fip-colour", 3, "src", "alt"]], template: function FooterComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["ca-footer"]], decls: 9, vars: 7, consts: [[1, "container"], [1, "flex", "align-items-end"], [1, "text-color-secondary", "text-sm", "pt-5"], [1, "img-fluid", "fip-colour", 3, "src", "alt"]], template: function FooterComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "footer", 0)(1, "p-toolbar")(2, "div", 1)(3, "p", 2);
       \u0275\u0275text(4);
@@ -23137,12 +24043,10 @@ var FooterComponent = class _FooterComponent {
   </p-toolbar>
 </footer>
   `, styles: ["/* angular:styles/component:css;219558ef63f119a92210704329b58a3cdceaa4fb296db559e672f74512827dc7;/home/naomi/content-assistant/src/app/template/footer.component.ts */\n:host {\n  display: block;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
-  }], null, { darkMode: [{
-    type: Input
-  }] });
+  }], () => [{ type: ThemeService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/template/footer.component.ts", lineNumber: 31 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/template/footer.component.ts", lineNumber: 32 });
 })();
 
 // src/app/template/api-key.component.ts
@@ -23289,36 +24193,23 @@ var AppComponent = class _AppComponent {
     this.primeng.ripple.set(true);
     console.log("The initial API key is: ", this.localStore.getData("apiKey"));
   }
-  //Handle dark mode states
-  isDarkMode = false;
-  toggleDarkMode() {
-    this.isDarkMode = !this.isDarkMode;
-  }
   static \u0275fac = function AppComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _AppComponent)(\u0275\u0275directiveInject(CustomTitleStrategy), \u0275\u0275directiveInject(Title), \u0275\u0275directiveInject(LocalStorageService), \u0275\u0275directiveInject(PrimeNG));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["ca-root"]], decls: 7, vars: 4, consts: [["vocab", "http://schema.org/", "typeof", "WebPage", 1, "mx-8", "my-2", "container"], [1, "container"], [3, "darkModeToggled", "darkMode"], [4, "ngIf"], [3, "darkMode"]], template: function AppComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["ca-root"]], decls: 7, vars: 2, consts: [["vocab", "http://schema.org/", "typeof", "WebPage", 1, "mx-8", "my-2", "container"], [1, "container"], [4, "ngIf"]], template: function AppComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "body", 0)(1, "main", 1)(2, "ca-header", 2);
-      \u0275\u0275listener("darkModeToggled", function AppComponent_Template_ca_header_darkModeToggled_2_listener() {
-        return ctx.toggleDarkMode();
-      });
+      \u0275\u0275elementStart(0, "body", 0)(1, "main", 1);
+      \u0275\u0275element(2, "ca-header")(3, "ca-sidebar");
+      \u0275\u0275template(4, AppComponent_ca_api_key_4_Template, 1, 0, "ca-api-key", 2)(5, AppComponent_router_outlet_5_Template, 1, 0, "router-outlet", 2);
       \u0275\u0275elementEnd();
-      \u0275\u0275element(3, "ca-sidebar");
-      \u0275\u0275template(4, AppComponent_ca_api_key_4_Template, 1, 0, "ca-api-key", 3)(5, AppComponent_router_outlet_5_Template, 1, 0, "router-outlet", 3);
-      \u0275\u0275elementEnd();
-      \u0275\u0275element(6, "ca-footer", 4);
+      \u0275\u0275element(6, "ca-footer");
       \u0275\u0275elementEnd();
     }
     if (rf & 2) {
-      \u0275\u0275advance(2);
-      \u0275\u0275property("darkMode", ctx.isDarkMode);
-      \u0275\u0275advance(2);
+      \u0275\u0275advance(4);
       \u0275\u0275property("ngIf", ctx.localStore.getData("apiKey") === null);
       \u0275\u0275advance();
       \u0275\u0275property("ngIf", ctx.localStore.getData("apiKey") != null);
-      \u0275\u0275advance();
-      \u0275\u0275property("darkMode", ctx.isDarkMode);
     }
   }, dependencies: [CommonModule, NgIf, RouterOutlet, RouterModule, TranslateModule, HeaderComponent, SidebarComponent, FooterComponent, ApiKeyComponent], encapsulation: 2 });
 };
@@ -23327,14 +24218,13 @@ var AppComponent = class _AppComponent {
     type: Component,
     args: [{ selector: "ca-root", imports: [CommonModule, RouterOutlet, RouterModule, TranslateModule, HeaderComponent, SidebarComponent, FooterComponent, ApiKeyComponent], template: `<body vocab="http://schema.org/" typeof="WebPage" class="mx-8 my-2 container">
   <main class="container">
-  <ca-header [darkMode]="isDarkMode" (darkModeToggled)="toggleDarkMode()"></ca-header>
-  <ca-sidebar></ca-sidebar>
-   <ca-api-key *ngIf="this.localStore.getData('apiKey') === null"></ca-api-key>
-  <router-outlet *ngIf="this.localStore.getData('apiKey') != null"></router-outlet>
+    <ca-header></ca-header>
+    <ca-sidebar></ca-sidebar>
+    <ca-api-key *ngIf="this.localStore.getData('apiKey') === null"></ca-api-key>
+    <router-outlet *ngIf="this.localStore.getData('apiKey') != null"></router-outlet>
   </main>
-  <ca-footer [darkMode]="isDarkMode"></ca-footer>
-</body>
-` }]
+  <ca-footer></ca-footer>
+</body>` }]
   }], () => [{ type: CustomTitleStrategy }, { type: Title }, { type: LocalStorageService }, { type: PrimeNG }], null);
 })();
 (() => {

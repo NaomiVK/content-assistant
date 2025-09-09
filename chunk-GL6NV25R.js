@@ -21020,8 +21020,8 @@ var RouterLinkActive = class _RouterLinkActive {
     });
   }
   set routerLinkActive(data) {
-    const classes29 = Array.isArray(data) ? data : data.split(" ");
-    this.classes = classes29.filter((c) => !!c);
+    const classes28 = Array.isArray(data) ? data : data.split(" ");
+    this.classes = classes28.filter((c) => !!c);
   }
   /** @docs-private */
   ngOnChanges(changes) {
@@ -22178,8 +22178,14 @@ function getWidth(element) {
 function invokeElementMethod(element, methodName, args) {
   element[methodName].apply(element, args);
 }
+function isAndroid() {
+  return /(android)/i.test(navigator.userAgent);
+}
 function isVisible(element) {
   return !!(element && element.offsetParent != null);
+}
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window["MSStream"];
 }
 function isRTL(element) {
   return element ? getComputedStyle(element).direction === "rtl" : false;
@@ -29710,7 +29716,7 @@ function getRule(selector, properties) {
 var dt = (...args) => {
   return dtwt(config_default.getTheme(), ...args);
 };
-var dtwt = (theme30 = {}, tokenPath, fallback, type) => {
+var dtwt = (theme29 = {}, tokenPath, fallback, type) => {
   if (tokenPath) {
     const {
       variable: VARIABLE,
@@ -29719,7 +29725,7 @@ var dtwt = (theme30 = {}, tokenPath, fallback, type) => {
     const {
       prefix,
       transform
-    } = (theme30 == null ? void 0 : theme30.options) || OPTIONS || {};
+    } = (theme29 == null ? void 0 : theme29.options) || OPTIONS || {};
     const regex = /{([^}]*)}/g;
     const token = matchRegex(tokenPath, regex) ? tokenPath : `{${tokenPath}}`;
     const isStrictTransform = type === "value" || isEmpty(type) && transform === "strict";
@@ -29727,7 +29733,7 @@ var dtwt = (theme30 = {}, tokenPath, fallback, type) => {
   }
   return "";
 };
-function toVariables_default(theme30, options = {}) {
+function toVariables_default(theme29, options = {}) {
   const VARIABLE = config_default.defaults.variable;
   const {
     prefix = VARIABLE.prefix,
@@ -29758,7 +29764,7 @@ function toVariables_default(theme30, options = {}) {
   const {
     variables,
     tokens
-  } = _toVariables(theme30, prefix);
+  } = _toVariables(theme29, prefix);
   return {
     value: variables,
     tokens,
@@ -29827,14 +29833,14 @@ var themeUtils_default = {
       });
     }
   },
-  _toVariables(theme30, options) {
-    return toVariables_default(theme30, {
+  _toVariables(theme29, options) {
+    return toVariables_default(theme29, {
       prefix: options == null ? void 0 : options.prefix
     });
   },
   getCommon({
     name = "",
-    theme: theme30 = {},
+    theme: theme29 = {},
     params,
     set,
     defaults
@@ -29843,7 +29849,7 @@ var themeUtils_default = {
     const {
       preset,
       options
-    } = theme30;
+    } = theme29;
     let primitive_css, primitive_tokens, semantic_css, semantic_tokens, global_css, global_tokens, style2;
     if (isNotEmpty(preset) && options.transform !== "strict") {
       const {
@@ -29976,7 +29982,7 @@ var themeUtils_default = {
   },
   getPresetC({
     name = "",
-    theme: theme30 = {},
+    theme: theme29 = {},
     params,
     set,
     defaults
@@ -29985,7 +29991,7 @@ var themeUtils_default = {
     const {
       preset,
       options
-    } = theme30;
+    } = theme29;
     const cPreset = (_a = preset == null ? void 0 : preset.components) == null ? void 0 : _a[name];
     return this.getPreset({
       name,
@@ -29998,7 +30004,7 @@ var themeUtils_default = {
   },
   getPresetD({
     name = "",
-    theme: theme30 = {},
+    theme: theme29 = {},
     params,
     set,
     defaults
@@ -30008,7 +30014,7 @@ var themeUtils_default = {
     const {
       preset,
       options
-    } = theme30;
+    } = theme29;
     const dPreset = (_a = preset == null ? void 0 : preset.directives) == null ? void 0 : _a[dName];
     return this.getPreset({
       name: dName,
@@ -30038,7 +30044,7 @@ var themeUtils_default = {
   },
   getCommonStyleSheet({
     name = "",
-    theme: theme30 = {},
+    theme: theme29 = {},
     params,
     props = {},
     set,
@@ -30046,7 +30052,7 @@ var themeUtils_default = {
   }) {
     const common = this.getCommon({
       name,
-      theme: theme30,
+      theme: theme29,
       params,
       set,
       defaults
@@ -30063,7 +30069,7 @@ var themeUtils_default = {
   },
   getStyleSheet({
     name = "",
-    theme: theme30 = {},
+    theme: theme29 = {},
     params,
     props = {},
     set,
@@ -30072,7 +30078,7 @@ var themeUtils_default = {
     var _a;
     const options = {
       name,
-      theme: theme30,
+      theme: theme29,
       params,
       set,
       defaults
@@ -30210,11 +30216,11 @@ var config_default = {
   _tokens: {},
   update(newValues = {}) {
     const {
-      theme: theme30
+      theme: theme29
     } = newValues;
-    if (theme30) {
-      this._theme = __spreadProps2(__spreadValues3({}, theme30), {
-        options: __spreadValues3(__spreadValues3({}, this.defaults.options), theme30.options)
+    if (theme29) {
+      this._theme = __spreadProps2(__spreadValues3({}, theme29), {
+        options: __spreadValues3(__spreadValues3({}, this.defaults.options), theme29.options)
       });
       this._tokens = themeUtils_default.createTokens(this.preset, this.defaults);
       this.clearLoadedStyleNames();
@@ -30815,10 +30821,10 @@ var ThemeProvider = class _ThemeProvider {
   }
   setThemeConfig(config) {
     const {
-      theme: theme30,
+      theme: theme29,
       csp
     } = config || {};
-    if (theme30) this.theme.set(theme30);
+    if (theme29) this.theme.set(theme29);
     if (csp) this.csp.set(csp);
   }
   static \u0275fac = function ThemeProvider_Factory(__ngFactoryType__) {
@@ -31001,7 +31007,7 @@ var PrimeNG = class _PrimeNG extends ThemeProvider {
       ripple,
       inputStyle,
       inputVariant,
-      theme: theme30,
+      theme: theme29,
       overlayOptions,
       translation,
       filterMatchModeOptions
@@ -31013,8 +31019,8 @@ var PrimeNG = class _PrimeNG extends ThemeProvider {
     if (overlayOptions) this.overlayOptions = overlayOptions;
     if (translation) this.setTranslation(translation);
     if (filterMatchModeOptions) this.filterMatchModeOptions = filterMatchModeOptions;
-    if (theme30) this.setThemeConfig({
-      theme: theme30,
+    if (theme29) this.setThemeConfig({
+      theme: theme29,
       csp
     });
   }
@@ -31221,13 +31227,13 @@ var BaseComponent = class _BaseComponent {
     this.themeChangeListeners.push(callback);
   }
   cx(arg, rest) {
-    const classes29 = this.parent ? this.parent.componentStyle?.classes?.[arg] : this.componentStyle?.classes?.[arg];
-    if (typeof classes29 === "function") {
-      return classes29({
+    const classes28 = this.parent ? this.parent.componentStyle?.classes?.[arg] : this.componentStyle?.classes?.[arg];
+    if (typeof classes28 === "function") {
+      return classes28({
         instance: this
       });
     }
-    return typeof classes29 === "string" ? classes29 : arg;
+    return typeof classes28 === "string" ? classes28 : arg;
   }
   sx(arg) {
     const styles = this.componentStyle?.inlineStyles?.[arg];
@@ -33133,27 +33139,27 @@ var Badge = class _Badge extends BaseComponent {
    * @returns An object representing the CSS classes to be applied to the badge container.
    */
   containerClass = computed(() => {
-    let classes29 = "p-badge p-component";
+    let classes28 = "p-badge p-component";
     if (isNotEmpty(this.value()) && String(this.value()).length === 1) {
-      classes29 += " p-badge-circle";
+      classes28 += " p-badge-circle";
     }
     if (this.badgeSize() === "large") {
-      classes29 += " p-badge-lg";
+      classes28 += " p-badge-lg";
     } else if (this.badgeSize() === "xlarge") {
-      classes29 += " p-badge-xl";
+      classes28 += " p-badge-xl";
     } else if (this.badgeSize() === "small") {
-      classes29 += " p-badge-sm";
+      classes28 += " p-badge-sm";
     }
     if (isEmpty(this.value())) {
-      classes29 += " p-badge-dot";
+      classes28 += " p-badge-dot";
     }
     if (this.styleClass()) {
-      classes29 += ` ${this.styleClass()}`;
+      classes28 += ` ${this.styleClass()}`;
     }
     if (this.severity()) {
-      classes29 += ` p-badge-${this.severity()}`;
+      classes28 += ` p-badge-${this.severity()}`;
     }
-    return classes29;
+    return classes28;
   });
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275Badge_BaseFactory;
@@ -49772,548 +49778,956 @@ var CheckboxModule = class _CheckboxModule {
   }], null, null);
 })();
 
-// node_modules/primeng/fesm2022/primeng-panel.mjs
-var _c016 = ["header"];
-var _c111 = ["icons"];
-var _c210 = ["content"];
-var _c39 = ["footer"];
-var _c46 = ["headericons"];
-var _c55 = ["contentWrapper"];
-var _c65 = ["*", [["p-header"]], [["p-footer"]]];
-var _c72 = ["*", "p-header", "p-footer"];
-var _c82 = (a0, a1) => ({
-  "p-panel p-component": true,
-  "p-panel-toggleable": a0,
-  "p-panel-expanded": a1
+// node_modules/primeng/fesm2022/primeng-accordion.mjs
+var _c016 = ["*"];
+var _c111 = ["toggleicon"];
+var _c210 = (a0) => ({
+  active: a0
 });
-var _c92 = (a0) => ({
-  transitionParams: a0,
-  height: "0",
-  opacity: "0"
+function AccordionHeader_Conditional_1_0_ng_template_0_Template(rf, ctx) {
+}
+function AccordionHeader_Conditional_1_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AccordionHeader_Conditional_1_0_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function AccordionHeader_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AccordionHeader_Conditional_1_0_Template, 1, 0, null, 0);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.toggleicon)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c210, ctx_r0.active()));
+  }
+}
+function AccordionHeader_Conditional_2_ng_container_0_span_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span", 4);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275classMap(ctx_r0.pcAccordion.collapseIcon);
+    \u0275\u0275property("ngClass", ctx_r0.pcAccordion.iconClass);
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AccordionHeader_Conditional_2_ng_container_0_ChevronDownIcon_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "ChevronDownIcon", 4);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("ngClass", ctx_r0.pcAccordion.iconClass);
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AccordionHeader_Conditional_2_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, AccordionHeader_Conditional_2_ng_container_0_span_1_Template, 1, 4, "span", 2)(2, AccordionHeader_Conditional_2_ng_container_0_ChevronDownIcon_2_Template, 1, 2, "ChevronDownIcon", 3);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.pcAccordion.collapseIcon);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r0.pcAccordion.collapseIcon);
+  }
+}
+function AccordionHeader_Conditional_2_ng_container_1_span_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span", 4);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275classMap(ctx_r0.pcAccordion.expandIcon);
+    \u0275\u0275property("ngClass", ctx_r0.pcAccordion.iconClass);
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AccordionHeader_Conditional_2_ng_container_1_ChevronUpIcon_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "ChevronUpIcon", 4);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("ngClass", ctx_r0.pcAccordion.iconClass);
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AccordionHeader_Conditional_2_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, AccordionHeader_Conditional_2_ng_container_1_span_1_Template, 1, 4, "span", 2)(2, AccordionHeader_Conditional_2_ng_container_1_ChevronUpIcon_2_Template, 1, 2, "ChevronUpIcon", 3);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.pcAccordion.expandIcon);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r0.pcAccordion.expandIcon);
+  }
+}
+function AccordionHeader_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AccordionHeader_Conditional_2_ng_container_0_Template, 3, 2, "ng-container", 1)(1, AccordionHeader_Conditional_2_ng_container_1_Template, 3, 2, "ng-container", 1);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngIf", ctx_r0.active());
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r0.active());
+  }
+}
+var _c39 = (a0) => ({
+  transitionParams: a0
 });
-var _c102 = (a0) => ({
-  value: "hidden",
-  params: a0
-});
-var _c112 = (a0) => ({
-  transitionParams: a0,
-  height: "*",
-  opacity: "1"
-});
-var _c123 = (a0) => ({
+var _c46 = (a0) => ({
   value: "visible",
   params: a0
 });
-var _c133 = (a0, a1, a2) => ({
-  "p-panel-icons-start": a0,
-  "p-panel-icons-end": a1,
-  "p-panel-icons-center": a2
+var _c55 = (a0) => ({
+  value: "hidden",
+  params: a0
 });
-var _c142 = (a0) => ({
+var _c65 = ["header"];
+var _c72 = ["icon"];
+var _c82 = ["content"];
+var _c92 = ["*", [["p-header"]]];
+var _c102 = ["*", "p-header"];
+var _c112 = (a0) => ({
   $implicit: a0
 });
-function Panel_div_1_span_1_Template(rf, ctx) {
+function AccordionTab_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "span", 12);
-    \u0275\u0275text(1);
-    \u0275\u0275elementEnd();
+    \u0275\u0275text(0);
   }
   if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(2);
-    \u0275\u0275attribute("id", ctx_r2.id + "_header");
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate(ctx_r2._header);
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275textInterpolate1(" ", ctx_r0.header, " ");
   }
 }
-function Panel_div_1_ng_container_3_Template(rf, ctx) {
+function AccordionTab_Conditional_2_Conditional_0_ng_container_0_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainer(0);
   }
 }
-function Panel_div_1_5_ng_template_0_Template(rf, ctx) {
-}
-function Panel_div_1_5_Template(rf, ctx) {
+function AccordionTab_Conditional_2_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275template(0, Panel_div_1_5_ng_template_0_Template, 0, 0, "ng-template");
-  }
-}
-function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_span_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "span");
+    \u0275\u0275template(0, AccordionTab_Conditional_2_Conditional_0_ng_container_0_Template, 1, 0, "ng-container", 4);
   }
   if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(6);
-    \u0275\u0275classMap(ctx_r2.expandIcon);
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.headerTemplate || ctx_r0._headerTemplate);
   }
 }
-function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_MinusIcon_2_Template(rf, ctx) {
+function AccordionTab_Conditional_2_Conditional_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "MinusIcon");
+    \u0275\u0275projection(0, 1);
   }
 }
-function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_Template(rf, ctx) {
+function AccordionTab_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AccordionTab_Conditional_2_Conditional_0_Template, 1, 1, "ng-container")(1, AccordionTab_Conditional_2_Conditional_1_Template, 1, 0);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275conditional(ctx_r0.headerTemplate || ctx_r0._headerTemplate ? 0 : -1);
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r0.headerFacet ? 1 : -1);
+  }
+}
+function AccordionTab_Conditional_3_0_ng_template_0_Template(rf, ctx) {
+}
+function AccordionTab_Conditional_3_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AccordionTab_Conditional_3_0_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function AccordionTab_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AccordionTab_Conditional_3_0_Template, 1, 0, null, 5);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.iconTemplate || ctx_r0._iconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c112, ctx_r0.selected));
+  }
+}
+function AccordionTab_Conditional_4_ng_container_0_span_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span", 8);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275classMap(ctx_r0.accordion.collapseIcon);
+    \u0275\u0275property("ngClass", ctx_r0.iconClass);
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AccordionTab_Conditional_4_ng_container_0_ChevronDownIcon_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "ChevronDownIcon", 8);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("ngClass", ctx_r0.iconClass);
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AccordionTab_Conditional_4_ng_container_0_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_span_1_Template, 1, 2, "span", 16)(2, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_MinusIcon_2_Template, 1, 0, "MinusIcon", 14);
+    \u0275\u0275template(1, AccordionTab_Conditional_4_ng_container_0_span_1_Template, 1, 4, "span", 6)(2, AccordionTab_Conditional_4_ng_container_0_ChevronDownIcon_2_Template, 1, 2, "ChevronDownIcon", 7);
     \u0275\u0275elementContainerEnd();
   }
   if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(5);
+    const ctx_r0 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r2.expandIcon);
+    \u0275\u0275property("ngIf", ctx_r0.accordion.collapseIcon);
     \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r2.expandIcon);
+    \u0275\u0275property("ngIf", !ctx_r0.accordion.collapseIcon);
   }
 }
-function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_span_1_Template(rf, ctx) {
+function AccordionTab_Conditional_4_ng_container_1_span_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "span");
+    \u0275\u0275element(0, "span", 8);
   }
   if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(6);
-    \u0275\u0275classMap(ctx_r2.collapseIcon);
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275classMap(ctx_r0.accordion.expandIcon);
+    \u0275\u0275property("ngClass", ctx_r0.iconClass);
+    \u0275\u0275attribute("aria-hidden", true);
   }
 }
-function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_PlusIcon_2_Template(rf, ctx) {
+function AccordionTab_Conditional_4_ng_container_1_ChevronUpIcon_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275element(0, "PlusIcon");
+    \u0275\u0275element(0, "ChevronUpIcon", 8);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("ngClass", ctx_r0.iconClass);
+    \u0275\u0275attribute("aria-hidden", true);
   }
 }
-function Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_Template(rf, ctx) {
+function AccordionTab_Conditional_4_ng_container_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_span_1_Template, 1, 2, "span", 16)(2, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_PlusIcon_2_Template, 1, 0, "PlusIcon", 14);
+    \u0275\u0275template(1, AccordionTab_Conditional_4_ng_container_1_span_1_Template, 1, 4, "span", 6)(2, AccordionTab_Conditional_4_ng_container_1_ChevronUpIcon_2_Template, 1, 2, "ChevronUpIcon", 7);
     \u0275\u0275elementContainerEnd();
   }
   if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(5);
+    const ctx_r0 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r2.collapseIcon);
+    \u0275\u0275property("ngIf", ctx_r0.accordion.expandIcon);
     \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r2.collapseIcon);
+    \u0275\u0275property("ngIf", !ctx_r0.accordion.expandIcon);
   }
 }
-function Panel_div_1_p_button_6_ng_template_1_ng_container_0_Template(rf, ctx) {
+function AccordionTab_Conditional_4_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_1_Template, 3, 2, "ng-container", 14)(2, Panel_div_1_p_button_6_ng_template_1_ng_container_0_ng_container_2_Template, 3, 2, "ng-container", 14);
-    \u0275\u0275elementContainerEnd();
+    \u0275\u0275template(0, AccordionTab_Conditional_4_ng_container_0_Template, 3, 2, "ng-container", 3)(1, AccordionTab_Conditional_4_ng_container_1_Template, 3, 2, "ng-container", 3);
   }
   if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(4);
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngIf", ctx_r0.selected);
     \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r2.collapsed);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r2.collapsed);
+    \u0275\u0275property("ngIf", !ctx_r0.selected);
   }
 }
-function Panel_div_1_p_button_6_ng_template_1_1_ng_template_0_Template(rf, ctx) {
-}
-function Panel_div_1_p_button_6_ng_template_1_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, Panel_div_1_p_button_6_ng_template_1_1_ng_template_0_Template, 0, 0, "ng-template");
-  }
-}
-function Panel_div_1_p_button_6_ng_template_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, Panel_div_1_p_button_6_ng_template_1_ng_container_0_Template, 3, 2, "ng-container", 14)(1, Panel_div_1_p_button_6_ng_template_1_1_Template, 1, 0, null, 15);
-  }
-  if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(3);
-    \u0275\u0275property("ngIf", !ctx_r2.headerIconsTemplate && !ctx_r2._headerIconsTemplate && !(ctx_r2.toggleButtonProps == null ? null : ctx_r2.toggleButtonProps.icon));
-    \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r2.headerIconsTemplate || ctx_r2._headerIconsTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(3, _c142, ctx_r2.collapsed));
-  }
-}
-function Panel_div_1_p_button_6_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "p-button", 13);
-    \u0275\u0275listener("click", function Panel_div_1_p_button_6_Template_p_button_click_0_listener($event) {
-      \u0275\u0275restoreView(_r4);
-      const ctx_r2 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r2.onIconClick($event));
-    })("keydown", function Panel_div_1_p_button_6_Template_p_button_keydown_0_listener($event) {
-      \u0275\u0275restoreView(_r4);
-      const ctx_r2 = \u0275\u0275nextContext(2);
-      return \u0275\u0275resetView(ctx_r2.onKeyDown($event));
-    });
-    \u0275\u0275template(1, Panel_div_1_p_button_6_ng_template_1_Template, 2, 5, "ng-template", null, 1, \u0275\u0275templateRefExtractor);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext(2);
-    \u0275\u0275property("text", true)("rounded", true)("buttonProps", ctx_r2.toggleButtonProps);
-    \u0275\u0275attribute("id", ctx_r2.id + "_header")("aria-label", ctx_r2.buttonAriaLabel)("aria-controls", ctx_r2.id + "_content")("aria-expanded", !ctx_r2.collapsed);
-  }
-}
-function Panel_div_1_Template(rf, ctx) {
-  if (rf & 1) {
-    const _r2 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 8);
-    \u0275\u0275listener("click", function Panel_div_1_Template_div_click_0_listener($event) {
-      \u0275\u0275restoreView(_r2);
-      const ctx_r2 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r2.onHeaderClick($event));
-    });
-    \u0275\u0275template(1, Panel_div_1_span_1_Template, 2, 2, "span", 9);
-    \u0275\u0275projection(2, 1);
-    \u0275\u0275template(3, Panel_div_1_ng_container_3_Template, 1, 0, "ng-container", 6);
-    \u0275\u0275elementStart(4, "div", 10);
-    \u0275\u0275template(5, Panel_div_1_5_Template, 1, 0, null, 6)(6, Panel_div_1_p_button_6_Template, 3, 7, "p-button", 11);
-    \u0275\u0275elementEnd()();
-  }
-  if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext();
-    \u0275\u0275attribute("id", ctx_r2.id + "-titlebar");
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r2._header);
-    \u0275\u0275advance(2);
-    \u0275\u0275property("ngTemplateOutlet", ctx_r2.headerTemplate || ctx_r2._headerTemplate);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction3(6, _c133, ctx_r2.iconPos === "start", ctx_r2.iconPos === "end", ctx_r2.iconPos === "center"));
-    \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r2.iconTemplate || ctx_r2._iconTemplate);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r2.toggleable);
-  }
-}
-function Panel_ng_container_6_Template(rf, ctx) {
+function AccordionTab_ng_container_8_ng_container_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainer(0);
   }
 }
-function Panel_div_7_ng_container_2_Template(rf, ctx) {
+function AccordionTab_ng_container_8_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementContainer(0);
-  }
-}
-function Panel_div_7_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 17);
-    \u0275\u0275projection(1, 2);
-    \u0275\u0275template(2, Panel_div_7_ng_container_2_Template, 1, 0, "ng-container", 6);
-    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, AccordionTab_ng_container_8_ng_container_1_Template, 1, 0, "ng-container", 4);
+    \u0275\u0275elementContainerEnd();
   }
   if (rf & 2) {
-    const ctx_r2 = \u0275\u0275nextContext();
-    \u0275\u0275advance(2);
-    \u0275\u0275property("ngTemplateOutlet", ctx_r2.footerTemplate || ctx_r2._footerTemplate);
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.contentTemplate || ctx_r0._contentTemplate);
   }
 }
 var theme19 = ({
   dt: dt2
 }) => `
-.p-panel {
-    border: 1px solid ${dt2("panel.border.color")};
-    border-radius: ${dt2("panel.border.radius")};
-    background: ${dt2("panel.background")};
-    color: ${dt2("panel.color")};
-}
-
-.p-panel-header {
+.p-accordionpanel {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: ${dt2("panel.header.padding")};
-    background: ${dt2("panel.header.background")};
-    color: ${dt2("panel.header.color")};
+    flex-direction: column;
     border-style: solid;
-    border-width: ${dt2("panel.header.border.width")};
-    border-color: ${dt2("panel.header.border.color")};
-    border-radius: ${dt2("panel.header.border.radius")};
+    border-width: ${dt2("accordion.panel.border.width")};
+    border-color: ${dt2("accordion.panel.border.color")};
 }
 
-.p-panel-toggleable .p-panel-header {
-    padding: ${dt2("panel.toggleable.header.padding")};
-}
-
-.p-panel-title {
-    line-height: 1;
-    font-weight: ${dt2("panel.title.font.weight")};
-}
-
-.p-panel-content {
-    padding: ${dt2("panel.content.padding")};
-}
-
-.p-panel-footer {
-    padding: ${dt2("panel.footer.padding")};
-}
-
-/* For PrimeNG */
-.p-panel-toggleable.p-panel-expanded > .p-panel-content-container:not(.ng-animating) {
-    overflow: visible
-}
-
-.p-panel-toggleable .p-panel-content-container {
+.p-accordionheader {
+    all: unset;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: ${dt2("accordion.header.padding")};
+    color: ${dt2("accordion.header.color")};
+    background: ${dt2("accordion.header.background")};
+    border-style: solid;
+    border-width: ${dt2("accordion.header.border.width")};
+    border-color: ${dt2("accordion.header.border.color")};
+    font-weight: ${dt2("accordion.header.font.weight")};
+    border-radius: ${dt2("accordion.header.border.radius")};
+    transition: background ${dt2("accordion.transition.duration")}; color ${dt2("accordion.transition.duration")}color ${dt2("accordion.transition.duration")}, outline-color ${dt2("accordion.transition.duration")}, box-shadow ${dt2("accordion.transition.duration")};
+    outline-color: transparent;
+    position: relative;
     overflow: hidden;
+}
+
+.p-accordionpanel:first-child > .p-accordionheader {
+    border-width: ${dt2("accordion.header.first.border.width")};
+    border-start-start-radius: ${dt2("accordion.header.first.top.border.radius")};
+    border-start-end-radius: ${dt2("accordion.header.first.top.border.radius")};
+}
+
+.p-accordionpanel:last-child > .p-accordionheader {
+    border-end-start-radius: ${dt2("accordion.header.last.bottom.border.radius")};
+    border-end-end-radius: ${dt2("accordion.header.last.bottom.border.radius")};
+}
+
+.p-accordionpanel:last-child.p-accordionpanel-active > .p-accordionheader {
+    border-end-start-radius: ${dt2("accordion.header.last.active.bottom.border.radius")};
+    border-end-end-radius:${dt2("accordion.header.last.active.bottom.border.radius")};
+}
+
+.p-accordionheader-toggle-icon {
+    color: ${dt2("accordion.header.toggle.icon.color")};
+}
+
+.p-accordionpanel:not(.p-disabled) .p-accordionheader:focus-visible {
+    box-shadow: ${dt2("accordion.header.focus.ring.shadow")};
+    outline: ${dt2("accordion.header.focus.ring.width")} ${dt2("accordion.header.focus.ring.style")} ${dt2("accordion.header.focus.ring.color")};
+    outline-offset: ${dt2("accordion.header.focus.ring.offset")};
+}
+
+.p-accordionpanel:not(.p-accordionpanel-active):not(.p-disabled) > .p-accordionheader:hover {
+    background: ${dt2("accordion.header.hover.background")};
+    color: ${dt2("accordion.header.hover.color")}
+}
+
+.p-accordionpanel:not(.p-accordionpanel-active):not(.p-disabled) .p-accordionheader:hover .p-accordionheader-toggle-icon {
+    color: ${dt2("accordion.header.toggle.icon.hover.color")};
+}
+
+.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader {
+    background: ${dt2("accordion.header.active.background")};
+    color: ${dt2("accordion.header.active.color")}
+}
+
+.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader .p-accordionheader-toggle-icon {
+    color: ${dt2("accordion.header.toggle.icon.active.color")};
+}
+
+.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader:hover  {
+    background: ${dt2("accordion.header.active.hover.background")};
+    color: ${dt2("accordion.header.active.hover.color")}
+}
+
+.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader:hover  .p-accordionheader-toggle-icon {
+    color: ${dt2("accordion.header.toggle.icon.active.hover.color")};
+}
+
+.p-accordioncontent-content {
+    border-style: solid;
+    border-width: ${dt2("accordion.content.border.width")};
+    border-color: ${dt2("accordion.content.border.color")};
+    background-color: ${dt2("accordion.content.background")};
+    color: ${dt2("accordion.content.color")};
+    padding: ${dt2("accordion.content.padding")}
+}
+
+/*For PrimeNG*/
+
+.p-accordion .p-accordioncontent {
+    overflow: hidden;
+}
+
+.p-accordionpanel.p-accordioncontent:not(.ng-animating) {
+    overflow: inherit;
+}
+
+.p-accordionheader-toggle-icon.icon-start {
+    order: -1;
+}
+
+.p-accordionheader:has(.p-accordionheader-toggle-icon.icon-start) {
+    justify-content: flex-start;
+    gap: ${dt2("accordion.header.padding")};
 }
 `;
 var classes19 = {
-  root: ({
-    props
-  }) => ["p-panel p-component", {
-    "p-panel-toggleable": props.toggleable
-  }],
-  header: "p-panel-header",
-  title: "p-panel-title",
-  headerActions: "p-panel-header-actions",
-  pcToggleButton: "p-panel-toggle-button",
-  contentContainer: "p-panel-content-container",
-  content: "p-panel-content",
-  footer: "p-panel-footer"
+  root: "p-accordion p-component"
 };
-var PanelStyle = class _PanelStyle extends BaseStyle {
-  name = "panel";
+var AccordionStyle = class _AccordionStyle extends BaseStyle {
+  name = "accordion";
   theme = theme19;
   classes = classes19;
   static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275PanelStyle_BaseFactory;
-    return function PanelStyle_Factory(__ngFactoryType__) {
-      return (\u0275PanelStyle_BaseFactory || (\u0275PanelStyle_BaseFactory = \u0275\u0275getInheritedFactory(_PanelStyle)))(__ngFactoryType__ || _PanelStyle);
+    let \u0275AccordionStyle_BaseFactory;
+    return function AccordionStyle_Factory(__ngFactoryType__) {
+      return (\u0275AccordionStyle_BaseFactory || (\u0275AccordionStyle_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionStyle)))(__ngFactoryType__ || _AccordionStyle);
     };
   })();
   static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
-    token: _PanelStyle,
-    factory: _PanelStyle.\u0275fac
+    token: _AccordionStyle,
+    factory: _AccordionStyle.\u0275fac
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PanelStyle, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionStyle, [{
     type: Injectable
   }], null, null);
 })();
-var PanelClasses;
-(function(PanelClasses2) {
-  PanelClasses2["root"] = "p-panel";
-  PanelClasses2["header"] = "p-panel-header";
-  PanelClasses2["title"] = "p-panel-title";
-  PanelClasses2["headerActions"] = "p-panel-header-actions";
-  PanelClasses2["pcToggleButton"] = "p-panel-toggle-button";
-  PanelClasses2["contentContainer"] = "p-panel-content-container";
-  PanelClasses2["content"] = "p-panel-content";
-  PanelClasses2["footer"] = "p-panel-footer";
-})(PanelClasses || (PanelClasses = {}));
-var Panel = class _Panel extends BaseComponent {
+var AccordionClasses;
+(function(AccordionClasses2) {
+  AccordionClasses2["root"] = "p-accordion";
+  AccordionClasses2["contentwrapper"] = "p-accordioncontent";
+  AccordionClasses2["content"] = "p-accordioncontent-content";
+  AccordionClasses2["header"] = "p-accordionheader";
+  AccordionClasses2["toggleicon"] = "p-accordionheader-toggle-icon";
+  AccordionClasses2["panel"] = "p-accordionpanel";
+})(AccordionClasses || (AccordionClasses = {}));
+var AccordionPanel = class _AccordionPanel extends BaseComponent {
+  pcAccordion = inject(forwardRef(() => Accordion));
   /**
-   * Defines if content of panel can be expanded and collapsed.
+   * Value of the active tab.
+   * @defaultValue undefined
    * @group Props
    */
-  toggleable;
+  value = model(void 0);
   /**
-   * Header text of the panel.
+   * Disables the tab when enabled.
+   * @defaultValue false
    * @group Props
    */
-  _header;
+  disabled = input(false, {
+    transform: (v) => transformToBoolean(v)
+  });
+  active = computed(() => this.pcAccordion.multiple() ? this.valueEquals(this.pcAccordion.value(), this.value()) : this.pcAccordion.value() === this.value());
+  valueEquals(currentValue, value) {
+    if (Array.isArray(currentValue)) {
+      return currentValue.includes(value);
+    }
+    return currentValue === value;
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275AccordionPanel_BaseFactory;
+    return function AccordionPanel_Factory(__ngFactoryType__) {
+      return (\u0275AccordionPanel_BaseFactory || (\u0275AccordionPanel_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionPanel)))(__ngFactoryType__ || _AccordionPanel);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _AccordionPanel,
+    selectors: [["p-accordion-panel"], ["p-accordionpanel"]],
+    hostVars: 9,
+    hostBindings: function AccordionPanel_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        \u0275\u0275attribute("data-pc-name", "accordionpanel")("data-p-disabled", ctx.disabled())("data-p-active", ctx.active());
+        \u0275\u0275classProp("p-accordionpanel", true)("p-accordionpanel-active", ctx.active())("p-disabled", ctx.disabled());
+      }
+    },
+    inputs: {
+      value: [1, "value"],
+      disabled: [1, "disabled"]
+    },
+    outputs: {
+      value: "valueChange"
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c016,
+    decls: 1,
+    vars: 0,
+    template: function AccordionPanel_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275projection(0);
+      }
+    },
+    dependencies: [CommonModule],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionPanel, [{
+    type: Component,
+    args: [{
+      selector: "p-accordion-panel, p-accordionpanel",
+      imports: [CommonModule],
+      standalone: true,
+      template: `<ng-content />`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      host: {
+        "[class.p-accordionpanel]": "true",
+        "[class.p-accordionpanel-active]": "active()",
+        "[class.p-disabled]": "disabled()",
+        "[attr.data-pc-name]": '"accordionpanel"',
+        "[attr.data-p-disabled]": "disabled()",
+        "[attr.data-p-active]": "active()"
+      }
+    }]
+  }], null, null);
+})();
+var AccordionHeader = class _AccordionHeader extends BaseComponent {
+  pcAccordion = inject(forwardRef(() => Accordion));
+  pcAccordionPanel = inject(forwardRef(() => AccordionPanel));
+  id = computed(() => `${this.pcAccordion.id()}_accordionheader_${this.pcAccordionPanel.value()}`);
+  active = computed(() => this.pcAccordionPanel.active());
+  disabled = computed(() => this.pcAccordionPanel.disabled());
+  ariaControls = computed(() => `${this.pcAccordion.id()}_accordioncontent_${this.pcAccordionPanel.value()}`);
   /**
-   * Defines the initial state of panel content, supports one or two-way binding as well.
+   * Toggle icon template.
+   * @type {TemplateRef<AccordionToggleIconTemplateContext>} context - Context of the template
+   * @example
+   * ```html
+   * <ng-template #toggleicon let-active="active"> </ng-template>
+   * ```
+   * @see {@link AccordionToggleIconTemplateContext}
+   * @group Templates
+   */
+  toggleicon;
+  onClick(event2) {
+    const wasActive = this.active();
+    this.changeActiveValue();
+    const isActive = this.active();
+    const index = this.pcAccordionPanel.value();
+    if (!wasActive && isActive) {
+      this.pcAccordion.onOpen.emit({
+        originalEvent: event2,
+        index
+      });
+    } else if (wasActive && !isActive) {
+      this.pcAccordion.onClose.emit({
+        originalEvent: event2,
+        index
+      });
+    }
+  }
+  onFocus() {
+    this.pcAccordion.selectOnFocus() && this.changeActiveValue();
+  }
+  onKeydown(event2) {
+    switch (event2.code) {
+      case "ArrowDown":
+        this.arrowDownKey(event2);
+        break;
+      case "ArrowUp":
+        this.arrowUpKey(event2);
+        break;
+      case "Home":
+        this.onHomeKey(event2);
+        break;
+      case "End":
+        this.onEndKey(event2);
+        break;
+      case "Enter":
+      case "Space":
+      case "NumpadEnter":
+        this.onEnterKey(event2);
+        break;
+      default:
+        break;
+    }
+  }
+  changeActiveValue() {
+    this.pcAccordion.updateValue(this.pcAccordionPanel.value());
+  }
+  findPanel(headerElement) {
+    return headerElement?.closest('[data-pc-name="accordionpanel"]');
+  }
+  findHeader(panelElement) {
+    return findSingle(panelElement, '[data-pc-name="accordionheader"]');
+  }
+  findNextPanel(panelElement, selfCheck = false) {
+    const element = selfCheck ? panelElement : panelElement.nextElementSibling;
+    return element ? getAttribute(element, "data-p-disabled") ? this.findNextPanel(element) : this.findHeader(element) : null;
+  }
+  findPrevPanel(panelElement, selfCheck = false) {
+    const element = selfCheck ? panelElement : panelElement.previousElementSibling;
+    return element ? getAttribute(element, "data-p-disabled") ? this.findPrevPanel(element) : this.findHeader(element) : null;
+  }
+  findFirstPanel() {
+    return this.findNextPanel(this.pcAccordion.el.nativeElement.firstElementChild, true);
+  }
+  findLastPanel() {
+    return this.findPrevPanel(this.pcAccordion.el.nativeElement.lastElementChild, true);
+  }
+  changeFocusedPanel(event2, element) {
+    focus(element);
+  }
+  arrowDownKey(event2) {
+    const nextPanel = this.findNextPanel(this.findPanel(event2.currentTarget));
+    nextPanel ? this.changeFocusedPanel(event2, nextPanel) : this.onHomeKey(event2);
+    event2.preventDefault();
+  }
+  arrowUpKey(event2) {
+    const prevPanel = this.findPrevPanel(this.findPanel(event2.currentTarget));
+    prevPanel ? this.changeFocusedPanel(event2, prevPanel) : this.onEndKey(event2);
+    event2.preventDefault();
+  }
+  onHomeKey(event2) {
+    const firstPanel = this.findFirstPanel();
+    this.changeFocusedPanel(event2, firstPanel);
+    event2.preventDefault();
+  }
+  onEndKey(event2) {
+    const lastPanel = this.findLastPanel();
+    this.changeFocusedPanel(event2, lastPanel);
+    event2.preventDefault();
+  }
+  onEnterKey(event2) {
+    this.changeActiveValue();
+    event2.preventDefault();
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275AccordionHeader_BaseFactory;
+    return function AccordionHeader_Factory(__ngFactoryType__) {
+      return (\u0275AccordionHeader_BaseFactory || (\u0275AccordionHeader_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionHeader)))(__ngFactoryType__ || _AccordionHeader);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _AccordionHeader,
+    selectors: [["p-accordion-header"], ["p-accordionheader"]],
+    contentQueries: function AccordionHeader_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c111, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.toggleicon = _t.first);
+      }
+    },
+    hostVars: 13,
+    hostBindings: function AccordionHeader_HostBindings(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275listener("click", function AccordionHeader_click_HostBindingHandler($event) {
+          return ctx.onClick($event);
+        })("focus", function AccordionHeader_focus_HostBindingHandler($event) {
+          return ctx.onFocus($event);
+        })("keydown", function AccordionHeader_keydown_HostBindingHandler($event) {
+          return ctx.onKeydown($event);
+        });
+      }
+      if (rf & 2) {
+        \u0275\u0275attribute("id", ctx.id())("aria-expanded", ctx.active())("aria-controls", ctx.ariaControls())("aria-disabled", ctx.disabled())("role", "button")("tabindex", ctx.disabled() ? "-1" : "0")("data-p-active", ctx.active())("data-p-disabled", ctx.disabled())("data-pc-name", "accordionheader");
+        \u0275\u0275styleProp("user-select", "none");
+        \u0275\u0275classProp("p-accordionheader", true);
+      }
+    },
+    features: [\u0275\u0275HostDirectivesFeature([Ripple]), \u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c016,
+    decls: 3,
+    vars: 1,
+    consts: [[4, "ngTemplateOutlet", "ngTemplateOutletContext"], [4, "ngIf"], [3, "class", "ngClass", 4, "ngIf"], [3, "ngClass", 4, "ngIf"], [3, "ngClass"]],
+    template: function AccordionHeader_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275projection(0);
+        \u0275\u0275template(1, AccordionHeader_Conditional_1_Template, 1, 4)(2, AccordionHeader_Conditional_2_Template, 2, 2);
+      }
+      if (rf & 2) {
+        \u0275\u0275advance();
+        \u0275\u0275conditional(ctx.toggleicon ? 1 : 2);
+      }
+    },
+    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, ChevronDownIcon, ChevronUpIcon],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionHeader, [{
+    type: Component,
+    args: [{
+      selector: "p-accordion-header, p-accordionheader",
+      imports: [CommonModule, ChevronDownIcon, ChevronUpIcon],
+      standalone: true,
+      template: `
+        <ng-content />
+        @if (toggleicon) {
+            <ng-template *ngTemplateOutlet="toggleicon; context: { active: active() }"></ng-template>
+        } @else {
+            <ng-container *ngIf="active()">
+                <span *ngIf="pcAccordion.collapseIcon" [class]="pcAccordion.collapseIcon" [ngClass]="pcAccordion.iconClass" [attr.aria-hidden]="true"></span>
+                <ChevronDownIcon *ngIf="!pcAccordion.collapseIcon" [ngClass]="pcAccordion.iconClass" [attr.aria-hidden]="true" />
+            </ng-container>
+            <ng-container *ngIf="!active()">
+                <span *ngIf="pcAccordion.expandIcon" [class]="pcAccordion.expandIcon" [ngClass]="pcAccordion.iconClass" [attr.aria-hidden]="true"></span>
+                <ChevronUpIcon *ngIf="!pcAccordion.expandIcon" [ngClass]="pcAccordion.iconClass" [attr.aria-hidden]="true" />
+            </ng-container>
+        }
+    `,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      host: {
+        "[class.p-accordionheader]": "true",
+        "[attr.id]": "id()",
+        "[attr.aria-expanded]": "active()",
+        "[attr.aria-controls]": "ariaControls()",
+        "[attr.aria-disabled]": "disabled()",
+        "[attr.role]": '"button"',
+        "[attr.tabindex]": 'disabled()?"-1":"0"',
+        "[attr.data-p-active]": "active()",
+        "[attr.data-p-disabled]": "disabled()",
+        "[attr.data-pc-name]": '"accordionheader"',
+        "[style.user-select]": '"none"'
+      },
+      hostDirectives: [Ripple]
+    }]
+  }], null, {
+    toggleicon: [{
+      type: ContentChild,
+      args: ["toggleicon"]
+    }],
+    onClick: [{
+      type: HostListener,
+      args: ["click", ["$event"]]
+    }],
+    onFocus: [{
+      type: HostListener,
+      args: ["focus", ["$event"]]
+    }],
+    onKeydown: [{
+      type: HostListener,
+      args: ["keydown", ["$event"]]
+    }]
+  });
+})();
+var AccordionContent = class _AccordionContent extends BaseComponent {
+  pcAccordion = inject(forwardRef(() => Accordion));
+  pcAccordionPanel = inject(forwardRef(() => AccordionPanel));
+  active = computed(() => this.pcAccordionPanel.active());
+  ariaLabelledby = computed(() => `${this.pcAccordion.id()}_accordionheader_${this.pcAccordionPanel.value()}`);
+  id = computed(() => `${this.pcAccordion.id()}_accordioncontent_${this.pcAccordionPanel.value()}`);
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275AccordionContent_BaseFactory;
+    return function AccordionContent_Factory(__ngFactoryType__) {
+      return (\u0275AccordionContent_BaseFactory || (\u0275AccordionContent_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionContent)))(__ngFactoryType__ || _AccordionContent);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _AccordionContent,
+    selectors: [["p-accordion-content"], ["p-accordioncontent"]],
+    hostVars: 7,
+    hostBindings: function AccordionContent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        \u0275\u0275attribute("id", ctx.id())("role", "region")("data-pc-name", "accordioncontent")("data-p-active", ctx.active())("aria-labelledby", ctx.ariaLabelledby());
+        \u0275\u0275classProp("p-accordioncontent", true);
+      }
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c016,
+    decls: 2,
+    vars: 9,
+    consts: [[1, "p-accordioncontent-content"]],
+    template: function AccordionContent_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275elementStart(0, "div", 0);
+        \u0275\u0275projection(1);
+        \u0275\u0275elementEnd();
+      }
+      if (rf & 2) {
+        \u0275\u0275property("@content", ctx.active() ? \u0275\u0275pureFunction1(3, _c46, \u0275\u0275pureFunction1(1, _c39, ctx.pcAccordion.transitionOptions)) : \u0275\u0275pureFunction1(7, _c55, \u0275\u0275pureFunction1(5, _c39, ctx.pcAccordion.transitionOptions)));
+      }
+    },
+    dependencies: [CommonModule],
+    encapsulation: 2,
+    data: {
+      animation: [trigger("content", [state("hidden", style({
+        height: "0",
+        paddingBottom: "0",
+        visibility: "hidden"
+      })), state("visible", style({
+        height: "*",
+        visibility: "visible"
+      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])]
+    },
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionContent, [{
+    type: Component,
+    args: [{
+      selector: "p-accordion-content, p-accordioncontent",
+      imports: [CommonModule],
+      standalone: true,
+      template: ` <div [@content]="active() ? { value: 'visible', params: { transitionParams: pcAccordion.transitionOptions } } : { value: 'hidden', params: { transitionParams: pcAccordion.transitionOptions } }" class="p-accordioncontent-content">
+        <ng-content />
+    </div>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      host: {
+        "[class.p-accordioncontent]": "true",
+        "[attr.id]": "id()",
+        "[attr.role]": '"region"',
+        "[attr.data-pc-name]": '"accordioncontent"',
+        "[attr.data-p-active]": "active()",
+        "[attr.aria-labelledby]": "ariaLabelledby()"
+      },
+      animations: [trigger("content", [state("hidden", style({
+        height: "0",
+        paddingBottom: "0",
+        visibility: "hidden"
+      })), state("visible", style({
+        height: "*",
+        visibility: "visible"
+      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])]
+    }]
+  }], null, null);
+})();
+var AccordionTab = class _AccordionTab extends BaseComponent {
+  get hostClass() {
+    return this.tabStyleClass;
+  }
+  get hostStyle() {
+    return this.tabStyle;
+  }
+  /**
+   * Current id state as a string.
    * @group Props
    */
-  collapsed;
+  id = uuid("pn_id_");
   /**
-   * Inline style of the component.
+   * Used to define the header of the tab.
    * @group Props
    */
-  style;
+  header;
   /**
-   * Style class of the component.
+   * Inline style of the tab header.
    * @group Props
    */
-  styleClass;
+  headerStyle;
   /**
-   * Position of the icons.
+   * Inline style of the tab.
    * @group Props
    */
-  iconPos = "end";
+  tabStyle;
   /**
-   * Expand icon of the toggle button.
-   * @group Props
-   * @deprecated since v15.4.2, use `headericons` template instead.
-   */
-  expandIcon;
-  /**
-   * Collapse icon of the toggle button.
-   * @group Props
-   * @deprecated since v15.4.2, use `headericons` template instead.
-   */
-  collapseIcon;
-  /**
-   * Specifies if header of panel cannot be displayed.
+   * Inline style of the tab content.
    * @group Props
    */
-  showHeader = true;
+  contentStyle;
   /**
-   * Specifies the toggler element to toggle the panel content.
+   * Style class of the tab.
    * @group Props
    */
-  toggler = "icon";
+  tabStyleClass;
+  /**
+   * Style class of the tab header.
+   * @group Props
+   */
+  headerStyleClass;
+  /**
+   * Style class of the tab content.
+   * @group Props
+   */
+  contentStyleClass;
+  /**
+   * Whether the tab is disabled.
+   * @group Props
+   */
+  disabled;
+  /**
+   * Whether a lazy loaded panel should avoid getting loaded again on reselection.
+   * @group Props
+   */
+  cache = true;
   /**
    * Transition options of the animation.
    * @group Props
    */
   transitionOptions = "400ms cubic-bezier(0.86, 0, 0.07, 1)";
   /**
-   * Used to pass all properties of the ButtonProps to the Button component.
+   * Position of the icon.
    * @group Props
    */
-  toggleButtonProps;
+  iconPos = "start";
   /**
-   * Emitted when the collapsed changes.
-   * @param {boolean} value - New Value.
+   * The value that returns the selection.
+   * @group Props
+   */
+  get selected() {
+    return this._selected;
+  }
+  set selected(val) {
+    this._selected = val;
+    if (!this.loaded) {
+      if (this._selected && this.cache) {
+        this.loaded = true;
+      }
+      this.cd.detectChanges();
+    }
+  }
+  /**
+   * The aria-level that each accordion header will have. The default value is 2 as per W3C specifications
+   * @group Props
+   */
+  headerAriaLevel = 2;
+  /**
+   * Event triggered by changing the choice.
+   * @param {boolean} value - Boolean value indicates that the option is changed.
    * @group Emits
    */
-  collapsedChange = new EventEmitter();
+  selectedChange = new EventEmitter();
+  headerFacet;
+  _selected = false;
+  get iconClass() {
+    if (this.iconPos === "end") {
+      return "p-accordionheader-toggle-icon icon-end";
+    } else {
+      return "p-accordionheader-toggle-icon icon-start";
+    }
+  }
   /**
-   * Callback to invoke before panel toggle.
-   * @param {PanelBeforeToggleEvent} event - Custom panel toggle event
-   * @group Emits
-   */
-  onBeforeToggle = new EventEmitter();
-  /**
-   * Callback to invoke after panel toggle.
-   * @param {PanelAfterToggleEvent} event - Custom panel toggle event
-   * @group Emits
-   */
-  onAfterToggle = new EventEmitter();
-  footerFacet;
-  animating;
-  /**
-   * Defines template option for header.
+   * Content template for the content of the drawer.
    * @group Templates
    */
   headerTemplate;
   /**
-   * Defines template option for icon.
-   * @example
-   * ```html
-   * <ng-template #icon> </ng-template>
-   * ```
+   * Template for the header icon.
    * @group Templates
    */
   iconTemplate;
   /**
-   * Defines template option for content.
-   * @example
-   * ```html
-   * <ng-template #content> </ng-template>
-   * ```
+   * Content template for the footer of the drawer.
    * @group Templates
    */
   contentTemplate;
-  /**
-   * Defines template option for footer.
-   * @example
-   * ```html
-   * <ng-template #footer> </ng-template>
-   * ```
-   * @group Templates
-   */
-  footerTemplate;
-  /**
-   * Defines template option for headerIcon.
-   * @type {TemplateRef<PanelHeaderIconsTemplateContext>} context - context of the template.
-   * @example
-   * ```html
-   * <ng-template #headericons let-collapsed> </ng-template>
-   * ```
-   * @see {@link PanelHeaderIconsTemplateContext}
-   * @group Templates
-   */
-  headerIconsTemplate;
+  templates;
   _headerTemplate;
   _iconTemplate;
   _contentTemplate;
-  _footerTemplate;
-  _headerIconsTemplate;
-  contentWrapperViewChild;
-  id = uuid("pn_id_");
-  get buttonAriaLabel() {
-    return this._header;
+  loaded = false;
+  accordion = inject(forwardRef(() => Accordion));
+  _componentStyle = inject(AccordionStyle);
+  ngOnInit() {
+    super.ngOnInit();
+    console.log("AccordionTab is deprecated as of v18, please use the new structure instead.");
   }
-  _componentStyle = inject(PanelStyle);
-  onHeaderClick(event2) {
-    if (this.toggler === "header") {
-      this.toggle(event2);
-    }
-  }
-  onIconClick(event2) {
-    if (this.toggler === "icon") {
-      this.toggle(event2);
-    }
-  }
-  toggle(event2) {
-    if (this.animating) {
-      return false;
-    }
-    this.animating = true;
-    this.onBeforeToggle.emit({
-      originalEvent: event2,
-      collapsed: this.collapsed
-    });
-    if (this.toggleable) {
-      if (this.collapsed) this.expand();
-      else this.collapse();
-    }
-    this.cd.markForCheck();
-    event2.preventDefault();
-  }
-  expand() {
-    this.collapsed = false;
-    this.collapsedChange.emit(this.collapsed);
-    this.updateTabIndex();
-  }
-  collapse() {
-    this.collapsed = true;
-    this.collapsedChange.emit(this.collapsed);
-    this.updateTabIndex();
-  }
-  getBlockableElement() {
-    return this.el.nativeElement.children[0];
-  }
-  updateTabIndex() {
-    if (this.contentWrapperViewChild) {
-      const focusableElements = this.contentWrapperViewChild.nativeElement.querySelectorAll('input, button, select, a, textarea, [tabindex]:not([tabindex="-1"])');
-      focusableElements.forEach((element) => {
-        if (this.collapsed) {
-          element.setAttribute("tabindex", "-1");
-        } else {
-          element.removeAttribute("tabindex");
-        }
-      });
-    }
-  }
-  onKeyDown(event2) {
-    if (event2.code === "Enter" || event2.code === "Space") {
-      this.toggle(event2);
-      event2.preventDefault();
-    }
-  }
-  onToggleDone(event2) {
-    this.animating = false;
-    this.onAfterToggle.emit({
-      originalEvent: event2,
-      collapsed: this.collapsed
-    });
-  }
-  templates;
   ngAfterContentInit() {
     this.templates.forEach((item) => {
       switch (item.getType()) {
-        case "header":
-          this._headerTemplate = item.template;
-          break;
         case "content":
           this._contentTemplate = item.template;
           break;
-        case "footer":
-          this._footerTemplate = item.template;
+        case "header":
+          this._headerTemplate = item.template;
           break;
-        case "icons":
+        case "icon":
           this._iconTemplate = item.template;
-          break;
-        case "headericons":
-          this._headerIconsTemplate = item.template;
           break;
         default:
           this._contentTemplate = item.template;
@@ -50321,300 +50735,323 @@ var Panel = class _Panel extends BaseComponent {
       }
     });
   }
+  toggle(event2) {
+    if (this.disabled) {
+      return false;
+    }
+    let index = this.findTabIndex();
+    if (this.selected) {
+      this.selected = false;
+      this.accordion.onClose.emit({
+        originalEvent: event2,
+        index
+      });
+    } else {
+      if (!this.accordion.multiple()) {
+        for (var i = 0; i < this.accordion.tabs.length; i++) {
+          if (this.accordion.tabs[i].selected) {
+            this.accordion.tabs[i].selected = false;
+            this.accordion.tabs[i].selectedChange.emit(false);
+            this.accordion.tabs[i].cd.markForCheck();
+          }
+        }
+      }
+      this.selected = true;
+      this.loaded = true;
+      this.accordion.onOpen.emit({
+        originalEvent: event2,
+        index
+      });
+    }
+    this.selectedChange.emit(this.selected);
+    this.accordion.updateActiveIndex();
+    this.cd.markForCheck();
+    event2?.preventDefault();
+  }
+  findTabIndex() {
+    let index = -1;
+    for (var i = 0; i < this.accordion.tabs.length; i++) {
+      if (this.accordion.tabs[i] == this) {
+        index = i;
+        break;
+      }
+    }
+    return index;
+  }
+  onKeydown(event2) {
+    switch (event2.code) {
+      case "Enter":
+      case "Space":
+        this.toggle(event2);
+        event2.preventDefault();
+        break;
+      default:
+        break;
+    }
+  }
+  getTabHeaderActionId(tabId) {
+    return `${tabId}_header_action`;
+  }
+  getTabContentId(tabId) {
+    return `${tabId}_content`;
+  }
+  ngOnDestroy() {
+    this.accordion.tabs.splice(this.findTabIndex(), 1);
+    super.ngOnDestroy();
+  }
   static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275Panel_BaseFactory;
-    return function Panel_Factory(__ngFactoryType__) {
-      return (\u0275Panel_BaseFactory || (\u0275Panel_BaseFactory = \u0275\u0275getInheritedFactory(_Panel)))(__ngFactoryType__ || _Panel);
+    let \u0275AccordionTab_BaseFactory;
+    return function AccordionTab_Factory(__ngFactoryType__) {
+      return (\u0275AccordionTab_BaseFactory || (\u0275AccordionTab_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionTab)))(__ngFactoryType__ || _AccordionTab);
     };
   })();
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-    type: _Panel,
-    selectors: [["p-panel"]],
-    contentQueries: function Panel_ContentQueries(rf, ctx, dirIndex) {
+    type: _AccordionTab,
+    selectors: [["p-accordionTab"], ["p-accordion-tab"], ["p-accordiontab"]],
+    contentQueries: function AccordionTab_ContentQueries(rf, ctx, dirIndex) {
       if (rf & 1) {
-        \u0275\u0275contentQuery(dirIndex, Footer, 5);
-        \u0275\u0275contentQuery(dirIndex, _c016, 4);
-        \u0275\u0275contentQuery(dirIndex, _c111, 4);
-        \u0275\u0275contentQuery(dirIndex, _c210, 4);
-        \u0275\u0275contentQuery(dirIndex, _c39, 4);
-        \u0275\u0275contentQuery(dirIndex, _c46, 4);
+        \u0275\u0275contentQuery(dirIndex, _c65, 4);
+        \u0275\u0275contentQuery(dirIndex, _c72, 4);
+        \u0275\u0275contentQuery(dirIndex, _c82, 4);
+        \u0275\u0275contentQuery(dirIndex, Header, 4);
         \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
       }
       if (rf & 2) {
         let _t;
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.footerFacet = _t.first);
         \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerTemplate = _t.first);
         \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.iconTemplate = _t.first);
         \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentTemplate = _t.first);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.footerTemplate = _t.first);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerIconsTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerFacet = _t);
         \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
       }
     },
-    viewQuery: function Panel_Query(rf, ctx) {
-      if (rf & 1) {
-        \u0275\u0275viewQuery(_c55, 5);
-      }
+    hostVars: 9,
+    hostBindings: function AccordionTab_HostBindings(rf, ctx) {
       if (rf & 2) {
-        let _t;
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentWrapperViewChild = _t.first);
+        \u0275\u0275attribute("data-pc-name", "accordiontab");
+        \u0275\u0275styleMap(ctx.hostStyle);
+        \u0275\u0275classMap(ctx.hostClass);
+        \u0275\u0275classProp("p-accordionpanel", true)("p-accordionpanel-active", ctx.selected);
       }
     },
     inputs: {
-      toggleable: [2, "toggleable", "toggleable", booleanAttribute],
-      _header: [0, "header", "_header"],
-      collapsed: [2, "collapsed", "collapsed", booleanAttribute],
-      style: "style",
-      styleClass: "styleClass",
-      iconPos: "iconPos",
-      expandIcon: "expandIcon",
-      collapseIcon: "collapseIcon",
-      showHeader: [2, "showHeader", "showHeader", booleanAttribute],
-      toggler: "toggler",
+      id: "id",
+      header: "header",
+      headerStyle: "headerStyle",
+      tabStyle: "tabStyle",
+      contentStyle: "contentStyle",
+      tabStyleClass: "tabStyleClass",
+      headerStyleClass: "headerStyleClass",
+      contentStyleClass: "contentStyleClass",
+      disabled: [2, "disabled", "disabled", booleanAttribute],
+      cache: [2, "cache", "cache", booleanAttribute],
       transitionOptions: "transitionOptions",
-      toggleButtonProps: "toggleButtonProps"
+      iconPos: "iconPos",
+      selected: "selected",
+      headerAriaLevel: [2, "headerAriaLevel", "headerAriaLevel", numberAttribute]
     },
     outputs: {
-      collapsedChange: "collapsedChange",
-      onBeforeToggle: "onBeforeToggle",
-      onAfterToggle: "onAfterToggle"
+      selectedChange: "selectedChange"
     },
-    features: [\u0275\u0275ProvidersFeature([PanelStyle]), \u0275\u0275InheritDefinitionFeature],
-    ngContentSelectors: _c72,
-    decls: 8,
-    vars: 25,
-    consts: [["contentWrapper", ""], ["icon", ""], [3, "ngClass", "ngStyle"], ["class", "p-panel-header", 3, "click", 4, "ngIf"], ["role", "region", 1, "p-panel-content-container", 3, "id"], [1, "p-panel-content"], [4, "ngTemplateOutlet"], ["class", "p-panel-footer", 4, "ngIf"], [1, "p-panel-header", 3, "click"], ["class", "p-panel-title", 4, "ngIf"], [1, "p-panel-icons", 3, "ngClass"], ["severity", "secondary", "type", "button", "role", "button", "styleClass", "p-panel-header-icon p-panel-toggler p-link", 3, "text", "rounded", "buttonProps", "click", "keydown", 4, "ngIf"], [1, "p-panel-title"], ["severity", "secondary", "type", "button", "role", "button", "styleClass", "p-panel-header-icon p-panel-toggler p-link", 3, "click", "keydown", "text", "rounded", "buttonProps"], [4, "ngIf"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [3, "class", 4, "ngIf"], [1, "p-panel-footer"]],
-    template: function Panel_Template(rf, ctx) {
+    features: [\u0275\u0275ProvidersFeature([AccordionStyle]), \u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c102,
+    decls: 9,
+    vars: 30,
+    consts: [["type", "button", 1, "p-accordionheader", 3, "click", "keydown", "disabled", "ngClass", "ngStyle"], ["role", "region", 1, "p-accordioncontent"], [1, "p-accordioncontent-content", 3, "ngClass", "ngStyle"], [4, "ngIf"], [4, "ngTemplateOutlet"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [3, "class", "ngClass", 4, "ngIf"], [3, "ngClass", 4, "ngIf"], [3, "ngClass"]],
+    template: function AccordionTab_Template(rf, ctx) {
       if (rf & 1) {
-        const _r1 = \u0275\u0275getCurrentView();
-        \u0275\u0275projectionDef(_c65);
-        \u0275\u0275elementStart(0, "div", 2);
-        \u0275\u0275template(1, Panel_div_1_Template, 7, 10, "div", 3);
-        \u0275\u0275elementStart(2, "div", 4);
-        \u0275\u0275listener("@panelContent.done", function Panel_Template_div_animation_panelContent_done_2_listener($event) {
-          \u0275\u0275restoreView(_r1);
-          return \u0275\u0275resetView(ctx.onToggleDone($event));
+        \u0275\u0275projectionDef(_c92);
+        \u0275\u0275elementStart(0, "button", 0);
+        \u0275\u0275listener("click", function AccordionTab_Template_button_click_0_listener($event) {
+          return ctx.toggle($event);
+        })("keydown", function AccordionTab_Template_button_keydown_0_listener($event) {
+          return ctx.onKeydown($event);
         });
-        \u0275\u0275elementStart(3, "div", 5, 0);
-        \u0275\u0275projection(5);
-        \u0275\u0275template(6, Panel_ng_container_6_Template, 1, 0, "ng-container", 6);
+        \u0275\u0275template(1, AccordionTab_Conditional_1_Template, 1, 1)(2, AccordionTab_Conditional_2_Template, 2, 2)(3, AccordionTab_Conditional_3_Template, 1, 4)(4, AccordionTab_Conditional_4_Template, 2, 2);
         \u0275\u0275elementEnd();
-        \u0275\u0275template(7, Panel_div_7_Template, 3, 1, "div", 7);
+        \u0275\u0275elementStart(5, "div", 1)(6, "div", 2);
+        \u0275\u0275projection(7);
+        \u0275\u0275template(8, AccordionTab_ng_container_8_Template, 2, 1, "ng-container", 3);
         \u0275\u0275elementEnd()();
       }
       if (rf & 2) {
-        \u0275\u0275classMap(ctx.styleClass);
-        \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(14, _c82, ctx.toggleable, !ctx.collapsed && ctx.toggleable))("ngStyle", ctx.style);
-        \u0275\u0275attribute("id", ctx.id)("data-pc-name", "panel");
+        \u0275\u0275classProp("p-disabled", ctx.disabled);
+        \u0275\u0275property("disabled", ctx.disabled)("ngClass", ctx.headerStyleClass)("ngStyle", ctx.headerStyle);
+        \u0275\u0275attribute("aria-expanded", ctx.selected)("aria-level", ctx.headerAriaLevel)("data-p-disabled", ctx.disabled)("data-pc-section", "accordionheader")("tabindex", ctx.disabled ? null : 0)("id", ctx.getTabHeaderActionId(ctx.id))("aria-controls", ctx.getTabContentId(ctx.id));
         \u0275\u0275advance();
-        \u0275\u0275property("ngIf", ctx.showHeader);
+        \u0275\u0275conditional(!ctx.headerTemplate && !ctx._headerTemplate ? 1 : 2);
+        \u0275\u0275advance(2);
+        \u0275\u0275conditional(ctx.iconTemplate || ctx._iconTemplate ? 3 : 4);
+        \u0275\u0275advance(2);
+        \u0275\u0275property("@tabContent", ctx.selected ? \u0275\u0275pureFunction1(24, _c46, \u0275\u0275pureFunction1(22, _c39, ctx.transitionOptions)) : \u0275\u0275pureFunction1(28, _c55, \u0275\u0275pureFunction1(26, _c39, ctx.transitionOptions)));
+        \u0275\u0275attribute("id", ctx.getTabContentId(ctx.id))("aria-hidden", !ctx.selected)("aria-labelledby", ctx.getTabHeaderActionId(ctx.id))("data-pc-section", "toggleablecontent");
         \u0275\u0275advance();
-        \u0275\u0275property("id", ctx.id + "_content")("@panelContent", ctx.collapsed ? \u0275\u0275pureFunction1(19, _c102, \u0275\u0275pureFunction1(17, _c92, ctx.animating ? ctx.transitionOptions : "0ms")) : \u0275\u0275pureFunction1(23, _c123, \u0275\u0275pureFunction1(21, _c112, ctx.animating ? ctx.transitionOptions : "0ms")));
-        \u0275\u0275attribute("aria-labelledby", ctx.id + "_header")("aria-hidden", ctx.collapsed)("tabindex", ctx.collapsed ? "-1" : void 0);
-        \u0275\u0275advance(4);
-        \u0275\u0275property("ngTemplateOutlet", ctx.contentTemplate || ctx._contentTemplate);
-        \u0275\u0275advance();
-        \u0275\u0275property("ngIf", ctx.footerFacet || ctx.footerTemplate || ctx._footerTemplate);
+        \u0275\u0275property("ngClass", ctx.contentStyleClass)("ngStyle", ctx.contentStyle);
+        \u0275\u0275advance(2);
+        \u0275\u0275property("ngIf", (ctx.contentTemplate || ctx._contentTemplate) && (ctx.cache ? ctx.loaded : ctx.selected));
       }
     },
-    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, PlusIcon, MinusIcon, ButtonModule, Button, SharedModule],
+    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, ChevronDownIcon, ChevronUpIcon],
     encapsulation: 2,
     data: {
-      animation: [trigger("panelContent", [state("hidden", style({
-        height: "0"
-      })), state("void", style({
-        height: "{{height}}"
-      }), {
-        params: {
-          height: "0"
-        }
-      }), state("visible", style({
-        height: "*"
-      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => hidden", animate("{{transitionParams}}")), transition("void => visible", animate("{{transitionParams}}"))])]
+      animation: [trigger("tabContent", [state("hidden", style({
+        height: "0",
+        visibility: "hidden"
+      })), state("visible", style({
+        height: "*",
+        visibility: "visible"
+      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])]
     },
     changeDetection: 0
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Panel, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionTab, [{
     type: Component,
     args: [{
-      selector: "p-panel",
+      selector: "p-accordionTab, p-accordion-tab, p-accordiontab",
       standalone: true,
-      imports: [CommonModule, PlusIcon, MinusIcon, ButtonModule, SharedModule],
+      imports: [CommonModule, ChevronDownIcon, ChevronUpIcon],
       template: `
-        <div
-            [attr.id]="id"
-            [attr.data-pc-name]="'panel'"
-            [ngClass]="{
-                'p-panel p-component': true,
-                'p-panel-toggleable': toggleable,
-                'p-panel-expanded': !collapsed && toggleable
-            }"
-            [ngStyle]="style"
-            [class]="styleClass"
+        <button
+            class="p-accordionheader"
+            type="button"
+            [disabled]="disabled"
+            [attr.aria-expanded]="selected"
+            [attr.aria-level]="headerAriaLevel"
+            [class.p-disabled]="disabled"
+            [attr.data-p-disabled]="disabled"
+            [attr.data-pc-section]="'accordionheader'"
+            (click)="toggle($event)"
+            (keydown)="onKeydown($event)"
+            [ngClass]="headerStyleClass"
+            [ngStyle]="headerStyle"
+            [attr.tabindex]="disabled ? null : 0"
+            [attr.id]="getTabHeaderActionId(id)"
+            [attr.aria-controls]="getTabContentId(id)"
         >
-            <div class="p-panel-header" *ngIf="showHeader" (click)="onHeaderClick($event)" [attr.id]="id + '-titlebar'">
-                <span class="p-panel-title" *ngIf="_header" [attr.id]="id + '_header'">{{ _header }}</span>
-                <ng-content select="p-header"></ng-content>
-                <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-                <div
-                    class="p-panel-icons"
-                    [ngClass]="{
-                        'p-panel-icons-start': iconPos === 'start',
-                        'p-panel-icons-end': iconPos === 'end',
-                        'p-panel-icons-center': iconPos === 'center'
-                    }"
-                >
-                    <ng-template *ngTemplateOutlet="iconTemplate || _iconTemplate"></ng-template>
-                    <p-button
-                        *ngIf="toggleable"
-                        [attr.id]="id + '_header'"
-                        severity="secondary"
-                        [text]="true"
-                        [rounded]="true"
-                        type="button"
-                        role="button"
-                        styleClass="p-panel-header-icon p-panel-toggler p-link"
-                        [attr.aria-label]="buttonAriaLabel"
-                        [attr.aria-controls]="id + '_content'"
-                        [attr.aria-expanded]="!collapsed"
-                        (click)="onIconClick($event)"
-                        (keydown)="onKeyDown($event)"
-                        [buttonProps]="toggleButtonProps"
-                    >
-                        <ng-template #icon>
-                            <ng-container *ngIf="!headerIconsTemplate && !_headerIconsTemplate && !toggleButtonProps?.icon">
-                                <ng-container *ngIf="!collapsed">
-                                    <span *ngIf="expandIcon" [class]="expandIcon"></span>
-                                    <MinusIcon *ngIf="!expandIcon" />
-                                </ng-container>
-
-                                <ng-container *ngIf="collapsed">
-                                    <span *ngIf="collapseIcon" [class]="collapseIcon"></span>
-                                    <PlusIcon *ngIf="!collapseIcon" />
-                                </ng-container>
-                            </ng-container>
-
-                            <ng-template *ngTemplateOutlet="headerIconsTemplate || _headerIconsTemplate; context: { $implicit: collapsed }"></ng-template>
-                        </ng-template>
-                    </p-button>
-                </div>
-            </div>
-            <div
-                class="p-panel-content-container"
-                [id]="id + '_content'"
-                role="region"
-                [attr.aria-labelledby]="id + '_header'"
-                [attr.aria-hidden]="collapsed"
-                [attr.tabindex]="collapsed ? '-1' : undefined"
-                [@panelContent]="
-                    collapsed
-                        ? {
-                              value: 'hidden',
-                              params: {
-                                  transitionParams: animating ? transitionOptions : '0ms',
-                                  height: '0',
-                                  opacity: '0'
-                              }
-                          }
-                        : {
-                              value: 'visible',
-                              params: {
-                                  transitionParams: animating ? transitionOptions : '0ms',
-                                  height: '*',
-                                  opacity: '1'
-                              }
-                          }
-                "
-                (@panelContent.done)="onToggleDone($event)"
-            >
-                <div class="p-panel-content" #contentWrapper>
-                    <ng-content></ng-content>
+            @if (!headerTemplate && !_headerTemplate) {
+                {{ header }}
+            } @else {
+                @if (headerTemplate || _headerTemplate) {
+                    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+                }
+                @if (headerFacet) {
+                    <ng-content select="p-header" />
+                }
+            }
+            @if (iconTemplate || _iconTemplate) {
+                <ng-template *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { $implicit: selected }"></ng-template>
+            } @else {
+                <ng-container *ngIf="selected">
+                    <span *ngIf="accordion.collapseIcon" [class]="accordion.collapseIcon" [ngClass]="iconClass" [attr.aria-hidden]="true"></span>
+                    <ChevronDownIcon *ngIf="!accordion.collapseIcon" [ngClass]="iconClass" [attr.aria-hidden]="true" />
+                </ng-container>
+                <ng-container *ngIf="!selected">
+                    <span *ngIf="accordion.expandIcon" [class]="accordion.expandIcon" [ngClass]="iconClass" [attr.aria-hidden]="true"></span>
+                    <ChevronUpIcon *ngIf="!accordion.expandIcon" [ngClass]="iconClass" [attr.aria-hidden]="true" />
+                </ng-container>
+            }
+        </button>
+        <div
+            [attr.id]="getTabContentId(id)"
+            class="p-accordioncontent"
+            [@tabContent]="selected ? { value: 'visible', params: { transitionParams: transitionOptions } } : { value: 'hidden', params: { transitionParams: transitionOptions } }"
+            role="region"
+            [attr.aria-hidden]="!selected"
+            [attr.aria-labelledby]="getTabHeaderActionId(id)"
+            [attr.data-pc-section]="'toggleablecontent'"
+        >
+            <div class="p-accordioncontent-content" [ngClass]="contentStyleClass" [ngStyle]="contentStyle">
+                <ng-content />
+                <ng-container *ngIf="(contentTemplate || _contentTemplate) && (cache ? loaded : selected)">
                     <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-                </div>
-
-                <div class="p-panel-footer" *ngIf="footerFacet || footerTemplate || _footerTemplate">
-                    <ng-content select="p-footer"></ng-content>
-                    <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
-                </div>
+                </ng-container>
             </div>
         </div>
     `,
-      animations: [trigger("panelContent", [state("hidden", style({
-        height: "0"
-      })), state("void", style({
-        height: "{{height}}"
-      }), {
-        params: {
-          height: "0"
-        }
-      }), state("visible", style({
-        height: "*"
-      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => hidden", animate("{{transitionParams}}")), transition("void => visible", animate("{{transitionParams}}"))])],
+      animations: [trigger("tabContent", [state("hidden", style({
+        height: "0",
+        visibility: "hidden"
+      })), state("visible", style({
+        height: "*",
+        visibility: "visible"
+      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])],
+      host: {
+        "[class.p-accordionpanel]": "true",
+        "[class.p-accordionpanel-active]": "selected",
+        "[attr.data-pc-name]": '"accordiontab"'
+      },
+      providers: [AccordionStyle],
       changeDetection: ChangeDetectionStrategy.OnPush,
-      encapsulation: ViewEncapsulation.None,
-      providers: [PanelStyle]
+      encapsulation: ViewEncapsulation.None
     }]
   }], null, {
-    toggleable: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
+    hostClass: [{
+      type: HostBinding,
+      args: ["class"]
     }],
-    _header: [{
-      type: Input,
-      args: ["header"]
+    hostStyle: [{
+      type: HostBinding,
+      args: ["style"]
     }],
-    collapsed: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    style: [{
+    id: [{
       type: Input
     }],
-    styleClass: [{
+    header: [{
+      type: Input
+    }],
+    headerStyle: [{
+      type: Input
+    }],
+    tabStyle: [{
+      type: Input
+    }],
+    contentStyle: [{
+      type: Input
+    }],
+    tabStyleClass: [{
+      type: Input
+    }],
+    headerStyleClass: [{
+      type: Input
+    }],
+    contentStyleClass: [{
+      type: Input
+    }],
+    disabled: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    cache: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    transitionOptions: [{
       type: Input
     }],
     iconPos: [{
       type: Input
     }],
-    expandIcon: [{
+    selected: [{
       type: Input
     }],
-    collapseIcon: [{
-      type: Input
-    }],
-    showHeader: [{
+    headerAriaLevel: [{
       type: Input,
       args: [{
-        transform: booleanAttribute
+        transform: numberAttribute
       }]
     }],
-    toggler: [{
-      type: Input
-    }],
-    transitionOptions: [{
-      type: Input
-    }],
-    toggleButtonProps: [{
-      type: Input
-    }],
-    collapsedChange: [{
+    selectedChange: [{
       type: Output
     }],
-    onBeforeToggle: [{
-      type: Output
-    }],
-    onAfterToggle: [{
-      type: Output
-    }],
-    footerFacet: [{
-      type: ContentChild,
-      args: [Footer]
+    headerFacet: [{
+      type: ContentChildren,
+      args: [Header]
     }],
     headerTemplate: [{
       type: ContentChild,
@@ -50624,7 +51061,7 @@ var Panel = class _Panel extends BaseComponent {
     }],
     iconTemplate: [{
       type: ContentChild,
-      args: ["icons", {
+      args: ["icon", {
         descendants: false
       }]
     }],
@@ -50634,47 +51071,441 @@ var Panel = class _Panel extends BaseComponent {
         descendants: false
       }]
     }],
-    footerTemplate: [{
-      type: ContentChild,
-      args: ["footer", {
-        descendants: false
-      }]
-    }],
-    headerIconsTemplate: [{
-      type: ContentChild,
-      args: ["headericons", {
-        descendants: false
-      }]
-    }],
-    contentWrapperViewChild: [{
-      type: ViewChild,
-      args: ["contentWrapper"]
-    }],
     templates: [{
       type: ContentChildren,
       args: [PrimeTemplate]
     }]
   });
 })();
-var PanelModule = class _PanelModule {
-  static \u0275fac = function PanelModule_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _PanelModule)();
-  };
-  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
-    type: _PanelModule,
-    imports: [Panel, SharedModule],
-    exports: [Panel, SharedModule]
+var Accordion = class _Accordion extends BaseComponent {
+  get hostClass() {
+    return this.styleClass;
+  }
+  get hostStyle() {
+    return this.style;
+  }
+  /**
+   * Value of the active tab.
+   * @defaultValue undefined
+   * @group Props
+   */
+  value = model(void 0);
+  /**
+   * When enabled, multiple tabs can be activated at the same time.
+   * @defaultValue false
+   * @group Props
+   */
+  multiple = input(false, {
+    transform: (v) => transformToBoolean(v)
   });
-  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
-    imports: [Panel, SharedModule, SharedModule]
+  /**
+   * Inline style of the tab header and content.
+   * @group Props
+   */
+  style;
+  /**
+   * Class of the element.
+   * @group Props
+   */
+  styleClass;
+  /**
+   * Icon of a collapsed tab.
+   * @group Props
+   */
+  expandIcon;
+  /**
+   * Icon of an expanded tab.
+   * @group Props
+   */
+  collapseIcon;
+  /**
+   * When enabled, the focused tab is activated.
+   * @defaultValue false
+   * @group Props
+   */
+  selectOnFocus = input(false, {
+    transform: (v) => transformToBoolean(v)
+  });
+  set activeIndex(val) {
+    this._activeIndex = val;
+    if (this.preventActiveIndexPropagation) {
+      this.preventActiveIndexPropagation = false;
+      return;
+    }
+    this.updateSelectionState();
+  }
+  /**
+   * Transition options of the animation.
+   * @group Props
+   */
+  transitionOptions = "400ms cubic-bezier(0.86, 0, 0.07, 1)";
+  /**
+   * Returns the active index.
+   * @param {number | number[]} value - New index.
+   * @deprecated use native valueChange emitter of the value model.
+   * @group Emits
+   */
+  activeIndexChange = new EventEmitter();
+  set headerAriaLevel(val) {
+    if (typeof val === "number" && val > 0) {
+      this._headerAriaLevel = val;
+    } else if (this._headerAriaLevel !== 2) {
+      this._headerAriaLevel = 2;
+    }
+  }
+  /**
+   * Callback to invoke when an active tab is collapsed by clicking on the header.
+   * @param {AccordionTabCloseEvent} event - Custom tab close event.
+   * @group Emits
+   */
+  onClose = new EventEmitter();
+  /**
+   * Callback to invoke when a tab gets expanded.
+   * @param {AccordionTabOpenEvent} event - Custom tab open event.
+   * @group Emits
+   */
+  onOpen = new EventEmitter();
+  id = signal(uuid("pn_id_"));
+  tabList;
+  tabListSubscription = null;
+  _activeIndex;
+  _headerAriaLevel = 2;
+  preventActiveIndexPropagation = false;
+  tabs = [];
+  _componentStyle = inject(AccordionStyle);
+  /**
+   * Index of the active tab or an array of indexes in multiple mode.
+   * @deprecated use value property with new architecture instead.
+   * @group Props
+   */
+  get activeIndex() {
+    return this._activeIndex;
+  }
+  /**
+   * The aria-level that each accordion header will have. The default value is 2 as per W3C specifications
+   * @deprecated use AccoridonHeader component and bind attribute to the host.
+   * @group Props
+   */
+  get headerAriaLevel() {
+    return this._headerAriaLevel;
+  }
+  onKeydown(event2) {
+    switch (event2.code) {
+      case "ArrowDown":
+        this.onTabArrowDownKey(event2);
+        break;
+      case "ArrowUp":
+        this.onTabArrowUpKey(event2);
+        break;
+      case "Home":
+        if (!event2.shiftKey) {
+          this.onTabHomeKey(event2);
+        }
+        break;
+      case "End":
+        if (!event2.shiftKey) {
+          this.onTabEndKey(event2);
+        }
+        break;
+    }
+  }
+  onTabArrowDownKey(event2) {
+    const nextHeaderAction = this.findNextHeaderAction(event2.target.parentElement);
+    nextHeaderAction ? this.changeFocusedTab(nextHeaderAction) : this.onTabHomeKey(event2);
+    event2.preventDefault();
+  }
+  onTabArrowUpKey(event2) {
+    const prevHeaderAction = this.findPrevHeaderAction(event2.target.parentElement);
+    prevHeaderAction ? this.changeFocusedTab(prevHeaderAction) : this.onTabEndKey(event2);
+    event2.preventDefault();
+  }
+  onTabHomeKey(event2) {
+    const firstHeaderAction = this.findFirstHeaderAction();
+    this.changeFocusedTab(firstHeaderAction);
+    event2.preventDefault();
+  }
+  changeFocusedTab(element) {
+    if (element) {
+      focus(element);
+      if (this.selectOnFocus()) {
+        this.tabs.forEach((tab, i) => {
+          let selected = this.multiple() ? this._activeIndex.includes(i) : i === this._activeIndex;
+          if (this.multiple()) {
+            if (!this._activeIndex) {
+              this._activeIndex = [];
+            }
+            if (tab.id == element.id) {
+              tab.selected = !tab.selected;
+              if (!this._activeIndex.includes(i)) {
+                this._activeIndex.push(i);
+              } else {
+                this._activeIndex = this._activeIndex.filter((ind) => ind !== i);
+              }
+            }
+          } else {
+            if (tab.id == element.id) {
+              tab.selected = !tab.selected;
+              this._activeIndex = i;
+            } else {
+              tab.selected = false;
+            }
+          }
+          tab.selectedChange.emit(selected);
+          this.activeIndexChange.emit(this._activeIndex);
+          tab.cd.markForCheck();
+        });
+      }
+    }
+  }
+  findNextHeaderAction(tabElement, selfCheck = false) {
+    const nextTabElement = selfCheck ? tabElement : tabElement.nextElementSibling;
+    const headerElement = findSingle(nextTabElement, '[data-pc-section="accordionheader"]');
+    return headerElement ? getAttribute(headerElement, "data-p-disabled") ? this.findNextHeaderAction(headerElement.parentElement) : findSingle(headerElement.parentElement, '[data-pc-section="accordionheader"]') : null;
+  }
+  findPrevHeaderAction(tabElement, selfCheck = false) {
+    const prevTabElement = selfCheck ? tabElement : tabElement.previousElementSibling;
+    const headerElement = findSingle(prevTabElement, '[data-pc-section="accordionheader"]');
+    return headerElement ? getAttribute(headerElement, "data-p-disabled") ? this.findPrevHeaderAction(headerElement.parentElement) : findSingle(headerElement.parentElement, '[data-pc-section="accordionheader"]') : null;
+  }
+  findFirstHeaderAction() {
+    const firstEl = this.el.nativeElement.firstElementChild;
+    return this.findNextHeaderAction(firstEl, true);
+  }
+  findLastHeaderAction() {
+    const lastEl = this.el.nativeElement.lastElementChild;
+    return this.findPrevHeaderAction(lastEl, true);
+  }
+  onTabEndKey(event2) {
+    const lastHeaderAction = this.findLastHeaderAction();
+    this.changeFocusedTab(lastHeaderAction);
+    event2.preventDefault();
+  }
+  ngAfterContentInit() {
+    this.initTabs();
+    this.tabListSubscription = this.tabList.changes.subscribe((_) => {
+      this.initTabs();
+    });
+  }
+  initTabs() {
+    this.tabs = this.tabList.toArray();
+    this.tabs.forEach((tab) => {
+      tab.headerAriaLevel = this._headerAriaLevel;
+    });
+    this.updateSelectionState();
+    this.cd.markForCheck();
+  }
+  getBlockableElement() {
+    return this.el.nativeElement.children[0];
+  }
+  updateSelectionState() {
+    if (this.tabs && this.tabs.length && this._activeIndex != null) {
+      for (let i = 0; i < this.tabs.length; i++) {
+        let selected = this.multiple() ? this._activeIndex.includes(i) : i === this._activeIndex;
+        let changed = selected !== this.tabs[i].selected;
+        if (changed) {
+          this.tabs[i].selected = selected;
+          this.tabs[i].selectedChange.emit(selected);
+          this.tabs[i].cd.markForCheck();
+        }
+      }
+    }
+  }
+  isTabActive(index) {
+    return this.multiple() ? this._activeIndex && this._activeIndex.includes(index) : this._activeIndex === index;
+  }
+  getTabProp(tab, name) {
+    return tab.props ? tab.props[name] : void 0;
+  }
+  updateActiveIndex() {
+    let index = this.multiple() ? [] : null;
+    this.tabs.forEach((tab, i) => {
+      if (tab.selected) {
+        if (this.multiple()) {
+          index.push(i);
+        } else {
+          index = i;
+          return;
+        }
+      }
+    });
+    this.preventActiveIndexPropagation = true;
+    this._activeIndex = index;
+    this.activeIndexChange.emit(index);
+  }
+  updateValue(value) {
+    const currentValue = this.value();
+    if (this.multiple()) {
+      const newValue = Array.isArray(currentValue) ? [...currentValue] : [];
+      const index = newValue.indexOf(value);
+      if (index !== -1) {
+        newValue.splice(index, 1);
+      } else {
+        newValue.push(value);
+      }
+      this.value.set(newValue);
+    } else {
+      if (currentValue === value) {
+        this.value.set(void 0);
+      } else {
+        this.value.set(value);
+      }
+    }
+  }
+  ngOnDestroy() {
+    if (this.tabListSubscription) {
+      this.tabListSubscription.unsubscribe();
+    }
+    super.ngOnDestroy();
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275Accordion_BaseFactory;
+    return function Accordion_Factory(__ngFactoryType__) {
+      return (\u0275Accordion_BaseFactory || (\u0275Accordion_BaseFactory = \u0275\u0275getInheritedFactory(_Accordion)))(__ngFactoryType__ || _Accordion);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _Accordion,
+    selectors: [["p-accordion"]],
+    contentQueries: function Accordion_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, AccordionTab, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.tabList = _t);
+      }
+    },
+    hostVars: 8,
+    hostBindings: function Accordion_HostBindings(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275listener("keydown", function Accordion_keydown_HostBindingHandler($event) {
+          return ctx.onKeydown($event);
+        });
+      }
+      if (rf & 2) {
+        \u0275\u0275styleMap(ctx.hostStyle);
+        \u0275\u0275classMap(ctx.hostClass);
+        \u0275\u0275classProp("p-accordion", true)("p-component", true);
+      }
+    },
+    inputs: {
+      value: [1, "value"],
+      multiple: [1, "multiple"],
+      style: "style",
+      styleClass: "styleClass",
+      expandIcon: "expandIcon",
+      collapseIcon: "collapseIcon",
+      selectOnFocus: [1, "selectOnFocus"],
+      transitionOptions: "transitionOptions",
+      activeIndex: "activeIndex",
+      headerAriaLevel: "headerAriaLevel"
+    },
+    outputs: {
+      value: "valueChange",
+      activeIndexChange: "activeIndexChange",
+      onClose: "onClose",
+      onOpen: "onOpen"
+    },
+    features: [\u0275\u0275ProvidersFeature([AccordionStyle]), \u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c016,
+    decls: 1,
+    vars: 0,
+    template: function Accordion_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275projection(0);
+      }
+    },
+    dependencies: [CommonModule, SharedModule],
+    encapsulation: 2,
+    changeDetection: 0
   });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PanelModule, [{
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Accordion, [{
+    type: Component,
+    args: [{
+      selector: "p-accordion",
+      standalone: true,
+      imports: [CommonModule, SharedModule],
+      template: ` <ng-content /> `,
+      host: {
+        "[class.p-accordion]": "true",
+        "[class.p-component]": "true"
+      },
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      providers: [AccordionStyle]
+    }]
+  }], null, {
+    hostClass: [{
+      type: HostBinding,
+      args: ["class"]
+    }],
+    hostStyle: [{
+      type: HostBinding,
+      args: ["style"]
+    }],
+    style: [{
+      type: Input
+    }],
+    styleClass: [{
+      type: Input
+    }],
+    expandIcon: [{
+      type: Input
+    }],
+    collapseIcon: [{
+      type: Input
+    }],
+    transitionOptions: [{
+      type: Input
+    }],
+    activeIndexChange: [{
+      type: Output
+    }],
+    onClose: [{
+      type: Output
+    }],
+    onOpen: [{
+      type: Output
+    }],
+    tabList: [{
+      type: ContentChildren,
+      args: [AccordionTab, {
+        descendants: true
+      }]
+    }],
+    activeIndex: [{
+      type: Input
+    }],
+    headerAriaLevel: [{
+      type: Input
+    }],
+    onKeydown: [{
+      type: HostListener,
+      args: ["keydown", ["$event"]]
+    }]
+  });
+})();
+var AccordionModule = class _AccordionModule {
+  static \u0275fac = function AccordionModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _AccordionModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _AccordionModule,
+    imports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent],
+    exports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionModule, [{
     type: NgModule,
     args: [{
-      imports: [Panel, SharedModule],
-      exports: [Panel, SharedModule]
+      imports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent],
+      exports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent]
     }]
   }], null, null);
 })();
@@ -53026,9 +53857,9 @@ var _c83 = ["clearicon"];
 var _c93 = ["decrementicon"];
 var _c103 = ["incrementicon"];
 var _c115 = ["inputicon"];
-var _c124 = ["container"];
-var _c134 = ["inputfield"];
-var _c143 = ["contentWrapper"];
+var _c123 = ["container"];
+var _c133 = ["inputfield"];
+var _c142 = ["contentWrapper"];
 var _c152 = [[["p-header"]], [["p-footer"]]];
 var _c162 = ["p-header", "p-footer"];
 var _c172 = (a0) => ({
@@ -57954,9 +58785,9 @@ var DatePicker = class _DatePicker extends BaseComponent {
     },
     viewQuery: function DatePicker_Query(rf, ctx) {
       if (rf & 1) {
-        \u0275\u0275viewQuery(_c124, 5);
-        \u0275\u0275viewQuery(_c134, 5);
-        \u0275\u0275viewQuery(_c143, 5);
+        \u0275\u0275viewQuery(_c123, 5);
+        \u0275\u0275viewQuery(_c133, 5);
+        \u0275\u0275viewQuery(_c142, 5);
       }
       if (rf & 2) {
         let _t;
@@ -60296,10 +61127,10 @@ var _c104 = (a0) => ({
 var _c118 = (a0) => ({
   options: a0
 });
-var _c125 = () => ({
+var _c124 = () => ({
   styleClass: "p-virtualscroller-loading-icon"
 });
-var _c135 = (a0, a1) => ({
+var _c134 = (a0, a1) => ({
   rows: a0,
   columns: a1
 });
@@ -60409,7 +61240,7 @@ function Scroller_ng_container_0_div_7_ng_template_2_ng_container_0_Template(rf,
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(4);
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r1.loaderIconTemplate || ctx_r1._loaderIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(3, _c118, \u0275\u0275pureFunction0(2, _c125)));
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.loaderIconTemplate || ctx_r1._loaderIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(3, _c118, \u0275\u0275pureFunction0(2, _c124)));
   }
 }
 function Scroller_ng_container_0_div_7_ng_template_2_ng_template_1_Template(rf, ctx) {
@@ -60489,7 +61320,7 @@ function Scroller_ng_template_1_ng_container_1_Template(rf, ctx) {
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r1.contentTemplate || ctx_r1._contentTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction2(5, _c75, ctx_r1.items, \u0275\u0275pureFunction2(2, _c135, ctx_r1._items, ctx_r1.loadedColumns)));
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.contentTemplate || ctx_r1._contentTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction2(5, _c75, ctx_r1.items, \u0275\u0275pureFunction2(2, _c134, ctx_r1._items, ctx_r1.loadedColumns)));
   }
 }
 function Scroller_ng_template_1_Template(rf, ctx) {
@@ -61982,9 +62813,9 @@ var _c85 = ["filter"];
 var _c95 = ["footer"];
 var _c105 = ["emptyfilter"];
 var _c1110 = ["empty"];
-var _c126 = ["dropdownicon"];
-var _c136 = ["loadingicon"];
-var _c144 = ["clearicon"];
+var _c125 = ["dropdownicon"];
+var _c135 = ["loadingicon"];
+var _c143 = ["clearicon"];
 var _c153 = ["filtericon"];
 var _c163 = ["onicon"];
 var _c173 = ["officon"];
@@ -63662,7 +64493,7 @@ var Select = class _Select extends BaseComponent {
   }
   // @todo to be refactored
   get hostClass() {
-    const classes29 = this._componentStyle.classes.root({
+    const classes28 = this._componentStyle.classes.root({
       instance: this
     }).map((cls) => {
       if (typeof cls === "string") {
@@ -63671,7 +64502,7 @@ var Select = class _Select extends BaseComponent {
         return Object.keys(cls).filter((key) => cls[key]).join(" ");
       }
     }).join(" ");
-    return classes29 + " " + this.styleClass;
+    return classes28 + " " + this.styleClass;
   }
   get hostStyle() {
     return this.style;
@@ -64640,9 +65471,9 @@ var Select = class _Select extends BaseComponent {
         \u0275\u0275contentQuery(dirIndex, _c95, 4);
         \u0275\u0275contentQuery(dirIndex, _c105, 4);
         \u0275\u0275contentQuery(dirIndex, _c1110, 4);
-        \u0275\u0275contentQuery(dirIndex, _c126, 4);
-        \u0275\u0275contentQuery(dirIndex, _c136, 4);
-        \u0275\u0275contentQuery(dirIndex, _c144, 4);
+        \u0275\u0275contentQuery(dirIndex, _c125, 4);
+        \u0275\u0275contentQuery(dirIndex, _c135, 4);
+        \u0275\u0275contentQuery(dirIndex, _c143, 4);
         \u0275\u0275contentQuery(dirIndex, _c153, 4);
         \u0275\u0275contentQuery(dirIndex, _c163, 4);
         \u0275\u0275contentQuery(dirIndex, _c173, 4);
@@ -67451,7 +68282,7 @@ var SelectButtonModule = class _SelectButtonModule {
 
 // node_modules/primeng/fesm2022/primeng-table.mjs
 var _c026 = ["header"];
-var _c127 = ["headergrouped"];
+var _c126 = ["headergrouped"];
 var _c218 = ["body"];
 var _c316 = ["loadingbody"];
 var _c412 = ["caption"];
@@ -67462,9 +68293,9 @@ var _c86 = ["colgroup"];
 var _c96 = ["expandedrow"];
 var _c106 = ["groupheader"];
 var _c1111 = ["groupfooter"];
-var _c128 = ["frozenexpandedrow"];
-var _c137 = ["frozenheader"];
-var _c145 = ["frozenbody"];
+var _c127 = ["frozenexpandedrow"];
+var _c136 = ["frozenheader"];
+var _c144 = ["frozenbody"];
 var _c154 = ["frozenfooter"];
 var _c164 = ["frozencolgroup"];
 var _c174 = ["emptymessage"];
@@ -72383,7 +73214,7 @@ var Table = class _Table extends BaseComponent {
     contentQueries: function Table_ContentQueries(rf, ctx, dirIndex) {
       if (rf & 1) {
         \u0275\u0275contentQuery(dirIndex, _c026, 4);
-        \u0275\u0275contentQuery(dirIndex, _c127, 4);
+        \u0275\u0275contentQuery(dirIndex, _c126, 4);
         \u0275\u0275contentQuery(dirIndex, _c218, 4);
         \u0275\u0275contentQuery(dirIndex, _c316, 4);
         \u0275\u0275contentQuery(dirIndex, _c412, 4);
@@ -72394,9 +73225,9 @@ var Table = class _Table extends BaseComponent {
         \u0275\u0275contentQuery(dirIndex, _c96, 4);
         \u0275\u0275contentQuery(dirIndex, _c106, 4);
         \u0275\u0275contentQuery(dirIndex, _c1111, 4);
-        \u0275\u0275contentQuery(dirIndex, _c128, 4);
-        \u0275\u0275contentQuery(dirIndex, _c137, 4);
-        \u0275\u0275contentQuery(dirIndex, _c145, 4);
+        \u0275\u0275contentQuery(dirIndex, _c127, 4);
+        \u0275\u0275contentQuery(dirIndex, _c136, 4);
+        \u0275\u0275contentQuery(dirIndex, _c144, 4);
         \u0275\u0275contentQuery(dirIndex, _c154, 4);
         \u0275\u0275contentQuery(dirIndex, _c164, 4);
         \u0275\u0275contentQuery(dirIndex, _c174, 4);
@@ -77675,1736 +78506,34 @@ var TableModule = class _TableModule {
   }], null, null);
 })();
 
-// node_modules/primeng/fesm2022/primeng-accordion.mjs
-var _c027 = ["*"];
-var _c129 = ["toggleicon"];
-var _c220 = (a0) => ({
-  active: a0
-});
-function AccordionHeader_Conditional_1_0_ng_template_0_Template(rf, ctx) {
-}
-function AccordionHeader_Conditional_1_0_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, AccordionHeader_Conditional_1_0_ng_template_0_Template, 0, 0, "ng-template");
-  }
-}
-function AccordionHeader_Conditional_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, AccordionHeader_Conditional_1_0_Template, 1, 0, null, 0);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r0.toggleicon)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c220, ctx_r0.active()));
-  }
-}
-function AccordionHeader_Conditional_2_ng_container_0_span_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "span", 4);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(3);
-    \u0275\u0275classMap(ctx_r0.pcAccordion.collapseIcon);
-    \u0275\u0275property("ngClass", ctx_r0.pcAccordion.iconClass);
-    \u0275\u0275attribute("aria-hidden", true);
-  }
-}
-function AccordionHeader_Conditional_2_ng_container_0_ChevronDownIcon_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "ChevronDownIcon", 4);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(3);
-    \u0275\u0275property("ngClass", ctx_r0.pcAccordion.iconClass);
-    \u0275\u0275attribute("aria-hidden", true);
-  }
-}
-function AccordionHeader_Conditional_2_ng_container_0_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, AccordionHeader_Conditional_2_ng_container_0_span_1_Template, 1, 4, "span", 2)(2, AccordionHeader_Conditional_2_ng_container_0_ChevronDownIcon_2_Template, 1, 2, "ChevronDownIcon", 3);
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r0.pcAccordion.collapseIcon);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r0.pcAccordion.collapseIcon);
-  }
-}
-function AccordionHeader_Conditional_2_ng_container_1_span_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "span", 4);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(3);
-    \u0275\u0275classMap(ctx_r0.pcAccordion.expandIcon);
-    \u0275\u0275property("ngClass", ctx_r0.pcAccordion.iconClass);
-    \u0275\u0275attribute("aria-hidden", true);
-  }
-}
-function AccordionHeader_Conditional_2_ng_container_1_ChevronUpIcon_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "ChevronUpIcon", 4);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(3);
-    \u0275\u0275property("ngClass", ctx_r0.pcAccordion.iconClass);
-    \u0275\u0275attribute("aria-hidden", true);
-  }
-}
-function AccordionHeader_Conditional_2_ng_container_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, AccordionHeader_Conditional_2_ng_container_1_span_1_Template, 1, 4, "span", 2)(2, AccordionHeader_Conditional_2_ng_container_1_ChevronUpIcon_2_Template, 1, 2, "ChevronUpIcon", 3);
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r0.pcAccordion.expandIcon);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r0.pcAccordion.expandIcon);
-  }
-}
-function AccordionHeader_Conditional_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, AccordionHeader_Conditional_2_ng_container_0_Template, 3, 2, "ng-container", 1)(1, AccordionHeader_Conditional_2_ng_container_1_Template, 3, 2, "ng-container", 1);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275property("ngIf", ctx_r0.active());
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r0.active());
-  }
-}
-var _c317 = (a0) => ({
-  transitionParams: a0
-});
-var _c413 = (a0) => ({
-  value: "visible",
-  params: a0
-});
-var _c512 = (a0) => ({
-  value: "hidden",
-  params: a0
-});
-var _c612 = ["header"];
-var _c79 = ["icon"];
-var _c87 = ["content"];
-var _c97 = ["*", [["p-header"]]];
-var _c107 = ["*", "p-header"];
-var _c1112 = (a0) => ({
-  $implicit: a0
-});
-function AccordionTab_Conditional_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275text(0);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275textInterpolate1(" ", ctx_r0.header, " ");
-  }
-}
-function AccordionTab_Conditional_2_Conditional_0_ng_container_0_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainer(0);
-  }
-}
-function AccordionTab_Conditional_2_Conditional_0_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, AccordionTab_Conditional_2_Conditional_0_ng_container_0_Template, 1, 0, "ng-container", 4);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275property("ngTemplateOutlet", ctx_r0.headerTemplate || ctx_r0._headerTemplate);
-  }
-}
-function AccordionTab_Conditional_2_Conditional_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275projection(0, 1);
-  }
-}
-function AccordionTab_Conditional_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, AccordionTab_Conditional_2_Conditional_0_Template, 1, 1, "ng-container")(1, AccordionTab_Conditional_2_Conditional_1_Template, 1, 0);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275conditional(ctx_r0.headerTemplate || ctx_r0._headerTemplate ? 0 : -1);
-    \u0275\u0275advance();
-    \u0275\u0275conditional(ctx_r0.headerFacet ? 1 : -1);
-  }
-}
-function AccordionTab_Conditional_3_0_ng_template_0_Template(rf, ctx) {
-}
-function AccordionTab_Conditional_3_0_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, AccordionTab_Conditional_3_0_ng_template_0_Template, 0, 0, "ng-template");
-  }
-}
-function AccordionTab_Conditional_3_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, AccordionTab_Conditional_3_0_Template, 1, 0, null, 5);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r0.iconTemplate || ctx_r0._iconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c1112, ctx_r0.selected));
-  }
-}
-function AccordionTab_Conditional_4_ng_container_0_span_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "span", 8);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(3);
-    \u0275\u0275classMap(ctx_r0.accordion.collapseIcon);
-    \u0275\u0275property("ngClass", ctx_r0.iconClass);
-    \u0275\u0275attribute("aria-hidden", true);
-  }
-}
-function AccordionTab_Conditional_4_ng_container_0_ChevronDownIcon_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "ChevronDownIcon", 8);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(3);
-    \u0275\u0275property("ngClass", ctx_r0.iconClass);
-    \u0275\u0275attribute("aria-hidden", true);
-  }
-}
-function AccordionTab_Conditional_4_ng_container_0_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, AccordionTab_Conditional_4_ng_container_0_span_1_Template, 1, 4, "span", 6)(2, AccordionTab_Conditional_4_ng_container_0_ChevronDownIcon_2_Template, 1, 2, "ChevronDownIcon", 7);
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r0.accordion.collapseIcon);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r0.accordion.collapseIcon);
-  }
-}
-function AccordionTab_Conditional_4_ng_container_1_span_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "span", 8);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(3);
-    \u0275\u0275classMap(ctx_r0.accordion.expandIcon);
-    \u0275\u0275property("ngClass", ctx_r0.iconClass);
-    \u0275\u0275attribute("aria-hidden", true);
-  }
-}
-function AccordionTab_Conditional_4_ng_container_1_ChevronUpIcon_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275element(0, "ChevronUpIcon", 8);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(3);
-    \u0275\u0275property("ngClass", ctx_r0.iconClass);
-    \u0275\u0275attribute("aria-hidden", true);
-  }
-}
-function AccordionTab_Conditional_4_ng_container_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, AccordionTab_Conditional_4_ng_container_1_span_1_Template, 1, 4, "span", 6)(2, AccordionTab_Conditional_4_ng_container_1_ChevronUpIcon_2_Template, 1, 2, "ChevronUpIcon", 7);
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r0.accordion.expandIcon);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r0.accordion.expandIcon);
-  }
-}
-function AccordionTab_Conditional_4_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275template(0, AccordionTab_Conditional_4_ng_container_0_Template, 3, 2, "ng-container", 3)(1, AccordionTab_Conditional_4_ng_container_1_Template, 3, 2, "ng-container", 3);
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275property("ngIf", ctx_r0.selected);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r0.selected);
-  }
-}
-function AccordionTab_ng_container_8_ng_container_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainer(0);
-  }
-}
-function AccordionTab_ng_container_8_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementContainerStart(0);
-    \u0275\u0275template(1, AccordionTab_ng_container_8_ng_container_1_Template, 1, 0, "ng-container", 4);
-    \u0275\u0275elementContainerEnd();
-  }
-  if (rf & 2) {
-    const ctx_r0 = \u0275\u0275nextContext();
-    \u0275\u0275advance();
-    \u0275\u0275property("ngTemplateOutlet", ctx_r0.contentTemplate || ctx_r0._contentTemplate);
-  }
-}
-var theme29 = ({
-  dt: dt2
-}) => `
-.p-accordionpanel {
-    display: flex;
-    flex-direction: column;
-    border-style: solid;
-    border-width: ${dt2("accordion.panel.border.width")};
-    border-color: ${dt2("accordion.panel.border.color")};
-}
-
-.p-accordionheader {
-    all: unset;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: ${dt2("accordion.header.padding")};
-    color: ${dt2("accordion.header.color")};
-    background: ${dt2("accordion.header.background")};
-    border-style: solid;
-    border-width: ${dt2("accordion.header.border.width")};
-    border-color: ${dt2("accordion.header.border.color")};
-    font-weight: ${dt2("accordion.header.font.weight")};
-    border-radius: ${dt2("accordion.header.border.radius")};
-    transition: background ${dt2("accordion.transition.duration")}; color ${dt2("accordion.transition.duration")}color ${dt2("accordion.transition.duration")}, outline-color ${dt2("accordion.transition.duration")}, box-shadow ${dt2("accordion.transition.duration")};
-    outline-color: transparent;
-    position: relative;
-    overflow: hidden;
-}
-
-.p-accordionpanel:first-child > .p-accordionheader {
-    border-width: ${dt2("accordion.header.first.border.width")};
-    border-start-start-radius: ${dt2("accordion.header.first.top.border.radius")};
-    border-start-end-radius: ${dt2("accordion.header.first.top.border.radius")};
-}
-
-.p-accordionpanel:last-child > .p-accordionheader {
-    border-end-start-radius: ${dt2("accordion.header.last.bottom.border.radius")};
-    border-end-end-radius: ${dt2("accordion.header.last.bottom.border.radius")};
-}
-
-.p-accordionpanel:last-child.p-accordionpanel-active > .p-accordionheader {
-    border-end-start-radius: ${dt2("accordion.header.last.active.bottom.border.radius")};
-    border-end-end-radius:${dt2("accordion.header.last.active.bottom.border.radius")};
-}
-
-.p-accordionheader-toggle-icon {
-    color: ${dt2("accordion.header.toggle.icon.color")};
-}
-
-.p-accordionpanel:not(.p-disabled) .p-accordionheader:focus-visible {
-    box-shadow: ${dt2("accordion.header.focus.ring.shadow")};
-    outline: ${dt2("accordion.header.focus.ring.width")} ${dt2("accordion.header.focus.ring.style")} ${dt2("accordion.header.focus.ring.color")};
-    outline-offset: ${dt2("accordion.header.focus.ring.offset")};
-}
-
-.p-accordionpanel:not(.p-accordionpanel-active):not(.p-disabled) > .p-accordionheader:hover {
-    background: ${dt2("accordion.header.hover.background")};
-    color: ${dt2("accordion.header.hover.color")}
-}
-
-.p-accordionpanel:not(.p-accordionpanel-active):not(.p-disabled) .p-accordionheader:hover .p-accordionheader-toggle-icon {
-    color: ${dt2("accordion.header.toggle.icon.hover.color")};
-}
-
-.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader {
-    background: ${dt2("accordion.header.active.background")};
-    color: ${dt2("accordion.header.active.color")}
-}
-
-.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader .p-accordionheader-toggle-icon {
-    color: ${dt2("accordion.header.toggle.icon.active.color")};
-}
-
-.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader:hover  {
-    background: ${dt2("accordion.header.active.hover.background")};
-    color: ${dt2("accordion.header.active.hover.color")}
-}
-
-.p-accordionpanel:not(.p-disabled).p-accordionpanel-active > .p-accordionheader:hover  .p-accordionheader-toggle-icon {
-    color: ${dt2("accordion.header.toggle.icon.active.hover.color")};
-}
-
-.p-accordioncontent-content {
-    border-style: solid;
-    border-width: ${dt2("accordion.content.border.width")};
-    border-color: ${dt2("accordion.content.border.color")};
-    background-color: ${dt2("accordion.content.background")};
-    color: ${dt2("accordion.content.color")};
-    padding: ${dt2("accordion.content.padding")}
-}
-
-/*For PrimeNG*/
-
-.p-accordion .p-accordioncontent {
-    overflow: hidden;
-}
-
-.p-accordionpanel.p-accordioncontent:not(.ng-animating) {
-    overflow: inherit;
-}
-
-.p-accordionheader-toggle-icon.icon-start {
-    order: -1;
-}
-
-.p-accordionheader:has(.p-accordionheader-toggle-icon.icon-start) {
-    justify-content: flex-start;
-    gap: ${dt2("accordion.header.padding")};
-}
-`;
-var classes28 = {
-  root: "p-accordion p-component"
-};
-var AccordionStyle = class _AccordionStyle extends BaseStyle {
-  name = "accordion";
-  theme = theme29;
-  classes = classes28;
-  static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275AccordionStyle_BaseFactory;
-    return function AccordionStyle_Factory(__ngFactoryType__) {
-      return (\u0275AccordionStyle_BaseFactory || (\u0275AccordionStyle_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionStyle)))(__ngFactoryType__ || _AccordionStyle);
-    };
-  })();
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
-    token: _AccordionStyle,
-    factory: _AccordionStyle.\u0275fac
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionStyle, [{
-    type: Injectable
-  }], null, null);
-})();
-var AccordionClasses;
-(function(AccordionClasses2) {
-  AccordionClasses2["root"] = "p-accordion";
-  AccordionClasses2["contentwrapper"] = "p-accordioncontent";
-  AccordionClasses2["content"] = "p-accordioncontent-content";
-  AccordionClasses2["header"] = "p-accordionheader";
-  AccordionClasses2["toggleicon"] = "p-accordionheader-toggle-icon";
-  AccordionClasses2["panel"] = "p-accordionpanel";
-})(AccordionClasses || (AccordionClasses = {}));
-var AccordionPanel = class _AccordionPanel extends BaseComponent {
-  pcAccordion = inject(forwardRef(() => Accordion));
-  /**
-   * Value of the active tab.
-   * @defaultValue undefined
-   * @group Props
-   */
-  value = model(void 0);
-  /**
-   * Disables the tab when enabled.
-   * @defaultValue false
-   * @group Props
-   */
-  disabled = input(false, {
-    transform: (v) => transformToBoolean(v)
-  });
-  active = computed(() => this.pcAccordion.multiple() ? this.valueEquals(this.pcAccordion.value(), this.value()) : this.pcAccordion.value() === this.value());
-  valueEquals(currentValue, value) {
-    if (Array.isArray(currentValue)) {
-      return currentValue.includes(value);
-    }
-    return currentValue === value;
-  }
-  static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275AccordionPanel_BaseFactory;
-    return function AccordionPanel_Factory(__ngFactoryType__) {
-      return (\u0275AccordionPanel_BaseFactory || (\u0275AccordionPanel_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionPanel)))(__ngFactoryType__ || _AccordionPanel);
-    };
-  })();
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-    type: _AccordionPanel,
-    selectors: [["p-accordion-panel"], ["p-accordionpanel"]],
-    hostVars: 9,
-    hostBindings: function AccordionPanel_HostBindings(rf, ctx) {
-      if (rf & 2) {
-        \u0275\u0275attribute("data-pc-name", "accordionpanel")("data-p-disabled", ctx.disabled())("data-p-active", ctx.active());
-        \u0275\u0275classProp("p-accordionpanel", true)("p-accordionpanel-active", ctx.active())("p-disabled", ctx.disabled());
-      }
-    },
-    inputs: {
-      value: [1, "value"],
-      disabled: [1, "disabled"]
-    },
-    outputs: {
-      value: "valueChange"
-    },
-    features: [\u0275\u0275InheritDefinitionFeature],
-    ngContentSelectors: _c027,
-    decls: 1,
-    vars: 0,
-    template: function AccordionPanel_Template(rf, ctx) {
-      if (rf & 1) {
-        \u0275\u0275projectionDef();
-        \u0275\u0275projection(0);
-      }
-    },
-    dependencies: [CommonModule],
-    encapsulation: 2,
-    changeDetection: 0
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionPanel, [{
-    type: Component,
-    args: [{
-      selector: "p-accordion-panel, p-accordionpanel",
-      imports: [CommonModule],
-      standalone: true,
-      template: `<ng-content />`,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      encapsulation: ViewEncapsulation.None,
-      host: {
-        "[class.p-accordionpanel]": "true",
-        "[class.p-accordionpanel-active]": "active()",
-        "[class.p-disabled]": "disabled()",
-        "[attr.data-pc-name]": '"accordionpanel"',
-        "[attr.data-p-disabled]": "disabled()",
-        "[attr.data-p-active]": "active()"
-      }
-    }]
-  }], null, null);
-})();
-var AccordionHeader = class _AccordionHeader extends BaseComponent {
-  pcAccordion = inject(forwardRef(() => Accordion));
-  pcAccordionPanel = inject(forwardRef(() => AccordionPanel));
-  id = computed(() => `${this.pcAccordion.id()}_accordionheader_${this.pcAccordionPanel.value()}`);
-  active = computed(() => this.pcAccordionPanel.active());
-  disabled = computed(() => this.pcAccordionPanel.disabled());
-  ariaControls = computed(() => `${this.pcAccordion.id()}_accordioncontent_${this.pcAccordionPanel.value()}`);
-  /**
-   * Toggle icon template.
-   * @type {TemplateRef<AccordionToggleIconTemplateContext>} context - Context of the template
-   * @example
-   * ```html
-   * <ng-template #toggleicon let-active="active"> </ng-template>
-   * ```
-   * @see {@link AccordionToggleIconTemplateContext}
-   * @group Templates
-   */
-  toggleicon;
-  onClick(event2) {
-    const wasActive = this.active();
-    this.changeActiveValue();
-    const isActive = this.active();
-    const index = this.pcAccordionPanel.value();
-    if (!wasActive && isActive) {
-      this.pcAccordion.onOpen.emit({
-        originalEvent: event2,
-        index
-      });
-    } else if (wasActive && !isActive) {
-      this.pcAccordion.onClose.emit({
-        originalEvent: event2,
-        index
-      });
-    }
-  }
-  onFocus() {
-    this.pcAccordion.selectOnFocus() && this.changeActiveValue();
-  }
-  onKeydown(event2) {
-    switch (event2.code) {
-      case "ArrowDown":
-        this.arrowDownKey(event2);
-        break;
-      case "ArrowUp":
-        this.arrowUpKey(event2);
-        break;
-      case "Home":
-        this.onHomeKey(event2);
-        break;
-      case "End":
-        this.onEndKey(event2);
-        break;
-      case "Enter":
-      case "Space":
-      case "NumpadEnter":
-        this.onEnterKey(event2);
-        break;
-      default:
-        break;
-    }
-  }
-  changeActiveValue() {
-    this.pcAccordion.updateValue(this.pcAccordionPanel.value());
-  }
-  findPanel(headerElement) {
-    return headerElement?.closest('[data-pc-name="accordionpanel"]');
-  }
-  findHeader(panelElement) {
-    return findSingle(panelElement, '[data-pc-name="accordionheader"]');
-  }
-  findNextPanel(panelElement, selfCheck = false) {
-    const element = selfCheck ? panelElement : panelElement.nextElementSibling;
-    return element ? getAttribute(element, "data-p-disabled") ? this.findNextPanel(element) : this.findHeader(element) : null;
-  }
-  findPrevPanel(panelElement, selfCheck = false) {
-    const element = selfCheck ? panelElement : panelElement.previousElementSibling;
-    return element ? getAttribute(element, "data-p-disabled") ? this.findPrevPanel(element) : this.findHeader(element) : null;
-  }
-  findFirstPanel() {
-    return this.findNextPanel(this.pcAccordion.el.nativeElement.firstElementChild, true);
-  }
-  findLastPanel() {
-    return this.findPrevPanel(this.pcAccordion.el.nativeElement.lastElementChild, true);
-  }
-  changeFocusedPanel(event2, element) {
-    focus(element);
-  }
-  arrowDownKey(event2) {
-    const nextPanel = this.findNextPanel(this.findPanel(event2.currentTarget));
-    nextPanel ? this.changeFocusedPanel(event2, nextPanel) : this.onHomeKey(event2);
-    event2.preventDefault();
-  }
-  arrowUpKey(event2) {
-    const prevPanel = this.findPrevPanel(this.findPanel(event2.currentTarget));
-    prevPanel ? this.changeFocusedPanel(event2, prevPanel) : this.onEndKey(event2);
-    event2.preventDefault();
-  }
-  onHomeKey(event2) {
-    const firstPanel = this.findFirstPanel();
-    this.changeFocusedPanel(event2, firstPanel);
-    event2.preventDefault();
-  }
-  onEndKey(event2) {
-    const lastPanel = this.findLastPanel();
-    this.changeFocusedPanel(event2, lastPanel);
-    event2.preventDefault();
-  }
-  onEnterKey(event2) {
-    this.changeActiveValue();
-    event2.preventDefault();
-  }
-  static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275AccordionHeader_BaseFactory;
-    return function AccordionHeader_Factory(__ngFactoryType__) {
-      return (\u0275AccordionHeader_BaseFactory || (\u0275AccordionHeader_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionHeader)))(__ngFactoryType__ || _AccordionHeader);
-    };
-  })();
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-    type: _AccordionHeader,
-    selectors: [["p-accordion-header"], ["p-accordionheader"]],
-    contentQueries: function AccordionHeader_ContentQueries(rf, ctx, dirIndex) {
-      if (rf & 1) {
-        \u0275\u0275contentQuery(dirIndex, _c129, 5);
-      }
-      if (rf & 2) {
-        let _t;
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.toggleicon = _t.first);
-      }
-    },
-    hostVars: 13,
-    hostBindings: function AccordionHeader_HostBindings(rf, ctx) {
-      if (rf & 1) {
-        \u0275\u0275listener("click", function AccordionHeader_click_HostBindingHandler($event) {
-          return ctx.onClick($event);
-        })("focus", function AccordionHeader_focus_HostBindingHandler($event) {
-          return ctx.onFocus($event);
-        })("keydown", function AccordionHeader_keydown_HostBindingHandler($event) {
-          return ctx.onKeydown($event);
-        });
-      }
-      if (rf & 2) {
-        \u0275\u0275attribute("id", ctx.id())("aria-expanded", ctx.active())("aria-controls", ctx.ariaControls())("aria-disabled", ctx.disabled())("role", "button")("tabindex", ctx.disabled() ? "-1" : "0")("data-p-active", ctx.active())("data-p-disabled", ctx.disabled())("data-pc-name", "accordionheader");
-        \u0275\u0275styleProp("user-select", "none");
-        \u0275\u0275classProp("p-accordionheader", true);
-      }
-    },
-    features: [\u0275\u0275HostDirectivesFeature([Ripple]), \u0275\u0275InheritDefinitionFeature],
-    ngContentSelectors: _c027,
-    decls: 3,
-    vars: 1,
-    consts: [[4, "ngTemplateOutlet", "ngTemplateOutletContext"], [4, "ngIf"], [3, "class", "ngClass", 4, "ngIf"], [3, "ngClass", 4, "ngIf"], [3, "ngClass"]],
-    template: function AccordionHeader_Template(rf, ctx) {
-      if (rf & 1) {
-        \u0275\u0275projectionDef();
-        \u0275\u0275projection(0);
-        \u0275\u0275template(1, AccordionHeader_Conditional_1_Template, 1, 4)(2, AccordionHeader_Conditional_2_Template, 2, 2);
-      }
-      if (rf & 2) {
-        \u0275\u0275advance();
-        \u0275\u0275conditional(ctx.toggleicon ? 1 : 2);
-      }
-    },
-    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, ChevronDownIcon, ChevronUpIcon],
-    encapsulation: 2,
-    changeDetection: 0
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionHeader, [{
-    type: Component,
-    args: [{
-      selector: "p-accordion-header, p-accordionheader",
-      imports: [CommonModule, ChevronDownIcon, ChevronUpIcon],
-      standalone: true,
-      template: `
-        <ng-content />
-        @if (toggleicon) {
-            <ng-template *ngTemplateOutlet="toggleicon; context: { active: active() }"></ng-template>
-        } @else {
-            <ng-container *ngIf="active()">
-                <span *ngIf="pcAccordion.collapseIcon" [class]="pcAccordion.collapseIcon" [ngClass]="pcAccordion.iconClass" [attr.aria-hidden]="true"></span>
-                <ChevronDownIcon *ngIf="!pcAccordion.collapseIcon" [ngClass]="pcAccordion.iconClass" [attr.aria-hidden]="true" />
-            </ng-container>
-            <ng-container *ngIf="!active()">
-                <span *ngIf="pcAccordion.expandIcon" [class]="pcAccordion.expandIcon" [ngClass]="pcAccordion.iconClass" [attr.aria-hidden]="true"></span>
-                <ChevronUpIcon *ngIf="!pcAccordion.expandIcon" [ngClass]="pcAccordion.iconClass" [attr.aria-hidden]="true" />
-            </ng-container>
-        }
-    `,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      encapsulation: ViewEncapsulation.None,
-      host: {
-        "[class.p-accordionheader]": "true",
-        "[attr.id]": "id()",
-        "[attr.aria-expanded]": "active()",
-        "[attr.aria-controls]": "ariaControls()",
-        "[attr.aria-disabled]": "disabled()",
-        "[attr.role]": '"button"',
-        "[attr.tabindex]": 'disabled()?"-1":"0"',
-        "[attr.data-p-active]": "active()",
-        "[attr.data-p-disabled]": "disabled()",
-        "[attr.data-pc-name]": '"accordionheader"',
-        "[style.user-select]": '"none"'
-      },
-      hostDirectives: [Ripple]
-    }]
-  }], null, {
-    toggleicon: [{
-      type: ContentChild,
-      args: ["toggleicon"]
-    }],
-    onClick: [{
-      type: HostListener,
-      args: ["click", ["$event"]]
-    }],
-    onFocus: [{
-      type: HostListener,
-      args: ["focus", ["$event"]]
-    }],
-    onKeydown: [{
-      type: HostListener,
-      args: ["keydown", ["$event"]]
-    }]
-  });
-})();
-var AccordionContent = class _AccordionContent extends BaseComponent {
-  pcAccordion = inject(forwardRef(() => Accordion));
-  pcAccordionPanel = inject(forwardRef(() => AccordionPanel));
-  active = computed(() => this.pcAccordionPanel.active());
-  ariaLabelledby = computed(() => `${this.pcAccordion.id()}_accordionheader_${this.pcAccordionPanel.value()}`);
-  id = computed(() => `${this.pcAccordion.id()}_accordioncontent_${this.pcAccordionPanel.value()}`);
-  static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275AccordionContent_BaseFactory;
-    return function AccordionContent_Factory(__ngFactoryType__) {
-      return (\u0275AccordionContent_BaseFactory || (\u0275AccordionContent_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionContent)))(__ngFactoryType__ || _AccordionContent);
-    };
-  })();
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-    type: _AccordionContent,
-    selectors: [["p-accordion-content"], ["p-accordioncontent"]],
-    hostVars: 7,
-    hostBindings: function AccordionContent_HostBindings(rf, ctx) {
-      if (rf & 2) {
-        \u0275\u0275attribute("id", ctx.id())("role", "region")("data-pc-name", "accordioncontent")("data-p-active", ctx.active())("aria-labelledby", ctx.ariaLabelledby());
-        \u0275\u0275classProp("p-accordioncontent", true);
-      }
-    },
-    features: [\u0275\u0275InheritDefinitionFeature],
-    ngContentSelectors: _c027,
-    decls: 2,
-    vars: 9,
-    consts: [[1, "p-accordioncontent-content"]],
-    template: function AccordionContent_Template(rf, ctx) {
-      if (rf & 1) {
-        \u0275\u0275projectionDef();
-        \u0275\u0275elementStart(0, "div", 0);
-        \u0275\u0275projection(1);
-        \u0275\u0275elementEnd();
-      }
-      if (rf & 2) {
-        \u0275\u0275property("@content", ctx.active() ? \u0275\u0275pureFunction1(3, _c413, \u0275\u0275pureFunction1(1, _c317, ctx.pcAccordion.transitionOptions)) : \u0275\u0275pureFunction1(7, _c512, \u0275\u0275pureFunction1(5, _c317, ctx.pcAccordion.transitionOptions)));
-      }
-    },
-    dependencies: [CommonModule],
-    encapsulation: 2,
-    data: {
-      animation: [trigger("content", [state("hidden", style({
-        height: "0",
-        paddingBottom: "0",
-        visibility: "hidden"
-      })), state("visible", style({
-        height: "*",
-        visibility: "visible"
-      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])]
-    },
-    changeDetection: 0
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionContent, [{
-    type: Component,
-    args: [{
-      selector: "p-accordion-content, p-accordioncontent",
-      imports: [CommonModule],
-      standalone: true,
-      template: ` <div [@content]="active() ? { value: 'visible', params: { transitionParams: pcAccordion.transitionOptions } } : { value: 'hidden', params: { transitionParams: pcAccordion.transitionOptions } }" class="p-accordioncontent-content">
-        <ng-content />
-    </div>`,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      encapsulation: ViewEncapsulation.None,
-      host: {
-        "[class.p-accordioncontent]": "true",
-        "[attr.id]": "id()",
-        "[attr.role]": '"region"',
-        "[attr.data-pc-name]": '"accordioncontent"',
-        "[attr.data-p-active]": "active()",
-        "[attr.aria-labelledby]": "ariaLabelledby()"
-      },
-      animations: [trigger("content", [state("hidden", style({
-        height: "0",
-        paddingBottom: "0",
-        visibility: "hidden"
-      })), state("visible", style({
-        height: "*",
-        visibility: "visible"
-      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])]
-    }]
-  }], null, null);
-})();
-var AccordionTab = class _AccordionTab extends BaseComponent {
-  get hostClass() {
-    return this.tabStyleClass;
-  }
-  get hostStyle() {
-    return this.tabStyle;
-  }
-  /**
-   * Current id state as a string.
-   * @group Props
-   */
-  id = uuid("pn_id_");
-  /**
-   * Used to define the header of the tab.
-   * @group Props
-   */
-  header;
-  /**
-   * Inline style of the tab header.
-   * @group Props
-   */
-  headerStyle;
-  /**
-   * Inline style of the tab.
-   * @group Props
-   */
-  tabStyle;
-  /**
-   * Inline style of the tab content.
-   * @group Props
-   */
-  contentStyle;
-  /**
-   * Style class of the tab.
-   * @group Props
-   */
-  tabStyleClass;
-  /**
-   * Style class of the tab header.
-   * @group Props
-   */
-  headerStyleClass;
-  /**
-   * Style class of the tab content.
-   * @group Props
-   */
-  contentStyleClass;
-  /**
-   * Whether the tab is disabled.
-   * @group Props
-   */
-  disabled;
-  /**
-   * Whether a lazy loaded panel should avoid getting loaded again on reselection.
-   * @group Props
-   */
-  cache = true;
-  /**
-   * Transition options of the animation.
-   * @group Props
-   */
-  transitionOptions = "400ms cubic-bezier(0.86, 0, 0.07, 1)";
-  /**
-   * Position of the icon.
-   * @group Props
-   */
-  iconPos = "start";
-  /**
-   * The value that returns the selection.
-   * @group Props
-   */
-  get selected() {
-    return this._selected;
-  }
-  set selected(val) {
-    this._selected = val;
-    if (!this.loaded) {
-      if (this._selected && this.cache) {
-        this.loaded = true;
-      }
-      this.cd.detectChanges();
-    }
-  }
-  /**
-   * The aria-level that each accordion header will have. The default value is 2 as per W3C specifications
-   * @group Props
-   */
-  headerAriaLevel = 2;
-  /**
-   * Event triggered by changing the choice.
-   * @param {boolean} value - Boolean value indicates that the option is changed.
-   * @group Emits
-   */
-  selectedChange = new EventEmitter();
-  headerFacet;
-  _selected = false;
-  get iconClass() {
-    if (this.iconPos === "end") {
-      return "p-accordionheader-toggle-icon icon-end";
-    } else {
-      return "p-accordionheader-toggle-icon icon-start";
-    }
-  }
-  /**
-   * Content template for the content of the drawer.
-   * @group Templates
-   */
-  headerTemplate;
-  /**
-   * Template for the header icon.
-   * @group Templates
-   */
-  iconTemplate;
-  /**
-   * Content template for the footer of the drawer.
-   * @group Templates
-   */
-  contentTemplate;
-  templates;
-  _headerTemplate;
-  _iconTemplate;
-  _contentTemplate;
-  loaded = false;
-  accordion = inject(forwardRef(() => Accordion));
-  _componentStyle = inject(AccordionStyle);
-  ngOnInit() {
-    super.ngOnInit();
-    console.log("AccordionTab is deprecated as of v18, please use the new structure instead.");
-  }
-  ngAfterContentInit() {
-    this.templates.forEach((item) => {
-      switch (item.getType()) {
-        case "content":
-          this._contentTemplate = item.template;
-          break;
-        case "header":
-          this._headerTemplate = item.template;
-          break;
-        case "icon":
-          this._iconTemplate = item.template;
-          break;
-        default:
-          this._contentTemplate = item.template;
-          break;
-      }
-    });
-  }
-  toggle(event2) {
-    if (this.disabled) {
-      return false;
-    }
-    let index = this.findTabIndex();
-    if (this.selected) {
-      this.selected = false;
-      this.accordion.onClose.emit({
-        originalEvent: event2,
-        index
-      });
-    } else {
-      if (!this.accordion.multiple()) {
-        for (var i = 0; i < this.accordion.tabs.length; i++) {
-          if (this.accordion.tabs[i].selected) {
-            this.accordion.tabs[i].selected = false;
-            this.accordion.tabs[i].selectedChange.emit(false);
-            this.accordion.tabs[i].cd.markForCheck();
-          }
-        }
-      }
-      this.selected = true;
-      this.loaded = true;
-      this.accordion.onOpen.emit({
-        originalEvent: event2,
-        index
-      });
-    }
-    this.selectedChange.emit(this.selected);
-    this.accordion.updateActiveIndex();
-    this.cd.markForCheck();
-    event2?.preventDefault();
-  }
-  findTabIndex() {
-    let index = -1;
-    for (var i = 0; i < this.accordion.tabs.length; i++) {
-      if (this.accordion.tabs[i] == this) {
-        index = i;
-        break;
-      }
-    }
-    return index;
-  }
-  onKeydown(event2) {
-    switch (event2.code) {
-      case "Enter":
-      case "Space":
-        this.toggle(event2);
-        event2.preventDefault();
-        break;
-      default:
-        break;
-    }
-  }
-  getTabHeaderActionId(tabId) {
-    return `${tabId}_header_action`;
-  }
-  getTabContentId(tabId) {
-    return `${tabId}_content`;
-  }
-  ngOnDestroy() {
-    this.accordion.tabs.splice(this.findTabIndex(), 1);
-    super.ngOnDestroy();
-  }
-  static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275AccordionTab_BaseFactory;
-    return function AccordionTab_Factory(__ngFactoryType__) {
-      return (\u0275AccordionTab_BaseFactory || (\u0275AccordionTab_BaseFactory = \u0275\u0275getInheritedFactory(_AccordionTab)))(__ngFactoryType__ || _AccordionTab);
-    };
-  })();
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-    type: _AccordionTab,
-    selectors: [["p-accordionTab"], ["p-accordion-tab"], ["p-accordiontab"]],
-    contentQueries: function AccordionTab_ContentQueries(rf, ctx, dirIndex) {
-      if (rf & 1) {
-        \u0275\u0275contentQuery(dirIndex, _c612, 4);
-        \u0275\u0275contentQuery(dirIndex, _c79, 4);
-        \u0275\u0275contentQuery(dirIndex, _c87, 4);
-        \u0275\u0275contentQuery(dirIndex, Header, 4);
-        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
-      }
-      if (rf & 2) {
-        let _t;
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerTemplate = _t.first);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.iconTemplate = _t.first);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentTemplate = _t.first);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerFacet = _t);
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
-      }
-    },
-    hostVars: 9,
-    hostBindings: function AccordionTab_HostBindings(rf, ctx) {
-      if (rf & 2) {
-        \u0275\u0275attribute("data-pc-name", "accordiontab");
-        \u0275\u0275styleMap(ctx.hostStyle);
-        \u0275\u0275classMap(ctx.hostClass);
-        \u0275\u0275classProp("p-accordionpanel", true)("p-accordionpanel-active", ctx.selected);
-      }
-    },
-    inputs: {
-      id: "id",
-      header: "header",
-      headerStyle: "headerStyle",
-      tabStyle: "tabStyle",
-      contentStyle: "contentStyle",
-      tabStyleClass: "tabStyleClass",
-      headerStyleClass: "headerStyleClass",
-      contentStyleClass: "contentStyleClass",
-      disabled: [2, "disabled", "disabled", booleanAttribute],
-      cache: [2, "cache", "cache", booleanAttribute],
-      transitionOptions: "transitionOptions",
-      iconPos: "iconPos",
-      selected: "selected",
-      headerAriaLevel: [2, "headerAriaLevel", "headerAriaLevel", numberAttribute]
-    },
-    outputs: {
-      selectedChange: "selectedChange"
-    },
-    features: [\u0275\u0275ProvidersFeature([AccordionStyle]), \u0275\u0275InheritDefinitionFeature],
-    ngContentSelectors: _c107,
-    decls: 9,
-    vars: 30,
-    consts: [["type", "button", 1, "p-accordionheader", 3, "click", "keydown", "disabled", "ngClass", "ngStyle"], ["role", "region", 1, "p-accordioncontent"], [1, "p-accordioncontent-content", 3, "ngClass", "ngStyle"], [4, "ngIf"], [4, "ngTemplateOutlet"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [3, "class", "ngClass", 4, "ngIf"], [3, "ngClass", 4, "ngIf"], [3, "ngClass"]],
-    template: function AccordionTab_Template(rf, ctx) {
-      if (rf & 1) {
-        \u0275\u0275projectionDef(_c97);
-        \u0275\u0275elementStart(0, "button", 0);
-        \u0275\u0275listener("click", function AccordionTab_Template_button_click_0_listener($event) {
-          return ctx.toggle($event);
-        })("keydown", function AccordionTab_Template_button_keydown_0_listener($event) {
-          return ctx.onKeydown($event);
-        });
-        \u0275\u0275template(1, AccordionTab_Conditional_1_Template, 1, 1)(2, AccordionTab_Conditional_2_Template, 2, 2)(3, AccordionTab_Conditional_3_Template, 1, 4)(4, AccordionTab_Conditional_4_Template, 2, 2);
-        \u0275\u0275elementEnd();
-        \u0275\u0275elementStart(5, "div", 1)(6, "div", 2);
-        \u0275\u0275projection(7);
-        \u0275\u0275template(8, AccordionTab_ng_container_8_Template, 2, 1, "ng-container", 3);
-        \u0275\u0275elementEnd()();
-      }
-      if (rf & 2) {
-        \u0275\u0275classProp("p-disabled", ctx.disabled);
-        \u0275\u0275property("disabled", ctx.disabled)("ngClass", ctx.headerStyleClass)("ngStyle", ctx.headerStyle);
-        \u0275\u0275attribute("aria-expanded", ctx.selected)("aria-level", ctx.headerAriaLevel)("data-p-disabled", ctx.disabled)("data-pc-section", "accordionheader")("tabindex", ctx.disabled ? null : 0)("id", ctx.getTabHeaderActionId(ctx.id))("aria-controls", ctx.getTabContentId(ctx.id));
-        \u0275\u0275advance();
-        \u0275\u0275conditional(!ctx.headerTemplate && !ctx._headerTemplate ? 1 : 2);
-        \u0275\u0275advance(2);
-        \u0275\u0275conditional(ctx.iconTemplate || ctx._iconTemplate ? 3 : 4);
-        \u0275\u0275advance(2);
-        \u0275\u0275property("@tabContent", ctx.selected ? \u0275\u0275pureFunction1(24, _c413, \u0275\u0275pureFunction1(22, _c317, ctx.transitionOptions)) : \u0275\u0275pureFunction1(28, _c512, \u0275\u0275pureFunction1(26, _c317, ctx.transitionOptions)));
-        \u0275\u0275attribute("id", ctx.getTabContentId(ctx.id))("aria-hidden", !ctx.selected)("aria-labelledby", ctx.getTabHeaderActionId(ctx.id))("data-pc-section", "toggleablecontent");
-        \u0275\u0275advance();
-        \u0275\u0275property("ngClass", ctx.contentStyleClass)("ngStyle", ctx.contentStyle);
-        \u0275\u0275advance(2);
-        \u0275\u0275property("ngIf", (ctx.contentTemplate || ctx._contentTemplate) && (ctx.cache ? ctx.loaded : ctx.selected));
-      }
-    },
-    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, ChevronDownIcon, ChevronUpIcon],
-    encapsulation: 2,
-    data: {
-      animation: [trigger("tabContent", [state("hidden", style({
-        height: "0",
-        visibility: "hidden"
-      })), state("visible", style({
-        height: "*",
-        visibility: "visible"
-      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])]
-    },
-    changeDetection: 0
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionTab, [{
-    type: Component,
-    args: [{
-      selector: "p-accordionTab, p-accordion-tab, p-accordiontab",
-      standalone: true,
-      imports: [CommonModule, ChevronDownIcon, ChevronUpIcon],
-      template: `
-        <button
-            class="p-accordionheader"
-            type="button"
-            [disabled]="disabled"
-            [attr.aria-expanded]="selected"
-            [attr.aria-level]="headerAriaLevel"
-            [class.p-disabled]="disabled"
-            [attr.data-p-disabled]="disabled"
-            [attr.data-pc-section]="'accordionheader'"
-            (click)="toggle($event)"
-            (keydown)="onKeydown($event)"
-            [ngClass]="headerStyleClass"
-            [ngStyle]="headerStyle"
-            [attr.tabindex]="disabled ? null : 0"
-            [attr.id]="getTabHeaderActionId(id)"
-            [attr.aria-controls]="getTabContentId(id)"
-        >
-            @if (!headerTemplate && !_headerTemplate) {
-                {{ header }}
-            } @else {
-                @if (headerTemplate || _headerTemplate) {
-                    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
-                }
-                @if (headerFacet) {
-                    <ng-content select="p-header" />
-                }
-            }
-            @if (iconTemplate || _iconTemplate) {
-                <ng-template *ngTemplateOutlet="iconTemplate || _iconTemplate; context: { $implicit: selected }"></ng-template>
-            } @else {
-                <ng-container *ngIf="selected">
-                    <span *ngIf="accordion.collapseIcon" [class]="accordion.collapseIcon" [ngClass]="iconClass" [attr.aria-hidden]="true"></span>
-                    <ChevronDownIcon *ngIf="!accordion.collapseIcon" [ngClass]="iconClass" [attr.aria-hidden]="true" />
-                </ng-container>
-                <ng-container *ngIf="!selected">
-                    <span *ngIf="accordion.expandIcon" [class]="accordion.expandIcon" [ngClass]="iconClass" [attr.aria-hidden]="true"></span>
-                    <ChevronUpIcon *ngIf="!accordion.expandIcon" [ngClass]="iconClass" [attr.aria-hidden]="true" />
-                </ng-container>
-            }
-        </button>
-        <div
-            [attr.id]="getTabContentId(id)"
-            class="p-accordioncontent"
-            [@tabContent]="selected ? { value: 'visible', params: { transitionParams: transitionOptions } } : { value: 'hidden', params: { transitionParams: transitionOptions } }"
-            role="region"
-            [attr.aria-hidden]="!selected"
-            [attr.aria-labelledby]="getTabHeaderActionId(id)"
-            [attr.data-pc-section]="'toggleablecontent'"
-        >
-            <div class="p-accordioncontent-content" [ngClass]="contentStyleClass" [ngStyle]="contentStyle">
-                <ng-content />
-                <ng-container *ngIf="(contentTemplate || _contentTemplate) && (cache ? loaded : selected)">
-                    <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
-                </ng-container>
-            </div>
-        </div>
-    `,
-      animations: [trigger("tabContent", [state("hidden", style({
-        height: "0",
-        visibility: "hidden"
-      })), state("visible", style({
-        height: "*",
-        visibility: "visible"
-      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])],
-      host: {
-        "[class.p-accordionpanel]": "true",
-        "[class.p-accordionpanel-active]": "selected",
-        "[attr.data-pc-name]": '"accordiontab"'
-      },
-      providers: [AccordionStyle],
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      encapsulation: ViewEncapsulation.None
-    }]
-  }], null, {
-    hostClass: [{
-      type: HostBinding,
-      args: ["class"]
-    }],
-    hostStyle: [{
-      type: HostBinding,
-      args: ["style"]
-    }],
-    id: [{
-      type: Input
-    }],
-    header: [{
-      type: Input
-    }],
-    headerStyle: [{
-      type: Input
-    }],
-    tabStyle: [{
-      type: Input
-    }],
-    contentStyle: [{
-      type: Input
-    }],
-    tabStyleClass: [{
-      type: Input
-    }],
-    headerStyleClass: [{
-      type: Input
-    }],
-    contentStyleClass: [{
-      type: Input
-    }],
-    disabled: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    cache: [{
-      type: Input,
-      args: [{
-        transform: booleanAttribute
-      }]
-    }],
-    transitionOptions: [{
-      type: Input
-    }],
-    iconPos: [{
-      type: Input
-    }],
-    selected: [{
-      type: Input
-    }],
-    headerAriaLevel: [{
-      type: Input,
-      args: [{
-        transform: numberAttribute
-      }]
-    }],
-    selectedChange: [{
-      type: Output
-    }],
-    headerFacet: [{
-      type: ContentChildren,
-      args: [Header]
-    }],
-    headerTemplate: [{
-      type: ContentChild,
-      args: ["header", {
-        descendants: false
-      }]
-    }],
-    iconTemplate: [{
-      type: ContentChild,
-      args: ["icon", {
-        descendants: false
-      }]
-    }],
-    contentTemplate: [{
-      type: ContentChild,
-      args: ["content", {
-        descendants: false
-      }]
-    }],
-    templates: [{
-      type: ContentChildren,
-      args: [PrimeTemplate]
-    }]
-  });
-})();
-var Accordion = class _Accordion extends BaseComponent {
-  get hostClass() {
-    return this.styleClass;
-  }
-  get hostStyle() {
-    return this.style;
-  }
-  /**
-   * Value of the active tab.
-   * @defaultValue undefined
-   * @group Props
-   */
-  value = model(void 0);
-  /**
-   * When enabled, multiple tabs can be activated at the same time.
-   * @defaultValue false
-   * @group Props
-   */
-  multiple = input(false, {
-    transform: (v) => transformToBoolean(v)
-  });
-  /**
-   * Inline style of the tab header and content.
-   * @group Props
-   */
-  style;
-  /**
-   * Class of the element.
-   * @group Props
-   */
-  styleClass;
-  /**
-   * Icon of a collapsed tab.
-   * @group Props
-   */
-  expandIcon;
-  /**
-   * Icon of an expanded tab.
-   * @group Props
-   */
-  collapseIcon;
-  /**
-   * When enabled, the focused tab is activated.
-   * @defaultValue false
-   * @group Props
-   */
-  selectOnFocus = input(false, {
-    transform: (v) => transformToBoolean(v)
-  });
-  set activeIndex(val) {
-    this._activeIndex = val;
-    if (this.preventActiveIndexPropagation) {
-      this.preventActiveIndexPropagation = false;
-      return;
-    }
-    this.updateSelectionState();
-  }
-  /**
-   * Transition options of the animation.
-   * @group Props
-   */
-  transitionOptions = "400ms cubic-bezier(0.86, 0, 0.07, 1)";
-  /**
-   * Returns the active index.
-   * @param {number | number[]} value - New index.
-   * @deprecated use native valueChange emitter of the value model.
-   * @group Emits
-   */
-  activeIndexChange = new EventEmitter();
-  set headerAriaLevel(val) {
-    if (typeof val === "number" && val > 0) {
-      this._headerAriaLevel = val;
-    } else if (this._headerAriaLevel !== 2) {
-      this._headerAriaLevel = 2;
-    }
-  }
-  /**
-   * Callback to invoke when an active tab is collapsed by clicking on the header.
-   * @param {AccordionTabCloseEvent} event - Custom tab close event.
-   * @group Emits
-   */
-  onClose = new EventEmitter();
-  /**
-   * Callback to invoke when a tab gets expanded.
-   * @param {AccordionTabOpenEvent} event - Custom tab open event.
-   * @group Emits
-   */
-  onOpen = new EventEmitter();
-  id = signal(uuid("pn_id_"));
-  tabList;
-  tabListSubscription = null;
-  _activeIndex;
-  _headerAriaLevel = 2;
-  preventActiveIndexPropagation = false;
-  tabs = [];
-  _componentStyle = inject(AccordionStyle);
-  /**
-   * Index of the active tab or an array of indexes in multiple mode.
-   * @deprecated use value property with new architecture instead.
-   * @group Props
-   */
-  get activeIndex() {
-    return this._activeIndex;
-  }
-  /**
-   * The aria-level that each accordion header will have. The default value is 2 as per W3C specifications
-   * @deprecated use AccoridonHeader component and bind attribute to the host.
-   * @group Props
-   */
-  get headerAriaLevel() {
-    return this._headerAriaLevel;
-  }
-  onKeydown(event2) {
-    switch (event2.code) {
-      case "ArrowDown":
-        this.onTabArrowDownKey(event2);
-        break;
-      case "ArrowUp":
-        this.onTabArrowUpKey(event2);
-        break;
-      case "Home":
-        if (!event2.shiftKey) {
-          this.onTabHomeKey(event2);
-        }
-        break;
-      case "End":
-        if (!event2.shiftKey) {
-          this.onTabEndKey(event2);
-        }
-        break;
-    }
-  }
-  onTabArrowDownKey(event2) {
-    const nextHeaderAction = this.findNextHeaderAction(event2.target.parentElement);
-    nextHeaderAction ? this.changeFocusedTab(nextHeaderAction) : this.onTabHomeKey(event2);
-    event2.preventDefault();
-  }
-  onTabArrowUpKey(event2) {
-    const prevHeaderAction = this.findPrevHeaderAction(event2.target.parentElement);
-    prevHeaderAction ? this.changeFocusedTab(prevHeaderAction) : this.onTabEndKey(event2);
-    event2.preventDefault();
-  }
-  onTabHomeKey(event2) {
-    const firstHeaderAction = this.findFirstHeaderAction();
-    this.changeFocusedTab(firstHeaderAction);
-    event2.preventDefault();
-  }
-  changeFocusedTab(element) {
-    if (element) {
-      focus(element);
-      if (this.selectOnFocus()) {
-        this.tabs.forEach((tab, i) => {
-          let selected = this.multiple() ? this._activeIndex.includes(i) : i === this._activeIndex;
-          if (this.multiple()) {
-            if (!this._activeIndex) {
-              this._activeIndex = [];
-            }
-            if (tab.id == element.id) {
-              tab.selected = !tab.selected;
-              if (!this._activeIndex.includes(i)) {
-                this._activeIndex.push(i);
-              } else {
-                this._activeIndex = this._activeIndex.filter((ind) => ind !== i);
-              }
-            }
-          } else {
-            if (tab.id == element.id) {
-              tab.selected = !tab.selected;
-              this._activeIndex = i;
-            } else {
-              tab.selected = false;
-            }
-          }
-          tab.selectedChange.emit(selected);
-          this.activeIndexChange.emit(this._activeIndex);
-          tab.cd.markForCheck();
-        });
-      }
-    }
-  }
-  findNextHeaderAction(tabElement, selfCheck = false) {
-    const nextTabElement = selfCheck ? tabElement : tabElement.nextElementSibling;
-    const headerElement = findSingle(nextTabElement, '[data-pc-section="accordionheader"]');
-    return headerElement ? getAttribute(headerElement, "data-p-disabled") ? this.findNextHeaderAction(headerElement.parentElement) : findSingle(headerElement.parentElement, '[data-pc-section="accordionheader"]') : null;
-  }
-  findPrevHeaderAction(tabElement, selfCheck = false) {
-    const prevTabElement = selfCheck ? tabElement : tabElement.previousElementSibling;
-    const headerElement = findSingle(prevTabElement, '[data-pc-section="accordionheader"]');
-    return headerElement ? getAttribute(headerElement, "data-p-disabled") ? this.findPrevHeaderAction(headerElement.parentElement) : findSingle(headerElement.parentElement, '[data-pc-section="accordionheader"]') : null;
-  }
-  findFirstHeaderAction() {
-    const firstEl = this.el.nativeElement.firstElementChild;
-    return this.findNextHeaderAction(firstEl, true);
-  }
-  findLastHeaderAction() {
-    const lastEl = this.el.nativeElement.lastElementChild;
-    return this.findPrevHeaderAction(lastEl, true);
-  }
-  onTabEndKey(event2) {
-    const lastHeaderAction = this.findLastHeaderAction();
-    this.changeFocusedTab(lastHeaderAction);
-    event2.preventDefault();
-  }
-  ngAfterContentInit() {
-    this.initTabs();
-    this.tabListSubscription = this.tabList.changes.subscribe((_) => {
-      this.initTabs();
-    });
-  }
-  initTabs() {
-    this.tabs = this.tabList.toArray();
-    this.tabs.forEach((tab) => {
-      tab.headerAriaLevel = this._headerAriaLevel;
-    });
-    this.updateSelectionState();
-    this.cd.markForCheck();
-  }
-  getBlockableElement() {
-    return this.el.nativeElement.children[0];
-  }
-  updateSelectionState() {
-    if (this.tabs && this.tabs.length && this._activeIndex != null) {
-      for (let i = 0; i < this.tabs.length; i++) {
-        let selected = this.multiple() ? this._activeIndex.includes(i) : i === this._activeIndex;
-        let changed = selected !== this.tabs[i].selected;
-        if (changed) {
-          this.tabs[i].selected = selected;
-          this.tabs[i].selectedChange.emit(selected);
-          this.tabs[i].cd.markForCheck();
-        }
-      }
-    }
-  }
-  isTabActive(index) {
-    return this.multiple() ? this._activeIndex && this._activeIndex.includes(index) : this._activeIndex === index;
-  }
-  getTabProp(tab, name) {
-    return tab.props ? tab.props[name] : void 0;
-  }
-  updateActiveIndex() {
-    let index = this.multiple() ? [] : null;
-    this.tabs.forEach((tab, i) => {
-      if (tab.selected) {
-        if (this.multiple()) {
-          index.push(i);
-        } else {
-          index = i;
-          return;
-        }
-      }
-    });
-    this.preventActiveIndexPropagation = true;
-    this._activeIndex = index;
-    this.activeIndexChange.emit(index);
-  }
-  updateValue(value) {
-    const currentValue = this.value();
-    if (this.multiple()) {
-      const newValue = Array.isArray(currentValue) ? [...currentValue] : [];
-      const index = newValue.indexOf(value);
-      if (index !== -1) {
-        newValue.splice(index, 1);
-      } else {
-        newValue.push(value);
-      }
-      this.value.set(newValue);
-    } else {
-      if (currentValue === value) {
-        this.value.set(void 0);
-      } else {
-        this.value.set(value);
-      }
-    }
-  }
-  ngOnDestroy() {
-    if (this.tabListSubscription) {
-      this.tabListSubscription.unsubscribe();
-    }
-    super.ngOnDestroy();
-  }
-  static \u0275fac = /* @__PURE__ */ (() => {
-    let \u0275Accordion_BaseFactory;
-    return function Accordion_Factory(__ngFactoryType__) {
-      return (\u0275Accordion_BaseFactory || (\u0275Accordion_BaseFactory = \u0275\u0275getInheritedFactory(_Accordion)))(__ngFactoryType__ || _Accordion);
-    };
-  })();
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
-    type: _Accordion,
-    selectors: [["p-accordion"]],
-    contentQueries: function Accordion_ContentQueries(rf, ctx, dirIndex) {
-      if (rf & 1) {
-        \u0275\u0275contentQuery(dirIndex, AccordionTab, 5);
-      }
-      if (rf & 2) {
-        let _t;
-        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.tabList = _t);
-      }
-    },
-    hostVars: 8,
-    hostBindings: function Accordion_HostBindings(rf, ctx) {
-      if (rf & 1) {
-        \u0275\u0275listener("keydown", function Accordion_keydown_HostBindingHandler($event) {
-          return ctx.onKeydown($event);
-        });
-      }
-      if (rf & 2) {
-        \u0275\u0275styleMap(ctx.hostStyle);
-        \u0275\u0275classMap(ctx.hostClass);
-        \u0275\u0275classProp("p-accordion", true)("p-component", true);
-      }
-    },
-    inputs: {
-      value: [1, "value"],
-      multiple: [1, "multiple"],
-      style: "style",
-      styleClass: "styleClass",
-      expandIcon: "expandIcon",
-      collapseIcon: "collapseIcon",
-      selectOnFocus: [1, "selectOnFocus"],
-      transitionOptions: "transitionOptions",
-      activeIndex: "activeIndex",
-      headerAriaLevel: "headerAriaLevel"
-    },
-    outputs: {
-      value: "valueChange",
-      activeIndexChange: "activeIndexChange",
-      onClose: "onClose",
-      onOpen: "onOpen"
-    },
-    features: [\u0275\u0275ProvidersFeature([AccordionStyle]), \u0275\u0275InheritDefinitionFeature],
-    ngContentSelectors: _c027,
-    decls: 1,
-    vars: 0,
-    template: function Accordion_Template(rf, ctx) {
-      if (rf & 1) {
-        \u0275\u0275projectionDef();
-        \u0275\u0275projection(0);
-      }
-    },
-    dependencies: [CommonModule, SharedModule],
-    encapsulation: 2,
-    changeDetection: 0
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Accordion, [{
-    type: Component,
-    args: [{
-      selector: "p-accordion",
-      standalone: true,
-      imports: [CommonModule, SharedModule],
-      template: ` <ng-content /> `,
-      host: {
-        "[class.p-accordion]": "true",
-        "[class.p-component]": "true"
-      },
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      providers: [AccordionStyle]
-    }]
-  }], null, {
-    hostClass: [{
-      type: HostBinding,
-      args: ["class"]
-    }],
-    hostStyle: [{
-      type: HostBinding,
-      args: ["style"]
-    }],
-    style: [{
-      type: Input
-    }],
-    styleClass: [{
-      type: Input
-    }],
-    expandIcon: [{
-      type: Input
-    }],
-    collapseIcon: [{
-      type: Input
-    }],
-    transitionOptions: [{
-      type: Input
-    }],
-    activeIndexChange: [{
-      type: Output
-    }],
-    onClose: [{
-      type: Output
-    }],
-    onOpen: [{
-      type: Output
-    }],
-    tabList: [{
-      type: ContentChildren,
-      args: [AccordionTab, {
-        descendants: true
-      }]
-    }],
-    activeIndex: [{
-      type: Input
-    }],
-    headerAriaLevel: [{
-      type: Input
-    }],
-    onKeydown: [{
-      type: HostListener,
-      args: ["keydown", ["$event"]]
-    }]
-  });
-})();
-var AccordionModule = class _AccordionModule {
-  static \u0275fac = function AccordionModule_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AccordionModule)();
+// src/app/services/theme.service.ts
+var ThemeService2 = class _ThemeService {
+  darkMode = signal(false);
+  constructor() {
+    const storedTheme = localStorage.getItem("darkMode");
+    this.setDarkMode(storedTheme === "true");
+  }
+  setDarkMode(enabled) {
+    this.darkMode.set(enabled);
+    localStorage.setItem("darkMode", String(enabled));
+    document.documentElement.classList.toggle("dark-mode", enabled);
+    console.log(`Dark mode set to ${enabled}`);
+  }
+  toggle() {
+    this.setDarkMode(!this.darkMode());
+  }
+  static \u0275fac = function ThemeService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ThemeService)();
   };
-  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
-    type: _AccordionModule,
-    imports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent],
-    exports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent]
-  });
-  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
-    imports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent, SharedModule]
-  });
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ThemeService, factory: _ThemeService.\u0275fac, providedIn: "root" });
 };
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AccordionModule, [{
-    type: NgModule,
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ThemeService2, [{
+    type: Injectable,
     args: [{
-      imports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent],
-      exports: [Accordion, AccordionTab, SharedModule, AccordionPanel, AccordionHeader, AccordionContent]
+      providedIn: "root"
     }]
-  }], null, null);
+  }], () => [], null);
 })();
 
 export {
@@ -79470,9 +78599,12 @@ export {
   getOuterHeight,
   getWidth,
   invokeElementMethod,
+  isAndroid,
+  isIOS,
   isRTL,
   isTouchDevice,
   nestedPosition,
+  removeChild,
   scrollInView,
   setAttribute,
   isEmpty,
@@ -79483,6 +78615,7 @@ export {
   findLastIndex,
   resolve,
   isPrintableCharacter,
+  removeAccents,
   reorderArray,
   uuid,
   ConfirmEventType,
@@ -79494,6 +78627,7 @@ export {
   PrimeTemplate,
   SharedModule,
   TranslationKeys,
+  TreeDragDropService,
   definePreset,
   BaseStyle,
   PrimeNG,
@@ -79512,6 +78646,8 @@ export {
   AutoFocusModule,
   RadioButton,
   RadioButtonModule,
+  Badge,
+  BadgeModule,
   BaseIcon,
   AngleRightIcon,
   ArrowDownIcon,
@@ -79540,6 +78676,8 @@ export {
   InputTextModule,
   InputGroup,
   InputGroupModule,
+  InputGroupAddon,
+  InputGroupAddonModule,
   Message,
   MessageModule,
   UploadStateService,
@@ -79568,7 +78706,6 @@ export {
   CardModule,
   Checkbox,
   CheckboxModule,
-  PanelModule,
   InputNumber,
   InputNumberModule,
   Paginator,
@@ -79593,7 +78730,8 @@ export {
   PromptKey,
   AiModel,
   Toolbar,
-  ToolbarModule
+  ToolbarModule,
+  ThemeService2 as ThemeService
 };
 /*! Bundled license information:
 
@@ -79618,4 +78756,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-DJEXFAMN.js.map
+//# sourceMappingURL=chunk-GL6NV25R.js.map
