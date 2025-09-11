@@ -78544,6 +78544,7 @@ export {
   NgIf,
   NgSwitch,
   NgSwitchCase,
+  NgSwitchDefault,
   NgStyle,
   NgTemplateOutlet,
   AsyncPipe,
@@ -78756,4 +78757,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-GL6NV25R.js.map
+//# sourceMappingURL=chunk-MGJSQWAK.js.map

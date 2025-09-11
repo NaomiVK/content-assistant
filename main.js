@@ -121,7 +121,7 @@ import {
   scrollInView,
   unblockBodyScroll,
   uuid
-} from "./chunk-GL6NV25R.js";
+} from "./chunk-MGJSQWAK.js";
 import {
   ANIMATION_MODULE_TYPE,
   BehaviorSubject,
@@ -21741,12 +21741,11 @@ var MetadataResultComponent = class _MetadataResultComponent {
 })();
 
 // src/app/views/metadata-assistant/components/csv-export/csv-export.component.ts
-var _c011 = (a0) => ({ count: a0 });
 function CsvExportComponent_div_0_ng_template_2_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 27);
-    \u0275\u0275element(1, "i", 28);
-    \u0275\u0275elementStart(2, "h3", 29);
+    \u0275\u0275elementStart(0, "div", 17);
+    \u0275\u0275element(1, "i", 18);
+    \u0275\u0275elementStart(2, "h3", 19);
     \u0275\u0275text(3);
     \u0275\u0275pipe(4, "translate");
     \u0275\u0275elementEnd()();
@@ -21774,70 +21773,6 @@ function CsvExportComponent_div_0_div_16_Template(rf, ctx) {
     \u0275\u0275textInterpolate(ctx_r1.getTranslatedResultsCount());
   }
 }
-function CsvExportComponent_div_0_th_37_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "th", 17);
-    \u0275\u0275text(1);
-    \u0275\u0275pipe(2, "translate");
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 1, "metadata.csv.frenchDescription"));
-  }
-}
-function CsvExportComponent_div_0_tr_39_td_5_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "td", 30);
-    \u0275\u0275text(1);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const result_r3 = \u0275\u0275nextContext().$implicit;
-    \u0275\u0275styleProp("max-width", "250px");
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", result_r3.frenchTranslatedDescription || "-", " ");
-  }
-}
-function CsvExportComponent_div_0_tr_39_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "tr", 16)(1, "td", 30);
-    \u0275\u0275text(2);
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "td", 30);
-    \u0275\u0275text(4);
-    \u0275\u0275elementEnd();
-    \u0275\u0275template(5, CsvExportComponent_div_0_tr_39_td_5_Template, 2, 3, "td", 31);
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const result_r3 = ctx.$implicit;
-    const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance();
-    \u0275\u0275styleProp("max-width", "200px");
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", result_r3.url, " ");
-    \u0275\u0275advance();
-    \u0275\u0275styleProp("max-width", "250px");
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ", result_r3.metaDescription, " ");
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r1.includeTranslations);
-  }
-}
-function CsvExportComponent_div_0_div_40_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 32);
-    \u0275\u0275text(1);
-    \u0275\u0275pipe(2, "translate");
-    \u0275\u0275elementEnd();
-  }
-  if (rf & 2) {
-    const ctx_r1 = \u0275\u0275nextContext(2);
-    \u0275\u0275advance();
-    \u0275\u0275textInterpolate1(" ... ", \u0275\u0275pipeBind2(2, 1, "metadata.csv.andMore", \u0275\u0275pureFunction1(4, _c011, ctx_r1.results.length - 2)), " ");
-  }
-}
 function CsvExportComponent_div_0_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
@@ -21855,86 +21790,34 @@ function CsvExportComponent_div_0_Template(rf, ctx) {
     \u0275\u0275text(15);
     \u0275\u0275elementEnd()();
     \u0275\u0275template(16, CsvExportComponent_div_0_div_16_Template, 6, 4, "div", 11);
-    \u0275\u0275elementStart(17, "div", 8)(18, "span", 9);
-    \u0275\u0275text(19);
-    \u0275\u0275pipe(20, "translate");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(21, "span", 10);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(17, "div", 12)(18, "p-button", 13);
+    \u0275\u0275listener("onClick", function CsvExportComponent_div_0_Template_p_button_onClick_18_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.exportToCsv());
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(19, "div", 14)(20, "small", 15);
+    \u0275\u0275element(21, "i", 16);
     \u0275\u0275text(22);
-    \u0275\u0275elementEnd()()()();
-    \u0275\u0275elementStart(23, "div", 12)(24, "h4", 13);
-    \u0275\u0275text(25);
-    \u0275\u0275pipe(26, "translate");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(27, "div", 14)(28, "table", 15)(29, "thead")(30, "tr", 16)(31, "th", 17);
-    \u0275\u0275text(32);
-    \u0275\u0275pipe(33, "translate");
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(34, "th", 17);
-    \u0275\u0275text(35);
-    \u0275\u0275pipe(36, "translate");
-    \u0275\u0275elementEnd();
-    \u0275\u0275template(37, CsvExportComponent_div_0_th_37_Template, 3, 3, "th", 18);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(38, "tbody");
-    \u0275\u0275template(39, CsvExportComponent_div_0_tr_39_Template, 6, 7, "tr", 19);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275template(40, CsvExportComponent_div_0_div_40_Template, 3, 6, "div", 20);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(41, "div", 21)(42, "p-button", 22);
-    \u0275\u0275listener("onClick", function CsvExportComponent_div_0_Template_p_button_onClick_42_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.exportToCsv());
-    });
-    \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(43, "p-button", 23);
-    \u0275\u0275pipe(44, "translate");
-    \u0275\u0275pipe(45, "translate");
-    \u0275\u0275listener("onClick", function CsvExportComponent_div_0_Template_p_button_onClick_43_listener() {
-      \u0275\u0275restoreView(_r1);
-      const ctx_r1 = \u0275\u0275nextContext();
-      return \u0275\u0275resetView(ctx_r1.exportToCsv());
-    });
-    \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(46, "div", 24)(47, "small", 25);
-    \u0275\u0275element(48, "i", 26);
-    \u0275\u0275text(49);
-    \u0275\u0275pipe(50, "translate");
+    \u0275\u0275pipe(23, "translate");
     \u0275\u0275elementEnd()()()()();
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275advance(6);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(7, 17, "metadata.csv.description"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(7, 6, "metadata.csv.description"), " ");
     \u0275\u0275advance(6);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 19, "metadata.csv.totalUrls"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 8, "metadata.csv.totalUrls"));
     \u0275\u0275advance(3);
     \u0275\u0275textInterpolate(ctx_r1.results.length);
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", ctx_r1.includeTranslations);
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(20, 21, "metadata.csv.columns"));
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(ctx_r1.includeTranslations ? 7 : 5);
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(26, 23, "metadata.csv.preview"));
-    \u0275\u0275advance(7);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(33, 25, "metadata.csv.url"));
-    \u0275\u0275advance(3);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(36, 27, "metadata.csv.metaDescription"));
-    \u0275\u0275advance(2);
-    \u0275\u0275property("ngIf", ctx_r1.includeTranslations);
-    \u0275\u0275advance(2);
-    \u0275\u0275property("ngForOf", ctx_r1.results.slice(0, 2));
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r1.results.length > 2);
     \u0275\u0275advance(2);
     \u0275\u0275property("label", ctx_r1.getExportButtonLabel());
-    \u0275\u0275advance();
-    \u0275\u0275property("label", \u0275\u0275pipeBind1(44, 29, "metadata.csv.copyForExcel"))("outlined", true)("pTooltip", \u0275\u0275pipeBind1(45, 31, "metadata.csv.copyTooltip"));
-    \u0275\u0275advance(6);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(50, 33, "metadata.csv.note"), " ");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(23, 10, "metadata.csv.note"), " ");
   }
 }
 var CsvExportComponent = class _CsvExportComponent {
@@ -22020,14 +21903,14 @@ var CsvExportComponent = class _CsvExportComponent {
   static \u0275fac = function CsvExportComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _CsvExportComponent)(\u0275\u0275directiveInject(TranslateService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CsvExportComponent, selectors: [["ca-metadata-csv-export"]], inputs: { results: "results", includeTranslations: "includeTranslations" }, decls: 1, vars: 1, consts: [["class", "csv-export-container", 4, "ngIf"], [1, "csv-export-container"], ["pTemplate", "header"], [1, "export-content"], [1, "export-info", "mb-3"], [1, "text-sm", "text-500", "m-0"], [1, "export-stats", "mb-3", "p-3", "surface-100", "border-round"], [1, "flex", "align-items-center", "justify-content-between"], [1, "stat-item"], [1, "text-xs", "text-500", "block", "mb-1"], [1, "text-xl", "font-bold", "text-primary"], ["class", "stat-item", 4, "ngIf"], [1, "export-preview", "mb-3"], [1, "text-sm", "font-semibold", "mb-2"], [1, "preview-table", "p-2", "surface-50", "border-round"], [1, "w-full", "text-xs"], [1, "border-bottom-1", "surface-border"], [1, "text-left", "p-1"], ["class", "text-left p-1", 4, "ngIf"], ["class", "border-bottom-1 surface-border", 4, "ngFor", "ngForOf"], ["class", "text-center text-xs text-500 mt-2", 4, "ngIf"], [1, "export-actions", "flex", "gap-2"], ["icon", "pi pi-file-export", "severity", "primary", 3, "onClick", "label"], ["icon", "pi pi-copy", "severity", "secondary", 3, "onClick", "label", "outlined", "pTooltip"], [1, "export-note", "mt-3"], [1, "text-xs", "text-500"], [1, "pi", "pi-info-circle", "mr-1"], [1, "flex", "align-items-center", "p-3"], [1, "pi", "pi-download", "mr-2"], [1, "m-0"], [1, "p-1", "text-overflow-ellipsis", "white-space-nowrap", "overflow-hidden"], ["class", "p-1 text-overflow-ellipsis white-space-nowrap overflow-hidden", 3, "max-width", 4, "ngIf"], [1, "text-center", "text-xs", "text-500", "mt-2"]], template: function CsvExportComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CsvExportComponent, selectors: [["ca-metadata-csv-export"]], inputs: { results: "results", includeTranslations: "includeTranslations" }, decls: 1, vars: 1, consts: [["class", "csv-export-container", 4, "ngIf"], [1, "csv-export-container"], ["pTemplate", "header"], [1, "export-content"], [1, "export-info", "mb-3"], [1, "text-sm", "text-500", "m-0"], [1, "export-stats", "mb-3", "p-3", "surface-100", "border-round"], [1, "flex", "align-items-center", "justify-content-between"], [1, "stat-item"], [1, "text-xs", "text-500", "block", "mb-1"], [1, "text-xl", "font-bold", "text-primary"], ["class", "stat-item", 4, "ngIf"], [1, "export-actions", "flex", "gap-2"], ["icon", "pi pi-file-export", "severity", "primary", 3, "onClick", "label"], [1, "export-note", "mt-3"], [1, "text-xs", "text-500"], [1, "pi", "pi-info-circle", "mr-1"], [1, "flex", "align-items-center", "p-3"], [1, "pi", "pi-download", "mr-2"], [1, "m-0"]], template: function CsvExportComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275template(0, CsvExportComponent_div_0_Template, 51, 35, "div", 0);
+      \u0275\u0275template(0, CsvExportComponent_div_0_Template, 24, 12, "div", 0);
     }
     if (rf & 2) {
       \u0275\u0275property("ngIf", ctx.results && ctx.results.length > 0);
     }
-  }, dependencies: [CommonModule, NgForOf, NgIf, TranslateModule, TranslatePipe, ButtonModule, Button, PrimeTemplate, CardModule, Card, TooltipModule, Tooltip], styles: ["\n\n.csv-export-container[_ngcontent-%COMP%] {\n  width: 100%;\n  margin-top: 1.5rem;\n}\n.export-content[_ngcontent-%COMP%] {\n  padding: 0;\n}\n.export-stats[_ngcontent-%COMP%] {\n  background: var(--surface-100);\n}\n.stat-item[_ngcontent-%COMP%] {\n  text-align: center;\n}\n.preview-table[_ngcontent-%COMP%] {\n  overflow-x: auto;\n}\n.preview-table[_ngcontent-%COMP%]   table[_ngcontent-%COMP%] {\n  font-size: 0.75rem;\n  table-layout: fixed;\n}\n.preview-table[_ngcontent-%COMP%]   th[_ngcontent-%COMP%] {\n  font-weight: 600;\n  color: var(--text-color);\n  background: var(--surface-100);\n}\n.preview-table[_ngcontent-%COMP%]   td[_ngcontent-%COMP%] {\n  color: var(--text-color-secondary);\n}\n.text-overflow-ellipsis[_ngcontent-%COMP%] {\n  text-overflow: ellipsis;\n}\n.white-space-nowrap[_ngcontent-%COMP%] {\n  white-space: nowrap;\n}\n.overflow-hidden[_ngcontent-%COMP%] {\n  overflow: hidden;\n}\n.export-actions[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 0.5rem;\n}\n.export-note[_ngcontent-%COMP%] {\n  padding-top: 0.5rem;\n  border-top: 1px solid var(--surface-200);\n}\n.text-primary[_ngcontent-%COMP%] {\n  color: var(--primary-color);\n}\n.border-bottom-1[_ngcontent-%COMP%] {\n  border-bottom-width: 1px;\n  border-bottom-style: solid;\n}\n.surface-border[_ngcontent-%COMP%] {\n  border-color: var(--surface-border);\n}\n/*# sourceMappingURL=csv-export.component.css.map */"] });
+  }, dependencies: [CommonModule, NgIf, TranslateModule, TranslatePipe, ButtonModule, Button, PrimeTemplate, CardModule, Card, TooltipModule], styles: ["\n\n.csv-export-container[_ngcontent-%COMP%] {\n  width: 100%;\n  margin-top: 1.5rem;\n}\n.export-content[_ngcontent-%COMP%] {\n  padding: 0;\n}\n.export-stats[_ngcontent-%COMP%] {\n  background: var(--surface-100);\n}\n.stat-item[_ngcontent-%COMP%] {\n  text-align: center;\n}\n.preview-table[_ngcontent-%COMP%] {\n  overflow-x: auto;\n}\n.preview-table[_ngcontent-%COMP%]   table[_ngcontent-%COMP%] {\n  font-size: 0.75rem;\n  table-layout: fixed;\n}\n.preview-table[_ngcontent-%COMP%]   th[_ngcontent-%COMP%] {\n  font-weight: 600;\n  color: var(--text-color);\n  background: var(--surface-100);\n}\n.preview-table[_ngcontent-%COMP%]   td[_ngcontent-%COMP%] {\n  color: var(--text-color-secondary);\n}\n.text-overflow-ellipsis[_ngcontent-%COMP%] {\n  text-overflow: ellipsis;\n}\n.white-space-nowrap[_ngcontent-%COMP%] {\n  white-space: nowrap;\n}\n.overflow-hidden[_ngcontent-%COMP%] {\n  overflow: hidden;\n}\n.export-actions[_ngcontent-%COMP%] {\n  display: flex;\n  gap: 0.5rem;\n}\n.export-note[_ngcontent-%COMP%] {\n  padding-top: 0.5rem;\n  border-top: 1px solid var(--surface-200);\n}\n.text-primary[_ngcontent-%COMP%] {\n  color: var(--primary-color);\n}\n.border-bottom-1[_ngcontent-%COMP%] {\n  border-bottom-width: 1px;\n  border-bottom-style: solid;\n}\n.surface-border[_ngcontent-%COMP%] {\n  border-color: var(--surface-border);\n}\n/*# sourceMappingURL=csv-export.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CsvExportComponent, [{
@@ -22064,41 +21947,6 @@ var CsvExportComponent = class _CsvExportComponent {
             <span class="text-xs text-500 block mb-1">{{ 'metadata.csv.withTranslations' | translate }}</span>
             <span class="text-xl font-bold text-primary">{{ getTranslatedResultsCount() }}</span>
           </div>
-          <div class="stat-item">
-            <span class="text-xs text-500 block mb-1">{{ 'metadata.csv.columns' | translate }}</span>
-            <span class="text-xl font-bold text-primary">{{ includeTranslations ? 7 : 5 }}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="export-preview mb-3">
-        <h4 class="text-sm font-semibold mb-2">{{ 'metadata.csv.preview' | translate }}</h4>
-        <div class="preview-table p-2 surface-50 border-round">
-          <table class="w-full text-xs">
-            <thead>
-              <tr class="border-bottom-1 surface-border">
-                <th class="text-left p-1">{{ 'metadata.csv.url' | translate }}</th>
-                <th class="text-left p-1">{{ 'metadata.csv.metaDescription' | translate }}</th>
-                <th class="text-left p-1" *ngIf="includeTranslations">{{ 'metadata.csv.frenchDescription' | translate }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let result of results.slice(0, 2)" class="border-bottom-1 surface-border">
-                <td class="p-1 text-overflow-ellipsis white-space-nowrap overflow-hidden" [style.max-width]="'200px'">
-                  {{ result.url }}
-                </td>
-                <td class="p-1 text-overflow-ellipsis white-space-nowrap overflow-hidden" [style.max-width]="'250px'">
-                  {{ result.metaDescription }}
-                </td>
-                <td class="p-1 text-overflow-ellipsis white-space-nowrap overflow-hidden" [style.max-width]="'250px'" *ngIf="includeTranslations">
-                  {{ result.frenchTranslatedDescription || '-' }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="text-center text-xs text-500 mt-2" *ngIf="results.length > 2">
-            ... {{ 'metadata.csv.andMore' | translate: {count: results.length - 2} }}
-          </div>
         </div>
       </div>
 
@@ -22107,14 +21955,6 @@ var CsvExportComponent = class _CsvExportComponent {
           [label]="getExportButtonLabel()"
           icon="pi pi-file-export"
           severity="primary"
-          (onClick)="exportToCsv()">
-        </p-button>
-        <p-button 
-          [label]="'metadata.csv.copyForExcel' | translate"
-          icon="pi pi-copy"
-          severity="secondary"
-          [outlined]="true"
-          [pTooltip]="'metadata.csv.copyTooltip' | translate"
           (onClick)="exportToCsv()">
         </p-button>
       </div>
@@ -23496,7 +23336,7 @@ var routes = [
       }
       return true;
     }],
-    loadComponent: () => import("./chunk-FI4GJSN5.js").then((m) => m.PageAssistantCompareComponent)
+    loadComponent: () => import("./chunk-7XCWMMLX.js").then((m) => m.PageAssistantCompareComponent)
   },
   {
     path: "page-assistant/share",
@@ -23740,7 +23580,7 @@ var HeaderComponent = class _HeaderComponent {
 })();
 
 // src/app/template/sidebar.component.ts
-var _c012 = () => ["/"];
+var _c011 = () => ["/"];
 var _c111 = () => ["/page-assistant"];
 var _c23 = () => ["/image-assistant"];
 var _c33 = () => ["/translation-assistant"];
@@ -23856,7 +23696,7 @@ var SidebarComponent = class _SidebarComponent {
     }
     if (rf & 2) {
       \u0275\u0275advance(3);
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(52, _c012));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(52, _c011));
       \u0275\u0275advance(4);
       \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 28, "title.landing"));
       \u0275\u0275advance(5);

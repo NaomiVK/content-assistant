@@ -64,6 +64,7 @@ import {
   NgStyle,
   NgSwitch,
   NgSwitchCase,
+  NgSwitchDefault,
   NgTemplateOutlet,
   OverlayService,
   Paginator,
@@ -164,7 +165,7 @@ import {
   unblockBodyScroll,
   uuid,
   zindexutils
-} from "./chunk-GL6NV25R.js";
+} from "./chunk-MGJSQWAK.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -29539,7 +29540,7 @@ function HeadingStructureComponent_ng_template_3_Template(rf, ctx) {
     \u0275\u0275advance();
     \u0275\u0275property("ngClass", ctx_r5.getTextClass(rowData_r4))("ngStyle", ctx_r5.getTextStyle(rowData_r4));
     \u0275\u0275advance();
-    \u0275\u0275textInterpolate(rowData_r4.text);
+    \u0275\u0275textInterpolate1(" ", rowData_r4.text, " ");
   }
 }
 var HeadingStructureComponent = class _HeadingStructureComponent {
@@ -29659,31 +29660,42 @@ var HeadingStructureComponent = class _HeadingStructureComponent {
       TranslateModule,
       TableModule,
       ButtonModule
-    ], template: `<p-table [columns]="cols" [value]="headings"
-         size="small" stripedRows [tableStyle]="{ 'min-width': '50rem' }"
-         [reorderableColumns]="true"
-         selectionMode="single" [(selection)]="selectedHeading" dataKey="order" metaKeySelection="false">
-    <ng-template #header let-columns>
-        <tr>
-            <th style="width:3rem"></th>
-            <th *ngFor="let col of columns">
-                {{ col.header }}
-            </th>
-            <th>Action</th>
-        </tr>
-    </ng-template>
-    <ng-template #body let-rowData let-columns="columns" let-index="rowIndex">
-        <tr [pReorderableRow]="index" [pSelectableRow]="rowData">
-            <td>
-                <span class="pi pi-bars" pReorderableRowHandle></span>
-            </td>
-            <td>{{ rowData.order }}</td>
-            <td>{{ rowData.type }}</td>
-            <td [ngClass]="getTextClass(rowData)" [ngStyle]="getTextStyle(rowData)">{{ rowData.text }}</td>
-            <td>Add buttons!</td>
-        </tr>
-    </ng-template>
-</p-table>` }]
+    ], template: `<p-table
+  [columns]="cols"
+  [value]="headings"
+  size="small"
+  stripedRows
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [reorderableColumns]="true"
+  selectionMode="single"
+  [(selection)]="selectedHeading"
+  dataKey="order"
+  metaKeySelection="false"
+>
+  <ng-template #header let-columns>
+    <tr>
+      <th style="width: 3rem"></th>
+      <th *ngFor="let col of columns">
+        {{ col.header }}
+      </th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-rowData let-columns="columns" let-index="rowIndex">
+    <tr [pReorderableRow]="index" [pSelectableRow]="rowData">
+      <td>
+        <span class="pi pi-bars" pReorderableRowHandle></span>
+      </td>
+      <td>{{ rowData.order }}</td>
+      <td>{{ rowData.type }}</td>
+      <td [ngClass]="getTextClass(rowData)" [ngStyle]="getTextStyle(rowData)">
+        {{ rowData.text }}
+      </td>
+      <td>Add buttons!</td>
+    </tr>
+  </ng-template>
+</p-table>
+` }]
   }], () => [{ type: UploadStateService }, { type: TranslateService }], null);
 })();
 (() => {
@@ -45394,26 +45406,562 @@ var UserInsightsComponent = class _UserInsightsComponent {
 })();
 
 // src/app/views/page-assistant/components/tools/link-report.component.ts
+var _c016 = () => ({ "min-width": "50rem" });
+function LinkReportComponent_ng_template_1_th_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "th");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const col_r1 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(col_r1.header);
+  }
+}
+function LinkReportComponent_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr");
+    \u0275\u0275element(1, "th", 3);
+    \u0275\u0275template(2, LinkReportComponent_ng_template_1_th_2_Template, 2, 1, "th", 4);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngForOf", ctx_r1.cols);
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const rowData_r3 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(rowData_r3.order);
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const rowData_r3 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(rowData_r3.type);
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_4_div_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 15);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const rowData_r3 = \u0275\u0275nextContext(3).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1("(", rowData_r3.href, ")");
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 13);
+    \u0275\u0275text(1);
+    \u0275\u0275template(2, LinkReportComponent_ng_template_2_td_3_span_4_div_2_Template, 2, 1, "div", 14);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const rowData_r3 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngClass", ctx_r1.getTextClass(rowData_r3))("ngStyle", ctx_r1.getTextStyle(rowData_r3));
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", rowData_r3.text, " ");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", rowData_r3.href);
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 16);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const rowData_r3 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", rowData_r3.destH1 || "\u2014", " ");
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_6_i_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 21);
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_6_i_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 22);
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_6_i_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 23);
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 17);
+    \u0275\u0275template(1, LinkReportComponent_ng_template_2_td_3_span_6_i_1_Template, 1, 0, "i", 18)(2, LinkReportComponent_ng_template_2_td_3_span_6_i_2_Template, 1, 0, "i", 19)(3, LinkReportComponent_ng_template_2_td_3_span_6_i_3_Template, 1, 0, "i", 20);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const rowData_r3 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", rowData_r3.matchStatus === "match");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", rowData_r3.matchStatus === "mismatch");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", rowData_r3.matchStatus === "unknown" || rowData_r3.matchStatus === "na");
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_span_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const col_r4 = \u0275\u0275nextContext().$implicit;
+    const rowData_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(rowData_r3[col_r4.field]);
+  }
+}
+function LinkReportComponent_ng_template_2_td_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "td");
+    \u0275\u0275elementContainerStart(1, 7);
+    \u0275\u0275template(2, LinkReportComponent_ng_template_2_td_3_span_2_Template, 2, 1, "span", 8)(3, LinkReportComponent_ng_template_2_td_3_span_3_Template, 2, 1, "span", 8)(4, LinkReportComponent_ng_template_2_td_3_span_4_Template, 3, 4, "span", 9)(5, LinkReportComponent_ng_template_2_td_3_span_5_Template, 2, 1, "span", 10)(6, LinkReportComponent_ng_template_2_td_3_span_6_Template, 4, 3, "span", 11)(7, LinkReportComponent_ng_template_2_td_3_span_7_Template, 2, 1, "span", 12);
+    \u0275\u0275elementContainerEnd();
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const col_r4 = ctx.$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275property("ngSwitch", col_r4.field);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngSwitchCase", "order");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngSwitchCase", "type");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngSwitchCase", "text");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngSwitchCase", "destH1");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngSwitchCase", "matchStatus");
+  }
+}
+function LinkReportComponent_ng_template_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr", 5)(1, "td");
+    \u0275\u0275element(2, "span", 6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(3, LinkReportComponent_ng_template_2_td_3_Template, 8, 6, "td", 4);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const rowData_r3 = ctx.$implicit;
+    const rowIndex_r5 = ctx.rowIndex;
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("pReorderableRow", rowIndex_r5)("pSelectableRow", rowData_r3);
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngForOf", ctx_r1.cols);
+  }
+}
 var LinkReportComponent = class _LinkReportComponent {
+  uploadState;
+  constructor(uploadState) {
+    this.uploadState = uploadState;
+  }
+  // table data & selection
+  headings = [];
+  selectedHeading;
+  // 5 columns exactly
+  cols = [
+    { field: "order", header: "Index" },
+    { field: "type", header: "Link Type" },
+    { field: "text", header: "Link name on page" },
+    { field: "destH1", header: "Destination link header (H1)" },
+    { field: "matchStatus", header: "Match" }
+  ];
+  sourceVersion = "original";
+  concurrency = 4;
+  // Origin of the page being analyzed (from upload state / base tag / pageUrl)
+  baseOrigin = null;
+  ngOnInit() {
+    this.extractLinks();
+  }
+  extractLinks() {
+    return __async(this, null, function* () {
+      const { html, baseUrl } = this.getHtmlToAnalyze();
+      if (!html) {
+        this.headings = [];
+        return;
+      }
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const anchors = Array.from(doc.querySelectorAll("body a[href]"));
+      this.headings = anchors.map((a, i) => {
+        const href = (a.getAttribute("href") || "").trim();
+        const absUrl = this.resolveUrl(href, baseUrl);
+        const text = (a.textContent || a.getAttribute("aria-label") || a.title || "").trim();
+        const type = this.classify(href, absUrl);
+        let destH1 = null;
+        let matchStatus = "unknown";
+        if (type === "anchor") {
+          const h1 = doc.querySelector("h1");
+          destH1 = h1 ? (h1.textContent || "").trim() : null;
+          matchStatus = this.smartMatch(text, destH1);
+        } else if (type === "mailto" || type === "tel" || type === "file") {
+          matchStatus = "na";
+        } else if (type === "external") {
+          const { guess, pathTokens } = this.smartSlugGuess(text, absUrl || href);
+          destH1 = guess;
+          matchStatus = this.smartMatch(text, destH1, pathTokens);
+        }
+        return {
+          order: i + 1,
+          type,
+          text,
+          href,
+          absUrl,
+          destH1,
+          matchStatus
+        };
+      });
+      const tasks = this.headings.filter((r) => r.type === "internal" && !r.destH1 && r.absUrl && this.isSameOrigin(r.absUrl)).map((r) => () => this.resolveDestH1(r));
+      yield this.runWithConcurrency(tasks, this.concurrency);
+    });
+  }
+  // ---------- helpers (no server required) ----------
+  getHtmlToAnalyze() {
+    const data = this.uploadState.getUploadData?.();
+    if (!data)
+      return { html: null, baseUrl: null };
+    const html = (this.sourceVersion === "modified" ? data.modifiedHtml : data.originalHtml) || null;
+    let baseUrl = null;
+    if (html) {
+      try {
+        const tmp = new DOMParser().parseFromString(html, "text/html");
+        const b = tmp.querySelector("base[href]")?.getAttribute("href")?.trim();
+        if (b)
+          baseUrl = b;
+      } catch {
+      }
+    }
+    if (!baseUrl && data.pageUrl)
+      baseUrl = data.pageUrl;
+    this.baseOrigin = null;
+    if (baseUrl) {
+      try {
+        this.baseOrigin = new URL(baseUrl).origin;
+      } catch {
+      }
+    }
+    return { html, baseUrl };
+  }
+  resolveUrl(href, baseUrl) {
+    try {
+      if (!href)
+        return null;
+      if (href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:"))
+        return href;
+      if (baseUrl)
+        return new URL(href, baseUrl).toString();
+      return new URL(href).toString();
+    } catch {
+      return null;
+    }
+  }
+  classify(href, absUrl) {
+    if (!href)
+      return "internal";
+    if (href.startsWith("#"))
+      return "anchor";
+    if (href.startsWith("mailto:"))
+      return "mailto";
+    if (href.startsWith("tel:"))
+      return "tel";
+    if (/\.(pdf|docx?|pptx?|xlsx?|zip)$/i.test(href))
+      return "file";
+    if (/^https?:\/\//i.test(href)) {
+      if (absUrl && this.baseOrigin) {
+        try {
+          return new URL(absUrl).origin === this.baseOrigin ? "internal" : "external";
+        } catch {
+          return "external";
+        }
+      }
+      return "external";
+    }
+    return "internal";
+  }
+  isSameOrigin(absUrl) {
+    try {
+      return this.baseOrigin ? new URL(absUrl).origin === this.baseOrigin : false;
+    } catch {
+      return false;
+    }
+  }
+  // same-origin internal: fetch and compute match against real H1
+  resolveDestH1(row) {
+    return __async(this, null, function* () {
+      if (!row.absUrl)
+        return;
+      try {
+        const resp = yield fetch(row.absUrl, { credentials: "same-origin" });
+        if (!resp.ok)
+          throw new Error("fetch failed");
+        const html = yield resp.text();
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const h1 = doc.querySelector("h1");
+        row.destH1 = h1 ? (h1.textContent || "").trim() : null;
+        row.matchStatus = this.smartMatch(row.text, row.destH1);
+      } catch {
+        if (!row.destH1)
+          row.matchStatus = "unknown";
+      }
+    });
+  }
+  // ---------- smart slug + smart match ----------
+  /** Normalize: strip accents, lowercase, treat /-_ as separators, remove punctuation */
+  normalizeText(s) {
+    return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[\/\-_]+/g, " ").replace(/[^\p{L}\p{N}\s]/gu, " ").replace(/\s+/g, " ").trim();
+  }
+  /** Tokenize & drop light stopwords */
+  tokenize(s) {
+    const STOP = /* @__PURE__ */ new Set([
+      "a",
+      "an",
+      "the",
+      "for",
+      "to",
+      "of",
+      "and",
+      "or",
+      "on",
+      "in",
+      "with",
+      "your",
+      "program",
+      "account",
+      "information",
+      "returns",
+      "return",
+      "services",
+      "service",
+      "tax",
+      "taxes",
+      "business",
+      "businesses",
+      "topics",
+      "en",
+      "fr"
+    ]);
+    return this.normalizeText(s).split(" ").filter((w) => w && !STOP.has(w));
+  }
+  /** Decode path segments and strip common extensions */
+  pathSegments(urlStr) {
+    if (!urlStr)
+      return [];
+    try {
+      const u = new URL(urlStr);
+      const raw = u.pathname.split("/").filter(Boolean);
+      return raw.map((seg) => decodeURIComponent(seg).replace(/\.(html?|php|aspx?)$/i, ""));
+    } catch {
+      return [];
+    }
+  }
+  /**
+   * Smart slug guess:
+   * - score each segment against link text (coverage + Jaccard)
+   * - return best segment as guess, plus all path tokens for matching
+   */
+  smartSlugGuess(linkText, absUrl) {
+    const linkTokens = this.tokenize(linkText);
+    const segs = this.pathSegments(absUrl);
+    let bestGuess = null;
+    let bestScore = -1;
+    const allTokens = /* @__PURE__ */ new Set();
+    for (const seg of segs) {
+      const segTokens = this.tokenize(seg);
+      for (const t of segTokens)
+        allTokens.add(t);
+      if (linkTokens.length) {
+        const cover = linkTokens.filter((t) => segTokens.includes(t)).length / linkTokens.length;
+        const setL = new Set(linkTokens);
+        const setS = new Set(segTokens);
+        const inter = [...setL].filter((w) => setS.has(w)).length;
+        const union = (/* @__PURE__ */ new Set([...setL, ...setS])).size || 1;
+        const jacc = inter / union;
+        const score = cover * 0.7 + jacc * 0.3;
+        if (score > bestScore) {
+          bestScore = score;
+          bestGuess = segTokens.join(" ") || seg;
+        }
+      }
+    }
+    if (!bestGuess && segs.length) {
+      const lastTokens = this.tokenize(segs[segs.length - 1]);
+      bestGuess = lastTokens.join(" ") || segs[segs.length - 1] || null;
+      for (const t of lastTokens)
+        allTokens.add(t);
+    }
+    return { guess: bestGuess, pathTokens: allTokens };
+  }
+  /** Token-aware loose match: exact → containment (with path tokens) → Jaccard */
+  smartMatch(linkText, candidate, extraTokens) {
+    if (!candidate && (!extraTokens || extraTokens.size === 0))
+      return "unknown";
+    const A = this.tokenize(linkText);
+    const B = this.tokenize(candidate || "");
+    if (A.length === 0)
+      return "unknown";
+    if (this.normalizeText(linkText) === this.normalizeText(candidate || ""))
+      return "match";
+    const basket = new Set(B);
+    if (extraTokens)
+      for (const t of extraTokens)
+        basket.add(t);
+    const allIn = A.every((t) => basket.has(t));
+    if (allIn)
+      return "match";
+    const setA = new Set(A);
+    const setB = new Set(B);
+    const inter = [...setA].filter((w) => setB.has(w)).length;
+    const union = (/* @__PURE__ */ new Set([...setA, ...setB])).size || 1;
+    const j = inter / union;
+    return j >= 0.6 ? "match" : "mismatch";
+  }
+  // Concurrency runner
+  runWithConcurrency(tasks, limit) {
+    return __async(this, null, function* () {
+      const q = tasks.slice();
+      const workers = [];
+      for (let i = 0; i < Math.min(limit, q.length); i++) {
+        workers.push((() => __async(null, null, function* () {
+          while (q.length)
+            yield q.shift()();
+        }))());
+      }
+      yield Promise.all(workers);
+    });
+  }
+  // style hooks used by template
+  getTextStyle(_row) {
+    return {};
+  }
+  getTextClass(_row) {
+    return {};
+  }
   static \u0275fac = function LinkReportComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _LinkReportComponent)();
+    return new (__ngFactoryType__ || _LinkReportComponent)(\u0275\u0275directiveInject(UploadStateService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LinkReportComponent, selectors: [["ca-link-report"]], decls: 2, vars: 0, consts: [[1, "m-0"]], template: function LinkReportComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LinkReportComponent, selectors: [["ca-link-report"]], decls: 3, vars: 4, consts: [["size", "small", "stripedRows", "", "selectionMode", "single", "dataKey", "order", "metaKeySelection", "false", 3, "selectionChange", "value", "tableStyle", "selection"], ["pTemplate", "header"], ["pTemplate", "body"], [2, "width", "3rem"], [4, "ngFor", "ngForOf"], [3, "pReorderableRow", "pSelectableRow"], ["pReorderableRowHandle", "", 1, "pi", "pi-bars"], [3, "ngSwitch"], [4, "ngSwitchCase"], [3, "ngClass", "ngStyle", 4, "ngSwitchCase"], ["class", "break-all", 4, "ngSwitchCase"], ["class", "flex justify-center", 4, "ngSwitchCase"], [4, "ngSwitchDefault"], [3, "ngClass", "ngStyle"], ["class", "muted", 4, "ngIf"], [1, "muted"], [1, "break-all"], [1, "flex", "justify-center"], ["class", "pi pi-check-circle text-ok", "title", "Match", 4, "ngIf"], ["class", "pi pi-times-circle text-bad", "title", "Mismatch", 4, "ngIf"], ["class", "pi pi-question-circle text-unk", "title", "Unknown", 4, "ngIf"], ["title", "Match", 1, "pi", "pi-check-circle", "text-ok"], ["title", "Mismatch", 1, "pi", "pi-times-circle", "text-bad"], ["title", "Unknown", 1, "pi", "pi-question-circle", "text-unk"]], template: function LinkReportComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "p", 0);
-      \u0275\u0275text(1, "Unfinished. Check status of links on page and if destination text matches link text.");
+      \u0275\u0275elementStart(0, "p-table", 0);
+      \u0275\u0275twoWayListener("selectionChange", function LinkReportComponent_Template_p_table_selectionChange_0_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.selectedHeading, $event) || (ctx.selectedHeading = $event);
+        return $event;
+      });
+      \u0275\u0275template(1, LinkReportComponent_ng_template_1_Template, 3, 1, "ng-template", 1)(2, LinkReportComponent_ng_template_2_Template, 4, 3, "ng-template", 2);
       \u0275\u0275elementEnd();
     }
-  }, encapsulation: 2 });
+    if (rf & 2) {
+      \u0275\u0275property("value", ctx.headings)("tableStyle", \u0275\u0275pureFunction0(3, _c016));
+      \u0275\u0275twoWayProperty("selection", ctx.selectedHeading);
+    }
+  }, dependencies: [CommonModule, NgClass, NgForOf, NgIf, NgStyle, NgSwitch, NgSwitchCase, NgSwitchDefault, FormsModule, TableModule, Table, PrimeTemplate, SelectableRow, ReorderableRowHandle, ReorderableRow], styles: ["\n\n.text-ok[_ngcontent-%COMP%] {\n  color: #16a34a;\n}\n.text-bad[_ngcontent-%COMP%] {\n  color: #dc2626;\n}\n.text-unk[_ngcontent-%COMP%] {\n  color: #64748b;\n}\n.break-all[_ngcontent-%COMP%] {\n  word-break: break-all;\n}\n.muted[_ngcontent-%COMP%] {\n  color: #6b7280;\n  font-size: 12px;\n}\n.flex[_ngcontent-%COMP%] {\n  display: flex;\n}\n.justify-center[_ngcontent-%COMP%] {\n  justify-content: center;\n}\n/*# sourceMappingURL=link-report.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LinkReportComponent, [{
     type: Component,
-    args: [{ selector: "ca-link-report", imports: [], template: '<p class="m-0">Unfinished. Check status of links on page and if destination text matches link text.</p>' }]
-  }], null, null);
+    args: [{ selector: "ca-link-report", standalone: true, imports: [CommonModule, FormsModule, TableModule], template: `<p-table
+  [value]="headings"
+  size="small"
+  stripedRows
+  [tableStyle]="{ 'min-width': '50rem' }"
+  selectionMode="single"
+  [(selection)]="selectedHeading"
+  dataKey="order"
+  metaKeySelection="false"
+>
+  <!-- \u53EA\u7528\u4F60\u81EA\u5DF1\u7684 cols \u6E32\u67D3\u8868\u5934 -->
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem"></th>
+      <th *ngFor="let col of cols">{{ col.header }}</th>
+    </tr>
+  </ng-template>
+
+  <!-- \u53EA\u7528\u4F60\u81EA\u5DF1\u7684 cols \u6E32\u67D3\u8868\u4F53 -->
+  <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+    <tr [pReorderableRow]="rowIndex" [pSelectableRow]="rowData">
+      <td><span class="pi pi-bars" pReorderableRowHandle></span></td>
+
+      <td *ngFor="let col of cols">
+        <ng-container [ngSwitch]="col.field">
+          <span *ngSwitchCase="'order'">{{ rowData.order }}</span>
+          <span *ngSwitchCase="'type'">{{ rowData.type }}</span>
+
+          <span
+            *ngSwitchCase="'text'"
+            [ngClass]="getTextClass(rowData)"
+            [ngStyle]="getTextStyle(rowData)"
+          >
+            {{ rowData.text }}
+            <div class="muted" *ngIf="rowData.href">({{ rowData.href }})</div>
+          </span>
+
+          <span *ngSwitchCase="'destH1'" class="break-all">
+            {{ rowData.destH1 || "\u2014" }}
+          </span>
+
+          <span *ngSwitchCase="'matchStatus'" class="flex justify-center">
+            <i
+              *ngIf="rowData.matchStatus === 'match'"
+              class="pi pi-check-circle text-ok"
+              title="Match"
+            ></i>
+            <i
+              *ngIf="rowData.matchStatus === 'mismatch'"
+              class="pi pi-times-circle text-bad"
+              title="Mismatch"
+            ></i>
+            <i
+              *ngIf="
+                rowData.matchStatus === 'unknown' ||
+                rowData.matchStatus === 'na'
+              "
+              class="pi pi-question-circle text-unk"
+              title="Unknown"
+            ></i>
+          </span>
+
+          <span *ngSwitchDefault>{{ rowData[col.field] }}</span>
+        </ng-container>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+`, styles: ["/* angular:styles/component:css;fbb9b1e938c6e536662de9e9abb3c037d6f99e568d5c1313dece8acd203a770f;/home/naomi/content-assistant/src/app/views/page-assistant/components/tools/link-report.component.ts */\n.text-ok {\n  color: #16a34a;\n}\n.text-bad {\n  color: #dc2626;\n}\n.text-unk {\n  color: #64748b;\n}\n.break-all {\n  word-break: break-all;\n}\n.muted {\n  color: #6b7280;\n  font-size: 12px;\n}\n.flex {\n  display: flex;\n}\n.justify-center {\n  justify-content: center;\n}\n/*# sourceMappingURL=link-report.component.css.map */\n"] }]
+  }], () => [{ type: UploadStateService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LinkReportComponent, { className: "LinkReportComponent", filePath: "src/app/views/page-assistant/components/tools/link-report.component.ts", lineNumber: 9 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LinkReportComponent, { className: "LinkReportComponent", filePath: "src/app/views/page-assistant/components/tools/link-report.component.ts", lineNumber: 58 });
 })();
 
 // src/app/views/page-assistant/components/tools/template-conversion.component.ts
@@ -46770,7 +47318,7 @@ var ShadowDomService = class _ShadowDomService {
 })();
 
 // src/app/views/page-assistant/page-assistant.component.ts
-var _c016 = ["liveContainer"];
+var _c017 = ["liveContainer"];
 var _c121 = ["sourceContainer"];
 var _c214 = () => ({ "ariaLabel": "Accept selected changes" });
 var _c314 = () => ({ "ariaLabel": "More accept options" });
@@ -47650,7 +48198,7 @@ ${base}`;
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PageAssistantCompareComponent, selectors: [["ca-page-assistant-compare"]], viewQuery: function PageAssistantCompareComponent_Query(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275viewQuery(_c016, 5);
+      \u0275\u0275viewQuery(_c017, 5);
       \u0275\u0275viewQuery(_c121, 5);
     }
     if (rf & 2) {
@@ -47922,4 +48470,4 @@ ${base}`;
 export {
   PageAssistantCompareComponent
 };
-//# sourceMappingURL=chunk-FI4GJSN5.js.map
+//# sourceMappingURL=chunk-7XCWMMLX.js.map
