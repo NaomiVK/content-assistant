@@ -22456,7 +22456,7 @@ Mots-cl\xE9s:`;
     if (!apiKey) {
       return throwError(() => new Error("API key not configured"));
     }
-    const translationModel = "mistralai/mistral-small:free";
+    const translationModel = "mistralai/mistral-small-3.2-24b-instruct:free";
     const descriptionPrompt = `You are a professional translator specializing in Canadian government content. Translate the following English meta description to French, maintaining the formal tone used by the Canada Revenue Agency (CRA). 
 
 Important CRA-specific terminology:
