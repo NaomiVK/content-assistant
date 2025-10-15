@@ -10,7 +10,7 @@ import {
   style,
   ɵPRE_STYLE,
   ɵɵdefineInjectable
-} from "./chunk-6G6LGOOB.js";
+} from "./chunk-RKAZV3NI.js";
 import {
   __objRest,
   __spreadValues
@@ -4109,9 +4109,9 @@ export {
 @angular/animations/fesm2022/util-D9FfmVnv.mjs:
 @angular/animations/fesm2022/browser.mjs:
   (**
-   * @license Angular v19.2.14
+   * @license Angular v19.2.15
    * (c) 2010-2025 Google LLC. https://angular.io/
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-3OQKL2GE.js.map
+//# sourceMappingURL=chunk-2UCOXLIO.js.map

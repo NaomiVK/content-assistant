@@ -735,6 +735,7 @@ var require_mammoth_browser = __commonJS({
           var Result = require2("../results").Result;
           var warning = require2("../results").warning;
           var xml = require2("../xml");
+          var transforms = require2("../transforms");
           var uris = require2("./uris");
           function createBodyReader(options) {
             return {
@@ -1073,16 +1074,33 @@ var require_mammoth_browser = __commonJS({
                 return readChildElements(element.firstOrEmpty("mc:Fallback"));
               },
               "w:sdt": function(element) {
-                var checkbox = element.firstOrEmpty("w:sdtPr").first("wordml:checkbox");
-                if (checkbox) {
-                  var checkedElement = checkbox.first("wordml:checked");
-                  var isChecked = !!checkedElement && readBooleanAttributeValue(checkedElement.attributes["wordml:val"]);
-                  return elementResult(documents.checkbox({
-                    checked: isChecked
-                  }));
-                } else {
-                  return readXmlElements(element.firstOrEmpty("w:sdtContent").children);
-                }
+                var contentResult = readXmlElements(element.firstOrEmpty("w:sdtContent").children);
+                return contentResult.map(function(content) {
+                  var checkbox = element.firstOrEmpty("w:sdtPr").first("wordml:checkbox");
+                  if (checkbox) {
+                    var checkedElement = checkbox.first("wordml:checked");
+                    var isChecked = !!checkedElement && readBooleanAttributeValue(checkedElement.attributes["wordml:val"]);
+                    var documentCheckbox = documents.checkbox({
+                      checked: isChecked
+                    });
+                    var hasCheckbox = false;
+                    var replacedContent = content.map(transforms._elementsOfType(documents.types.text, function(text) {
+                      if (text.value.length > 0 && !hasCheckbox) {
+                        hasCheckbox = true;
+                        return documentCheckbox;
+                      } else {
+                        return text;
+                      }
+                    }));
+                    if (hasCheckbox) {
+                      return replacedContent;
+                    } else {
+                      return documentCheckbox;
+                    }
+                  } else {
+                    return content;
+                  }
+                });
               },
               "w:ins": readChildElements,
               "w:object": readChildElements,
@@ -1123,6 +1141,10 @@ var require_mammoth_browser = __commonJS({
             }
             function readTableRow(element) {
               var properties = element.firstOrEmpty("w:trPr");
+              var isDeleted = !!properties.first("w:del");
+              if (isDeleted) {
+                return emptyResult();
+              }
               var isHeader = !!properties.first("w:tblHeader");
               return readXmlElements(element.children).map(function(children) {
                 return documents.TableRow(children, {
@@ -1156,6 +1178,7 @@ var require_mammoth_browser = __commonJS({
                 return row.type !== documents.types.tableRow;
               });
               if (unexpectedNonRows) {
+                removeVMergeProperties(rows);
                 return elementResultWithMessages(rows, [warning("unexpected non-row element in table, cell merging may be incorrect")]);
               }
               var unexpectedNonCells = _.any(rows, function(row) {
@@ -1164,6 +1187,7 @@ var require_mammoth_browser = __commonJS({
                 });
               });
               if (unexpectedNonCells) {
+                removeVMergeProperties(rows);
                 return elementResultWithMessages(rows, [warning("unexpected non-cell element in table row, cell merging may be incorrect")]);
               }
               var columns = {};
@@ -1188,6 +1212,14 @@ var require_mammoth_browser = __commonJS({
                 });
               });
               return elementResult(rows);
+            }
+            function removeVMergeProperties(rows) {
+              rows.forEach(function(row) {
+                var cells = transforms.getDescendantsOfType(row, documents.types.tableCell);
+                cells.forEach(function(cell) {
+                  delete cell._vMerge;
+                });
+              });
             }
             function readDrawingElement(element) {
               var blips = element.getElementsByTagName("a:graphic").getElementsByTagName("a:graphicData").getElementsByTagName("pic:pic").getElementsByTagName("pic:blipFill").getElementsByTagName("a:blip");
@@ -1261,6 +1293,9 @@ var require_mammoth_browser = __commonJS({
               if (levelByStyleId != null) {
                 return levelByStyleId;
               }
+            }
+            if (numId !== void 0) {
+              return numbering.findLevel(numId, "0");
             }
             return null;
           }
@@ -1352,6 +1387,7 @@ var require_mammoth_browser = __commonJS({
         }, {
           "../documents": 4,
           "../results": 25,
+          "../transforms": 30,
           "../xml": 35,
           "./uris": 16,
           "dingbat-to-unicode": 85,
@@ -1482,13 +1518,18 @@ var require_mammoth_browser = __commonJS({
           var notesReader = require2("./notes-reader");
           var commentsReader = require2("./comments-reader");
           var Files = require2("./files").Files;
-          function read(docxFile, input) {
+          function read(docxFile, input, options) {
             input = input || {};
+            options = options || {};
+            var files = new Files({
+              externalFileAccess: options.externalFileAccess,
+              relativeToFile: input.path
+            });
             return promises.props({
               contentTypes: readContentTypesFromZipFile(docxFile),
               partPaths: findPartPaths(docxFile),
               docxFile,
-              files: input.path ? Files.relativeToFile(input.path) : new Files(null)
+              files
             }).also(function(result) {
               return {
                 styles: readStylesFromZipFile(docxFile, result.partPaths.styles)
@@ -1765,16 +1806,29 @@ var require_mammoth_browser = __commonJS({
           }
           function readAbstractNum(element) {
             var levels = {};
+            var levelWithoutIndex = null;
             element.getElementsByTagName("w:lvl").forEach(function(levelElement) {
               var levelIndex = levelElement.attributes["w:ilvl"];
               var numFmt = levelElement.firstOrEmpty("w:numFmt").attributes["w:val"];
+              var isOrdered = numFmt !== "bullet";
               var paragraphStyleId = levelElement.firstOrEmpty("w:pStyle").attributes["w:val"];
-              levels[levelIndex] = {
-                isOrdered: numFmt !== "bullet",
-                level: levelIndex,
-                paragraphStyleId
-              };
+              if (levelIndex === void 0) {
+                levelWithoutIndex = {
+                  isOrdered,
+                  level: "0",
+                  paragraphStyleId
+                };
+              } else {
+                levels[levelIndex] = {
+                  isOrdered,
+                  level: levelIndex,
+                  paragraphStyleId
+                };
+              }
             });
+            if (levelWithoutIndex !== null && levels[levelWithoutIndex.level] === void 0) {
+              levels[levelWithoutIndex.level] = levelWithoutIndex;
+            }
             var numStyleLink = element.firstOrEmpty("w:numStyleLink").attributes["w:val"];
             return {
               levels,
@@ -1995,40 +2049,47 @@ var require_mammoth_browser = __commonJS({
             var styles = {
               "paragraph": paragraphStyles,
               "character": characterStyles,
-              "table": tableStyles
+              "table": tableStyles,
+              "numbering": numberingStyles
             };
             root.getElementsByTagName("w:style").forEach(function(styleElement) {
               var style = readStyleElement(styleElement);
-              if (style.type === "numbering") {
-                numberingStyles[style.styleId] = readNumberingStyleElement(styleElement);
-              } else {
-                var styleSet = styles[style.type];
-                if (styleSet) {
-                  styleSet[style.styleId] = style;
-                }
+              var styleSet = styles[style.type];
+              if (styleSet && styleSet[style.styleId] === void 0) {
+                styleSet[style.styleId] = style;
               }
             });
             return new Styles(paragraphStyles, characterStyles, tableStyles, numberingStyles);
           }
           function readStyleElement(styleElement) {
             var type = styleElement.attributes["w:type"];
-            var styleId = styleElement.attributes["w:styleId"];
-            var name = styleName(styleElement);
-            return {
-              type,
-              styleId,
-              name
-            };
+            if (type === "numbering") {
+              return readNumberingStyleElement(type, styleElement);
+            } else {
+              var styleId = readStyleId(styleElement);
+              var name = styleName(styleElement);
+              return {
+                type,
+                styleId,
+                name
+              };
+            }
           }
           function styleName(styleElement) {
             var nameElement = styleElement.first("w:name");
             return nameElement ? nameElement.attributes["w:val"] : null;
           }
-          function readNumberingStyleElement(styleElement) {
+          function readNumberingStyleElement(type, styleElement) {
+            var styleId = readStyleId(styleElement);
             var numId = styleElement.firstOrEmpty("w:pPr").firstOrEmpty("w:numPr").firstOrEmpty("w:numId").attributes["w:val"];
             return {
-              numId
+              type,
+              numId,
+              styleId
             };
+          }
+          function readStyleId(styleElement) {
+            return styleElement.attributes["w:styleId"];
           }
         }, {}],
         16: [function(require2, module2, exports2) {
@@ -2276,7 +2337,7 @@ var require_mammoth_browser = __commonJS({
                   options.embeddedStyleMap = styleMap;
                 });
               }).then(function(docxFile) {
-                return docxReader.read(docxFile, input).then(function(documentResult) {
+                return docxReader.read(docxFile, input, options).then(function(documentResult) {
                   return documentResult.map(options.transformDocument);
                 }).then(function(documentResult) {
                   return convertDocumentToHtml(documentResult, options);
@@ -2367,6 +2428,9 @@ var require_mammoth_browser = __commonJS({
             "p[style-name='heading 4'] => h4:fresh",
             "p[style-name='heading 5'] => h5:fresh",
             "p[style-name='heading 6'] => h6:fresh",
+            // Apple Pages
+            "p.Heading => h1:fresh",
+            "p[style-name='Heading'] => h1:fresh",
             "r[style-name='Strong'] => strong",
             "p[style-name='footnote text'] => p:fresh",
             "r[style-name='footnote reference'] =>",
@@ -2390,9 +2454,13 @@ var require_mammoth_browser = __commonJS({
             "p:ordered-list(4) => ul|ol > li > ul|ol > li > ul|ol > li > ol > li:fresh",
             "p:ordered-list(5) => ul|ol > li > ul|ol > li > ul|ol > li > ul|ol > li > ol > li:fresh",
             "r[style-name='Hyperlink'] =>",
-            "p[style-name='Normal'] => p:fresh"
+            "p[style-name='Normal'] => p:fresh",
+            // Apple Pages
+            "p.Body => p:fresh",
+            "p[style-name='Body'] => p:fresh"
           ];
           var standardOptions = exports2._standardOptions = {
+            externalFileAccess: false,
             transformDocument: identity,
             includeDefaultStyleMap: true,
             includeEmbeddedStyleMap: true
@@ -2967,6 +3035,7 @@ var require_mammoth_browser = __commonJS({
           exports2.paragraph = paragraph;
           exports2.run = run;
           exports2._elements = elements;
+          exports2._elementsOfType = elementsOfType;
           exports2.getDescendantsOfType = getDescendantsOfType;
           exports2.getDescendants = getDescendants;
           function paragraph(transform) {
@@ -26653,4 +26722,4 @@ mammoth/mammoth.browser.js:
   https://github.com/nodeca/pako/blob/master/LICENSE
   *)
 */
-//# sourceMappingURL=chunk-DTBDOXZB.js.map
+//# sourceMappingURL=chunk-RMYGL4OT.js.map

@@ -3,10 +3,14 @@ import {
   AccordionModule,
   AccordionTab,
   ActivatedRoute,
+  ApiKeyService,
   AsyncPipe,
   AutoFocus,
   AutoFocusModule,
+  Badge,
+  BadgeModule,
   BaseComponent,
+  BaseIcon,
   BaseStyle,
   BlankIcon,
   Button,
@@ -20,10 +24,16 @@ import {
   ChevronDownIcon,
   CommonModule,
   ConfirmationService,
+  ConnectedOverlayScrollHandler,
+  ContextMenu,
+  ContextMenuModule,
   DOCUMENT,
   DefaultValueAccessor,
+  DomHandler,
   DomRendererFactory2,
   DomSanitizer,
+  FetchService,
+  FileUpload,
   FileUploadModule,
   FilterService,
   Footer,
@@ -35,15 +45,21 @@ import {
   IftaLabel,
   IftaLabelModule,
   InputGroup,
+  InputGroupAddon,
+  InputGroupAddonModule,
   InputGroupModule,
   InputIcon,
+  InputNumberModule,
   InputText,
   InputTextModule,
+  LocalStorageService,
   LocationStrategy,
+  MaxLengthValidator,
   Message,
   MessageModule,
   MessageService,
   MinusIcon,
+  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   NgClass,
   NgControl,
@@ -55,9 +71,14 @@ import {
   NgSwitch,
   NgSwitchCase,
   NgTemplateOutlet,
+  OrganizationChart,
+  OrganizationChartModule,
   Overlay,
   OverlayModule,
+  OverlayService,
   PlusIcon,
+  Popover,
+  PopoverModule,
   PrimeNG,
   PrimeTemplate,
   ProgressBar,
@@ -74,9 +95,17 @@ import {
   Scroller,
   SearchIcon,
   SharedModule,
+  SpinnerIcon,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
   Table,
   TableModule,
+  Tabs,
+  TabsModule,
   Textarea,
+  TextareaModule,
   ThemeService,
   TimesCircleIcon,
   TimesIcon,
@@ -95,33 +124,53 @@ import {
   TranslatePipe,
   TranslateService,
   TranslationKeys,
+  Tree,
+  TreeDragDropService,
+  TreeTableModule,
   UploadPasteComponent,
   UploadStateService,
   UploadUrlComponent,
   UploadWordComponent,
   UrlDataService,
   WebViewType,
+  absolutePosition,
+  addClass,
   bootstrapApplication,
   deepEquals,
   definePreset,
+  environment,
   equals,
+  find,
+  findIndexInList,
   findLastIndex,
   findSingle,
   focus,
+  getBrowser,
   getFirstFocusableElement,
   getFocusableElements,
   getLastFocusableElement,
+  getOffset,
+  getOuterWidth,
+  hasClass,
+  isAndroid,
   isEmpty,
+  isIOS,
   isNotEmpty,
+  isPlatformBrowser,
   isPrintableCharacter,
+  isTouchDevice,
   provideHttpClient,
   providePrimeNG,
   provideRouter,
+  relativePosition,
+  removeClass,
   resolveFieldData,
   scrollInView,
+  transformToBoolean,
   unblockBodyScroll,
-  uuid
-} from "./chunk-MGJSQWAK.js";
+  uuid,
+  zindexutils
+} from "./chunk-DBQBWPW5.js";
 import {
   ANIMATION_MODULE_TYPE,
   BehaviorSubject,
@@ -146,6 +195,8 @@ import {
   Observable,
   Optional,
   Output,
+  PLATFORM_ID,
+  Pipe,
   Renderer2,
   RendererFactory2,
   RuntimeError,
@@ -156,13 +207,17 @@ import {
   booleanAttribute,
   catchError,
   computed,
+  contentChild,
+  contentChildren,
   effect,
   forwardRef,
   from,
   importProvidersFrom,
   inject,
+  input,
   makeEnvironmentProviders,
   map,
+  model,
   numberAttribute,
   of,
   performanceMarkFeature,
@@ -188,11 +243,13 @@ import {
   ɵɵclassProp,
   ɵɵconditional,
   ɵɵcontentQuery,
+  ɵɵcontentQuerySignal,
   ɵɵdefineComponent,
   ɵɵdefineDirective,
   ɵɵdefineInjectable,
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
+  ɵɵdefinePipe,
   ɵɵdirectiveInject,
   ɵɵelement,
   ɵɵelementContainer,
@@ -220,9 +277,11 @@ import {
   ɵɵpureFunction1,
   ɵɵpureFunction2,
   ɵɵpureFunction3,
+  ɵɵqueryAdvance,
   ɵɵqueryRefresh,
   ɵɵreference,
   ɵɵresetView,
+  ɵɵresolveDocument,
   ɵɵrestoreView,
   ɵɵsanitizeHtml,
   ɵɵsanitizeUrl,
@@ -238,9 +297,10 @@ import {
   ɵɵtwoWayListener,
   ɵɵtwoWayProperty,
   ɵɵviewQuery
-} from "./chunk-6G6LGOOB.js";
+} from "./chunk-RKAZV3NI.js";
 import {
   __async,
+  __objRest,
   __spreadProps,
   __spreadValues
 } from "./chunk-3MOD5TGX.js";
@@ -291,12 +351,10 @@ var TranslateHttpLoader = class _TranslateHttpLoader {
 
 // src/app/common/custom-title-strategy.ts
 var CustomTitleStrategy = class _CustomTitleStrategy extends TitleStrategy {
-  translate;
-  title;
-  constructor(translate, title) {
+  translate = inject(TranslateService);
+  title = inject(Title);
+  constructor() {
     super();
-    this.translate = translate;
-    this.title = title;
   }
   updateTitle(snapshot) {
     const titleKey = this.buildTitle(snapshot);
@@ -307,7 +365,7 @@ var CustomTitleStrategy = class _CustomTitleStrategy extends TitleStrategy {
     }
   }
   static \u0275fac = function CustomTitleStrategy_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _CustomTitleStrategy)(\u0275\u0275inject(TranslateService), \u0275\u0275inject(Title));
+    return new (__ngFactoryType__ || _CustomTitleStrategy)();
   };
   static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _CustomTitleStrategy, factory: _CustomTitleStrategy.\u0275fac, providedIn: "root" });
 };
@@ -315,7 +373,7 @@ var CustomTitleStrategy = class _CustomTitleStrategy extends TitleStrategy {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(CustomTitleStrategy, [{
     type: Injectable,
     args: [{ providedIn: "root" }]
-  }], () => [{ type: TranslateService }, { type: Title }], null);
+  }], () => [], null);
 })();
 
 // node_modules/@angular/platform-browser/fesm2022/animations/async.mjs
@@ -352,7 +410,7 @@ var AsyncAnimationRendererFactory = class _AsyncAnimationRendererFactory {
    * @internal
    */
   loadImpl() {
-    const loadFn = () => this.moduleImpl ?? import("./chunk-3OQKL2GE.js").then((m) => m);
+    const loadFn = () => this.moduleImpl ?? import("./chunk-2UCOXLIO.js").then((m) => m);
     let moduleImplPromise;
     if (this.loadingSchedulerFn) {
       moduleImplPromise = this.loadingSchedulerFn(loadFn);
@@ -7181,11 +7239,129 @@ var NotFoundComponent = class _NotFoundComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(NotFoundComponent, { className: "NotFoundComponent", filePath: "src/app/views/static/not-found.component.ts", lineNumber: 12 });
 })();
 
+// node_modules/primeng/fesm2022/primeng-icons-eye.mjs
+var EyeIcon = class _EyeIcon extends BaseIcon {
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275EyeIcon_BaseFactory;
+    return function EyeIcon_Factory(__ngFactoryType__) {
+      return (\u0275EyeIcon_BaseFactory || (\u0275EyeIcon_BaseFactory = \u0275\u0275getInheritedFactory(_EyeIcon)))(__ngFactoryType__ || _EyeIcon);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _EyeIcon,
+    selectors: [["EyeIcon"]],
+    features: [\u0275\u0275InheritDefinitionFeature],
+    decls: 2,
+    vars: 5,
+    consts: [["width", "14", "height", "14", "viewBox", "0 0 14 14", "fill", "none", "xmlns", "http://www.w3.org/2000/svg"], ["fill-rule", "evenodd", "clip-rule", "evenodd", "d", "M0.0535499 7.25213C0.208567 7.59162 2.40413 12.4 7 12.4C11.5959 12.4 13.7914 7.59162 13.9465 7.25213C13.9487 7.2471 13.9506 7.24304 13.952 7.24001C13.9837 7.16396 14 7.08239 14 7.00001C14 6.91762 13.9837 6.83605 13.952 6.76001C13.9506 6.75697 13.9487 6.75292 13.9465 6.74788C13.7914 6.4084 11.5959 1.60001 7 1.60001C2.40413 1.60001 0.208567 6.40839 0.0535499 6.74788C0.0512519 6.75292 0.0494023 6.75697 0.048 6.76001C0.0163137 6.83605 0 6.91762 0 7.00001C0 7.08239 0.0163137 7.16396 0.048 7.24001C0.0494023 7.24304 0.0512519 7.2471 0.0535499 7.25213ZM7 11.2C3.664 11.2 1.736 7.92001 1.264 7.00001C1.736 6.08001 3.664 2.80001 7 2.80001C10.336 2.80001 12.264 6.08001 12.736 7.00001C12.264 7.92001 10.336 11.2 7 11.2ZM5.55551 9.16182C5.98308 9.44751 6.48576 9.6 7 9.6C7.68891 9.59789 8.349 9.32328 8.83614 8.83614C9.32328 8.349 9.59789 7.68891 9.59999 7C9.59999 6.48576 9.44751 5.98308 9.16182 5.55551C8.87612 5.12794 8.47006 4.7947 7.99497 4.59791C7.51988 4.40112 6.99711 4.34963 6.49276 4.44995C5.98841 4.55027 5.52513 4.7979 5.16152 5.16152C4.7979 5.52513 4.55027 5.98841 4.44995 6.49276C4.34963 6.99711 4.40112 7.51988 4.59791 7.99497C4.7947 8.47006 5.12794 8.87612 5.55551 9.16182ZM6.2222 5.83594C6.45243 5.6821 6.7231 5.6 7 5.6C7.37065 5.6021 7.72553 5.75027 7.98762 6.01237C8.24972 6.27446 8.39789 6.62934 8.4 7C8.4 7.27689 8.31789 7.54756 8.16405 7.77779C8.01022 8.00802 7.79157 8.18746 7.53575 8.29343C7.27994 8.39939 6.99844 8.42711 6.72687 8.37309C6.4553 8.31908 6.20584 8.18574 6.01005 7.98994C5.81425 7.79415 5.68091 7.54469 5.6269 7.27312C5.57288 7.00155 5.6006 6.72006 5.70656 6.46424C5.81253 6.20842 5.99197 5.98977 6.2222 5.83594Z", "fill", "currentColor"]],
+    template: function EyeIcon_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275namespaceSVG();
+        \u0275\u0275elementStart(0, "svg", 0);
+        \u0275\u0275element(1, "path", 1);
+        \u0275\u0275elementEnd();
+      }
+      if (rf & 2) {
+        \u0275\u0275classMap(ctx.getClassNames());
+        \u0275\u0275attribute("aria-label", ctx.ariaLabel)("aria-hidden", ctx.ariaHidden)("role", ctx.role);
+      }
+    },
+    encapsulation: 2
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(EyeIcon, [{
+    type: Component,
+    args: [{
+      selector: "EyeIcon",
+      standalone: true,
+      template: `
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" [attr.aria-label]="ariaLabel" [attr.aria-hidden]="ariaHidden" [attr.role]="role" [class]="getClassNames()">
+            <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M0.0535499 7.25213C0.208567 7.59162 2.40413 12.4 7 12.4C11.5959 12.4 13.7914 7.59162 13.9465 7.25213C13.9487 7.2471 13.9506 7.24304 13.952 7.24001C13.9837 7.16396 14 7.08239 14 7.00001C14 6.91762 13.9837 6.83605 13.952 6.76001C13.9506 6.75697 13.9487 6.75292 13.9465 6.74788C13.7914 6.4084 11.5959 1.60001 7 1.60001C2.40413 1.60001 0.208567 6.40839 0.0535499 6.74788C0.0512519 6.75292 0.0494023 6.75697 0.048 6.76001C0.0163137 6.83605 0 6.91762 0 7.00001C0 7.08239 0.0163137 7.16396 0.048 7.24001C0.0494023 7.24304 0.0512519 7.2471 0.0535499 7.25213ZM7 11.2C3.664 11.2 1.736 7.92001 1.264 7.00001C1.736 6.08001 3.664 2.80001 7 2.80001C10.336 2.80001 12.264 6.08001 12.736 7.00001C12.264 7.92001 10.336 11.2 7 11.2ZM5.55551 9.16182C5.98308 9.44751 6.48576 9.6 7 9.6C7.68891 9.59789 8.349 9.32328 8.83614 8.83614C9.32328 8.349 9.59789 7.68891 9.59999 7C9.59999 6.48576 9.44751 5.98308 9.16182 5.55551C8.87612 5.12794 8.47006 4.7947 7.99497 4.59791C7.51988 4.40112 6.99711 4.34963 6.49276 4.44995C5.98841 4.55027 5.52513 4.7979 5.16152 5.16152C4.7979 5.52513 4.55027 5.98841 4.44995 6.49276C4.34963 6.99711 4.40112 7.51988 4.59791 7.99497C4.7947 8.47006 5.12794 8.87612 5.55551 9.16182ZM6.2222 5.83594C6.45243 5.6821 6.7231 5.6 7 5.6C7.37065 5.6021 7.72553 5.75027 7.98762 6.01237C8.24972 6.27446 8.39789 6.62934 8.4 7C8.4 7.27689 8.31789 7.54756 8.16405 7.77779C8.01022 8.00802 7.79157 8.18746 7.53575 8.29343C7.27994 8.39939 6.99844 8.42711 6.72687 8.37309C6.4553 8.31908 6.20584 8.18574 6.01005 7.98994C5.81425 7.79415 5.68091 7.54469 5.6269 7.27312C5.57288 7.00155 5.6006 6.72006 5.70656 6.46424C5.81253 6.20842 5.99197 5.98977 6.2222 5.83594Z"
+                fill="currentColor"
+            />
+        </svg>
+    `
+    }]
+  }], null, null);
+})();
+
+// node_modules/primeng/fesm2022/primeng-icons-eyeslash.mjs
+var EyeSlashIcon = class _EyeSlashIcon extends BaseIcon {
+  pathId;
+  ngOnInit() {
+    this.pathId = "url(#" + uuid() + ")";
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275EyeSlashIcon_BaseFactory;
+    return function EyeSlashIcon_Factory(__ngFactoryType__) {
+      return (\u0275EyeSlashIcon_BaseFactory || (\u0275EyeSlashIcon_BaseFactory = \u0275\u0275getInheritedFactory(_EyeSlashIcon)))(__ngFactoryType__ || _EyeSlashIcon);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _EyeSlashIcon,
+    selectors: [["EyeSlashIcon"]],
+    features: [\u0275\u0275InheritDefinitionFeature],
+    decls: 6,
+    vars: 7,
+    consts: [["width", "14", "height", "14", "viewBox", "0 0 14 14", "fill", "none", "xmlns", "http://www.w3.org/2000/svg"], ["fill-rule", "evenodd", "clip-rule", "evenodd", "d", "M13.9414 6.74792C13.9437 6.75295 13.9455 6.757 13.9469 6.76003C13.982 6.8394 14.0001 6.9252 14.0001 7.01195C14.0001 7.0987 13.982 7.1845 13.9469 7.26386C13.6004 8.00059 13.1711 8.69549 12.6674 9.33515C12.6115 9.4071 12.54 9.46538 12.4582 9.50556C12.3765 9.54574 12.2866 9.56678 12.1955 9.56707C12.0834 9.56671 11.9737 9.53496 11.8788 9.47541C11.7838 9.41586 11.7074 9.3309 11.6583 9.23015C11.6092 9.12941 11.5893 9.01691 11.6008 8.90543C11.6124 8.79394 11.6549 8.68793 11.7237 8.5994C12.1065 8.09726 12.4437 7.56199 12.7313 6.99995C12.2595 6.08027 10.3402 2.8014 6.99732 2.8014C6.63723 2.80218 6.27816 2.83969 5.92569 2.91336C5.77666 2.93304 5.62568 2.89606 5.50263 2.80972C5.37958 2.72337 5.29344 2.59398 5.26125 2.44714C5.22907 2.30031 5.2532 2.14674 5.32885 2.01685C5.40451 1.88696 5.52618 1.79021 5.66978 1.74576C6.10574 1.64961 6.55089 1.60134 6.99732 1.60181C11.5916 1.60181 13.7864 6.40856 13.9414 6.74792ZM2.20333 1.61685C2.35871 1.61411 2.5091 1.67179 2.6228 1.77774L12.2195 11.3744C12.3318 11.4869 12.3949 11.6393 12.3949 11.7983C12.3949 11.9572 12.3318 12.1097 12.2195 12.2221C12.107 12.3345 11.9546 12.3976 11.7956 12.3976C11.6367 12.3976 11.4842 12.3345 11.3718 12.2221L10.5081 11.3584C9.46549 12.0426 8.24432 12.4042 6.99729 12.3981C2.403 12.3981 0.208197 7.59135 0.0532336 7.25198C0.0509364 7.24694 0.0490875 7.2429 0.0476856 7.23986C0.0162332 7.16518 3.05176e-05 7.08497 3.05176e-05 7.00394C3.05176e-05 6.92291 0.0162332 6.8427 0.0476856 6.76802C0.631261 5.47831 1.46902 4.31959 2.51084 3.36119L1.77509 2.62545C1.66914 2.51175 1.61146 2.36136 1.61421 2.20597C1.61695 2.05059 1.6799 1.90233 1.78979 1.79244C1.89968 1.68254 2.04794 1.6196 2.20333 1.61685ZM7.45314 8.35147L5.68574 6.57609V6.5361C5.5872 6.78938 5.56498 7.06597 5.62183 7.33173C5.67868 7.59749 5.8121 7.84078 6.00563 8.03158C6.19567 8.21043 6.43052 8.33458 6.68533 8.39089C6.94014 8.44721 7.20543 8.43359 7.45314 8.35147ZM1.26327 6.99994C1.7351 7.91163 3.64645 11.1985 6.99729 11.1985C7.9267 11.2048 8.8408 10.9618 9.64438 10.4947L8.35682 9.20718C7.86027 9.51441 7.27449 9.64491 6.69448 9.57752C6.11446 9.51014 5.57421 9.24881 5.16131 8.83592C4.74842 8.42303 4.4871 7.88277 4.41971 7.30276C4.35232 6.72274 4.48282 6.13697 4.79005 5.64041L3.35855 4.2089C2.4954 5.00336 1.78523 5.94935 1.26327 6.99994Z", "fill", "currentColor"], [3, "id"], ["width", "14", "height", "14", "fill", "white"]],
+    template: function EyeSlashIcon_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275namespaceSVG();
+        \u0275\u0275elementStart(0, "svg", 0)(1, "g");
+        \u0275\u0275element(2, "path", 1);
+        \u0275\u0275elementEnd();
+        \u0275\u0275elementStart(3, "defs")(4, "clipPath", 2);
+        \u0275\u0275element(5, "rect", 3);
+        \u0275\u0275elementEnd()()();
+      }
+      if (rf & 2) {
+        \u0275\u0275classMap(ctx.getClassNames());
+        \u0275\u0275attribute("aria-label", ctx.ariaLabel)("aria-hidden", ctx.ariaHidden)("role", ctx.role);
+        \u0275\u0275advance();
+        \u0275\u0275attribute("clip-path", ctx.pathId);
+        \u0275\u0275advance(3);
+        \u0275\u0275property("id", ctx.pathId);
+      }
+    },
+    encapsulation: 2
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(EyeSlashIcon, [{
+    type: Component,
+    args: [{
+      selector: "EyeSlashIcon",
+      standalone: true,
+      template: `
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" [attr.aria-label]="ariaLabel" [attr.aria-hidden]="ariaHidden" [attr.role]="role" [class]="getClassNames()">
+            <g [attr.clip-path]="pathId">
+                <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M13.9414 6.74792C13.9437 6.75295 13.9455 6.757 13.9469 6.76003C13.982 6.8394 14.0001 6.9252 14.0001 7.01195C14.0001 7.0987 13.982 7.1845 13.9469 7.26386C13.6004 8.00059 13.1711 8.69549 12.6674 9.33515C12.6115 9.4071 12.54 9.46538 12.4582 9.50556C12.3765 9.54574 12.2866 9.56678 12.1955 9.56707C12.0834 9.56671 11.9737 9.53496 11.8788 9.47541C11.7838 9.41586 11.7074 9.3309 11.6583 9.23015C11.6092 9.12941 11.5893 9.01691 11.6008 8.90543C11.6124 8.79394 11.6549 8.68793 11.7237 8.5994C12.1065 8.09726 12.4437 7.56199 12.7313 6.99995C12.2595 6.08027 10.3402 2.8014 6.99732 2.8014C6.63723 2.80218 6.27816 2.83969 5.92569 2.91336C5.77666 2.93304 5.62568 2.89606 5.50263 2.80972C5.37958 2.72337 5.29344 2.59398 5.26125 2.44714C5.22907 2.30031 5.2532 2.14674 5.32885 2.01685C5.40451 1.88696 5.52618 1.79021 5.66978 1.74576C6.10574 1.64961 6.55089 1.60134 6.99732 1.60181C11.5916 1.60181 13.7864 6.40856 13.9414 6.74792ZM2.20333 1.61685C2.35871 1.61411 2.5091 1.67179 2.6228 1.77774L12.2195 11.3744C12.3318 11.4869 12.3949 11.6393 12.3949 11.7983C12.3949 11.9572 12.3318 12.1097 12.2195 12.2221C12.107 12.3345 11.9546 12.3976 11.7956 12.3976C11.6367 12.3976 11.4842 12.3345 11.3718 12.2221L10.5081 11.3584C9.46549 12.0426 8.24432 12.4042 6.99729 12.3981C2.403 12.3981 0.208197 7.59135 0.0532336 7.25198C0.0509364 7.24694 0.0490875 7.2429 0.0476856 7.23986C0.0162332 7.16518 3.05176e-05 7.08497 3.05176e-05 7.00394C3.05176e-05 6.92291 0.0162332 6.8427 0.0476856 6.76802C0.631261 5.47831 1.46902 4.31959 2.51084 3.36119L1.77509 2.62545C1.66914 2.51175 1.61146 2.36136 1.61421 2.20597C1.61695 2.05059 1.6799 1.90233 1.78979 1.79244C1.89968 1.68254 2.04794 1.6196 2.20333 1.61685ZM7.45314 8.35147L5.68574 6.57609V6.5361C5.5872 6.78938 5.56498 7.06597 5.62183 7.33173C5.67868 7.59749 5.8121 7.84078 6.00563 8.03158C6.19567 8.21043 6.43052 8.33458 6.68533 8.39089C6.94014 8.44721 7.20543 8.43359 7.45314 8.35147ZM1.26327 6.99994C1.7351 7.91163 3.64645 11.1985 6.99729 11.1985C7.9267 11.2048 8.8408 10.9618 9.64438 10.4947L8.35682 9.20718C7.86027 9.51441 7.27449 9.64491 6.69448 9.57752C6.11446 9.51014 5.57421 9.24881 5.16131 8.83592C4.74842 8.42303 4.4871 7.88277 4.41971 7.30276C4.35232 6.72274 4.48282 6.13697 4.79005 5.64041L3.35855 4.2089C2.4954 5.00336 1.78523 5.94935 1.26327 6.99994Z"
+                    fill="currentColor"
+                />
+            </g>
+            <defs>
+                <clipPath [id]="pathId">
+                    <rect width="14" height="14" fill="white" />
+                </clipPath>
+            </defs>
+        </svg>
+    `
+    }]
+  }], null, null);
+})();
+
 // src/app/views/page-assistant/components/upload.component.ts
 function PageUploadComponent_ca_upload_url_26_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "ca-upload-url", 14);
+    \u0275\u0275elementStart(0, "ca-upload-url", 16);
     \u0275\u0275listener("uploadComplete", function PageUploadComponent_ca_upload_url_26_Template_ca_upload_url_uploadComplete_0_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -7197,7 +7373,7 @@ function PageUploadComponent_ca_upload_url_26_Template(rf, ctx) {
 function PageUploadComponent_ca_upload_paste_27_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "ca-upload-paste", 14);
+    \u0275\u0275elementStart(0, "ca-upload-paste", 16);
     \u0275\u0275listener("uploadComplete", function PageUploadComponent_ca_upload_paste_27_Template_ca_upload_paste_uploadComplete_0_listener() {
       \u0275\u0275restoreView(_r3);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -7209,7 +7385,7 @@ function PageUploadComponent_ca_upload_paste_27_Template(rf, ctx) {
 function PageUploadComponent_ca_upload_word_28_Template(rf, ctx) {
   if (rf & 1) {
     const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "ca-upload-word", 14);
+    \u0275\u0275elementStart(0, "ca-upload-word", 16);
     \u0275\u0275listener("uploadComplete", function PageUploadComponent_ca_upload_word_28_Template_ca_upload_word_uploadComplete_0_listener() {
       \u0275\u0275restoreView(_r4);
       const ctx_r1 = \u0275\u0275nextContext();
@@ -7219,12 +7395,8 @@ function PageUploadComponent_ca_upload_word_28_Template(rf, ctx) {
   }
 }
 var PageUploadComponent = class _PageUploadComponent {
-  uploadState;
-  router;
-  constructor(uploadState, router) {
-    this.uploadState = uploadState;
-    this.router = router;
-  }
+  uploadState = inject(UploadStateService);
+  router = inject(Router);
   ngOnInit() {
     const data = this.uploadState.getUploadData();
     if (data) {
@@ -7241,9 +7413,9 @@ var PageUploadComponent = class _PageUploadComponent {
     this.router.navigate(["page-assistant/compare"]);
   }
   static \u0275fac = function PageUploadComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _PageUploadComponent)(\u0275\u0275directiveInject(UploadStateService), \u0275\u0275directiveInject(Router));
+    return new (__ngFactoryType__ || _PageUploadComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PageUploadComponent, selectors: [["ca-page-upload"]], decls: 29, vars: 13, consts: [["id", "wb-cont"], [1, "flex", "flex-wrap"], [1, "flex", "mr-4", "mb-4"], [1, "border-none", "p-0", "m-0"], [1, "font-bold", "mb-3"], [1, "flex", "flex-column", "gap-3"], [1, "flex", "align-items-center"], ["name", "uploadType", "value", "url", 3, "onClick", "ngModelChange", "ngModel"], [1, "ml-2"], ["name", "uploadType", "value", "paste", 3, "onClick", "ngModelChange", "ngModel"], ["name", "uploadType", "value", "word", 3, "onClick", "ngModelChange", "ngModel"], [1, "flex"], [3, "ngSwitch"], [3, "uploadComplete", 4, "ngSwitchCase"], [3, "uploadComplete"]], template: function PageUploadComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _PageUploadComponent, selectors: [["ca-page-upload"]], decls: 29, vars: 13, consts: [["id", "wb-cont"], [1, "flex", "flex-wrap"], [1, "flex", "mr-4", "mb-4"], [1, "border-none", "p-0", "m-0"], [1, "font-bold", "mb-3"], [1, "flex", "flex-column", "gap-3"], ["for", "url", 1, "flex", "align-items-center"], ["id", "url", "name", "uploadType", "value", "url", 3, "onClick", "ngModelChange", "ngModel"], [1, "ml-2"], ["for", "paste", 1, "flex", "align-items-center"], ["id", "paste", "name", "uploadType", "value", "paste", 3, "onClick", "ngModelChange", "ngModel"], ["for", "word", 1, "flex", "align-items-center"], ["id", "word", "name", "uploadType", "value", "word", 3, "onClick", "ngModelChange", "ngModel"], [1, "flex"], [3, "ngSwitch"], [3, "uploadComplete", 4, "ngSwitchCase"], [3, "uploadComplete"]], template: function PageUploadComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "h1", 0);
       \u0275\u0275text(1);
@@ -7268,7 +7440,7 @@ var PageUploadComponent = class _PageUploadComponent {
       \u0275\u0275elementStart(14, "span", 8);
       \u0275\u0275text(15, "URL");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(16, "label", 6)(17, "p-radioButton", 9);
+      \u0275\u0275elementStart(16, "label", 9)(17, "p-radioButton", 10);
       \u0275\u0275listener("onClick", function PageUploadComponent_Template_p_radioButton_onClick_17_listener() {
         return ctx.onUploadTypeChange("paste");
       });
@@ -7280,7 +7452,7 @@ var PageUploadComponent = class _PageUploadComponent {
       \u0275\u0275elementStart(18, "span", 8);
       \u0275\u0275text(19, "Copy & Paste");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(20, "label", 6)(21, "p-radioButton", 10);
+      \u0275\u0275elementStart(20, "label", 11)(21, "p-radioButton", 12);
       \u0275\u0275listener("onClick", function PageUploadComponent_Template_p_radioButton_onClick_21_listener() {
         return ctx.onUploadTypeChange("word");
       });
@@ -7292,9 +7464,9 @@ var PageUploadComponent = class _PageUploadComponent {
       \u0275\u0275elementStart(22, "span", 8);
       \u0275\u0275text(23, "Word doc (converts to HTML)");
       \u0275\u0275elementEnd()()()()();
-      \u0275\u0275elementStart(24, "div", 11);
-      \u0275\u0275elementContainerStart(25, 12);
-      \u0275\u0275template(26, PageUploadComponent_ca_upload_url_26_Template, 1, 0, "ca-upload-url", 13)(27, PageUploadComponent_ca_upload_paste_27_Template, 1, 0, "ca-upload-paste", 13)(28, PageUploadComponent_ca_upload_word_28_Template, 1, 0, "ca-upload-word", 13);
+      \u0275\u0275elementStart(24, "div", 13);
+      \u0275\u0275elementContainerStart(25, 14);
+      \u0275\u0275template(26, PageUploadComponent_ca_upload_url_26_Template, 1, 0, "ca-upload-url", 15)(27, PageUploadComponent_ca_upload_paste_27_Template, 1, 0, "ca-upload-paste", 15)(28, PageUploadComponent_ca_upload_word_28_Template, 1, 0, "ca-upload-word", 15);
       \u0275\u0275elementContainerEnd();
       \u0275\u0275elementEnd()();
     }
@@ -7340,21 +7512,21 @@ var PageUploadComponent = class _PageUploadComponent {
             <legend class="font-bold mb-3">Choose upload type:</legend>
 
             <div class="flex flex-column gap-3">
-                <label class="flex align-items-center">
-                    <p-radioButton name="uploadType" value="url" (onClick)="onUploadTypeChange('url')"
-                        [(ngModel)]="selectedUploadType"></p-radioButton>
+                <label for="url" class="flex align-items-center">
+                    <p-radioButton id="url" name="uploadType" value="url" (onClick)="onUploadTypeChange('url')"
+                                   [(ngModel)]="selectedUploadType"></p-radioButton>
                     <span class="ml-2">URL</span>
                 </label>
 
-                <label class="flex align-items-center">
-                    <p-radioButton name="uploadType" value="paste" (onClick)="onUploadTypeChange('paste')"
-                        [(ngModel)]="selectedUploadType"></p-radioButton>
+                <label for="paste" class="flex align-items-center">
+                    <p-radioButton id="paste" name="uploadType" value="paste" (onClick)="onUploadTypeChange('paste')"
+                                   [(ngModel)]="selectedUploadType"></p-radioButton>
                     <span class="ml-2">Copy & Paste</span>
                 </label>
 
-                <label class="flex align-items-center">
-                    <p-radioButton name="uploadType" value="word" (onClick)="onUploadTypeChange('word')"
-                        [(ngModel)]="selectedUploadType"></p-radioButton>
+                <label for="word" class="flex align-items-center">
+                    <p-radioButton id="word" name="uploadType" value="word" (onClick)="onUploadTypeChange('word')"
+                                   [(ngModel)]="selectedUploadType"></p-radioButton>
                     <span class="ml-2">Word doc (converts to HTML)</span>
                 </label>
             </div>
@@ -7371,7 +7543,7 @@ var PageUploadComponent = class _PageUploadComponent {
         </ng-container>
     </div>
 </div>` }]
-  }], () => [{ type: UploadStateService }, { type: Router }], null);
+  }], null, null);
 })();
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(PageUploadComponent, { className: "PageUploadComponent", filePath: "src/app/views/page-assistant/components/upload.component.ts", lineNumber: 30 });
@@ -7683,20 +7855,12 @@ function ShareComponent_div_7_Template(rf, ctx) {
   }
 }
 var ShareComponent = class _ShareComponent {
-  route;
-  urlDataService;
-  uploadState;
-  translate;
-  router;
-  locationStrategy;
-  constructor(route, urlDataService, uploadState, translate, router, locationStrategy) {
-    this.route = route;
-    this.urlDataService = urlDataService;
-    this.uploadState = uploadState;
-    this.translate = translate;
-    this.router = router;
-    this.locationStrategy = locationStrategy;
-  }
+  route = inject(ActivatedRoute);
+  urlDataService = inject(UrlDataService);
+  uploadState = inject(UploadStateService);
+  translate = inject(TranslateService);
+  router = inject(Router);
+  locationStrategy = inject(LocationStrategy);
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       const url = params["url"];
@@ -7711,9 +7875,10 @@ var ShareComponent = class _ShareComponent {
   compareUrl = null;
   baseHref = null;
   getShareLink(url, compareUrl) {
-    const params = {};
-    params.url = url;
-    params.compareUrl = compareUrl;
+    const params = {
+      url,
+      compareUrl
+    };
     const treeLink = this.router.createUrlTree(["page-assistant/share"], { queryParams: params });
     const shareLink = `${window.location.origin}${this.baseHref}${this.router.serializeUrl(treeLink).replace(/^\//, "")}`;
     return shareLink;
@@ -7744,14 +7909,20 @@ var ShareComponent = class _ShareComponent {
         });
         this.router.navigate(["page-assistant/compare"]);
       } catch (err) {
-        this.error = `${tryError} ${err.message || err || unknownError}`;
+        if (err instanceof Error) {
+          this.error = `${tryError} ${err.message}`;
+        } else if (typeof err === "string") {
+          this.error = `${tryError} ${err}`;
+        } else {
+          this.error = `${unknownError}`;
+        }
       } finally {
         this.loading = false;
       }
     });
   }
   static \u0275fac = function ShareComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ShareComponent)(\u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275directiveInject(UrlDataService), \u0275\u0275directiveInject(UploadStateService), \u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(LocationStrategy));
+    return new (__ngFactoryType__ || _ShareComponent)();
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ShareComponent, selectors: [["ca-share"]], decls: 8, vars: 8, consts: [["id", "wb-cont"], [4, "ngIf"], ["class", "flex justify-content-center", 4, "ngIf"], [1, "flex", "flex-column", "gap-3"], ["pInputText", "", "id", "url", "autocomplete", "off", "fluid", "", 3, "ngModelChange", "ngModel"], ["for", "url"], ["pInputText", "", "id", "compare", "autocomplete", "off", "fluid", "", 3, "ngModelChange", "ngModel"], ["for", "compare"], [3, "href"], ["href", "page-assistant/share?url=https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses.html&compareUrl=https://cra-design.github.io/gst-hst-business/en/topics/gst-hst-businesses.html"], [1, "flex", "justify-content-center"], ["ariaLabel", "loading"]], template: function ShareComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -7805,10 +7976,476 @@ var ShareComponent = class _ShareComponent {
       </div>
       <div class="flex justify-content-center" *ngIf="loading"><p-progress-spinner ariaLabel="loading" /></div>
   ` }]
-  }], () => [{ type: ActivatedRoute }, { type: UrlDataService }, { type: UploadStateService }, { type: TranslateService }, { type: Router }, { type: LocationStrategy }], null);
+  }], null, null);
 })();
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ShareComponent, { className: "ShareComponent", filePath: "src/app/views/page-assistant/components/share.component.ts", lineNumber: 47 });
+})();
+
+// src/app/services/image-processor.ts
+var ImageProcessorService = class _ImageProcessorService {
+  MAX_IMAGE_SIZE = 1024;
+  // Max width/height for resizing
+  OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
+  // --- UPDATED: New Translation Model and specific prompt ---
+  TRANSLATION_MODEL_FOR_CRA = "mistralai/mistral-small-3.2-24b-instruct:free";
+  // Using Mistral Small for reliable free translation
+  http = inject(HttpClient);
+  apiKeyService = inject(ApiKeyService);
+  /**
+   * Main method to analyze an image file using OpenRouter's vision API with fallback support.
+   * @param file The image file to analyze.
+   * @param selectedVisionModel The OpenRouter vision model ID (e.g., 'qwen/qwen2.5-vl-32b-instruct:free').
+   * @param identifier A unique identifier for logging (e.g., file name).
+   * @param isPdfPage Whether this image is from a PDF page (for different prompting).
+   * @param fallbackModels Optional array of fallback model IDs to try if primary fails.
+   * @returns An Observable emitting the analysis result.
+   */
+  analyzeImage(file, selectedVisionModel, identifier, isPdfPage = false, fallbackModels = []) {
+    console.log("ImageProcessorService.analyzeImage called with:", file.name, selectedVisionModel);
+    const apiKey = this.apiKeyService.getCurrentKey();
+    if (!apiKey) {
+      console.error("No API key found");
+      return throwError(() => new Error("OpenRouter API Key is missing. Please provide it."));
+    }
+    console.log("API key found, loading image...");
+    return this.loadImage(file).pipe(map((img) => {
+      const base64Data = this.resizeAndConvertToBase64(img, this.MAX_IMAGE_SIZE);
+      return { base64Data };
+    }), switchMap(({ base64Data }) => this.getVisionAnalysisWithFallback(base64Data, selectedVisionModel, apiKey, identifier, isPdfPage, fallbackModels).pipe(map((visionResult) => {
+      if (visionResult.error) {
+        throw new Error(visionResult.error);
+      }
+      return __spreadProps(__spreadValues({}, visionResult), { imageBase64: base64Data });
+    }))), switchMap((visionResult) => {
+      if (visionResult.error || !visionResult.english) {
+        return from([visionResult]);
+      }
+      return this.translateToFrench(visionResult.english, apiKey, identifier).pipe(map((frenchText) => ({
+        english: visionResult.english,
+        french: frenchText,
+        error: null,
+        // Clear any vision error if translation proceeds
+        imageBase64: visionResult.imageBase64
+        // Keep the image
+      })), catchError((translateError) => {
+        console.error(`Translation error for ${identifier}:`, translateError);
+        return from([{
+          english: visionResult.english,
+          french: `[Translation Error: ${translateError.message || "Unknown error"}]`,
+          error: translateError.message,
+          imageBase64: visionResult.imageBase64
+        }]);
+      }));
+    }), catchError((error) => {
+      console.error(`Error in image analysis pipeline for ${identifier}:`, error);
+      if (error.message === "KEY_LIMIT_EXCEEDED") {
+        return from([{
+          english: null,
+          french: null,
+          error: "KEY_LIMIT_EXCEEDED",
+          imageBase64: null
+        }]);
+      }
+      return from([{
+        english: null,
+        french: null,
+        error: error.message || "Unknown error",
+        imageBase64: null
+      }]);
+    }));
+  }
+  loadImage(file) {
+    return new Observable((observer) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          observer.next(img);
+          observer.complete();
+        };
+        img.onerror = () => {
+          observer.error(new Error(`Failed to load image '${file.name}'.`));
+        };
+        img.src = e.target?.result;
+      };
+      reader.onerror = () => {
+        observer.error(new Error(`Failed to read file '${file.name}'.`));
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  resizeAndConvertToBase64(img, maxSize) {
+    const canvas = document.createElement("canvas");
+    let width = img.width;
+    let height = img.height;
+    if (width > maxSize || height > maxSize) {
+      if (width > height) {
+        height = Math.round(height * (maxSize / width));
+        width = maxSize;
+      } else {
+        width = Math.round(width * (maxSize / height));
+        height = maxSize;
+      }
+    }
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      throw new Error("Could not get 2D context from canvas for image resizing.");
+    }
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL("image/png");
+  }
+  getVisionAnalysisWithFallback(base64Data, selectedVisionModel, apiKey, identifier, isPdfPage = false, fallbackModels = []) {
+    const modelsToTry = [selectedVisionModel, ...fallbackModels.filter((m) => m !== selectedVisionModel)];
+    return this.tryVisionModelsInSequence(base64Data, modelsToTry, apiKey, identifier, isPdfPage, 0, selectedVisionModel);
+  }
+  tryVisionModelsInSequence(base64Data, models, apiKey, identifier, isPdfPage, attemptIndex, primaryModel) {
+    if (attemptIndex >= models.length) {
+      return from([{
+        english: null,
+        french: null,
+        error: "All vision models failed due to rate limits or errors"
+      }]);
+    }
+    const currentModel = models[attemptIndex];
+    console.log(`Attempting vision analysis with model: ${currentModel} (attempt ${attemptIndex + 1}/${models.length})`);
+    return this.getVisionAnalysis(base64Data, currentModel, apiKey, identifier, isPdfPage).pipe(catchError((error) => {
+      console.warn(`Vision model ${currentModel} failed:`, error);
+      if (this.isRateLimitError(error)) {
+        console.log(`Rate limit detected for ${currentModel}, trying next model...`);
+        return this.tryVisionModelsInSequence(base64Data, models, apiKey, identifier, isPdfPage, attemptIndex + 1, primaryModel);
+      }
+      if (attemptIndex < models.length - 1) {
+        console.log(`Error with ${currentModel}, trying next model...`);
+        return this.tryVisionModelsInSequence(base64Data, models, apiKey, identifier, isPdfPage, attemptIndex + 1, primaryModel);
+      }
+      return from([{
+        english: null,
+        french: null,
+        error: error.error || error.message || "All vision models failed"
+      }]);
+    }));
+  }
+  isRateLimitError(error) {
+    if (!error)
+      return false;
+    const errorAny = error;
+    const errorMessage = errorAny.error || errorAny.message || "";
+    const errorLower = typeof errorMessage === "string" ? errorMessage.toLowerCase() : "";
+    return errorLower.includes("rate limit") || errorLower.includes("quota exceeded") || errorLower.includes("too many requests") || errorLower.includes("429") || errorLower.includes("key limit exceeded") || errorAny.status === 403 || errorAny.status === 429;
+  }
+  getVisionAnalysis(base64Data, selectedVisionModel, apiKey, identifier, isPdfPage = false) {
+    console.log("getVisionAnalysis called for:", identifier, "model:", selectedVisionModel, "isPdfPage:", isPdfPage);
+    let prompt;
+    let max_tokens;
+    if (isPdfPage) {
+      prompt = "Provide a comprehensive, well-structured description of this document page. Format your response with clear sections and bullet points where appropriate.\n\nInclude:\n\u2022 All visible text content (quotes, headings, paragraphs)\n\u2022 Document structure and layout\n\u2022 Forms, fields, and what information they request\n\u2022 Tables and their contents\n\u2022 Any important visual elements or logos\n\nUse line breaks between sections for readability. If there are multiple sections or forms, clearly separate them.\nBe thorough and detailed to help someone understand the full content without seeing the page.";
+      max_tokens = 2e3;
+    } else {
+      prompt = "Create a short, concise alt text for this image suitable for a website. DO NOT start with phrases like 'The image depicts', 'The image shows', or similar. Instead, directly describe the main subject in 15-20 words maximum. Focus only on the key elements necessary for accessibility. Use simple, direct language without unnecessary words.";
+      max_tokens = 50;
+    }
+    let messages;
+    if (selectedVisionModel.includes("qwen") || selectedVisionModel.includes("llama")) {
+      messages = [{
+        "role": "user",
+        "content": [
+          { "type": "text", "text": prompt },
+          { "type": "image_url", "image_url": { "url": base64Data } }
+        ]
+      }];
+    } else {
+      messages = [{
+        "role": "user",
+        "content": [
+          { "type": "image_url", "image_url": { "url": base64Data } },
+          { "type": "text", "text": prompt }
+        ]
+      }];
+    }
+    const payload = {
+      model: selectedVisionModel,
+      messages,
+      max_tokens,
+      temperature: 0.3,
+      top_p: 0.85
+    };
+    const headers = new HttpHeaders({
+      "Authorization": `Bearer ${apiKey}`,
+      "Content-Type": "application/json"
+    });
+    return this.http.post(this.OPENROUTER_API_URL, payload, { headers }).pipe(timeout(6e4), map((response) => {
+      const englishText = response?.choices?.[0]?.message?.content?.trim();
+      if (!englishText) {
+        console.warn(`No content or unexpected structure from vision model for ${identifier}. Response:`, response);
+        throw new Error("No content returned from vision model.");
+      }
+      return { english: englishText, french: null, error: null };
+    }), catchError((error) => {
+      let errorMessage = `Vision API Error (${error.status || "Network Error"}): ${error.statusText || "Unknown Error"}`;
+      if (error.error && error.error.error && error.error.error.message) {
+        errorMessage += ` - ${error.error.error.message}`;
+      } else if (typeof error.error === "string") {
+        errorMessage += ` - ${error.error}`;
+      }
+      if (error.status === 403 && errorMessage.toLowerCase().includes("key limit exceeded")) {
+        errorMessage = "KEY_LIMIT_EXCEEDED";
+      }
+      console.error(`Error in vision API call for ${identifier}:`, errorMessage, error);
+      return from([{ english: null, french: null, error: errorMessage }]);
+    }));
+  }
+  translateToFrench(text2, apiKey, identifier) {
+    if (!text2) {
+      console.log(`Skipping translation for empty text: ${identifier}`);
+      return from([""]);
+    }
+    const systemPrompt = `You are a professional translator for the Canada Revenue Agency (CRA).
+                          Your task is to translate the following English text into clear, concise, and accurate Canadian French,
+                          using official CRA terminology and tone where applicable.
+                          CRITICAL INSTRUCTION: Provide ONLY the direct translation. DO NOT include any explanations, notes,
+                          disclaimers, or additional commentary of any kind. DO NOT include phrases like 'Here is the translation:'.
+                          DO NOT wrap your response in quotes. Simply translate the text directly.`;
+    const messages = [
+      { "role": "system", "content": systemPrompt },
+      { "role": "user", "content": text2 }
+    ];
+    const payload = {
+      model: this.TRANSLATION_MODEL_FOR_CRA,
+      messages,
+      temperature: 0.1,
+      max_tokens: Math.max(500, Math.ceil(text2.length * 2.5)),
+      top_p: 0.9
+    };
+    const headers = new HttpHeaders({
+      "Authorization": `Bearer ${apiKey}`,
+      "Content-Type": "application/json"
+    });
+    return this.http.post(this.OPENROUTER_API_URL, payload, { headers }).pipe(
+      timeout(9e4),
+      // Increased timeout to 90 seconds for PDF content
+      retry({ count: 1, delay: 2e3 }),
+      // Retry once after 2 seconds on failure
+      map((response) => {
+        console.log(`Translation response for ${identifier}:`, response);
+        if (!response || !response.choices || !Array.isArray(response.choices) || response.choices.length === 0) {
+          console.error(`Invalid response structure from translation model for ${identifier}:`, response);
+          throw new Error("Invalid response structure from translation model.");
+        }
+        let translation = response.choices[0]?.message?.content;
+        if (!translation || typeof translation !== "string") {
+          console.error(`No content in translation response for ${identifier}. Full response:`, JSON.stringify(response, null, 2));
+          throw new Error("Translation model returned empty content.");
+        }
+        translation = translation.trim();
+        if (!translation) {
+          console.error(`Translation content is empty after trimming for ${identifier}`);
+          throw new Error("Translation model returned empty content after trimming.");
+        }
+        translation = translation.replace(/^Voici la traduction\s*:\s*/i, "");
+        translation = translation.replace(/^Translation\s*:\s*/i, "");
+        translation = translation.replace(/^Here is the translation\s*:\s*/i, "");
+        return translation;
+      }),
+      catchError((error) => {
+        let errorMessage = `Translation API Error (${error.status || "Network Error"}): ${error.statusText || "Unknown Error"}`;
+        if (error.error && error.error.error && error.error.error.message) {
+          errorMessage += ` - ${error.error.error.message}`;
+        }
+        if (error.status === 403 && error.error?.error?.message?.toLowerCase().includes("key limit exceeded")) {
+          errorMessage = "KEY_LIMIT_EXCEEDED";
+        }
+        console.error(`Error translating text for ${identifier}:`, errorMessage, error);
+        return throwError(() => new Error(errorMessage));
+      })
+    );
+  }
+  escapeHtml(unsafe) {
+    if (unsafe === null || typeof unsafe !== "string")
+      return "";
+    return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+  formatDescription(text2) {
+    if (!text2)
+      return "";
+    let formatted = this.escapeHtml(text2);
+    formatted = formatted.replace(/\n\s*\n/g, "</p><p>");
+    formatted = formatted.replace(/\n/g, "<br>");
+    if (!formatted.startsWith("<p>") && formatted.trim() !== "") {
+      formatted = "<p>" + formatted;
+    }
+    if (!formatted.endsWith("</p>") && formatted.trim() !== "") {
+      formatted = formatted + "</p>";
+    }
+    formatted = formatted.replace(/<p>(\s*[-*•][\s\S]*?)<\/p>/g, "<ul><li>$1</li></ul>");
+    formatted = formatted.replace(/<br>\s*([-*•])\s+/g, "</li><li>");
+    formatted = formatted.replace(/<p>(\s*\d+\.[\s\S]*?)<\/p>/g, "<ol><li>$1</li></ol>");
+    formatted = formatted.replace(/<br>\s*(\d+\.)\s+/g, "</li><li>");
+    formatted = formatted.replace(/<p>([A-Z][A-Z\s]+[A-Z]:?)<\/p>/g, "<h4>$1</h4>");
+    formatted = formatted.replace(/<p>\s*(<br\s*\/?>)?\s*<\/p>/gi, "");
+    formatted = formatted.replace(/<p><br\s*\/?>/gi, "<p>");
+    formatted = formatted.replace(/<br\s*\/?>\s*<\/p>/gi, "</p>");
+    return formatted.trim();
+  }
+  static \u0275fac = function ImageProcessorService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ImageProcessorService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ImageProcessorService, factory: _ImageProcessorService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ImageProcessorService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/services/image-assistant-state.service.ts
+var ImageAssistantStateService = class _ImageAssistantStateService {
+  stateSubject = new BehaviorSubject({
+    results: {},
+    filesInProgress: 0,
+    processedCount: 0,
+    progressText: "",
+    showProgressArea: false
+  });
+  state$ = this.stateSubject.asObservable();
+  constructor() {
+  }
+  getCurrentState() {
+    return this.stateSubject.value;
+  }
+  updateState(updates) {
+    const currentState = this.stateSubject.value;
+    this.stateSubject.next(__spreadValues(__spreadValues({}, currentState), updates));
+  }
+  addResult(fileName, result) {
+    const currentState = this.stateSubject.value;
+    const newResults = __spreadProps(__spreadValues({}, currentState.results), { [fileName]: result });
+    this.updateState({ results: newResults });
+  }
+  updateResult(fileName, updates) {
+    const currentState = this.stateSubject.value;
+    if (currentState.results[fileName]) {
+      const updatedResult = __spreadValues(__spreadValues({}, currentState.results[fileName]), updates);
+      const newResults = __spreadProps(__spreadValues({}, currentState.results), { [fileName]: updatedResult });
+      this.updateState({ results: newResults });
+    }
+  }
+  resetState() {
+    this.stateSubject.next({
+      results: {},
+      filesInProgress: 0,
+      processedCount: 0,
+      progressText: "",
+      showProgressArea: false
+    });
+  }
+  incrementProcessedCount() {
+    const currentState = this.stateSubject.value;
+    this.updateState({ processedCount: currentState.processedCount + 1 });
+  }
+  static \u0275fac = function ImageAssistantStateService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ImageAssistantStateService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ImageAssistantStateService, factory: _ImageAssistantStateService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ImageAssistantStateService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [], null);
+})();
+
+// src/app/services/pdf-converter.service.ts
+var PdfConverterService = class _PdfConverterService {
+  pdfjsLib;
+  isInitialized = false;
+  constructor() {
+  }
+  /**
+   * Lazy load and initialize pdfjs-dist
+   */
+  initializePdfJs() {
+    return __async(this, null, function* () {
+      if (this.isInitialized) {
+        return;
+      }
+      const pdfjs = yield import("./chunk-5ZSE7KCM.js");
+      this.pdfjsLib = pdfjs;
+      const { GlobalWorkerOptions } = yield import("./chunk-5ZSE7KCM.js");
+      const baseElement = document.querySelector("base");
+      const baseHref = baseElement?.getAttribute("href") || "/";
+      GlobalWorkerOptions.workerSrc = `${baseHref}pdfjs/pdf.worker.min.mjs`.replace(/\/+/g, "/");
+      this.isInitialized = true;
+    });
+  }
+  /**
+   * Converts a PDF file to an array of image data URLs (one per page)
+   * @param file The PDF file to convert
+   * @returns Promise with array of base64 image data URLs
+   */
+  convertPdfToImages(file) {
+    return __async(this, null, function* () {
+      yield this.initializePdfJs();
+      const arrayBuffer = yield file.arrayBuffer();
+      const pdf = yield this.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      const images = [];
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = yield pdf.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 2 });
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        if (!context) {
+          throw new Error("Failed to get canvas context");
+        }
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        const renderContext = {
+          canvasContext: context,
+          viewport
+        };
+        yield page.render(renderContext).promise;
+        const imageDataUrl = canvas.toDataURL("image/png");
+        images.push(imageDataUrl);
+      }
+      return images;
+    });
+  }
+  /**
+   * Creates a File object from a data URL
+   * @param dataUrl The data URL of the image
+   * @param filename The filename for the created File
+   * @returns A File object
+   */
+  dataUrlToFile(dataUrl, filename) {
+    const arr = dataUrl.split(",");
+    const mime = arr[0].match(/:(.*?);/)?.[1] || "image/png";
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+  static \u0275fac = function PdfConverterService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _PdfConverterService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _PdfConverterService, factory: _PdfConverterService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PdfConverterService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [], null);
 })();
 
 // src/app/views/image-assistant/components/file-upload/file-upload.component.ts
@@ -7816,9 +8453,9 @@ var FileUploadComponent = class _FileUploadComponent {
   filesSelected = new EventEmitter();
   isDragOver = false;
   onFileSelected(event) {
-    const input = event.target;
-    if (input.files && input.files.length > 0) {
-      this.filesSelected.emit(input.files);
+    const input2 = event.target;
+    if (input2.files && input2.files.length > 0) {
+      this.filesSelected.emit(input2.files);
     }
   }
   onDragOver(event) {
@@ -7849,14 +8486,19 @@ var FileUploadComponent = class _FileUploadComponent {
   static \u0275fac = function FileUploadComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _FileUploadComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FileUploadComponent, selectors: [["ca-file-upload"]], outputs: { filesSelected: "filesSelected" }, decls: 15, vars: 11, consts: [[1, "file-upload-container", 3, "click", "dragover", "dragleave", "drop"], [1, "upload-icon"], [1, "pi", "pi-upload"], [1, "mb-2"], [1, "text-color-secondary", "text-sm"], ["type", "file", "id", "file-input", "name", "files", "multiple", "", "accept", ".png,.jpg,.jpeg,.pdf", 3, "change"]], template: function FileUploadComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FileUploadComponent, selectors: [["ca-file-upload"]], outputs: { filesSelected: "filesSelected" }, decls: 16, vars: 14, consts: [["tabindex", "0", "role", "button", 1, "file-upload-container", 3, "click", "keydown.enter", "keydown.space", "dragover", "dragleave", "drop"], [1, "upload-icon"], [1, "pi", "pi-upload"], [1, "mb-2"], [1, "text-color-secondary", "text-sm"], ["type", "file", "id", "file-input", "name", "files", "multiple", "", "accept", ".png,.jpg,.jpeg,.pdf", 3, "change"]], template: function FileUploadComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "fieldset")(1, "legend");
       \u0275\u0275text(2);
       \u0275\u0275pipe(3, "translate");
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(4, "div", 0);
+      \u0275\u0275pipe(5, "translate");
       \u0275\u0275listener("click", function FileUploadComponent_Template_div_click_4_listener() {
+        return ctx.triggerFileInput();
+      })("keydown.enter", function FileUploadComponent_Template_div_keydown_enter_4_listener() {
+        return ctx.triggerFileInput();
+      })("keydown.space", function FileUploadComponent_Template_div_keydown_space_4_listener() {
         return ctx.triggerFileInput();
       })("dragover", function FileUploadComponent_Template_div_dragover_4_listener($event) {
         return ctx.onDragOver($event);
@@ -7865,32 +8507,33 @@ var FileUploadComponent = class _FileUploadComponent {
       })("drop", function FileUploadComponent_Template_div_drop_4_listener($event) {
         return ctx.onDrop($event);
       });
-      \u0275\u0275elementStart(5, "div", 1);
-      \u0275\u0275element(6, "i", 2);
+      \u0275\u0275elementStart(6, "div", 1);
+      \u0275\u0275element(7, "i", 2);
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(7, "p", 3)(8, "strong");
-      \u0275\u0275text(9);
-      \u0275\u0275pipe(10, "translate");
+      \u0275\u0275elementStart(8, "p", 3)(9, "strong");
+      \u0275\u0275text(10);
+      \u0275\u0275pipe(11, "translate");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(11, "p", 4);
-      \u0275\u0275text(12);
-      \u0275\u0275pipe(13, "translate");
+      \u0275\u0275elementStart(12, "p", 4);
+      \u0275\u0275text(13);
+      \u0275\u0275pipe(14, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(14, "input", 5);
-      \u0275\u0275listener("change", function FileUploadComponent_Template_input_change_14_listener($event) {
+      \u0275\u0275elementStart(15, "input", 5);
+      \u0275\u0275listener("change", function FileUploadComponent_Template_input_change_15_listener($event) {
         return ctx.onFileSelected($event);
       });
       \u0275\u0275elementEnd()()();
     }
     if (rf & 2) {
       \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 5, "image.upload.legend"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 6, "image.upload.legend"));
       \u0275\u0275advance(2);
       \u0275\u0275classProp("dragover", ctx.isDragOver);
-      \u0275\u0275advance(5);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(10, 7, "image.upload.title"));
+      \u0275\u0275attribute("aria-label", \u0275\u0275pipeBind1(5, 8, "image.upload.title"));
+      \u0275\u0275advance(6);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(11, 10, "image.upload.title"));
       \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(13, 9, "image.upload.accept"), " ");
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(14, 12, "image.upload.accept"), " ");
     }
   }, dependencies: [CommonModule, TranslateModule, TranslatePipe], styles: ["\n\n.file-upload-container[_ngcontent-%COMP%] {\n  border: 2px dashed #ccc;\n  border-radius: 8px;\n  padding: 2rem;\n  text-align: center;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  margin-top: 1rem;\n}\n.file-upload-container[_ngcontent-%COMP%]:hover {\n  border-color: #a7a72e;\n  background-color: #f5f5f5;\n}\n.file-upload-container.dragover[_ngcontent-%COMP%] {\n  border-color: #a7a72e;\n  background-color: #f0f0f0;\n}\ninput[type=file][_ngcontent-%COMP%] {\n  display: none;\n}\n.upload-icon[_ngcontent-%COMP%] {\n  font-size: 3rem;\n  color: #a7a72e;\n  margin-bottom: 1rem;\n}\nfieldset[_ngcontent-%COMP%] {\n  border: none;\n  padding: 0;\n  margin: 0;\n}\nlegend[_ngcontent-%COMP%] {\n  font-weight: bold;\n  margin-bottom: 0.5rem;\n}\n/*# sourceMappingURL=file-upload.component.css.map */"] });
 };
@@ -7902,7 +8545,12 @@ var FileUploadComponent = class _FileUploadComponent {
   <div 
     class="file-upload-container" 
     [class.dragover]="isDragOver"
+    tabindex="0"
+    role="button"
+    [attr.aria-label]="'image.upload.title' | translate"
     (click)="triggerFileInput()"
+    (keydown.enter)="triggerFileInput()"
+    (keydown.space)="triggerFileInput()"
     (dragover)="onDragOver($event)"
     (dragleave)="onDragLeave($event)"
     (drop)="onDrop($event)">
@@ -9624,7 +10272,7 @@ var Dropdown = class _Dropdown extends BaseComponent {
   lastHiddenFocusableElementOnOverlay;
   // @todo to be refactored
   get hostClass() {
-    const classes8 = this._componentStyle.classes.root({
+    const classes14 = this._componentStyle.classes.root({
       instance: this
     }).map((cls) => {
       if (typeof cls === "string") {
@@ -9633,7 +10281,7 @@ var Dropdown = class _Dropdown extends BaseComponent {
         return Object.keys(cls).filter((key) => cls[key]).join(" ");
       }
     }).join(" ");
-    return classes8 + " " + this.styleClass;
+    return classes14 + " " + this.styleClass;
   }
   get hostStyle() {
     return this.style;
@@ -11410,19 +12058,24 @@ var SharedModelSelectorComponent = class _SharedModelSelectorComponent {
   translateChange = new EventEmitter();
   modelChange = new EventEmitter();
   localModels = [];
+  destroy$ = new Subject();
   constructor(translate) {
     this.translate = translate;
   }
   ngOnInit() {
     this.initializeModels();
-    this.translate.onLangChange.subscribe(() => {
+    this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.initializeModels();
     });
   }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
   initializeModels() {
     if (this.models && this.models.length > 0) {
-      this.localModels = this.models.map((model) => __spreadProps(__spreadValues({}, model), {
-        name: this.translate.instant(model.name)
+      this.localModels = this.models.map((model2) => __spreadProps(__spreadValues({}, model2), {
+        name: this.translate.instant(model2.name)
       }));
     }
   }
@@ -11548,7 +12201,7 @@ var SharedModelSelectorComponent = class _SharedModelSelectorComponent {
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SharedModelSelectorComponent, { className: "SharedModelSelectorComponent", filePath: "src/app/components/model-selector/model-selector.component.ts", lineNumber: 29 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SharedModelSelectorComponent, { className: "SharedModelSelectorComponent", filePath: "src/app/components/model-selector/model-selector.component.ts", lineNumber: 30 });
 })();
 
 // src/app/components/progress-indicator/progress-indicator.component.ts
@@ -11911,369 +12564,6 @@ var DividerModule = class _DividerModule {
   }], null, null);
 })();
 
-// src/app/services/local-storage.service.ts
-var LocalStorageService = class _LocalStorageService {
-  constructor() {
-  }
-  saveData(key, value) {
-    localStorage.setItem(key, value);
-    console.log(`Saved ` + key + `: ` + value);
-  }
-  getData(key) {
-    return localStorage.getItem(key);
-  }
-  removeData(key) {
-    localStorage.removeItem(key);
-    console.log(`Removed ` + key);
-  }
-  clearData() {
-    localStorage.clear();
-    console.log(`Removed all stored values`);
-  }
-  static \u0275fac = function LocalStorageService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _LocalStorageService)();
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _LocalStorageService, factory: _LocalStorageService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LocalStorageService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
-})();
-
-// src/app/services/api-key.service.ts
-var ApiKeyService = class _ApiKeyService {
-  localStorageService;
-  STORAGE_KEY = "apiKey";
-  // Using same key as the rest of the app
-  apiKeySubject;
-  apiKey$;
-  hasApiKey$;
-  constructor(localStorageService) {
-    this.localStorageService = localStorageService;
-    const storedKey = this.getStoredKey();
-    this.apiKeySubject = new BehaviorSubject(storedKey);
-    this.apiKey$ = this.apiKeySubject.asObservable();
-    this.hasApiKey$ = new BehaviorSubject(!!storedKey);
-  }
-  getStoredKey() {
-    return this.localStorageService.getData(this.STORAGE_KEY);
-  }
-  setKey(key) {
-    this.localStorageService.saveData(this.STORAGE_KEY, key);
-    this.apiKeySubject.next(key);
-    this.hasApiKey$.next(true);
-  }
-  getCurrentKey() {
-    return this.apiKeySubject.value;
-  }
-  clearKey() {
-    this.localStorageService.removeData(this.STORAGE_KEY);
-    this.apiKeySubject.next(null);
-    this.hasApiKey$.next(false);
-  }
-  static \u0275fac = function ApiKeyService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ApiKeyService)(\u0275\u0275inject(LocalStorageService));
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ApiKeyService, factory: _ApiKeyService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ApiKeyService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [{ type: LocalStorageService }], null);
-})();
-
-// src/app/services/image-processor.ts
-var ImageProcessorService = class _ImageProcessorService {
-  http;
-  apiKeyService;
-  MAX_IMAGE_SIZE = 1024;
-  // Max width/height for resizing
-  OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-  // --- UPDATED: New Translation Model and specific prompt ---
-  TRANSLATION_MODEL_FOR_CRA = "mistralai/mistral-small-3.2-24b-instruct:free";
-  // Using Mistral Small for reliable free translation
-  constructor(http, apiKeyService) {
-    this.http = http;
-    this.apiKeyService = apiKeyService;
-  }
-  /**
-   * Main method to analyze an image file using OpenRouter's vision API.
-   * @param file The image file to analyze.
-   * @param selectedVisionModel The OpenRouter vision model ID (e.g., 'qwen/qwen2.5-vl-32b-instruct:free').
-   * @param identifier A unique identifier for logging (e.g., file name).
-   * @param isPdfPage Whether this image is from a PDF page (for different prompting).
-   * @returns An Observable emitting the analysis result.
-   */
-  analyzeImage(file, selectedVisionModel, identifier, isPdfPage = false) {
-    console.log("ImageProcessorService.analyzeImage called with:", file.name, selectedVisionModel);
-    const apiKey = this.apiKeyService.getCurrentKey();
-    if (!apiKey) {
-      console.error("No API key found");
-      return throwError(() => new Error("OpenRouter API Key is missing. Please provide it."));
-    }
-    console.log("API key found, loading image...");
-    return this.loadImage(file).pipe(map((img) => {
-      const base64Data = this.resizeAndConvertToBase64(img, this.MAX_IMAGE_SIZE);
-      return { img, base64Data };
-    }), switchMap(({ img, base64Data }) => this.getVisionAnalysis(base64Data, selectedVisionModel, apiKey, identifier, isPdfPage).pipe(map((visionResult) => {
-      if (visionResult.error) {
-        throw new Error(visionResult.error);
-      }
-      return __spreadProps(__spreadValues({}, visionResult), { imageBase64: base64Data });
-    }))), switchMap((visionResult) => {
-      if (visionResult.error || !visionResult.english) {
-        return from([visionResult]);
-      }
-      return this.translateToFrench(visionResult.english, apiKey, identifier).pipe(map((frenchText) => ({
-        english: visionResult.english,
-        french: frenchText,
-        error: null,
-        // Clear any vision error if translation proceeds
-        imageBase64: visionResult.imageBase64
-        // Keep the image
-      })), catchError((translateError) => {
-        console.error(`Translation error for ${identifier}:`, translateError);
-        return from([{
-          english: visionResult.english,
-          french: `[Translation Error: ${translateError.message || "Unknown error"}]`,
-          error: translateError.message,
-          imageBase64: visionResult.imageBase64
-        }]);
-      }));
-    }), catchError((error) => {
-      console.error(`Error in image analysis pipeline for ${identifier}:`, error);
-      if (error.message === "KEY_LIMIT_EXCEEDED") {
-        return from([{
-          english: null,
-          french: null,
-          error: "KEY_LIMIT_EXCEEDED",
-          imageBase64: null
-        }]);
-      }
-      return from([{
-        english: null,
-        french: null,
-        error: error.message || "Unknown error",
-        imageBase64: null
-      }]);
-    }));
-  }
-  loadImage(file) {
-    return new Observable((observer) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          observer.next(img);
-          observer.complete();
-        };
-        img.onerror = (err) => {
-          observer.error(new Error(`Failed to load image '${file.name}'.`));
-        };
-        img.src = e.target?.result;
-      };
-      reader.onerror = (err) => {
-        observer.error(new Error(`Failed to read file '${file.name}'.`));
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-  resizeAndConvertToBase64(img, maxSize) {
-    const canvas = document.createElement("canvas");
-    let width = img.width;
-    let height = img.height;
-    if (width > maxSize || height > maxSize) {
-      if (width > height) {
-        height = Math.round(height * (maxSize / width));
-        width = maxSize;
-      } else {
-        width = Math.round(width * (maxSize / height));
-        height = maxSize;
-      }
-    }
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      throw new Error("Could not get 2D context from canvas for image resizing.");
-    }
-    ctx.drawImage(img, 0, 0, width, height);
-    return canvas.toDataURL("image/png");
-  }
-  getVisionAnalysis(base64Data, selectedVisionModel, apiKey, identifier, isPdfPage = false) {
-    console.log("getVisionAnalysis called for:", identifier, "model:", selectedVisionModel, "isPdfPage:", isPdfPage);
-    let prompt;
-    let max_tokens;
-    if (isPdfPage) {
-      prompt = "Provide a comprehensive, well-structured description of this document page. Format your response with clear sections and bullet points where appropriate.\n\nInclude:\n\u2022 All visible text content (quotes, headings, paragraphs)\n\u2022 Document structure and layout\n\u2022 Forms, fields, and what information they request\n\u2022 Tables and their contents\n\u2022 Any important visual elements or logos\n\nUse line breaks between sections for readability. If there are multiple sections or forms, clearly separate them.\nBe thorough and detailed to help someone understand the full content without seeing the page.";
-      max_tokens = 2e3;
-    } else {
-      prompt = "Create a short, concise alt text for this image suitable for a website. DO NOT start with phrases like 'The image depicts', 'The image shows', or similar. Instead, directly describe the main subject in 15-20 words maximum. Focus only on the key elements necessary for accessibility. Use simple, direct language without unnecessary words.";
-      max_tokens = 50;
-    }
-    let messages;
-    if (selectedVisionModel.includes("qwen") || selectedVisionModel.includes("llama")) {
-      messages = [{
-        "role": "user",
-        "content": [
-          { "type": "text", "text": prompt },
-          { "type": "image_url", "image_url": { "url": base64Data } }
-        ]
-      }];
-    } else {
-      messages = [{
-        "role": "user",
-        "content": [
-          { "type": "image_url", "image_url": { "url": base64Data } },
-          { "type": "text", "text": prompt }
-        ]
-      }];
-    }
-    const payload = {
-      model: selectedVisionModel,
-      messages,
-      max_tokens,
-      temperature: 0.3,
-      top_p: 0.85
-    };
-    const headers = new HttpHeaders({
-      "Authorization": `Bearer ${apiKey}`,
-      "Content-Type": "application/json"
-    });
-    return this.http.post(this.OPENROUTER_API_URL, payload, { headers }).pipe(timeout(6e4), map((response) => {
-      const englishText = response?.choices?.[0]?.message?.content?.trim();
-      if (!englishText) {
-        console.warn(`No content or unexpected structure from vision model for ${identifier}. Response:`, response);
-        throw new Error("No content returned from vision model.");
-      }
-      return { english: englishText, french: null, error: null };
-    }), catchError((error) => {
-      let errorMessage = `Vision API Error (${error.status || "Network Error"}): ${error.statusText || "Unknown Error"}`;
-      if (error.error && error.error.error && error.error.error.message) {
-        errorMessage += ` - ${error.error.error.message}`;
-      } else if (typeof error.error === "string") {
-        errorMessage += ` - ${error.error}`;
-      }
-      if (error.status === 403 && errorMessage.toLowerCase().includes("key limit exceeded")) {
-        errorMessage = "KEY_LIMIT_EXCEEDED";
-      }
-      console.error(`Error in vision API call for ${identifier}:`, errorMessage, error);
-      return from([{ english: null, french: null, error: errorMessage }]);
-    }));
-  }
-  translateToFrench(text2, apiKey, identifier) {
-    if (!text2) {
-      console.log(`Skipping translation for empty text: ${identifier}`);
-      return from([""]);
-    }
-    const systemPrompt = `You are a professional translator for the Canada Revenue Agency (CRA).
-                          Your task is to translate the following English text into clear, concise, and accurate Canadian French,
-                          using official CRA terminology and tone where applicable.
-                          CRITICAL INSTRUCTION: Provide ONLY the direct translation. DO NOT include any explanations, notes,
-                          disclaimers, or additional commentary of any kind. DO NOT include phrases like 'Here is the translation:'.
-                          DO NOT wrap your response in quotes. Simply translate the text directly.`;
-    const messages = [
-      { "role": "system", "content": systemPrompt },
-      { "role": "user", "content": text2 }
-    ];
-    const payload = {
-      model: this.TRANSLATION_MODEL_FOR_CRA,
-      messages,
-      temperature: 0.1,
-      max_tokens: Math.max(500, Math.ceil(text2.length * 2.5)),
-      top_p: 0.9
-    };
-    const headers = new HttpHeaders({
-      "Authorization": `Bearer ${apiKey}`,
-      "Content-Type": "application/json"
-    });
-    return this.http.post(this.OPENROUTER_API_URL, payload, { headers }).pipe(
-      timeout(9e4),
-      // Increased timeout to 90 seconds for PDF content
-      retry({ count: 1, delay: 2e3 }),
-      // Retry once after 2 seconds on failure
-      map((response) => {
-        console.log(`Translation response for ${identifier}:`, response);
-        if (!response || !response.choices || !Array.isArray(response.choices) || response.choices.length === 0) {
-          console.error(`Invalid response structure from translation model for ${identifier}:`, response);
-          throw new Error("Invalid response structure from translation model.");
-        }
-        let translation = response.choices[0]?.message?.content;
-        if (!translation || typeof translation !== "string") {
-          console.error(`No content in translation response for ${identifier}. Full response:`, JSON.stringify(response, null, 2));
-          throw new Error("Translation model returned empty content.");
-        }
-        translation = translation.trim();
-        if (!translation) {
-          console.error(`Translation content is empty after trimming for ${identifier}`);
-          throw new Error("Translation model returned empty content after trimming.");
-        }
-        translation = translation.replace(/^Voici la traduction\s*:\s*/i, "");
-        translation = translation.replace(/^Translation\s*:\s*/i, "");
-        translation = translation.replace(/^Here is the translation\s*:\s*/i, "");
-        return translation;
-      }),
-      catchError((error) => {
-        let errorMessage = `Translation API Error (${error.status || "Network Error"}): ${error.statusText || "Unknown Error"}`;
-        if (error.error && error.error.error && error.error.error.message) {
-          errorMessage += ` - ${error.error.error.message}`;
-        }
-        if (error.status === 403 && error.error?.error?.message?.toLowerCase().includes("key limit exceeded")) {
-          errorMessage = "KEY_LIMIT_EXCEEDED";
-        }
-        console.error(`Error translating text for ${identifier}:`, errorMessage, error);
-        return throwError(() => new Error(errorMessage));
-      })
-    );
-  }
-  escapeHtml(unsafe) {
-    if (unsafe === null || typeof unsafe !== "string")
-      return "";
-    return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-  }
-  formatDescription(text2) {
-    if (!text2)
-      return "";
-    let formatted = this.escapeHtml(text2);
-    formatted = formatted.replace(/\n\s*\n/g, "</p><p>");
-    formatted = formatted.replace(/\n/g, "<br>");
-    if (!formatted.startsWith("<p>") && formatted.trim() !== "") {
-      formatted = "<p>" + formatted;
-    }
-    if (!formatted.endsWith("</p>") && formatted.trim() !== "") {
-      formatted = formatted + "</p>";
-    }
-    formatted = formatted.replace(/<p>(\s*[-*•][\s\S]*?)<\/p>/g, "<ul><li>$1</li></ul>");
-    formatted = formatted.replace(/<br>\s*([-*•])\s+/g, "</li><li>");
-    formatted = formatted.replace(/<p>(\s*\d+\.[\s\S]*?)<\/p>/g, "<ol><li>$1</li></ol>");
-    formatted = formatted.replace(/<br>\s*(\d+\.)\s+/g, "</li><li>");
-    formatted = formatted.replace(/<p>([A-Z][A-Z\s]+[A-Z]:?)<\/p>/g, "<h4>$1</h4>");
-    formatted = formatted.replace(/<p>\s*(<br\s*\/?>)?\s*<\/p>/gi, "");
-    formatted = formatted.replace(/<p><br\s*\/?>/gi, "<p>");
-    formatted = formatted.replace(/<br\s*\/?>\s*<\/p>/gi, "</p>");
-    return formatted.trim();
-  }
-  static \u0275fac = function ImageProcessorService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ImageProcessorService)(\u0275\u0275inject(HttpClient), \u0275\u0275inject(ApiKeyService));
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ImageProcessorService, factory: _ImageProcessorService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ImageProcessorService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [{ type: HttpClient }, { type: ApiKeyService }], null);
-})();
-
 // src/app/views/image-assistant/components/image-result/image-result.component.ts
 var _c03 = (a0) => ({ fileName: a0 });
 var _c17 = () => ({ width: "30px", height: "30px" });
@@ -12516,13 +12806,9 @@ function ImageResultComponent_ng_template_3_Template(rf, ctx) {
   }
 }
 var ImageResultComponent = class _ImageResultComponent {
-  translate;
-  imageProcessor;
   result;
-  constructor(translate, imageProcessor) {
-    this.translate = translate;
-    this.imageProcessor = imageProcessor;
-  }
+  translate = inject(TranslateService);
+  imageProcessor = inject(ImageProcessorService);
   toggleFullText() {
     this.result.showFullText = !this.result.showFullText;
   }
@@ -12555,7 +12841,7 @@ var ImageResultComponent = class _ImageResultComponent {
     return (text2 || "").length > 150;
   }
   static \u0275fac = function ImageResultComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ImageResultComponent)(\u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(ImageProcessorService));
+    return new (__ngFactoryType__ || _ImageResultComponent)();
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ImageResultComponent, selectors: [["ca-image-result"]], inputs: { result: "result" }, decls: 4, vars: 0, consts: [[1, "result-container"], ["pTemplate", "header"], ["pTemplate", "content"], ["severity", "error", 3, "text", 4, "ngIf"], ["class", "processing-message", 4, "ngIf"], [4, "ngIf"], ["severity", "error", 3, "text"], [1, "processing-message"], ["strokeWidth", "4"], ["class", "result-image", 3, "src", "alt", 4, "ngIf"], [1, "result-columns"], [1, "result-column"], [1, "collapsible-container"], [3, "innerHTML", 4, "ngIf"], ["styleClass", "p-button-text p-button-sm", 3, "label", "click", 4, "ngIf"], ["icon", "pi pi-copy", "styleClass", "p-button-secondary p-button-sm copy-button", 3, "label", "click", 4, "ngIf"], [1, "result-image", 3, "src", "alt"], [3, "innerHTML"], ["styleClass", "p-button-text p-button-sm", 3, "click", "label"], ["icon", "pi pi-copy", "styleClass", "p-button-secondary p-button-sm copy-button", 3, "click", "label"]], template: function ImageResultComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -12682,7 +12968,7 @@ var ImageResultComponent = class _ImageResultComponent {
     </ng-template>
   </p-card>
 </div>`, styles: ["/* angular:styles/component:css;1645e8db0489e01d241bf83ede0fef27d6588e9d7870f9c030b5919ea8047f7f;/home/naomi/content-assistant/src/app/views/image-assistant/components/image-result/image-result.component.ts */\n.result-container {\n  margin-bottom: 2rem;\n}\n.result-image {\n  max-height: 200px;\n  width: auto;\n  border: 1px solid #eee;\n  margin-bottom: 1rem;\n  display: block;\n  border-radius: 4px;\n}\n.result-columns {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 2rem;\n}\n@media (max-width: 768px) {\n  .result-columns {\n    grid-template-columns: 1fr;\n    gap: 1rem;\n  }\n}\n.result-column {\n  background-color: #f8f9fa;\n  padding: 1rem;\n  border-radius: 8px;\n}\n.collapsible-container {\n  margin: 0.5rem 0;\n}\n.processing-message {\n  display: flex;\n  align-items: center;\n  gap: 1rem;\n}\n.copy-button {\n  margin-top: 0.5rem;\n}\n/*# sourceMappingURL=image-result.component.css.map */\n"] }]
-  }], () => [{ type: TranslateService }, { type: ImageProcessorService }], { result: [{
+  }], null, { result: [{
     type: Input
   }] });
 })();
@@ -12734,11 +13020,8 @@ function CsvDownloadComponent_div_0_Template(rf, ctx) {
   }
 }
 var CsvDownloadComponent = class _CsvDownloadComponent {
-  translate;
   results = {};
-  constructor(translate) {
-    this.translate = translate;
-  }
+  translate = inject(TranslateService);
   hasResults() {
     return Object.keys(this.results).length > 0;
   }
@@ -12768,7 +13051,7 @@ var CsvDownloadComponent = class _CsvDownloadComponent {
     URL.revokeObjectURL(url);
   }
   static \u0275fac = function CsvDownloadComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _CsvDownloadComponent)(\u0275\u0275directiveInject(TranslateService));
+    return new (__ngFactoryType__ || _CsvDownloadComponent)();
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CsvDownloadComponent, selectors: [["ca-csv-download"]], inputs: { results: "results" }, decls: 1, vars: 1, consts: [["class", "csv-download-container", 4, "ngIf"], [1, "csv-download-container"], ["icon", "pi pi-download", "styleClass", "my-2", 3, "label", "onClick", 4, "ngIf"], [4, "ngIf"], ["icon", "pi pi-download", "styleClass", "my-2", 3, "onClick", "label"]], template: function CsvDownloadComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -12795,157 +13078,12 @@ var CsvDownloadComponent = class _CsvDownloadComponent {
     {{ 'image.csv.noData' | translate }}
   </p>
 </div>`, styles: ["/* angular:styles/component:css;1c997a74d74a98c53de94cd1b23dcec12d9454b472a147986b6d5799e58fa7ae;/home/naomi/content-assistant/src/app/views/image-assistant/components/csv-download/csv-download.component.ts */\n.csv-download-container {\n  margin-top: 2rem;\n  padding: 1rem;\n  background-color: var(--surface-100);\n  border-radius: 8px;\n}\n/*# sourceMappingURL=csv-download.component.css.map */\n"] }]
-  }], () => [{ type: TranslateService }], { results: [{
+  }], null, { results: [{
     type: Input
   }] });
 })();
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CsvDownloadComponent, { className: "CsvDownloadComponent", filePath: "src/app/views/image-assistant/components/csv-download/csv-download.component.ts", lineNumber: 21 });
-})();
-
-// src/app/services/image-assistant-state.service.ts
-var ImageAssistantStateService = class _ImageAssistantStateService {
-  stateSubject = new BehaviorSubject({
-    results: {},
-    filesInProgress: 0,
-    processedCount: 0,
-    progressText: "",
-    showProgressArea: false
-  });
-  state$ = this.stateSubject.asObservable();
-  constructor() {
-  }
-  getCurrentState() {
-    return this.stateSubject.value;
-  }
-  updateState(updates) {
-    const currentState = this.stateSubject.value;
-    this.stateSubject.next(__spreadValues(__spreadValues({}, currentState), updates));
-  }
-  addResult(fileName, result) {
-    const currentState = this.stateSubject.value;
-    const newResults = __spreadProps(__spreadValues({}, currentState.results), { [fileName]: result });
-    this.updateState({ results: newResults });
-  }
-  updateResult(fileName, updates) {
-    const currentState = this.stateSubject.value;
-    if (currentState.results[fileName]) {
-      const updatedResult = __spreadValues(__spreadValues({}, currentState.results[fileName]), updates);
-      const newResults = __spreadProps(__spreadValues({}, currentState.results), { [fileName]: updatedResult });
-      this.updateState({ results: newResults });
-    }
-  }
-  resetState() {
-    this.stateSubject.next({
-      results: {},
-      filesInProgress: 0,
-      processedCount: 0,
-      progressText: "",
-      showProgressArea: false
-    });
-  }
-  incrementProcessedCount() {
-    const currentState = this.stateSubject.value;
-    this.updateState({ processedCount: currentState.processedCount + 1 });
-  }
-  static \u0275fac = function ImageAssistantStateService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ImageAssistantStateService)();
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ImageAssistantStateService, factory: _ImageAssistantStateService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ImageAssistantStateService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
-})();
-
-// src/app/services/pdf-converter.service.ts
-var PdfConverterService = class _PdfConverterService {
-  pdfjsLib;
-  isInitialized = false;
-  constructor() {
-  }
-  /**
-   * Lazy load and initialize pdfjs-dist
-   */
-  initializePdfJs() {
-    return __async(this, null, function* () {
-      if (this.isInitialized) {
-        return;
-      }
-      const pdfjs = yield import("./chunk-XCH5NBXG.js");
-      this.pdfjsLib = pdfjs;
-      const { GlobalWorkerOptions } = yield import("./chunk-XCH5NBXG.js");
-      const baseElement = document.querySelector("base");
-      const baseHref = baseElement?.getAttribute("href") || "/";
-      GlobalWorkerOptions.workerSrc = `${baseHref}pdfjs/pdf.worker.min.mjs`.replace(/\/+/g, "/");
-      this.isInitialized = true;
-    });
-  }
-  /**
-   * Converts a PDF file to an array of image data URLs (one per page)
-   * @param file The PDF file to convert
-   * @returns Promise with array of base64 image data URLs
-   */
-  convertPdfToImages(file) {
-    return __async(this, null, function* () {
-      yield this.initializePdfJs();
-      const arrayBuffer = yield file.arrayBuffer();
-      const pdf = yield this.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-      const images = [];
-      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-        const page = yield pdf.getPage(pageNum);
-        const viewport = page.getViewport({ scale: 2 });
-        const canvas = document.createElement("canvas");
-        const context = canvas.getContext("2d");
-        if (!context) {
-          throw new Error("Failed to get canvas context");
-        }
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        const renderContext = {
-          canvasContext: context,
-          viewport
-        };
-        yield page.render(renderContext).promise;
-        const imageDataUrl = canvas.toDataURL("image/png");
-        images.push(imageDataUrl);
-      }
-      return images;
-    });
-  }
-  /**
-   * Creates a File object from a data URL
-   * @param dataUrl The data URL of the image
-   * @param filename The filename for the created File
-   * @returns A File object
-   */
-  dataUrlToFile(dataUrl, filename) {
-    const arr = dataUrl.split(",");
-    const mime = arr[0].match(/:(.*?);/)?.[1] || "image/png";
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, { type: mime });
-  }
-  static \u0275fac = function PdfConverterService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _PdfConverterService)();
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _PdfConverterService, factory: _PdfConverterService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PdfConverterService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
 })();
 
 // src/app/views/image-assistant/image-assistant.component.ts
@@ -13028,15 +13166,6 @@ function ImageAssistantComponent_ng_container_19_Template(rf, ctx) {
   }
 }
 var ImageAssistantComponent = class _ImageAssistantComponent {
-  apiKeyService;
-  imageProcessorService;
-  stateService;
-  translate;
-  cdr;
-  route;
-  router;
-  pdfConverterService;
-  messageService;
   // Processing State
   selectedVisionModel = "qwen/qwen2.5-vl-32b-instruct:free";
   filesToProcess = [];
@@ -13046,27 +13175,37 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
   // Model options for the shared selector
   visionModels = [
     {
-      name: "image.model.qwen",
+      name: "image.model.qwen32",
       value: "qwen/qwen2.5-vl-32b-instruct:free",
-      description: "image.model.qwenDescription"
+      description: "image.model.qwen32Description"
+    },
+    {
+      name: "image.model.qwen72",
+      value: "qwen/qwen2.5-vl-72b-instruct:free",
+      description: "image.model.qwen72Description"
     },
     {
       name: "image.model.gemma",
       value: "google/gemma-3-27b-it:free",
       description: "image.model.gemmaDescription"
+    },
+    {
+      name: "image.model.llama",
+      value: "meta-llama/llama-3.2-11b-vision-instruct",
+      description: "image.model.llamaDescription"
     }
   ];
   subscriptions = [];
-  constructor(apiKeyService, imageProcessorService, stateService, translate, cdr, route, router, pdfConverterService, messageService) {
-    this.apiKeyService = apiKeyService;
-    this.imageProcessorService = imageProcessorService;
-    this.stateService = stateService;
-    this.translate = translate;
-    this.cdr = cdr;
-    this.route = route;
-    this.router = router;
-    this.pdfConverterService = pdfConverterService;
-    this.messageService = messageService;
+  apiKeyService = inject(ApiKeyService);
+  imageProcessorService = inject(ImageProcessorService);
+  stateService = inject(ImageAssistantStateService);
+  translate = inject(TranslateService);
+  cdr = inject(ChangeDetectorRef);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
+  pdfConverterService = inject(PdfConverterService);
+  messageService = inject(MessageService);
+  constructor() {
     this.state$ = this.stateService.state$;
   }
   ngOnInit() {
@@ -13086,12 +13225,12 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
     this.processingStartTime = performance.now();
     this.filesToProcess = [];
     let actualFileCount = 0;
-    for (let i = 0; i < files.length; i++) {
+    for (const file of files) {
       this.filesToProcess.push({
-        file: files[i],
-        displayName: files[i].name
+        file,
+        displayName: file.name
       });
-      if (files[i].type !== "application/pdf") {
+      if (file.type !== "application/pdf") {
         actualFileCount++;
       }
     }
@@ -13104,8 +13243,8 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
     });
     this.processNextFile();
   }
-  onModelChange(model) {
-    this.selectedVisionModel = model;
+  onModelChange(model2) {
+    this.selectedVisionModel = model2;
     alert(this.translate.instant("image.model.changeAlert"));
     this.stateService.resetState();
   }
@@ -13160,7 +13299,8 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
             throw new Error(this.translate.instant("image.error.pdfNoPages"));
           }
         } else if (file.type.startsWith("image/")) {
-          this.imageProcessorService.analyzeImage(file, this.selectedVisionModel, displayName, isPdfPage).subscribe({
+          const fallbackModels = this.visionModels.map((m) => m.value).filter((m) => m !== this.selectedVisionModel);
+          this.imageProcessorService.analyzeImage(file, this.selectedVisionModel, displayName, isPdfPage, fallbackModels).subscribe({
             next: (result) => {
               let errorMessage = result.error;
               if (errorMessage === "KEY_LIMIT_EXCEEDED") {
@@ -13212,6 +13352,7 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
         }
       } catch (error) {
         console.error(`Error processing file ${displayName}:`, error);
+        const errorMessage = error instanceof Error ? error.message : this.translate.instant("image.error.failedToProcess");
         if (file.type !== "application/pdf") {
           this.stateService.updateResult(displayName, {
             status: "error",
@@ -13219,7 +13360,7 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
               imageBase64: null,
               english: null,
               french: null,
-              error: error.message || this.translate.instant("image.error.failedToProcess")
+              error: errorMessage
             }
           });
           this.stateService.incrementProcessedCount();
@@ -13260,7 +13401,7 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
     });
   }
   static \u0275fac = function ImageAssistantComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ImageAssistantComponent)(\u0275\u0275directiveInject(ApiKeyService), \u0275\u0275directiveInject(ImageProcessorService), \u0275\u0275directiveInject(ImageAssistantStateService), \u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(ChangeDetectorRef), \u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(PdfConverterService), \u0275\u0275directiveInject(MessageService));
+    return new (__ngFactoryType__ || _ImageAssistantComponent)();
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ImageAssistantComponent, selectors: [["ca-image-assistant"]], features: [\u0275\u0275ProvidersFeature([MessageService])], decls: 21, vars: 24, consts: [["id", "wb-cont"], [1, "api-key-status", "mb-4"], ["class", "text-green-600", 4, "ngIf"], ["class", "text-orange-600", 4, "ngIf"], [3, "modelChange", "selectedModel", "models", "label", "cardTitle", "showCard", "showTranslateOption"], [3, "filesSelected"], [4, "ngIf"], [1, "text-green-600"], [1, "pi", "pi-check-circle"], [1, "text-orange-600"], [1, "pi", "pi-exclamation-circle"], [3, "progressText", "processedCount", "totalFiles", "showProgress"], ["class", "results-section", 4, "ngIf"], [1, "results-section"], [3, "result", 4, "ngFor", "ngForOf"], [3, "results"], [1, "mt-3"], ["icon", "pi pi-refresh", "severity", "secondary", 3, "click", "label", "pTooltip"], [3, "result"]], template: function ImageAssistantComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -13306,7 +13447,7 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
       \u0275\u0275advance(2);
       \u0275\u0275property("ngIf", \u0275\u0275pipeBind1(13, 18, ctx.apiKeyService.hasApiKey$));
       \u0275\u0275advance(2);
-      \u0275\u0275property("ngIf", !\u0275\u0275pipeBind1(15, 20, ctx.apiKeyService.hasApiKey$));
+      \u0275\u0275property("ngIf", \u0275\u0275pipeBind1(15, 20, ctx.apiKeyService.hasApiKey$) === false);
       \u0275\u0275advance(3);
       \u0275\u0275property("selectedModel", ctx.selectedVisionModel)("models", ctx.visionModels)("label", "image.model.label")("cardTitle", "image.model.title")("showCard", true)("showTranslateOption", false);
       \u0275\u0275advance(2);
@@ -13357,7 +13498,7 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
     <span *ngIf="apiKeyService.hasApiKey$ | async" class="text-green-600">
       <i class="pi pi-check-circle"></i> {{ 'page.apiKey.active' | translate }}
     </span>
-    <span *ngIf="!(apiKeyService.hasApiKey$ | async)" class="text-orange-600">
+    <span *ngIf="(apiKeyService.hasApiKey$ | async) === false" class="text-orange-600">
       <i class="pi pi-exclamation-circle"></i> {{ 'page.apiKey.notSet' | translate }}
     </span>
   </div>
@@ -13415,7 +13556,7 @@ var ImageAssistantComponent = class _ImageAssistantComponent {
     </div>
   </ng-container>
 </section>`, styles: ["/* angular:styles/component:css;09dc9166e46b9e7aabdb069b1dc488d36e7e0913816855e9dc9912d983b17aa9;/home/naomi/content-assistant/src/app/views/image-assistant/image-assistant.component.ts */\n.results-section {\n  margin-top: 2rem;\n}\n/*# sourceMappingURL=image-assistant.component.css.map */\n"] }]
-  }], () => [{ type: ApiKeyService }, { type: ImageProcessorService }, { type: ImageAssistantStateService }, { type: TranslateService }, { type: ChangeDetectorRef }, { type: ActivatedRoute }, { type: Router }, { type: PdfConverterService }, { type: MessageService }], null);
+  }], () => [], null);
 })();
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ImageAssistantComponent, { className: "ImageAssistantComponent", filePath: "src/app/views/image-assistant/image-assistant.component.ts", lineNumber: 47 });
@@ -16332,7 +16473,7 @@ var render = function(iconDefinition) {
     maskId = null,
     title = null,
     titleId = null,
-    classes: classes8 = [],
+    classes: classes14 = [],
     attributes = {},
     styles: styles2 = {}
   } = params;
@@ -16377,7 +16518,7 @@ var render = function(iconDefinition) {
       extra: {
         attributes,
         styles: styles2,
-        classes: classes8
+        classes: classes14
       }
     });
   });
@@ -16479,7 +16620,7 @@ var Layers = {
       layer(assembler) {
         let params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
         const {
-          classes: classes8 = []
+          classes: classes14 = []
         } = params;
         return domVariants({
           type: "layer"
@@ -16497,7 +16638,7 @@ var Layers = {
           return [{
             tag: "span",
             attributes: {
-              class: ["".concat(config.cssPrefix, "-layers"), ...classes8].join(" ")
+              class: ["".concat(config.cssPrefix, "-layers"), ...classes14].join(" ")
             },
             children
           }];
@@ -16513,7 +16654,7 @@ var LayersCounter = {
         let params = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
         const {
           title = null,
-          classes: classes8 = [],
+          classes: classes14 = [],
           attributes = {},
           styles: styles2 = {}
         } = params;
@@ -16531,7 +16672,7 @@ var LayersCounter = {
             extra: {
               attributes,
               styles: styles2,
-              classes: ["".concat(config.cssPrefix, "-layers-counter"), ...classes8]
+              classes: ["".concat(config.cssPrefix, "-layers-counter"), ...classes14]
             }
           });
         });
@@ -16547,7 +16688,7 @@ var LayersText = {
         const {
           transform = meaninglessTransform,
           title = null,
-          classes: classes8 = [],
+          classes: classes14 = [],
           attributes = {},
           styles: styles2 = {}
         } = params;
@@ -16566,7 +16707,7 @@ var LayersText = {
             extra: {
               attributes,
               styles: styles2,
-              classes: ["".concat(config.cssPrefix, "-layers-text"), ...classes8]
+              classes: ["".concat(config.cssPrefix, "-layers-text"), ...classes14]
             }
           });
         });
@@ -17141,7 +17282,7 @@ var faWarnIfIconSpecMissing = () => {
 var isKnownRotateValue = (rotate) => rotate != null && (rotate === 90 || rotate === 180 || rotate === 270 || rotate === "90" || rotate === "180" || rotate === "270");
 var faClassList = (props) => {
   const knownRotateValue = isKnownRotateValue(props.rotate);
-  const classes8 = {
+  const classes14 = {
     [`fa-${props.animation}`]: props.animation != null && !props.animation.startsWith("spin"),
     "fa-spin": props.animation === "spin" || props.animation === "spin-reverse",
     "fa-spin-pulse": props.animation === "spin-pulse" || props.animation === "spin-pulse-reverse",
@@ -17162,7 +17303,7 @@ var faClassList = (props) => {
     [`fa-pull-${props.pull}`]: props.pull !== null,
     [`fa-stack-${props.stackItemSize}`]: props.stackItemSize != null
   };
-  return Object.keys(classes8).map((key) => classes8[key] ? key : null).filter((key) => key);
+  return Object.keys(classes14).map((key) => classes14[key] ? key : null).filter((key) => key);
 };
 var cssInserted = /* @__PURE__ */ new WeakSet();
 var autoCssId = "fa-auto-css";
@@ -18032,153 +18173,6 @@ var faFilePowerpoint = {
   icon: [384, 512, [], "f1c4", "M64 464c-8.8 0-16-7.2-16-16L48 64c0-8.8 7.2-16 16-16l160 0 0 80c0 17.7 14.3 32 32 32l80 0 0 288c0 8.8-7.2 16-16 16L64 464zM64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-293.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0L64 0zm72 208c-13.3 0-24 10.7-24 24l0 104 0 56c0 13.3 10.7 24 24 24s24-10.7 24-24l0-32 44 0c42 0 76-34 76-76s-34-76-76-76l-68 0zm68 104l-44 0 0-56 44 0c15.5 0 28 12.5 28 28s-12.5 28-28 28z"]
 };
 
-// src/app/services/translation.service.ts
-var TranslationService = class _TranslationService {
-  http;
-  apiKeyService;
-  openRouterApiUrl = "https://openrouter.ai/api/v1/chat/completions";
-  docxPrompt = `You are a document formatting assistant. 
-You will be provided two inputs in HTML format:
-1. An English HTML document that contains unique identifiers for each text segment (e.g., <p id="P1">, <p id="P2">).
-2. A block of French text that is the translation of the English document.
-
-Your task: return the French document in HTML format such that:
-1. All English text is replaced with its correct French translation.
-2. The HTML structure (tags, attributes, order) remains unchanged.
-3. Each text element retains its original unique ID.
-Do not add extra commentary or leftover English text.`;
-  pptxPrompt = `You are a presentation formatting assistant. 
-Inputs:
-1. English HTML containing IDs like S3_T1, S3_T2.
-2. A block of French text.
-
-Your task: 
-1. Replace the English text with correct French translation.
-2. Preserve the same HTML structure and unique IDs.
-3. If the French text is one paragraph but the English input is split into multiple segments, split it appropriately.
-Return only the French HTML document.`;
-  constructor(http, apiKeyService) {
-    this.http = http;
-    this.apiKeyService = apiKeyService;
-  }
-  /**
-   * Aligns French text with the English HTML structure.
-   */
-  alignTranslation(englishHtml, frenchText, englishFile) {
-    return __async(this, null, function* () {
-      englishHtml = englishHtml.replace(/<img[^>]*>/g, "");
-      const fileExtension = englishFile?.name.split(".").pop()?.toLowerCase();
-      const systemPrompt = fileExtension === "pptx" ? this.pptxPrompt : this.docxPrompt;
-      const combinedPrompt = `${systemPrompt}
-
-English Document (HTML):
-${englishHtml}
-
-French Text:
-${frenchText}
-
-Return the French document in HTML format that exactly follows the structure of the English document.`;
-      const requestJson = [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: combinedPrompt }
-      ];
-      const models = [
-        "meta-llama/llama-3.3-70b-instruct:free",
-        "google/gemini-2.0-flash-exp:free",
-        "google/gemini-exp-1206:free",
-        "cognitivecomputations/dolphin3.0-mistral-24b:free",
-        "cognitivecomputations/dolphin3.0-r1-mistral-24b:free",
-        "nvidia/llama-3.1-nemotron-70b-instruct:free",
-        "deepseek/deepseek-r1:free"
-      ];
-      let finalResponse = null;
-      for (const model of models) {
-        const aiResponse = yield this.getORData(model, requestJson, 0);
-        if (aiResponse?.choices?.[0]?.message?.content) {
-          finalResponse = this.removeCodeFences(aiResponse.choices[0].message.content);
-          console.log("AI response received.");
-          break;
-        }
-      }
-      return finalResponse;
-    });
-  }
-  /**
-   * Fetches data from OpenRouter API
-   */
-  getORData(model, requestJson, temperature = 0) {
-    return __async(this, null, function* () {
-      const apiKey = this.apiKeyService.getCurrentKey();
-      if (!apiKey)
-        throw new Error("API key is required.");
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "X-Title": "Content Assistant"
-        // optional but nice
-      });
-      const payload = { model, messages: requestJson, temperature };
-      try {
-        const resp = yield this.http.post(this.openRouterApiUrl, payload, {
-          headers,
-          responseType: "text",
-          // <-- key change
-          observe: "response"
-        }).toPromise();
-        const ct = resp?.headers.get("content-type") || "";
-        if (ct.includes("application/json")) {
-          return JSON.parse(resp.body);
-        } else {
-          console.error(`OpenRouter non-JSON (status ${resp?.status}, ${ct}):
-`, (resp?.body || "").slice(0, 500));
-          return void 0;
-        }
-      } catch (err) {
-        const status = err?.status;
-        const bodySnippet = typeof err?.error === "string" ? err.error.slice(0, 500) : JSON.stringify(err?.error);
-        console.error(`OpenRouter HTTP error (model: ${model}) status=${status}: ${bodySnippet}`);
-        return void 0;
-      }
-    });
-  }
-  /**
-   * Removes ``` code fences from AI output
-   */
-  removeCodeFences(str) {
-    str = str.replace(/^```.*\n/, "");
-    str = str.replace(/\n\s*```+\s*$/, "");
-    return str.trim();
-  }
-  /**
-   * Builds a mapping of paragraph IDs to French text from HTML.
-   */
-  buildFrenchTextMap(finalFrenchHtml) {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = finalFrenchHtml;
-    const frenchMap = {};
-    tempDiv.querySelectorAll("p[id]").forEach((p2) => {
-      const id = p2.getAttribute("id");
-      const text2 = p2.textContent?.trim() || "";
-      if (text2)
-        frenchMap[id] = text2;
-    });
-    return frenchMap;
-  }
-  static \u0275fac = function TranslationService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _TranslationService)(\u0275\u0275inject(HttpClient), \u0275\u0275inject(ApiKeyService));
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _TranslationService, factory: _TranslationService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(TranslationService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [{ type: HttpClient }, { type: ApiKeyService }], null);
-})();
-
 // src/app/services/file-parse.service.ts
 var FileParseService = class _FileParseService {
   extractDocxParagraphs(arrayBuffer) {
@@ -18294,6 +18288,147 @@ var FileParseService = class _FileParseService {
   }], null, null);
 })();
 
+// src/app/services/translation.service.ts
+var TranslationService = class _TranslationService {
+  openRouterApiUrl = "https://openrouter.ai/api/v1/chat/completions";
+  // prefer-inject over constructor DI
+  http = inject(HttpClient);
+  apiKeyService = inject(ApiKeyService);
+  docxPrompt = `You are a document formatting assistant. 
+You will be provided two inputs in HTML format:
+1. An English HTML document that contains unique identifiers for each text segment (e.g., <p id="P1">, <p id="P2">).
+2. A block of French text that is the translation of the English document.
+
+Your task: return the French document in HTML format such that:
+1. All English text is replaced with its correct French translation.
+2. The HTML structure (tags, attributes, order) remains unchanged.
+3. Each text element retains its original unique ID.
+Do not add extra commentary or leftover English text.`;
+  pptxPrompt = `You are a presentation formatting assistant. 
+Inputs:
+1. English HTML containing IDs like S3_T1, S3_T2.
+2. A block of French text.
+
+Your task: 
+1. Replace the English text with correct French translation.
+2. Preserve the same HTML structure and unique IDs.
+3. If the French text is one paragraph but the English input is split into multiple segments, split it appropriately.
+Return only the French HTML document.`;
+  models = [
+    "meta-llama/llama-3.3-70b-instruct:free",
+    "google/gemini-2.0-flash-exp:free",
+    "google/gemini-exp-1206:free",
+    "cognitivecomputations/dolphin3.0-mistral-24b:free",
+    "cognitivecomputations/dolphin3.0-r1-mistral-24b:free",
+    "nvidia/llama-3.1-nemotron-70b-instruct:free",
+    "deepseek/deepseek-r1:free"
+  ];
+  /**
+   * Aligns French text with the English HTML structure.
+   */
+  alignTranslation(englishHtml, frenchText, englishFile) {
+    return __async(this, null, function* () {
+      englishHtml = englishHtml.replace(/<img[^>]*>/g, "");
+      const fileExtension = englishFile?.name.split(".").pop()?.toLowerCase();
+      const systemPrompt = fileExtension === "pptx" ? this.pptxPrompt : this.docxPrompt;
+      const combinedPrompt = `${systemPrompt}
+
+English Document (HTML):
+${englishHtml}
+
+French Text:
+${frenchText}
+
+Return the French document in HTML format that exactly follows the structure of the English document.`;
+      const requestMessages = [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: combinedPrompt }
+      ];
+      let finalResponse = null;
+      for (const model2 of this.models) {
+        const aiResponse = yield this.getORData(model2, requestMessages, 0);
+        const text2 = aiResponse?.choices?.[0]?.message?.content;
+        if (text2) {
+          finalResponse = this.removeCodeFences(text2);
+          console.log("AI response received.");
+          break;
+        }
+      }
+      return finalResponse;
+    });
+  }
+  /**
+   * Fetches data from OpenRouter API
+   */
+  getORData(model2, messages, temperature = 0) {
+    return __async(this, null, function* () {
+      const apiKey = this.apiKeyService.getCurrentKey();
+      if (!apiKey)
+        throw new Error("API key is required.");
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "X-Title": "Content Assistant"
+      });
+      const payload = { model: model2, messages, temperature };
+      try {
+        const resp = yield this.http.post(this.openRouterApiUrl, payload, {
+          headers,
+          responseType: "text",
+          // keep text to check content-type ourselves
+          observe: "response"
+        }).toPromise();
+        const ct = resp?.headers.get("content-type") || "";
+        if (ct.includes("application/json") && typeof resp?.body === "string") {
+          return JSON.parse(resp.body);
+        } else {
+          console.error(`OpenRouter non-JSON (status ${resp?.status}, ${ct}):
+`, (resp?.body || "").slice(0, 500));
+          return void 0;
+        }
+      } catch (err) {
+        const httpErr = err;
+        const status = httpErr?.status;
+        const bodySnippet = typeof httpErr?.error === "string" ? httpErr.error.slice(0, 500) : JSON.stringify(httpErr?.error);
+        console.error(`OpenRouter HTTP error (model: ${model2}) status=${status}: ${bodySnippet}`);
+        return void 0;
+      }
+    });
+  }
+  /**
+   * Removes ``` code fences from AI output
+   */
+  removeCodeFences(str) {
+    return str.replace(/^```(?:html|json)?\s*/i, "").replace(/\s*```$/i, "").trim();
+  }
+  /**
+   * Builds a mapping of paragraph IDs to French text from HTML.
+   */
+  buildFrenchTextMap(finalFrenchHtml) {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = finalFrenchHtml;
+    const frenchMap = {};
+    tempDiv.querySelectorAll("p[id]").forEach((p2) => {
+      const id = p2.getAttribute("id");
+      const text2 = p2.textContent?.trim() || "";
+      if (id && text2)
+        frenchMap[id] = text2;
+    });
+    return frenchMap;
+  }
+  static \u0275fac = function TranslationService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _TranslationService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _TranslationService, factory: _TranslationService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(TranslationService, [{
+    type: Injectable,
+    args: [{ providedIn: "root" }]
+  }], null, null);
+})();
+
 // src/app/views/translation-assistant/translation-assistant.component.ts
 var _c06 = (a0, a1) => ({ "pi-plus": a0, "pi-minus": a1 });
 function TranslationAssistantComponent_ng_container_12_i_2_Template(rf, ctx) {
@@ -18337,9 +18472,9 @@ function TranslationAssistantComponent_ng_template_13_Template(rf, ctx) {
     \u0275\u0275elementEnd();
   }
 }
-function TranslationAssistantComponent_div_17_div_9_Template(rf, ctx) {
+function TranslationAssistantComponent_div_18_div_11_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 31)(1, "span");
+    \u0275\u0275elementStart(0, "div", 32)(1, "span");
     \u0275\u0275text(2);
     \u0275\u0275elementEnd()();
   }
@@ -18349,11 +18484,19 @@ function TranslationAssistantComponent_div_17_div_9_Template(rf, ctx) {
     \u0275\u0275textInterpolate(ctx_r2.previewText);
   }
 }
-function TranslationAssistantComponent_div_17_Template(rf, ctx) {
+function TranslationAssistantComponent_div_18_Template(rf, ctx) {
   if (rf & 1) {
     const _r4 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "div", 22)(1, "div", 23)(2, "div", 24);
-    \u0275\u0275listener("click", function TranslationAssistantComponent_div_17_Template_div_click_2_listener() {
+    \u0275\u0275listener("click", function TranslationAssistantComponent_div_18_Template_div_click_2_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.isExpanded = !ctx_r2.isExpanded);
+    })("keyup.enter", function TranslationAssistantComponent_div_18_Template_div_keyup_enter_2_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.isExpanded = !ctx_r2.isExpanded);
+    })("keyup.space", function TranslationAssistantComponent_div_18_Template_div_keyup_space_2_listener() {
       \u0275\u0275restoreView(_r4);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.isExpanded = !ctx_r2.isExpanded);
@@ -18361,50 +18504,55 @@ function TranslationAssistantComponent_div_17_Template(rf, ctx) {
     \u0275\u0275elementStart(3, "div", 25);
     \u0275\u0275element(4, "i", 26);
     \u0275\u0275elementStart(5, "span", 27);
-    \u0275\u0275text(6, "Preview source language file");
+    \u0275\u0275text(6, " Preview source language file ");
     \u0275\u0275elementEnd()();
     \u0275\u0275elementStart(7, "button", 28);
-    \u0275\u0275listener("click", function TranslationAssistantComponent_div_17_Template_button_click_7_listener($event) {
+    \u0275\u0275listener("click", function TranslationAssistantComponent_div_18_Template_button_click_7_listener($event) {
       \u0275\u0275restoreView(_r4);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.copyAll($event));
     });
     \u0275\u0275element(8, "span", 29);
-    \u0275\u0275elementEnd()();
-    \u0275\u0275template(9, TranslationAssistantComponent_div_17_div_9_Template, 3, 1, "div", 30);
+    \u0275\u0275elementStart(9, "span", 30);
+    \u0275\u0275text(10, "Copy All");
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275template(11, TranslationAssistantComponent_div_18_div_11_Template, 3, 1, "div", 31);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext();
-    \u0275\u0275advance(4);
-    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(2, _c06, !ctx_r2.isExpanded, ctx_r2.isExpanded));
-    \u0275\u0275advance(5);
+    \u0275\u0275advance(2);
+    \u0275\u0275attribute("aria-expanded", ctx_r2.isExpanded);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(3, _c06, !ctx_r2.isExpanded, ctx_r2.isExpanded));
+    \u0275\u0275advance(7);
     \u0275\u0275property("ngIf", ctx_r2.isExpanded);
   }
 }
-function TranslationAssistantComponent_div_18_Template(rf, ctx) {
+function TranslationAssistantComponent_div_19_Template(rf, ctx) {
   if (rf & 1) {
     const _r5 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 32)(1, "p-card")(2, "h2", 33);
+    \u0275\u0275elementStart(0, "div", 33)(1, "p-card")(2, "h2", 34);
     \u0275\u0275text(3, "Paste target language content");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(4, "p");
     \u0275\u0275text(5, " Paste the full translation of the uploaded source content into the box below. ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "textarea", 34);
-    \u0275\u0275twoWayListener("ngModelChange", function TranslationAssistantComponent_div_18_Template_textarea_ngModelChange_6_listener($event) {
+    \u0275\u0275elementStart(6, "textarea", 35);
+    \u0275\u0275twoWayListener("ngModelChange", function TranslationAssistantComponent_div_19_Template_textarea_ngModelChange_6_listener($event) {
       \u0275\u0275restoreView(_r5);
       const ctx_r2 = \u0275\u0275nextContext();
       \u0275\u0275twoWayBindingSet(ctx_r2.frenchText, $event) || (ctx_r2.frenchText = $event);
       return \u0275\u0275resetView($event);
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(7, "div", 10)(8, "button", 35);
-    \u0275\u0275listener("click", function TranslationAssistantComponent_div_18_Template_button_click_8_listener() {
+    \u0275\u0275elementStart(7, "div", 10)(8, "button", 36);
+    \u0275\u0275listener("click", function TranslationAssistantComponent_div_19_Template_button_click_8_listener() {
       \u0275\u0275restoreView(_r5);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.onFormatTargetLanguageContent());
     });
+    \u0275\u0275text(9, " Format target language content ");
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -18413,39 +18561,41 @@ function TranslationAssistantComponent_div_18_Template(rf, ctx) {
     \u0275\u0275twoWayProperty("ngModel", ctx_r2.frenchText);
   }
 }
-function TranslationAssistantComponent_div_19_Template(rf, ctx) {
+function TranslationAssistantComponent_div_20_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 36);
-    \u0275\u0275element(1, "p-progressSpinner", 37);
-    \u0275\u0275elementStart(2, "p", 38);
+    \u0275\u0275elementStart(0, "div", 37);
+    \u0275\u0275element(1, "p-progressSpinner", 38);
+    \u0275\u0275elementStart(2, "p", 39);
     \u0275\u0275text(3, "Generating files...");
     \u0275\u0275elementEnd()();
   }
 }
-function TranslationAssistantComponent_div_20_Template(rf, ctx) {
+function TranslationAssistantComponent_div_21_Template(rf, ctx) {
   if (rf & 1) {
     const _r6 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 32)(1, "p-card")(2, "h2", 33);
+    \u0275\u0275elementStart(0, "div", 33)(1, "p-card")(2, "h2", 34);
     \u0275\u0275text(3, "Formatting complete");
     \u0275\u0275elementEnd();
     \u0275\u0275elementStart(4, "p");
     \u0275\u0275text(5, " The translated file has been formatted to match the original layout and is ready for download. ");
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(6, "div", 10)(7, "button", 39);
-    \u0275\u0275listener("click", function TranslationAssistantComponent_div_20_Template_button_click_7_listener() {
+    \u0275\u0275elementStart(6, "div", 10)(7, "button", 40);
+    \u0275\u0275listener("click", function TranslationAssistantComponent_div_21_Template_button_click_7_listener() {
       \u0275\u0275restoreView(_r6);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.onDownloadFile());
     });
+    \u0275\u0275text(8, " Download file ");
     \u0275\u0275elementEnd()()()();
   }
 }
 var TranslationAssistantComponent = class _TranslationAssistantComponent {
-  apiKeyService;
-  translationService;
-  router;
-  route;
-  parseSrv;
+  // prefer-inject: replace constructor DI with inject()
+  apiKeyService = inject(ApiKeyService);
+  translationService = inject(TranslationService);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
+  parseSrv = inject(FileParseService);
   isExpanded = false;
   isDragging = false;
   selectedFile = null;
@@ -18459,13 +18609,6 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
   finalFrenchHtml = "";
   sourceError = "";
   faFilePowerpoint = faFilePowerpoint;
-  constructor(apiKeyService, translationService, router, route, parseSrv) {
-    this.apiKeyService = apiKeyService;
-    this.translationService = translationService;
-    this.router = router;
-    this.route = route;
-    this.parseSrv = parseSrv;
-  }
   onClear() {
     this.router.navigateByUrl("/", { skipLocationChange: true }).then(() => this.router.navigate([this.router.url]));
   }
@@ -18481,8 +18624,8 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
     this.previewText = "";
     this.showSecondUpload = false;
     this.sourceError = "";
-    const input = event.target;
-    this.selectedFile = input.files?.[0] ?? null;
+    const input2 = event.target;
+    this.selectedFile = input2.files?.[0] ?? null;
     if (this.selectedFile) {
       this.buildEnglishHtmlStored(this.selectedFile).catch(console.error);
     }
@@ -18685,7 +18828,7 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
       aggregated[paraId].texts.push(item.text);
     });
     return Object.values(aggregated).map((entry) => {
-      let combined = entry.texts.join("").replace(/\s+/g, " ").trim();
+      const combined = entry.texts.join("").replace(/\s+/g, " ").trim();
       return { id: entry.id, text: combined };
     });
   }
@@ -18790,9 +18933,9 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
   static \u0275fac = function TranslationAssistantComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _TranslationAssistantComponent)(\u0275\u0275directiveInject(ApiKeyService), \u0275\u0275directiveInject(TranslationService), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(ActivatedRoute), \u0275\u0275directiveInject(FileParseService));
+    return new (__ngFactoryType__ || _TranslationAssistantComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TranslationAssistantComponent, selectors: [["app-translation-assistant"]], decls: 21, vars: 7, consts: [["fileInput", ""], ["dragArea", ""], [1, "p-mb-3"], [1, "p-text-bold"], [1, "surface-100", "border-round", "shadow-3", "p-4", "max-w-3xl", "mx-auto"], [1, "p-mb-4"], [1, "p-m-0", "p-text-bold", "p-text-2xl", 2, "color", "black"], [1, "flex", "flex-column", "align-items-center", "justify-content-center", "p-3", "border-dashed", "border-round", "border-200", "surface-100", "hover:surface-200", "hover:border-primary-400", "transition-colors", "transition-duration-300", "cursor-pointer", "w-full", "max-w-30rem", "min-h-12rem", 3, "click", "dragover", "dragleave", "drop"], ["type", "file", "accept", ".docx,.pptx", 2, "display", "none", 3, "change"], [4, "ngIf", "ngIfElse"], [1, "flex", "gap-2", "mt-3"], ["pButton", "", "type", "button", "label", "Upload file", "icon", "pi pi-upload", 1, "p-button", "p-component", "p-button-primary", 3, "click", "disabled"], ["class", "mt-3", 4, "ngIf"], ["class", "surface-100 border-round shadow-3", "style", "border: 2px solid #00000000; padding: 1rem", 4, "ngIf"], ["class", "p-mt-4 text-center", 4, "ngIf"], [1, "text-xl", "text-center"], ["class", "pi pi-file-word text-blue-500 text-2xl mr-1", 4, "ngIf"], ["class", "text-orange-500 text-2xl mr-1", 3, "icon", 4, "ngIf"], [1, "pi", "pi-file-word", "text-blue-500", "text-2xl", "mr-1"], [1, "text-orange-500", "text-2xl", "mr-1", 3, "icon"], [1, "pi", "pi-upload", "border-2", "border-circle", "border-300", "p-3", "text-3xl", "text-color-secondary", "mb-2", "hover:bg-primary", "hover:text-white", "transition-colors", "transition-duration-300"], [1, "m-0", "text-center", "text-sm"], [1, "mt-3"], [1, "p-panel", "p-component", "border-1", "border-round", "surface-100", 2, "border-color", "#00000023", "font-size", "1rem", "font-family", '"Segoe UI", Roboto, sans-serif'], [1, "p-panel-header", "d-flex", "justify-content-between", "align-items-center", "cursor-pointer", 2, "height", "4rem", "padding", "0 1rem", "display", "flex", "font-size", "1rem", "justify-content", "space-between", "align-items", "center", "flex-wrap", "nowrap", "gap", "0.5rem", "width", "100%", 3, "click"], [1, "d-flex", "align-items-center"], [1, "pi", 2, "margin-right", "0.5rem", 3, "ngClass"], [1, "p-panel-title", "font-semibold", 2, "color", "black"], ["pButton", "", "type", "button", "title", "Copy All", 1, "p-button-text", "p-button-icon-only", "flex-shrink-0", 2, "width", "3rem", "height", "3rem", 3, "click"], [1, "pi", "pi-copy", 2, "font-size", "1.4rem"], ["class", "p-panel-content p-mt-2", "style", "\n            background-color: white;\n            padding: 1rem;\n            border-top: 1px solid #ccc;\n          ", 4, "ngIf"], [1, "p-panel-content", "p-mt-2", 2, "background-color", "white", "padding", "1rem", "border-top", "1px solid #ccc"], [1, "surface-100", "border-round", "shadow-3", 2, "border", "2px solid #00000000", "padding", "1rem"], [1, "p-mb-3", 2, "color", "black"], ["pInputTextarea", "", "rows", "15", "cols", "70", "placeholder", "", 1, "p-inputtext", "p-mb-3", "w-full", 2, "border-color", "#00000052", "min-height", "10rem", "resize", "vertical text", "font-family", '"Segoe UI", Roboto, sans-serif', "font-size", "1rem", "color", "#000000be", 3, "ngModelChange", "ngModel"], ["pButton", "", "type", "button", "label", "Format target language content", "icon", "pi pi-align-left", 1, "p-button-primary", 3, "click"], [1, "p-mt-4", "text-center"], ["styleClass", "p-mt-3"], [1, "p-mt-2", "font-bold"], ["pButton", "", "type", "button", "label", "Download file", "icon", "pi pi-download", 1, "p-button-primary", 3, "click"]], template: function TranslationAssistantComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TranslationAssistantComponent, selectors: [["ca-translation-assistant"]], decls: 22, vars: 7, consts: [["fileInput", ""], ["dragArea", ""], [1, "p-mb-3"], [1, "p-text-bold"], [1, "surface-100", "border-round", "shadow-3", "p-4", "max-w-3xl", "mx-auto"], [1, "p-mb-4"], [1, "p-m-0", "p-text-bold", "p-text-2xl", 2, "color", "black"], ["role", "button", "tabindex", "0", "aria-label", "Select a source .docx or .pptx file", 1, "flex", "flex-column", "align-items-center", "justify-content-center", "p-3", "border-dashed", "border-round", "border-200", "surface-100", "hover:surface-200", "hover:border-primary-400", "transition-colors", "transition-duration-300", "cursor-pointer", "w-full", "max-w-30rem", "min-h-12rem", 3, "click", "keyup.enter", "keyup.space", "dragover", "dragleave", "drop"], ["type", "file", "accept", ".docx,.pptx", 2, "display", "none", 3, "change"], [4, "ngIf", "ngIfElse"], [1, "flex", "gap-2", "mt-3"], ["pButton", "", "type", "button", "icon", "pi pi-upload", 1, "p-button", "p-component", "p-button-primary", 3, "click", "disabled"], ["class", "mt-3", 4, "ngIf"], ["class", "surface-100 border-round shadow-3", "style", "border: 2px solid #00000000; padding: 1rem", 4, "ngIf"], ["class", "p-mt-4 text-center", 4, "ngIf"], [1, "text-xl", "text-center"], ["class", "pi pi-file-word text-blue-500 text-2xl mr-1", "aria-hidden", "true", 4, "ngIf"], ["class", "text-orange-500 text-2xl mr-1", "aria-hidden", "true", 3, "icon", 4, "ngIf"], ["aria-hidden", "true", 1, "pi", "pi-file-word", "text-blue-500", "text-2xl", "mr-1"], ["aria-hidden", "true", 1, "text-orange-500", "text-2xl", "mr-1", 3, "icon"], ["aria-hidden", "true", 1, "pi", "pi-upload", "border-2", "border-circle", "border-300", "p-3", "text-3xl", "text-color-secondary", "mb-2", "hover:bg-primary", "hover:text-white", "transition-colors", "transition-duration-300"], [1, "m-0", "text-center", "text-sm"], [1, "mt-3"], [1, "p-panel", "p-component", "border-1", "border-round", "surface-100", 2, "border-color", "#00000023", "font-size", "1rem", "font-family", '"Segoe UI", Roboto, sans-serif'], ["role", "button", "tabindex", "0", "aria-controls", "preview-panel-content", 1, "p-panel-header", "d-flex", "justify-content-between", "align-items-center", "cursor-pointer", 2, "height", "4rem", "padding", "0 1rem", "display", "flex", "font-size", "1rem", "justify-content", "space-between", "align-items", "center", "flex-wrap", "nowrap", "gap", "0.5rem", "width", "100%", 3, "click", "keyup.enter", "keyup.space"], [1, "d-flex", "align-items-center"], ["aria-hidden", "true", 1, "pi", 2, "margin-right", "0.5rem", 3, "ngClass"], [1, "p-panel-title", "font-semibold", 2, "color", "black"], ["pButton", "", "type", "button", "title", "Copy All", "aria-label", "Copy all preview text", 1, "p-button-text", "p-button-icon-only", "flex-shrink-0", 2, "width", "3rem", "height", "3rem", 3, "click"], ["aria-hidden", "true", 1, "pi", "pi-copy", 2, "font-size", "1.4rem"], [1, "sr-only"], ["id", "preview-panel-content", "class", "p-panel-content p-mt-2", "style", "\n            background-color: white;\n            padding: 1rem;\n            border-top: 1px solid #ccc;\n          ", 4, "ngIf"], ["id", "preview-panel-content", 1, "p-panel-content", "p-mt-2", 2, "background-color", "white", "padding", "1rem", "border-top", "1px solid #ccc"], [1, "surface-100", "border-round", "shadow-3", 2, "border", "2px solid #00000000", "padding", "1rem"], [1, "p-mb-3", 2, "color", "black"], ["pInputTextarea", "", "rows", "15", "cols", "70", "placeholder", "", 1, "p-inputtext", "p-mb-3", "w-full", 2, "border-color", "#00000052", "min-height", "10rem", "resize", "vertical text", "font-family", '"Segoe UI", Roboto, sans-serif', "font-size", "1rem", "color", "#000000be", 3, "ngModelChange", "ngModel"], ["pButton", "", "type", "button", "icon", "pi pi-align-left", 1, "p-button-primary", 3, "click"], [1, "p-mt-4", "text-center"], ["styleClass", "p-mt-3"], [1, "p-mt-2", "font-bold"], ["pButton", "", "type", "button", "icon", "pi pi-download", 1, "p-button-primary", 3, "click"]], template: function TranslationAssistantComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "div", 2)(1, "h1", 3);
@@ -18806,6 +18949,14 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(9, "div", 7);
       \u0275\u0275listener("click", function TranslationAssistantComponent_Template_div_click_9_listener() {
+        \u0275\u0275restoreView(_r1);
+        const fileInput_r2 = \u0275\u0275reference(11);
+        return \u0275\u0275resetView(fileInput_r2.click());
+      })("keyup.enter", function TranslationAssistantComponent_Template_div_keyup_enter_9_listener() {
+        \u0275\u0275restoreView(_r1);
+        const fileInput_r2 = \u0275\u0275reference(11);
+        return \u0275\u0275resetView(fileInput_r2.click());
+      })("keyup.space", function TranslationAssistantComponent_Template_div_keyup_space_9_listener() {
         \u0275\u0275restoreView(_r1);
         const fileInput_r2 = \u0275\u0275reference(11);
         return \u0275\u0275resetView(fileInput_r2.click());
@@ -18832,10 +18983,11 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.previewSource());
       });
+      \u0275\u0275text(17, " Upload file ");
       \u0275\u0275elementEnd()();
-      \u0275\u0275template(17, TranslationAssistantComponent_div_17_Template, 10, 5, "div", 12);
+      \u0275\u0275template(18, TranslationAssistantComponent_div_18_Template, 12, 6, "div", 12);
       \u0275\u0275elementEnd()();
-      \u0275\u0275template(18, TranslationAssistantComponent_div_18_Template, 9, 1, "div", 13)(19, TranslationAssistantComponent_div_19_Template, 4, 0, "div", 14)(20, TranslationAssistantComponent_div_20_Template, 8, 0, "div", 13);
+      \u0275\u0275template(19, TranslationAssistantComponent_div_19_Template, 10, 1, "div", 13)(20, TranslationAssistantComponent_div_20_Template, 4, 0, "div", 14)(21, TranslationAssistantComponent_div_21_Template, 9, 0, "div", 13);
     }
     if (rf & 2) {
       const dragArea_r7 = \u0275\u0275reference(14);
@@ -18843,7 +18995,7 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
       \u0275\u0275property("ngIf", ctx.selectedFile)("ngIfElse", dragArea_r7);
       \u0275\u0275advance(4);
       \u0275\u0275property("disabled", !ctx.selectedFile);
-      \u0275\u0275advance();
+      \u0275\u0275advance(2);
       \u0275\u0275property("ngIf", ctx.previewText);
       \u0275\u0275advance();
       \u0275\u0275property("ngIf", ctx.showSecondUpload);
@@ -18877,7 +19029,7 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(TranslationAssistantComponent, [{
     type: Component,
-    args: [{ selector: "app-translation-assistant", imports: [
+    args: [{ selector: "ca-translation-assistant", imports: [
       CommonModule,
       RouterModule,
       ButtonModule,
@@ -18906,7 +19058,12 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
     <!-- Upload Section -->
     <div
       class="flex flex-column align-items-center justify-content-center p-3 border-dashed border-round border-200 surface-100 hover:surface-200 hover:border-primary-400 transition-colors transition-duration-300 cursor-pointer w-full max-w-30rem min-h-12rem"
+      role="button"
+      tabindex="0"
+      aria-label="Select a source .docx or .pptx file"
       (click)="fileInput.click()"
+      (keyup.enter)="fileInput.click()"
+      (keyup.space)="fileInput.click()"
       (dragover)="onDragOver($event)"
       (dragleave)="onDragLeave($event)"
       (drop)="onDrop($event)"
@@ -18923,11 +19080,13 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
           <i
             *ngIf="isDocx(selectedFile)"
             class="pi pi-file-word text-blue-500 text-2xl mr-1"
+            aria-hidden="true"
           ></i>
           <fa-icon
             *ngIf="isPptx(selectedFile)"
             [icon]="faFilePowerpoint"
             class="text-orange-500 text-2xl mr-1"
+            aria-hidden="true"
           ></fa-icon>
 
           {{ selectedFile.name }}
@@ -18936,6 +19095,7 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
       <ng-template #dragArea>
         <i
           class="pi pi-upload border-2 border-circle border-300 p-3 text-3xl text-color-secondary mb-2 hover:bg-primary hover:text-white transition-colors transition-duration-300"
+          aria-hidden="true"
         ></i>
         <p class="m-0 text-center text-sm">
           Drag and drop .docx or .pptx source language file here.
@@ -18947,12 +19107,13 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
       <button
         pButton
         type="button"
-        label="Upload file"
         icon="pi pi-upload"
         class="p-button p-component p-button-primary"
         [disabled]="!selectedFile"
         (click)="previewSource()"
-      ></button>
+      >
+        Upload file
+      </button>
     </div>
 
     <!-- Preview Panel -->
@@ -18978,7 +19139,13 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
             gap: 0.5rem;
             width: 100%;
           "
+          role="button"
+          tabindex="0"
           (click)="isExpanded = !isExpanded"
+          (keyup.enter)="isExpanded = !isExpanded"
+          (keyup.space)="isExpanded = !isExpanded"
+          [attr.aria-expanded]="isExpanded"
+          aria-controls="preview-panel-content"
         >
           <div class="d-flex align-items-center">
             <i
@@ -18988,10 +19155,11 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
                 'pi-minus': isExpanded,
               }"
               style="margin-right: 0.5rem"
+              aria-hidden="true"
             ></i>
-            <span class="p-panel-title font-semibold" style="color: black"
-              >Preview source language file</span
-            >
+            <span class="p-panel-title font-semibold" style="color: black">
+              Preview source language file
+            </span>
           </div>
 
           <button
@@ -18999,15 +19167,22 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
             type="button"
             class="p-button-text p-button-icon-only flex-shrink-0"
             title="Copy All"
+            aria-label="Copy all preview text"
             (click)="copyAll($event)"
             style="width: 3rem; height: 3rem"
           >
-            <span class="pi pi-copy" style="font-size: 1.4rem"></span>
+            <span
+              class="pi pi-copy"
+              style="font-size: 1.4rem"
+              aria-hidden="true"
+            ></span>
+            <span class="sr-only">Copy All</span>
           </button>
         </div>
 
         <div
           *ngIf="isExpanded"
+          id="preview-panel-content"
           class="p-panel-content p-mt-2"
           style="
             background-color: white;
@@ -19055,11 +19230,12 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
       <button
         pButton
         type="button"
-        label="Format target language content"
         icon="pi pi-align-left"
         class="p-button-primary"
         (click)="onFormatTargetLanguageContent()"
-      ></button>
+      >
+        Format target language content
+      </button>
     </div>
   </p-card>
 </div>
@@ -19085,19 +19261,20 @@ var TranslationAssistantComponent = class _TranslationAssistantComponent {
       <button
         pButton
         type="button"
-        label="Download file"
         icon="pi pi-download"
         class="p-button-primary"
         (click)="onDownloadFile()"
-      ></button>
+      >
+        Download file
+      </button>
     </div>
   </p-card>
 </div>
 ` }]
-  }], () => [{ type: ApiKeyService }, { type: TranslationService }, { type: Router }, { type: ActivatedRoute }, { type: FileParseService }], null);
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TranslationAssistantComponent, { className: "TranslationAssistantComponent", filePath: "src/app/views/translation-assistant/translation-assistant.component.ts", lineNumber: 40 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TranslationAssistantComponent, { className: "TranslationAssistantComponent", filePath: "src/app/views/translation-assistant/translation-assistant.component.ts", lineNumber: 41 });
 })();
 
 // src/app/views/project-assistant/project-assistant.component.ts
@@ -19366,8 +19543,8 @@ var InventoryAssistantComponent = class _InventoryAssistantComponent {
   /**
    * Splits a multi-line string into a clean array of trimmed, non-empty URLs.
    */
-  getCleanUrls(input) {
-    return input.split("\n").map((url) => url.trim()).filter((url) => url.length > 0);
+  getCleanUrls(input2) {
+    return input2.split("\n").map((url) => url.trim()).filter((url) => url.length > 0);
   }
   /**
    * Processes a single URL, extracting metadata and updating the results buffer.
@@ -19457,9 +19634,9 @@ var InventoryAssistantComponent = class _InventoryAssistantComponent {
   /**
    * Extract metadata for preview URLs using local CSV data.
    */
-  fetchPreviewMetadata(input) {
+  fetchPreviewMetadata(input2) {
     return __async(this, null, function* () {
-      const urls = this.getCleanUrls(input);
+      const urls = this.getCleanUrls(input2);
       if (!urls.length)
         return;
       this.loading = true;
@@ -19740,6 +19917,729 @@ var InventoryAssistantComponent = class _InventoryAssistantComponent {
 })();
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(InventoryAssistantComponent, { className: "InventoryAssistantComponent", filePath: "src/app/views/inventory-assistant/inventory-assistant.component.ts", lineNumber: 35 });
+})();
+
+// src/app/services/metadata-assistant.service.ts
+var ALLOWED_HOSTS = /* @__PURE__ */ new Set([
+  "cra-design.github.io",
+  "cra-proto.github.io",
+  "gc-proto.github.io",
+  "test.canada.ca",
+  "www.canada.ca"
+]);
+var MetadataAssistantService = class _MetadataAssistantService {
+  OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+  SCRAPING_TIMEOUT = 3e4;
+  // 30 seconds
+  API_TIMEOUT = 6e4;
+  // 60 seconds
+  TRANSLATION_TIMEOUT = 9e4;
+  // 90 seconds with retry
+  // Default fallback models in order of preference
+  DEFAULT_FALLBACK_MODELS = [
+    "mistralai/mistral-small-3.2-24b-instruct:free",
+    "meta-llama/llama-3.3-70b-instruct:free",
+    "google/gemma-3-27b-it:free"
+  ];
+  http = inject(HttpClient);
+  apiKeyService = inject(ApiKeyService);
+  fileParseService = inject(FileParseService);
+  processUrls(options) {
+    const results = [];
+    const fallbackModels = options.fallbackModels || this.DEFAULT_FALLBACK_MODELS;
+    return from(options.urls).pipe(switchMap((url) => this.processUrl(url, options.model, options.translateToFrench, fallbackModels)), map((result) => {
+      results.push(result);
+      return results;
+    }), catchError((error) => {
+      console.error("Error processing URLs:", error);
+      return throwError(() => error);
+    }));
+  }
+  processUrl(url, model2, translateToFrench, fallbackModels) {
+    return this.scrapeUrl(url).pipe(switchMap((scrapedContent) => {
+      if (!scrapedContent || scrapedContent.length < 50) {
+        return throwError(() => new Error("Content too short or invalid for processing"));
+      }
+      const language = this.detectLanguage(scrapedContent);
+      return this.generateMetadataWithFallback(scrapedContent, model2, language, fallbackModels).pipe(switchMap((metadata) => {
+        const result = {
+          url,
+          scrapedContent,
+          metaDescription: metadata.description,
+          metaKeywords: metadata.keywords,
+          language,
+          modelUsed: metadata.modelUsed,
+          fallbackUsed: metadata.fallbackUsed
+        };
+        if (translateToFrench && language === "en") {
+          return this.translateMetadata(metadata).pipe(map((translated) => __spreadProps(__spreadValues({}, result), {
+            frenchTranslatedDescription: translated.description,
+            frenchTranslatedKeywords: translated.keywords
+          })));
+        }
+        return of(result);
+      }));
+    }));
+  }
+  scrapeUrl(url) {
+    try {
+      const parsedUrl = new URL(url);
+      if (!ALLOWED_HOSTS.has(parsedUrl.host)) {
+        return throwError(() => new Error(`Host not allowed: ${parsedUrl.host}. Only government domains are supported.`));
+      }
+    } catch {
+      return throwError(() => new Error("Invalid URL format"));
+    }
+    return from(fetch(`${url}?_=${Date.now()}`, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache"
+    })).pipe(timeout(this.SCRAPING_TIMEOUT), switchMap((response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch URL: HTTP ${response.status}`);
+      }
+      return from(response.text());
+    }), map((html) => this.extractTextContent(html)), catchError((error) => {
+      console.error("Error scraping URL:", error);
+      if (error.message?.includes("Host not allowed")) {
+        return throwError(() => error);
+      }
+      return throwError(() => new Error(`Failed to scrape URL: ${error.message || "Unknown error"}`));
+    }));
+  }
+  extractTextContent(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    let mainElement = this.findMainElement(doc);
+    if (!mainElement) {
+      console.warn("No main element found in page, attempting fallback to body content");
+      mainElement = doc.body;
+      if (!mainElement) {
+        console.error("No body element found in page");
+        return "";
+      }
+    }
+    const contentElement = mainElement.cloneNode(true);
+    const unwantedClasses = [
+      "provisional most-requested-bullets well well-sm brdr-0",
+      "pagedetails container",
+      "lnkbx",
+      "pagedetails",
+      "gc-prtts",
+      "alert alert-info",
+      "footer",
+      "nav",
+      "header",
+      "aside"
+    ];
+    unwantedClasses.forEach((className) => {
+      contentElement.querySelectorAll(`.${className.replace(/ /g, ".")}`).forEach((el) => el.remove());
+    });
+    ["footer", "nav", "header", "aside"].forEach((tagName) => {
+      contentElement.querySelectorAll(tagName).forEach((el) => el.remove());
+    });
+    contentElement.querySelectorAll("h2.h3").forEach((h2) => {
+      const text2 = h2.textContent || "";
+      if (text2.includes("On this page:") || text2.includes("Sur cette page :")) {
+        const nextSibling = h2.nextElementSibling;
+        if (nextSibling && nextSibling.tagName === "UL") {
+          nextSibling.querySelectorAll("li").forEach((li) => {
+            li.setAttribute("data-on-this-page", "true");
+          });
+          nextSibling.remove();
+        }
+        h2.remove();
+      }
+    });
+    contentElement.querySelectorAll("h2").forEach((h2) => {
+      const text2 = h2.textContent || "";
+      if (text2.includes("On this page") || text2.includes("Sur cette page")) {
+        let nextElement = h2.nextElementSibling;
+        while (nextElement && nextElement.tagName === "UL") {
+          nextElement.querySelectorAll("li").forEach((li) => {
+            li.setAttribute("data-on-this-page", "true");
+          });
+          nextElement = nextElement.nextElementSibling;
+        }
+      }
+    });
+    const allowedTags = ["h1", "h2", "h3", "h4", "p", "li"];
+    const textContent = [];
+    allowedTags.forEach((tag) => {
+      contentElement.querySelectorAll(tag).forEach((element) => {
+        if (tag === "h2") {
+          const text3 = element.textContent || "";
+          if (text3.includes("Chat with Charlie") || text3.includes("Clavardez avec Charlie")) {
+            return;
+          }
+        }
+        if (tag === "li" && element.hasAttribute("data-on-this-page")) {
+          return;
+        }
+        const text2 = element.textContent?.trim();
+        if (text2 && text2.length > 0) {
+          textContent.push(text2);
+        }
+      });
+    });
+    const fullText = textContent.join(" ");
+    console.log(`Extracted ${fullText.length} characters of content`);
+    if (fullText.length < 100) {
+      console.warn(`Very short content extracted: '${fullText}'`);
+    } else if (fullText.length > 2500) {
+      console.log(`Content truncated from ${fullText.length} to 2500 characters`);
+    }
+    return fullText.substring(0, 2500);
+  }
+  findMainElement(doc) {
+    const mainSelectors = [
+      'main[property="mainContentOfPage"][resource="#wb-main"][typeof="WebPageElement"]',
+      'main[property="mainContentOfPage"][resource="#wb-main"][typeof="WebPageElement"].col-md-9.col-md-push-3',
+      'main[role="main"][property="mainContentOfPage"].container',
+      'main[role="main"][property="mainContentOfPage"]'
+    ];
+    for (const selector of mainSelectors) {
+      const element = doc.querySelector(selector);
+      if (element) {
+        const isLastSelector = selector === mainSelectors[mainSelectors.length - 1];
+        if (isLastSelector) {
+          const containerDiv = element.querySelector("div.container");
+          if (containerDiv) {
+            console.log("Found main element with container div inside");
+            return containerDiv;
+          }
+        }
+        return element;
+      }
+    }
+    const mainElement = doc.querySelector('main[role="main"]');
+    if (mainElement) {
+      console.log("Found main element using generic selector");
+      const containerDiv = mainElement.querySelector("div.container");
+      if (containerDiv) {
+        console.log("Found container div inside main element");
+        return containerDiv;
+      }
+      return mainElement;
+    }
+    const plainMain = doc.querySelector("main");
+    if (plainMain) {
+      console.log("Found plain main element");
+      const containerDiv = plainMain.querySelector("div.container");
+      if (containerDiv) {
+        console.log("Found container div inside plain main element");
+        return containerDiv;
+      }
+      return plainMain;
+    }
+    const roleMain = doc.querySelector('[role="main"]');
+    if (roleMain) {
+      console.log('Found element with role="main"');
+      return roleMain;
+    }
+    return null;
+  }
+  detectLanguage(content) {
+    const frenchIndicators = [
+      "le",
+      "la",
+      "les",
+      "de",
+      "du",
+      "des",
+      "un",
+      "une",
+      "et",
+      "ou",
+      "mais",
+      "pour",
+      "avec",
+      "sans",
+      "sur",
+      "dans",
+      "par",
+      "que",
+      "qui",
+      "quoi",
+      "dont",
+      "o\xF9"
+    ];
+    const words = content.toLowerCase().split(/\s+/);
+    const frenchWordCount = words.filter((word) => frenchIndicators.includes(word)).length;
+    const frenchRatio = frenchWordCount / Math.max(words.length, 1);
+    return frenchRatio > 0.05 ? "fr" : "en";
+  }
+  generateMetadataWithFallback(content, primaryModel, language, fallbackModels) {
+    const modelsToTry = [primaryModel, ...fallbackModels.filter((m) => m !== primaryModel)];
+    return this.tryModelsInSequence(content, modelsToTry, language, 0, primaryModel);
+  }
+  tryModelsInSequence(content, models, language, attemptIndex, primaryModel) {
+    if (attemptIndex >= models.length) {
+      return throwError(() => new Error("All models failed due to rate limits or other errors"));
+    }
+    const currentModel = models[attemptIndex];
+    const fallbackUsed = attemptIndex > 0;
+    console.log(`Attempting metadata generation with model: ${currentModel} (attempt ${attemptIndex + 1}/${models.length})`);
+    return this.generateMetadata(content, currentModel, language).pipe(map((result) => __spreadProps(__spreadValues({}, result), {
+      modelUsed: currentModel,
+      fallbackUsed
+    })), catchError((error) => {
+      console.warn(`Model ${currentModel} failed:`, error.message);
+      if (this.isRateLimitError(error)) {
+        console.log(`Rate limit detected for ${currentModel}, trying next model...`);
+        return this.tryModelsInSequence(content, models, language, attemptIndex + 1, primaryModel);
+      }
+      if (attemptIndex < models.length - 1) {
+        console.log(`Error with ${currentModel}, trying next model...`);
+        return this.tryModelsInSequence(content, models, language, attemptIndex + 1, primaryModel);
+      }
+      return throwError(() => error);
+    }));
+  }
+  isRateLimitError(error) {
+    if (!error)
+      return false;
+    const errorMessage = error?.message || error?.toString() || "";
+    const errorLower = errorMessage.toLowerCase();
+    return errorLower.includes("rate limit") || errorLower.includes("quota exceeded") || errorLower.includes("too many requests") || errorLower.includes("429") || error?.status === 429;
+  }
+  generateMetadata(content, model2, language) {
+    const apiKey = this.apiKeyService.getCurrentKey();
+    if (!apiKey) {
+      return throwError(() => new Error("API key not configured"));
+    }
+    const descriptionPrompt = language === "en" ? `As a search engine optimization expert, analyze the following content carefully and provide a concise, complete summary suitable for a meta description in English. The summary MUST be highly relevant to the specific content provided and capture its main topic and purpose. Use topic-specific terms found in the content, write in full sentences, and ensure the summary ends concisely within 275 characters. IMPORTANT: Provide ONLY the meta description itself with NO additional commentary or explanations.
+
+${content}
+
+Summary:` : `En tant qu'expert en r\xE9f\xE9rencement, analysez attentivement le contenu suivant et fournissez un r\xE9sum\xE9 concis et complet adapt\xE9 \xE0 une m\xE9ta-description en fran\xE7ais. Le r\xE9sum\xE9 DOIT \xEAtre parfaitement adapt\xE9 au contenu sp\xE9cifique fourni. Utilisez des termes sp\xE9cifiques au sujet, \xE9crivez en phrases compl\xE8tes, et assurez-vous que le r\xE9sum\xE9 se termine de mani\xE8re concise dans les 275 caract\xE8res. IMPORTANT: Fournissez UNIQUEMENT la m\xE9ta-description elle-m\xEAme SANS commentaire suppl\xE9mentaire.
+
+${content}
+
+R\xE9sum\xE9:`;
+    const keywordsPrompt = language === "en" ? `As a search engine optimization expert, carefully analyze the following content and identify 10 meaningful, topic-specific meta keywords that are DIRECTLY EXTRACTED from or strongly implied by the content. IMPORTANT: Return ONLY a comma-separated list of keywords with absolutely NO additional notes or commentary. Exclude 'Canada Revenue Agency' from the keywords.
+
+${content}
+
+Keywords:` : `En tant qu'expert en optimisation pour les moteurs de recherche, analysez attentivement le contenu suivant et identifiez 10 mots-cl\xE9s m\xE9ta significatifs qui sont DIRECTEMENT EXTRAITS du contenu. IMPORTANT: Retournez UNIQUEMENT une liste de mots-cl\xE9s s\xE9par\xE9s par des virgules sans AUCUNE note suppl\xE9mentaire. Excluez 'Agence du revenu du Canada' des mots-cl\xE9s.
+
+${content}
+
+Mots-cl\xE9s:`;
+    return this.callOpenRouter(descriptionPrompt, model2, 200).pipe(switchMap((description) => {
+      return this.callOpenRouter(keywordsPrompt, model2, 100).pipe(map((keywords) => ({
+        description: this.cleanMetadataResponse(description),
+        keywords: this.cleanKeywordsResponse(keywords)
+      })));
+    }));
+  }
+  translateMetadata(metadata) {
+    const apiKey = this.apiKeyService.getCurrentKey();
+    if (!apiKey) {
+      return throwError(() => new Error("API key not configured"));
+    }
+    const translationModel = "mistralai/mistral-small-3.2-24b-instruct:free";
+    const descriptionPrompt = `You are a professional translator specializing in Canadian government content. Translate the following English meta description to French, maintaining the formal tone used by the Canada Revenue Agency (CRA). 
+
+Important CRA-specific terminology:
+- "Canada Revenue Agency" \u2192 "Agence du revenu du Canada"
+- "income tax" \u2192 "imp\xF4t sur le revenu"
+- "benefits" \u2192 "prestations"
+- "tax return" \u2192 "d\xE9claration de revenus"
+- "GST/HST" \u2192 "TPS/TVH"
+- "business number" \u2192 "num\xE9ro d'entreprise"
+- "tax credit" \u2192 "cr\xE9dit d'imp\xF4t"
+- "deduction" \u2192 "d\xE9duction"
+- "tax-free savings account (TFSA)" \u2192 "compte d'\xE9pargne libre d'imp\xF4t (CELI)"
+- "registered retirement savings plan (RRSP)" \u2192 "r\xE9gime enregistr\xE9 d'\xE9pargne-retraite (REER)"
+
+IMPORTANT: Your response must contain ONLY the direct translation, with absolutely NO commentary, NO suggestions, NO explanations, and NO additional text of any kind. Return ONLY the translated text itself:
+
+${metadata.description}
+
+French translation:`;
+    const keywordsPrompt = `Translate each of these English keywords to French. IMPORTANT: Return ONLY the translated keywords in a comma-separated list. Provide absolutely NO commentary, NO suggestions, NO explanations, and NO additional text of any kind. Return ONLY a comma-separated list of the translated keywords:
+
+${metadata.keywords}
+
+French keywords (comma-separated):`;
+    return this.callOpenRouter(descriptionPrompt, translationModel, 200, this.TRANSLATION_TIMEOUT).pipe(
+      retry({ count: 1, delay: 2e3 }),
+      // Retry once after 2 seconds for cold starts
+      switchMap((description) => {
+        return this.callOpenRouter(keywordsPrompt, translationModel, 100, this.TRANSLATION_TIMEOUT).pipe(retry({ count: 1, delay: 2e3 }), map((keywords) => ({
+          description: this.cleanMetadataResponse(description),
+          keywords: this.cleanKeywordsResponse(keywords)
+        })));
+      })
+    );
+  }
+  callOpenRouter(prompt, model2, maxTokens, timeoutMs = this.API_TIMEOUT) {
+    const apiKey = this.apiKeyService.getCurrentKey();
+    if (!apiKey) {
+      return throwError(() => new Error("API key not configured"));
+    }
+    const headers = new HttpHeaders({
+      "Authorization": `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      "HTTP-Referer": "https://content-assistant.app",
+      "X-Title": "Content Assistant"
+    });
+    const payload = {
+      model: model2,
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: maxTokens,
+      temperature: 0.3
+    };
+    return this.http.post(this.OPENROUTER_URL, payload, { headers }).pipe(timeout(timeoutMs), map((response) => {
+      if (response.choices && response.choices[0]?.message?.content) {
+        return response.choices[0].message.content;
+      }
+      throw new Error("Invalid response from API");
+    }), catchError((error) => {
+      console.error("OpenRouter API error:", error);
+      const httpError = error;
+      if (httpError.status === 429 || httpError.error?.error?.code === 429) {
+        return throwError(() => {
+          const rateLimitError = new Error("Rate limit exceeded");
+          rateLimitError.status = 429;
+          rateLimitError.originalError = error;
+          return rateLimitError;
+        });
+      }
+      const newError = new Error(httpError.error?.error?.message || httpError.message || "Failed to generate content");
+      newError.status = httpError.status;
+      newError.originalError = error;
+      return throwError(() => newError);
+    }));
+  }
+  cleanMetadataResponse(response) {
+    let cleaned = response.trim();
+    if (cleaned.startsWith('"') && cleaned.endsWith('"')) {
+      cleaned = cleaned.slice(1, -1);
+    }
+    const prefixes = [
+      "Here is a summary:",
+      "Summary:",
+      "Meta description:",
+      "Voici un r\xE9sum\xE9:",
+      "R\xE9sum\xE9:",
+      "M\xE9ta-description:",
+      "French translation:",
+      "Translation:"
+    ];
+    for (const prefix of prefixes) {
+      if (cleaned.toLowerCase().startsWith(prefix.toLowerCase())) {
+        cleaned = cleaned.substring(prefix.length).trim();
+      }
+    }
+    if (cleaned.length > 275) {
+      const lastPeriod = cleaned.lastIndexOf(".", 275);
+      if (lastPeriod > 200) {
+        cleaned = cleaned.substring(0, lastPeriod + 1);
+      } else {
+        cleaned = cleaned.substring(0, 275);
+      }
+    }
+    return cleaned;
+  }
+  cleanKeywordsResponse(response) {
+    let cleaned = response.trim();
+    if (cleaned.startsWith('"') && cleaned.endsWith('"')) {
+      cleaned = cleaned.slice(1, -1);
+    }
+    const prefixes = [
+      "Keywords:",
+      "Here are the keywords:",
+      "Meta keywords:",
+      "Mots-cl\xE9s:",
+      "Voici les mots-cl\xE9s:",
+      "French keywords:"
+    ];
+    for (const prefix of prefixes) {
+      if (cleaned.toLowerCase().startsWith(prefix.toLowerCase())) {
+        cleaned = cleaned.substring(prefix.length).trim();
+      }
+    }
+    const keywords = cleaned.split(",").map((k) => k.trim()).filter((k) => k.length > 0);
+    return keywords.join(", ");
+  }
+  // Document processing methods
+  processDocument(file) {
+    return from(this.extractDocumentText(file)).pipe(switchMap((content) => {
+      if (!content || content.length < 50) {
+        return throwError(() => new Error("Document content too short or invalid for processing"));
+      }
+      return this.generateMetadataFromDocument(content);
+    }));
+  }
+  // New method for document tab - extracts text, detects language, generates metadata
+  processDocumentForMetadata(file, model2) {
+    return from(this.extractDocumentText(file)).pipe(switchMap((content) => {
+      if (!content || content.length < 50) {
+        return throwError(() => new Error("Document content too short or invalid for processing"));
+      }
+      const language = this.detectLanguage(content);
+      if (language === "fr") {
+        return this.generateMetadataFromDocument(content).pipe(map((metadata) => ({
+          language,
+          text: content,
+          metadata: {
+            url: file.name,
+            scrapedContent: content.substring(0, 500) + "...",
+            // Show preview
+            metaDescription: metadata.description,
+            metaKeywords: metadata.keywords,
+            language: "fr",
+            modelUsed: "mistralai/mistral-small-3.2-24b-instruct:free",
+            fallbackUsed: false
+          }
+        })));
+      } else {
+        return this.generateMetadata(content, model2, language).pipe(map((metadata) => ({
+          language,
+          text: content,
+          metadata: {
+            url: file.name,
+            scrapedContent: content.substring(0, 500) + "...",
+            // Show preview
+            metaDescription: metadata.description,
+            metaKeywords: metadata.keywords,
+            language: "en",
+            modelUsed: model2,
+            fallbackUsed: false
+          }
+        })));
+      }
+    }));
+  }
+  extractDocumentText(file) {
+    return __async(this, null, function* () {
+      const arrayBuffer = yield file.arrayBuffer();
+      return this.fileParseService.extractDocxParagraphs(arrayBuffer);
+    });
+  }
+  generateMetadataFromDocument(content) {
+    const apiKey = this.apiKeyService.getCurrentKey();
+    if (!apiKey) {
+      return throwError(() => new Error("API key not configured"));
+    }
+    const descriptionPrompt = `En tant qu'expert en r\xE9f\xE9rencement, analysez attentivement le contenu suivant et fournissez un r\xE9sum\xE9 concis et complet adapt\xE9 \xE0 une m\xE9ta-description en fran\xE7ais. Le r\xE9sum\xE9 DOIT \xEAtre parfaitement adapt\xE9 au contenu sp\xE9cifique fourni. Utilisez des termes sp\xE9cifiques au sujet, \xE9crivez en phrases compl\xE8tes, et assurez-vous que le r\xE9sum\xE9 se termine de mani\xE8re concise dans les 275 caract\xE8res. IMPORTANT: Fournissez UNIQUEMENT la m\xE9ta-description elle-m\xEAme SANS commentaire suppl\xE9mentaire.
+
+${content}
+
+R\xE9sum\xE9:`;
+    const keywordsPrompt = `En tant qu'expert en optimisation pour les moteurs de recherche, analysez attentivement le contenu suivant et identifiez 10 mots-cl\xE9s m\xE9ta significatifs qui sont DIRECTEMENT EXTRAITS du contenu. IMPORTANT: Retournez UNIQUEMENT une liste de mots-cl\xE9s s\xE9par\xE9s par des virgules sans AUCUNE note suppl\xE9mentaire. Excluez 'Agence du revenu du Canada' des mots-cl\xE9s.
+
+${content}
+
+Mots-cl\xE9s:`;
+    const model2 = "mistralai/mistral-small-3.2-24b-instruct:free";
+    return this.callOpenRouter(descriptionPrompt, model2, 200).pipe(switchMap((description) => {
+      return this.callOpenRouter(keywordsPrompt, model2, 100).pipe(map((keywords) => ({
+        description: this.cleanMetadataResponse(description),
+        keywords: this.cleanKeywordsResponse(keywords)
+      })));
+    }));
+  }
+  evaluateMetadata(translatedMetadata, documentMetadata) {
+    const apiKey = this.apiKeyService.getCurrentKey();
+    if (!apiKey) {
+      return throwError(() => new Error("API key not configured"));
+    }
+    const evaluationPrompt = `Vous \xEAtes un expert en optimisation pour les moteurs de recherche (SEO) pour l'Agence du revenu du Canada. Vous devez \xE9valuer deux versions de m\xE9tadonn\xE9es en fran\xE7ais et sugg\xE9rer la meilleure version finale.
+
+VERSION 1 - Traduit de l'anglais:
+Description: ${translatedMetadata.description}
+Mots-cl\xE9s: ${translatedMetadata.keywords}
+
+VERSION 2 - G\xE9n\xE9r\xE9 \xE0 partir du document fran\xE7ais:
+Description: ${documentMetadata.description}
+Mots-cl\xE9s: ${documentMetadata.keywords}
+
+Analysez ces deux versions et fournissez:
+1. Une m\xE9ta-description finale sugg\xE9r\xE9e (maximum 275 caract\xE8res)
+2. Des mots-cl\xE9s m\xE9ta finaux sugg\xE9r\xE9s (format: liste s\xE9par\xE9e par des virgules)
+3. Une br\xE8ve justification de vos choix
+
+IMPORTANT: Votre r\xE9ponse DOIT \xEAtre structur\xE9e EXACTEMENT comme suit, sans texte suppl\xE9mentaire:
+
+DESCRIPTION: [votre m\xE9ta-description sugg\xE9r\xE9e]
+KEYWORDS: [vos mots-cl\xE9s sugg\xE9r\xE9s]
+RATIONALE: [votre justification]`;
+    const model2 = "mistralai/mistral-small-3.2-24b-instruct:free";
+    return this.callOpenRouter(evaluationPrompt, model2, 400, this.TRANSLATION_TIMEOUT).pipe(retry({ count: 1, delay: 2e3 }), map((response) => this.parseEvaluationResponse(response)), catchError((error) => {
+      console.error("Error evaluating metadata:", error);
+      return throwError(() => error);
+    }));
+  }
+  parseEvaluationResponse(response) {
+    const lines = response.trim().split("\n");
+    let suggestedDescription = "";
+    let suggestedKeywords = "";
+    let rationale = "";
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      if (trimmedLine.startsWith("DESCRIPTION:")) {
+        suggestedDescription = trimmedLine.substring("DESCRIPTION:".length).trim();
+      } else if (trimmedLine.startsWith("KEYWORDS:")) {
+        suggestedKeywords = trimmedLine.substring("KEYWORDS:".length).trim();
+      } else if (trimmedLine.startsWith("RATIONALE:")) {
+        rationale = trimmedLine.substring("RATIONALE:".length).trim();
+      }
+    }
+    suggestedDescription = this.cleanMetadataResponse(suggestedDescription);
+    suggestedKeywords = this.cleanKeywordsResponse(suggestedKeywords);
+    return {
+      suggestedDescription,
+      suggestedKeywords,
+      rationale: rationale || "No rationale provided"
+    };
+  }
+  static \u0275fac = function MetadataAssistantService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _MetadataAssistantService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _MetadataAssistantService, factory: _MetadataAssistantService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MetadataAssistantService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/services/metadata-assistant-state.service.ts
+var MetadataAssistantStateService = class _MetadataAssistantStateService {
+  initialState = {
+    isProcessing: false,
+    currentUrl: "",
+    currentStep: "idle",
+    progress: 0,
+    totalUrls: 0,
+    processedUrls: 0,
+    results: [],
+    error: null,
+    selectedModel: "mistralai/mistral-small-3.2-24b-instruct:free",
+    translateToFrench: false,
+    documentProcessingIndex: null
+  };
+  stateSubject = new BehaviorSubject(this.initialState);
+  state$ = this.stateSubject.asObservable();
+  getState() {
+    return this.stateSubject.value;
+  }
+  updateState(updates) {
+    const currentState = this.getState();
+    this.stateSubject.next(__spreadValues(__spreadValues({}, currentState), updates));
+  }
+  startProcessing(urls, model2, translateToFrench) {
+    this.updateState({
+      isProcessing: true,
+      currentStep: "scraping",
+      progress: 0,
+      totalUrls: urls.length,
+      processedUrls: 0,
+      results: [],
+      error: null,
+      selectedModel: model2,
+      translateToFrench
+    });
+  }
+  updateProgress(currentUrl, step) {
+    const state2 = this.getState();
+    const stepProgress = step === "scraping" ? 0.3 : step === "generating" ? 0.6 : 0.9;
+    const urlProgress = state2.processedUrls / Math.max(state2.totalUrls, 1);
+    const currentUrlProgress = stepProgress / Math.max(state2.totalUrls, 1);
+    this.updateState({
+      currentUrl,
+      currentStep: step,
+      progress: Math.min((urlProgress + currentUrlProgress) * 100, 100)
+    });
+  }
+  addResult(result) {
+    const state2 = this.getState();
+    this.updateState({
+      results: [...state2.results, result],
+      processedUrls: state2.processedUrls + 1,
+      progress: (state2.processedUrls + 1) / Math.max(state2.totalUrls, 1) * 100
+    });
+  }
+  completeProcessing() {
+    this.updateState({
+      isProcessing: false,
+      currentStep: "complete",
+      progress: 100,
+      currentUrl: ""
+    });
+  }
+  setError(error) {
+    this.updateState({
+      isProcessing: false,
+      currentStep: "idle",
+      error
+    });
+  }
+  reset() {
+    this.stateSubject.next(this.initialState);
+  }
+  setSelectedModel(model2) {
+    this.updateState({ selectedModel: model2 });
+  }
+  setTranslateToFrench(translate) {
+    this.updateState({ translateToFrench: translate });
+  }
+  clearResults() {
+    this.updateState({
+      results: [],
+      progress: 0,
+      processedUrls: 0,
+      totalUrls: 0,
+      currentStep: "idle",
+      error: null
+    });
+  }
+  // Document processing methods
+  updateResultWithDocumentMetadata(index, documentMetadata) {
+    const state2 = this.getState();
+    const updatedResults = [...state2.results];
+    if (updatedResults[index]) {
+      updatedResults[index] = __spreadProps(__spreadValues({}, updatedResults[index]), {
+        documentMetadata
+      });
+      this.updateState({ results: updatedResults });
+    }
+  }
+  updateResultWithEvaluation(index, evaluationResult) {
+    const state2 = this.getState();
+    const updatedResults = [...state2.results];
+    if (updatedResults[index]) {
+      updatedResults[index] = __spreadProps(__spreadValues({}, updatedResults[index]), {
+        evaluationResult
+      });
+      this.updateState({
+        results: updatedResults,
+        documentProcessingIndex: null,
+        currentStep: "complete"
+      });
+    }
+  }
+  setDocumentProcessingIndex(index) {
+    this.updateState({ documentProcessingIndex: index });
+  }
+  static \u0275fac = function MetadataAssistantStateService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _MetadataAssistantStateService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _MetadataAssistantStateService, factory: _MetadataAssistantStateService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MetadataAssistantStateService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
 })();
 
 // node_modules/primeng/fesm2022/primeng-inputtextarea.mjs
@@ -20398,11 +21298,11 @@ var Chip = class _Chip extends BaseComponent {
     }
   }
   containerClass() {
-    let classes8 = "p-chip p-component";
+    let classes14 = "p-chip p-component";
     if (this.styleClass) {
-      classes8 += ` ${this.styleClass}`;
+      classes14 += ` ${this.styleClass}`;
     }
-    return classes8;
+    return classes14;
   }
   close(event) {
     this.visible = false;
@@ -20706,6 +21606,7 @@ var UrlInputComponent = class _UrlInputComponent {
   disabled = false;
   urlsChange = new EventEmitter();
   urlInputChange = new EventEmitter();
+  translate = inject(TranslateService);
   urlText = "";
   validUrls = [];
   invalidUrls = [];
@@ -20751,11 +21652,11 @@ var UrlInputComponent = class _UrlInputComponent {
     try {
       const urlObj = new URL(url);
       if (!this.allowedHosts.has(urlObj.host)) {
-        return `Domain not supported: ${urlObj.host}`;
+        return this.translate.instant("metadata.urlInput.errors.domainNotSupported", { host: urlObj.host });
       }
-      return "Invalid URL format";
+      return this.translate.instant("metadata.urlInput.errors.invalidFormat");
     } catch {
-      return "Invalid URL format";
+      return this.translate.instant("metadata.urlInput.errors.invalidFormat");
     }
   }
   clearInput() {
@@ -21143,17 +22044,17 @@ var Tag = class _Tag extends BaseComponent {
     });
   }
   containerClass() {
-    let classes8 = "p-tag p-component";
+    let classes14 = "p-tag p-component";
     if (this.severity) {
-      classes8 += ` p-tag-${this.severity}`;
+      classes14 += ` p-tag-${this.severity}`;
     }
     if (this.rounded) {
-      classes8 += " p-tag-rounded";
+      classes14 += " p-tag-rounded";
     }
     if (this.styleClass) {
-      classes8 += ` ${this.styleClass}`;
+      classes14 += ` ${this.styleClass}`;
     }
-    return classes8;
+    return classes14;
   }
   static \u0275fac = /* @__PURE__ */ (() => {
     let \u0275Tag_BaseFactory;
@@ -21300,6 +22201,239 @@ var TagModule = class _TagModule {
   }], null, null);
 })();
 
+// src/app/views/metadata-assistant/components/document-upload/document-upload.component.ts
+function DocumentUploadComponent_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 7);
+    \u0275\u0275element(1, "i", 8);
+    \u0275\u0275elementStart(2, "h4", 9);
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 1, "metadata.document.title"));
+  }
+}
+function DocumentUploadComponent_ng_container_8_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275element(1, "i", 10);
+    \u0275\u0275elementStart(2, "p", 11);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "p-button", 12);
+    \u0275\u0275pipe(5, "translate");
+    \u0275\u0275listener("onClick", function DocumentUploadComponent_ng_container_8_Template_p_button_onClick_4_listener($event) {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r3 = \u0275\u0275nextContext();
+      ctx_r3.clearFile();
+      return \u0275\u0275resetView($event.stopPropagation());
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate(ctx_r3.selectedFile.name);
+    \u0275\u0275advance();
+    \u0275\u0275property("label", \u0275\u0275pipeBind1(5, 3, "metadata.document.clearFile"))("outlined", true);
+  }
+}
+function DocumentUploadComponent_ng_template_9_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 13);
+    \u0275\u0275elementStart(1, "p", 14);
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "translate");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 1, "metadata.document.dragDrop"));
+  }
+}
+var DocumentUploadComponent = class _DocumentUploadComponent {
+  disabled = false;
+  fileSelected = new EventEmitter();
+  selectedFile = null;
+  isDragging = false;
+  onFileSelected(event) {
+    const input2 = event.target;
+    if (input2.files && input2.files.length > 0) {
+      const file = input2.files[0];
+      if (this.isDocx(file)) {
+        this.selectedFile = file;
+        this.fileSelected.emit(this.selectedFile);
+      } else {
+        console.warn("Invalid file type. Please select a .docx file.");
+      }
+    }
+    input2.value = "";
+  }
+  onFileInputClick(event) {
+    const input2 = event.target;
+    input2.value = "";
+  }
+  onDragOver(event) {
+    event.preventDefault();
+    this.isDragging = true;
+  }
+  onDragLeave(event) {
+    event.preventDefault();
+    this.isDragging = false;
+  }
+  onDrop(event) {
+    event.preventDefault();
+    this.isDragging = false;
+    if (event.dataTransfer?.files.length) {
+      const droppedFile = event.dataTransfer.files[0];
+      if (droppedFile.name.toLowerCase().endsWith(".docx")) {
+        this.selectedFile = droppedFile;
+        this.fileSelected.emit(this.selectedFile);
+      }
+    }
+  }
+  isDocx(file) {
+    return file.name.toLowerCase().endsWith(".docx");
+  }
+  clearFile() {
+    this.selectedFile = null;
+  }
+  static \u0275fac = function DocumentUploadComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _DocumentUploadComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DocumentUploadComponent, selectors: [["ca-document-upload"]], inputs: { disabled: "disabled" }, outputs: { fileSelected: "fileSelected" }, decls: 11, vars: 8, consts: [["fileInput", ""], ["dragArea", ""], ["pTemplate", "header"], [1, "mb-3"], ["role", "button", "tabindex", "0", 1, "flex", "flex-column", "align-items-center", "justify-content-center", "p-3", "border-dashed", "border-round", "border-200", "surface-100", "hover:surface-200", "hover:border-primary-400", "transition-colors", "transition-duration-300", "cursor-pointer", "w-full", "min-h-12rem", 3, "click", "keydown.enter", "keydown.space", "dragover", "dragleave", "drop"], ["type", "file", "accept", ".docx", 2, "display", "none", 3, "click", "change", "disabled"], [4, "ngIf", "ngIfElse"], [1, "flex", "align-items-center", "p-3"], [1, "pi", "pi-file-word", "mr-2"], [1, "m-0"], [1, "pi", "pi-file-word", "text-blue-500", "text-4xl", "mb-2"], [1, "text-xl", "text-center", "mb-2"], ["icon", "pi pi-times", "severity", "secondary", "size", "small", 3, "onClick", "label", "outlined"], [1, "pi", "pi-upload", "border-2", "border-circle", "border-300", "p-3", "text-3xl", "text-color-secondary", "mb-2"], [1, "m-0", "text-center", "text-sm"]], template: function DocumentUploadComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      const _r1 = \u0275\u0275getCurrentView();
+      \u0275\u0275elementStart(0, "p-card");
+      \u0275\u0275template(1, DocumentUploadComponent_ng_template_1_Template, 5, 3, "ng-template", 2);
+      \u0275\u0275elementStart(2, "p", 3);
+      \u0275\u0275text(3);
+      \u0275\u0275pipe(4, "translate");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(5, "div", 4);
+      \u0275\u0275listener("click", function DocumentUploadComponent_Template_div_click_5_listener() {
+        \u0275\u0275restoreView(_r1);
+        const fileInput_r2 = \u0275\u0275reference(7);
+        return \u0275\u0275resetView(fileInput_r2.click());
+      })("keydown.enter", function DocumentUploadComponent_Template_div_keydown_enter_5_listener() {
+        \u0275\u0275restoreView(_r1);
+        const fileInput_r2 = \u0275\u0275reference(7);
+        return \u0275\u0275resetView(fileInput_r2.click());
+      })("keydown.space", function DocumentUploadComponent_Template_div_keydown_space_5_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        const fileInput_r2 = \u0275\u0275reference(7);
+        fileInput_r2.click();
+        return \u0275\u0275resetView($event.preventDefault());
+      })("dragover", function DocumentUploadComponent_Template_div_dragover_5_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.onDragOver($event));
+      })("dragleave", function DocumentUploadComponent_Template_div_dragleave_5_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.onDragLeave($event));
+      })("drop", function DocumentUploadComponent_Template_div_drop_5_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.onDrop($event));
+      });
+      \u0275\u0275elementStart(6, "input", 5, 0);
+      \u0275\u0275listener("click", function DocumentUploadComponent_Template_input_click_6_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.onFileInputClick($event));
+      })("change", function DocumentUploadComponent_Template_input_change_6_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        return \u0275\u0275resetView(ctx.onFileSelected($event));
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(8, DocumentUploadComponent_ng_container_8_Template, 6, 5, "ng-container", 6)(9, DocumentUploadComponent_ng_template_9_Template, 4, 3, "ng-template", null, 1, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementEnd()();
+    }
+    if (rf & 2) {
+      const dragArea_r5 = \u0275\u0275reference(10);
+      \u0275\u0275advance(3);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 6, "metadata.document.description"));
+      \u0275\u0275advance(2);
+      \u0275\u0275classProp("border-primary-400", ctx.isDragging);
+      \u0275\u0275advance();
+      \u0275\u0275property("disabled", ctx.disabled);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngIf", ctx.selectedFile)("ngIfElse", dragArea_r5);
+    }
+  }, dependencies: [CommonModule, NgIf, TranslateModule, TranslatePipe, CardModule, Card, PrimeTemplate, ButtonModule, Button], styles: ["\n\n/*# sourceMappingURL=document-upload.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(DocumentUploadComponent, [{
+    type: Component,
+    args: [{ selector: "ca-document-upload", standalone: true, imports: [
+      CommonModule,
+      TranslateModule,
+      CardModule,
+      ButtonModule
+    ], template: `<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center p-3">
+      <i class="pi pi-file-word mr-2"></i>
+      <h4 class="m-0">{{ 'metadata.document.title' | translate }}</h4>
+    </div>
+  </ng-template>
+
+  <p class="mb-3">{{ 'metadata.document.description' | translate }}</p>
+
+  <!-- Upload Section -->
+  <div
+    class="flex flex-column align-items-center justify-content-center p-3 border-dashed border-round border-200 surface-100 hover:surface-200 hover:border-primary-400 transition-colors transition-duration-300 cursor-pointer w-full min-h-12rem"
+    [class.border-primary-400]="isDragging"
+    role="button"
+    tabindex="0"
+    (click)="fileInput.click()"
+    (keydown.enter)="fileInput.click()"
+    (keydown.space)="fileInput.click(); $event.preventDefault()"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)">
+
+    <input
+      type="file"
+      accept=".docx"
+      #fileInput
+      style="display: none"
+      [disabled]="disabled"
+      (click)="onFileInputClick($event)"
+      (change)="onFileSelected($event)" />
+
+    <ng-container *ngIf="selectedFile; else dragArea">
+      <i class="pi pi-file-word text-blue-500 text-4xl mb-2"></i>
+      <p class="text-xl text-center mb-2">{{ selectedFile.name }}</p>
+      <p-button
+        [label]="'metadata.document.clearFile' | translate"
+        icon="pi pi-times"
+        severity="secondary"
+        [outlined]="true"
+        size="small"
+        (onClick)="clearFile(); $event.stopPropagation()">
+      </p-button>
+    </ng-container>
+
+    <ng-template #dragArea>
+      <i class="pi pi-upload border-2 border-circle border-300 p-3 text-3xl text-color-secondary mb-2"></i>
+      <p class="m-0 text-center text-sm">{{ 'metadata.document.dragDrop' | translate }}</p>
+    </ng-template>
+  </div>
+</p-card>
+`, styles: ["/* src/app/views/metadata-assistant/components/document-upload/document-upload.component.css */\n/*# sourceMappingURL=document-upload.component.css.map */\n"] }]
+  }], null, { disabled: [{
+    type: Input
+  }], fileSelected: [{
+    type: Output
+  }] });
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DocumentUploadComponent, { className: "DocumentUploadComponent", filePath: "src/app/views/metadata-assistant/components/document-upload/document-upload.component.ts", lineNumber: 19 });
+})();
+
 // src/app/views/metadata-assistant/components/metadata-result/metadata-result.component.ts
 var _c010 = () => ({ "font-size": "0.75rem" });
 function MetadataResultComponent_div_0_ng_template_2_Template(rf, ctx) {
@@ -21324,10 +22458,12 @@ function MetadataResultComponent_div_0_ng_template_2_Template(rf, ctx) {
 }
 function MetadataResultComponent_div_0_p_accordionTab_5_ng_template_1_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 24)(1, "div", 25)(2, "span", 26);
+    \u0275\u0275elementStart(0, "div", 27)(1, "div", 28)(2, "span", 29);
     \u0275\u0275text(3);
     \u0275\u0275elementEnd();
-    \u0275\u0275element(4, "p-tag", 27);
+    \u0275\u0275element(4, "p-tag", 30);
+    \u0275\u0275pipe(5, "translate");
+    \u0275\u0275pipe(6, "translate");
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
@@ -21336,15 +22472,15 @@ function MetadataResultComponent_div_0_p_accordionTab_5_ng_template_1_Template(r
     \u0275\u0275advance(3);
     \u0275\u0275textInterpolate(ctx_r0.getDomainFromUrl(result_r3.url));
     \u0275\u0275advance();
-    \u0275\u0275styleMap(\u0275\u0275pureFunction0(5, _c010));
-    \u0275\u0275property("value", result_r3.language === "en" ? "English" : "Fran\xE7ais")("severity", result_r3.language === "en" ? "success" : "info");
+    \u0275\u0275styleMap(\u0275\u0275pureFunction0(9, _c010));
+    \u0275\u0275property("value", result_r3.language === "en" ? \u0275\u0275pipeBind1(5, 5, "common.language.english") : \u0275\u0275pipeBind1(6, 7, "common.language.french"))("severity", result_r3.language === "en" ? "success" : "info");
   }
 }
 function MetadataResultComponent_div_0_p_accordionTab_5_div_36_Template(rf, ctx) {
   if (rf & 1) {
     const _r4 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 28)(1, "h4", 29);
-    \u0275\u0275element(2, "i", 30);
+    \u0275\u0275elementStart(0, "div", 31)(1, "h4", 32);
+    \u0275\u0275element(2, "i", 33);
     \u0275\u0275text(3);
     \u0275\u0275pipe(4, "translate");
     \u0275\u0275elementEnd();
@@ -21366,7 +22502,7 @@ function MetadataResultComponent_div_0_p_accordionTab_5_div_36_Template(rf, ctx)
     \u0275\u0275elementStart(14, "div", 21)(15, "code", 22);
     \u0275\u0275text(16);
     \u0275\u0275elementEnd()()();
-    \u0275\u0275elementStart(17, "div", 31)(18, "div", 18)(19, "label", 14);
+    \u0275\u0275elementStart(17, "div", 34)(18, "div", 18)(19, "label", 14);
     \u0275\u0275text(20);
     \u0275\u0275pipe(21, "translate");
     \u0275\u0275elementStart(22, "span", 19);
@@ -21407,11 +22543,175 @@ function MetadataResultComponent_div_0_p_accordionTab_5_div_36_Template(rf, ctx)
     \u0275\u0275textInterpolate(result_r3.frenchTranslatedKeywords);
   }
 }
+function MetadataResultComponent_div_0_p_accordionTab_5_div_37_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 35)(1, "ca-document-upload", 36);
+    \u0275\u0275listener("fileSelected", function MetadataResultComponent_div_0_p_accordionTab_5_div_37_Template_ca_document_upload_fileSelected_1_listener($event) {
+      \u0275\u0275restoreView(_r5);
+      const i_r6 = \u0275\u0275nextContext().index;
+      const ctx_r0 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r0.onDocumentFileSelected($event, i_r6));
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const i_r6 = \u0275\u0275nextContext().index;
+    const ctx_r0 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("disabled", ctx_r0.isProcessingDocument(i_r6));
+  }
+}
+function MetadataResultComponent_div_0_p_accordionTab_5_div_38_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 37)(1, "h4", 32);
+    \u0275\u0275element(2, "i", 38);
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "div", 13)(6, "div", 18)(7, "label", 14);
+    \u0275\u0275text(8);
+    \u0275\u0275pipe(9, "translate");
+    \u0275\u0275elementStart(10, "span", 19);
+    \u0275\u0275text(11);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(12, "p-button", 20);
+    \u0275\u0275pipe(13, "translate");
+    \u0275\u0275listener("onClick", function MetadataResultComponent_div_0_p_accordionTab_5_div_38_Template_p_button_onClick_12_listener() {
+      \u0275\u0275restoreView(_r7);
+      const result_r3 = \u0275\u0275nextContext().$implicit;
+      const ctx_r0 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r0.copyToClipboard(result_r3.documentMetadata.description));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(14, "div", 21)(15, "code", 22);
+    \u0275\u0275text(16);
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(17, "div", 34)(18, "div", 18)(19, "label", 14);
+    \u0275\u0275text(20);
+    \u0275\u0275pipe(21, "translate");
+    \u0275\u0275elementStart(22, "span", 19);
+    \u0275\u0275text(23);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(24, "p-button", 20);
+    \u0275\u0275pipe(25, "translate");
+    \u0275\u0275listener("onClick", function MetadataResultComponent_div_0_p_accordionTab_5_div_38_Template_p_button_onClick_24_listener() {
+      \u0275\u0275restoreView(_r7);
+      const result_r3 = \u0275\u0275nextContext().$implicit;
+      const ctx_r0 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r0.copyToClipboard(result_r3.documentMetadata.keywords));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(26, "div", 21)(27, "code", 22);
+    \u0275\u0275text(28);
+    \u0275\u0275elementEnd()()()();
+  }
+  if (rf & 2) {
+    const result_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(4, 13, "metadata.results.documentMetadata"), " ");
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(9, 15, "metadata.results.documentDescription"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1("(", result_r3.documentMetadata.description.length, " chars)");
+    \u0275\u0275advance();
+    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(13, 17, "metadata.results.copyToClipboard"));
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(result_r3.documentMetadata.description);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(21, 19, "metadata.results.documentKeywords"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1("(", result_r3.documentMetadata.keywords.length, " chars)");
+    \u0275\u0275advance();
+    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(25, 21, "metadata.results.copyToClipboard"));
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(result_r3.documentMetadata.keywords);
+  }
+}
+function MetadataResultComponent_div_0_p_accordionTab_5_div_39_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 39)(1, "h4", 32);
+    \u0275\u0275element(2, "i", 40);
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "div", 13)(6, "div", 18)(7, "label", 41);
+    \u0275\u0275text(8);
+    \u0275\u0275pipe(9, "translate");
+    \u0275\u0275elementStart(10, "span", 42);
+    \u0275\u0275text(11);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(12, "p-button", 43);
+    \u0275\u0275pipe(13, "translate");
+    \u0275\u0275listener("onClick", function MetadataResultComponent_div_0_p_accordionTab_5_div_39_Template_p_button_onClick_12_listener() {
+      \u0275\u0275restoreView(_r8);
+      const result_r3 = \u0275\u0275nextContext().$implicit;
+      const ctx_r0 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r0.copyToClipboard(result_r3.evaluationResult.suggestedDescription));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(14, "div", 44)(15, "code", 22);
+    \u0275\u0275text(16);
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(17, "div", 13)(18, "div", 18)(19, "label", 41);
+    \u0275\u0275text(20);
+    \u0275\u0275pipe(21, "translate");
+    \u0275\u0275elementStart(22, "span", 42);
+    \u0275\u0275text(23);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(24, "p-button", 43);
+    \u0275\u0275pipe(25, "translate");
+    \u0275\u0275listener("onClick", function MetadataResultComponent_div_0_p_accordionTab_5_div_39_Template_p_button_onClick_24_listener() {
+      \u0275\u0275restoreView(_r8);
+      const result_r3 = \u0275\u0275nextContext().$implicit;
+      const ctx_r0 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r0.copyToClipboard(result_r3.evaluationResult.suggestedKeywords));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(26, "div", 44)(27, "code", 22);
+    \u0275\u0275text(28);
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(29, "div", 34)(30, "label", 45);
+    \u0275\u0275text(31);
+    \u0275\u0275pipe(32, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(33, "div", 44)(34, "p", 46);
+    \u0275\u0275text(35);
+    \u0275\u0275elementEnd()()()();
+  }
+  if (rf & 2) {
+    const result_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(4, 15, "metadata.results.evaluation"), " ");
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(9, 17, "metadata.results.suggestedDescription"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1("(", result_r3.evaluationResult.suggestedDescription.length, " chars)");
+    \u0275\u0275advance();
+    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(13, 19, "metadata.results.copyToClipboard"));
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(result_r3.evaluationResult.suggestedDescription);
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(21, 21, "metadata.results.suggestedKeywords"), " ");
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1("(", result_r3.evaluationResult.suggestedKeywords.length, " chars)");
+    \u0275\u0275advance();
+    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(25, 23, "metadata.results.copyToClipboard"));
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(result_r3.evaluationResult.suggestedKeywords);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(32, 25, "metadata.results.rationale"), " ");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(result_r3.evaluationResult.rationale);
+  }
+}
 function MetadataResultComponent_div_0_p_accordionTab_5_Template(rf, ctx) {
   if (rf & 1) {
     const _r2 = \u0275\u0275getCurrentView();
     \u0275\u0275elementStart(0, "p-accordionTab", 11);
-    \u0275\u0275template(1, MetadataResultComponent_div_0_p_accordionTab_5_ng_template_1_Template, 5, 6, "ng-template", 2);
+    \u0275\u0275template(1, MetadataResultComponent_div_0_p_accordionTab_5_ng_template_1_Template, 7, 10, "ng-template", 2);
     \u0275\u0275elementStart(2, "div", 12)(3, "div", 13)(4, "label", 14);
     \u0275\u0275text(5);
     \u0275\u0275pipe(6, "translate");
@@ -21461,40 +22761,46 @@ function MetadataResultComponent_div_0_p_accordionTab_5_Template(rf, ctx) {
     \u0275\u0275elementStart(33, "div", 21)(34, "code", 22);
     \u0275\u0275text(35);
     \u0275\u0275elementEnd()()();
-    \u0275\u0275template(36, MetadataResultComponent_div_0_p_accordionTab_5_div_36_Template, 29, 23, "div", 23);
+    \u0275\u0275template(36, MetadataResultComponent_div_0_p_accordionTab_5_div_36_Template, 29, 23, "div", 23)(37, MetadataResultComponent_div_0_p_accordionTab_5_div_37_Template, 2, 1, "div", 24)(38, MetadataResultComponent_div_0_p_accordionTab_5_div_38_Template, 29, 23, "div", 25)(39, MetadataResultComponent_div_0_p_accordionTab_5_div_39_Template, 36, 27, "div", 26);
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
     const result_r3 = ctx.$implicit;
-    const i_r5 = ctx.index;
+    const i_r6 = ctx.index;
     const ctx_r0 = \u0275\u0275nextContext(2);
-    \u0275\u0275property("selected", i_r5 === 0);
+    \u0275\u0275property("selected", i_r6 === 0);
     \u0275\u0275advance(5);
-    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(6, 20, "metadata.results.url"));
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(6, 23, "metadata.results.url"));
     \u0275\u0275advance(3);
     \u0275\u0275property("href", result_r3.url, \u0275\u0275sanitizeUrl);
     \u0275\u0275advance();
     \u0275\u0275textInterpolate1(" ", result_r3.url, " ");
     \u0275\u0275advance();
-    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(11, 22, "metadata.results.openInNewTab"));
+    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(11, 25, "metadata.results.openInNewTab"));
     \u0275\u0275advance(5);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(16, 24, "metadata.results.metaDescription"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(16, 27, "metadata.results.metaDescription"), " ");
     \u0275\u0275advance(3);
     \u0275\u0275textInterpolate1("(", result_r3.metaDescription.length, " chars)");
     \u0275\u0275advance();
-    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(20, 26, "metadata.results.copyToClipboard"));
+    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(20, 29, "metadata.results.copyToClipboard"));
     \u0275\u0275advance(4);
     \u0275\u0275textInterpolate(result_r3.metaDescription);
     \u0275\u0275advance(4);
-    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(28, 28, "metadata.results.metaKeywords"), " ");
+    \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(28, 31, "metadata.results.metaKeywords"), " ");
     \u0275\u0275advance(3);
     \u0275\u0275textInterpolate1("(", result_r3.metaKeywords.length, " chars)");
     \u0275\u0275advance();
-    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(32, 30, "metadata.results.copyToClipboard"));
+    \u0275\u0275property("text", true)("rounded", true)("pTooltip", \u0275\u0275pipeBind1(32, 33, "metadata.results.copyToClipboard"));
     \u0275\u0275advance(4);
     \u0275\u0275textInterpolate(result_r3.metaKeywords);
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", ctx_r0.showTranslations && result_r3.frenchTranslatedDescription);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.canUploadDocument(result_r3));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", result_r3.documentMetadata);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", result_r3.evaluationResult);
   }
 }
 function MetadataResultComponent_div_0_Template(rf, ctx) {
@@ -21502,7 +22808,7 @@ function MetadataResultComponent_div_0_Template(rf, ctx) {
     \u0275\u0275elementStart(0, "div", 1)(1, "p-card");
     \u0275\u0275template(2, MetadataResultComponent_div_0_ng_template_2_Template, 8, 6, "ng-template", 2);
     \u0275\u0275elementStart(3, "div", 3)(4, "p-accordion", 4);
-    \u0275\u0275template(5, MetadataResultComponent_div_0_p_accordionTab_5_Template, 37, 32, "p-accordionTab", 5);
+    \u0275\u0275template(5, MetadataResultComponent_div_0_p_accordionTab_5_Template, 40, 35, "p-accordionTab", 5);
     \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
@@ -21516,6 +22822,9 @@ function MetadataResultComponent_div_0_Template(rf, ctx) {
 var MetadataResultComponent = class _MetadataResultComponent {
   results = [];
   showTranslations = false;
+  isProcessing = false;
+  processingIndex = null;
+  documentSelected = new EventEmitter();
   expandedStates = {};
   toggleExpanded(index) {
     this.expandedStates[index] = !this.expandedStates[index];
@@ -21543,10 +22852,19 @@ var MetadataResultComponent = class _MetadataResultComponent {
       return content;
     return content.substring(0, maxLength) + "...";
   }
+  onDocumentFileSelected(file, index) {
+    this.documentSelected.emit({ file, index });
+  }
+  canUploadDocument(result) {
+    return this.showTranslations && !!result.frenchTranslatedDescription && !!result.frenchTranslatedKeywords && !result.evaluationResult;
+  }
+  isProcessingDocument(index) {
+    return this.isProcessing && this.processingIndex === index;
+  }
   static \u0275fac = function MetadataResultComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _MetadataResultComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _MetadataResultComponent, selectors: [["ca-metadata-result"]], inputs: { results: "results", showTranslations: "showTranslations" }, decls: 1, vars: 1, consts: [["class", "metadata-results-container", 4, "ngIf"], [1, "metadata-results-container"], ["pTemplate", "header"], [1, "results-content"], [3, "multiple"], [3, "selected", 4, "ngFor", "ngForOf"], [1, "flex", "align-items-center", "justify-content-between", "p-3"], [1, "flex", "align-items-center"], [1, "pi", "pi-list", "mr-2"], [1, "m-0"], ["severity", "info", 3, "value"], [3, "selected"], [1, "result-content", "p-3"], [1, "field", "mb-3"], [1, "font-semibold", "text-500", "text-sm"], [1, "flex", "align-items-center", "gap-2", "mt-1"], ["target", "_blank", 1, "text-primary", "hover:underline", "text-sm", 3, "href"], ["icon", "pi pi-external-link", "size", "small", 3, "onClick", "text", "rounded", "pTooltip"], [1, "flex", "align-items-center", "justify-content-between", "mb-1"], [1, "text-xs", "text-400", "ml-1"], ["icon", "pi pi-copy", "size", "small", 3, "onClick", "text", "rounded", "pTooltip"], [1, "meta-content", "p-2", "surface-50", "border-round"], [1, "text-sm"], ["class", "translation-section mt-4 p-3 surface-100 border-round", 4, "ngIf"], [1, "flex", "align-items-center", "justify-content-between", "w-full", "pr-2"], [1, "flex", "align-items-center", "gap-2"], [1, "font-semibold"], [3, "value", "severity"], [1, "translation-section", "mt-4", "p-3", "surface-100", "border-round"], [1, "flex", "align-items-center", "gap-2", "mb-3"], [1, "pi", "pi-language"], [1, "field"]], template: function MetadataResultComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _MetadataResultComponent, selectors: [["ca-metadata-result"]], inputs: { results: "results", showTranslations: "showTranslations", isProcessing: "isProcessing", processingIndex: "processingIndex" }, outputs: { documentSelected: "documentSelected" }, decls: 1, vars: 1, consts: [["class", "metadata-results-container", 4, "ngIf"], [1, "metadata-results-container"], ["pTemplate", "header"], [1, "results-content"], [3, "multiple"], [3, "selected", 4, "ngFor", "ngForOf"], [1, "flex", "align-items-center", "justify-content-between", "p-3"], [1, "flex", "align-items-center"], [1, "pi", "pi-list", "mr-2"], [1, "m-0"], ["severity", "info", 3, "value"], [3, "selected"], [1, "result-content", "p-3"], [1, "field", "mb-3"], [1, "font-semibold", "text-500", "text-sm"], [1, "flex", "align-items-center", "gap-2", "mt-1"], ["target", "_blank", 1, "text-primary", "hover:underline", "text-sm", 3, "href"], ["icon", "pi pi-external-link", "size", "small", 3, "onClick", "text", "rounded", "pTooltip"], [1, "flex", "align-items-center", "justify-content-between", "mb-1"], [1, "text-xs", "text-400", "ml-1"], ["icon", "pi pi-copy", "size", "small", 3, "onClick", "text", "rounded", "pTooltip"], [1, "meta-content", "p-2", "surface-50", "border-round"], [1, "text-sm"], ["class", "translation-section mt-4 p-3 surface-100 border-round", 4, "ngIf"], ["class", "document-upload-section mt-4", 4, "ngIf"], ["class", "document-metadata-section mt-4 p-3 surface-100 border-round", 4, "ngIf"], ["class", "evaluation-section mt-4 p-3 border-round", "style", "background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;", 4, "ngIf"], [1, "flex", "align-items-center", "justify-content-between", "w-full", "pr-2"], [1, "flex", "align-items-center", "gap-2"], [1, "font-semibold"], [3, "value", "severity"], [1, "translation-section", "mt-4", "p-3", "surface-100", "border-round"], [1, "flex", "align-items-center", "gap-2", "mb-3"], [1, "pi", "pi-language"], [1, "field"], [1, "document-upload-section", "mt-4"], [3, "fileSelected", "disabled"], [1, "document-metadata-section", "mt-4", "p-3", "surface-100", "border-round"], [1, "pi", "pi-file-word"], [1, "evaluation-section", "mt-4", "p-3", "border-round", 2, "background", "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", "color", "white"], [1, "pi", "pi-check-circle"], [1, "font-semibold", "text-sm"], [1, "text-xs", "ml-1", "opacity-80"], ["icon", "pi pi-copy", "size", "small", "styleClass", "text-white", 3, "onClick", "text", "rounded", "pTooltip"], [1, "p-2", "border-round", 2, "background", "rgba(255,255,255,0.9)", "color", "#333"], [1, "font-semibold", "text-sm", "mb-1", "block"], [1, "text-sm", "m-0"]], template: function MetadataResultComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275template(0, MetadataResultComponent_div_0_Template, 6, 2, "div", 0);
     }
@@ -21571,7 +22889,8 @@ var MetadataResultComponent = class _MetadataResultComponent {
     TagModule,
     Tag,
     TooltipModule,
-    Tooltip
+    Tooltip,
+    DocumentUploadComponent
   ], styles: ['\n\n.metadata-results-container[_ngcontent-%COMP%] {\n  width: 100%;\n  margin-top: 1.5rem;\n}\n.results-content[_ngcontent-%COMP%] {\n  padding: 0;\n}\n.result-content[_ngcontent-%COMP%] {\n  padding: 1rem;\n}\n.field[_ngcontent-%COMP%] {\n  margin-bottom: 1rem;\n}\n.field[_ngcontent-%COMP%]   label[_ngcontent-%COMP%] {\n  display: block;\n  margin-bottom: 0.5rem;\n}\n.content-preview[_ngcontent-%COMP%] {\n  max-height: 400px;\n  overflow-y: auto;\n  font-family:\n    system-ui,\n    -apple-system,\n    sans-serif;\n  line-height: 1.6;\n}\n.meta-content[_ngcontent-%COMP%] {\n  font-family:\n    "Monaco",\n    "Courier New",\n    monospace;\n  word-break: break-word;\n}\n.keywords-container[_ngcontent-%COMP%] {\n  padding: 0.5rem;\n  background-color: var(--surface-50);\n  border-radius: var(--border-radius);\n}\n.translation-section[_ngcontent-%COMP%] {\n  border-left: 3px solid var(--primary-300);\n}\n.text-primary[_ngcontent-%COMP%] {\n  color: var(--primary-color);\n}\n.hover\\:underline[_ngcontent-%COMP%]:hover {\n  text-decoration: underline;\n}\n.text-400[_ngcontent-%COMP%] {\n  color: var(--text-color-secondary);\n}\n.text-500[_ngcontent-%COMP%] {\n  color: var(--text-color);\n}\n[_nghost-%COMP%]     .p-accordion .p-accordion-header-link {\n  padding: 1rem;\n  background: var(--surface-50);\n  border: 1px solid var(--surface-200);\n  transition: all 0.2s;\n}\n[_nghost-%COMP%]     .p-accordion .p-accordion-header-link:hover {\n  background: var(--surface-100);\n}\n[_nghost-%COMP%]     .p-accordion .p-accordion-content {\n  padding: 0;\n  border: 1px solid var(--surface-200);\n  border-top: none;\n}\n[_nghost-%COMP%]     .p-chip {\n  background: var(--primary-100);\n  color: var(--primary-700);\n  font-size: 0.85rem;\n  padding: 0.25rem 0.5rem;\n}\n/*# sourceMappingURL=metadata-result.component.css.map */'] });
 };
 (() => {
@@ -21585,7 +22904,8 @@ var MetadataResultComponent = class _MetadataResultComponent {
       ChipModule,
       ButtonModule,
       TagModule,
-      TooltipModule
+      TooltipModule,
+      DocumentUploadComponent
     ], template: `<div class="metadata-results-container" *ngIf="results && results.length > 0">
   <p-card>
     <ng-template pTemplate="header">
@@ -21605,8 +22925,8 @@ var MetadataResultComponent = class _MetadataResultComponent {
             <div class="flex align-items-center justify-content-between w-full pr-2">
               <div class="flex align-items-center gap-2">
                 <span class="font-semibold">{{ getDomainFromUrl(result.url) }}</span>
-                <p-tag 
-                  [value]="result.language === 'en' ? 'English' : 'Fran\xE7ais'" 
+                <p-tag
+                  [value]="result.language === 'en' ? ('common.language.english' | translate) : ('common.language.french' | translate)"
                   [severity]="result.language === 'en' ? 'success' : 'info'"
                   [style]="{'font-size': '0.75rem'}">
                 </p-tag>
@@ -21689,8 +23009,8 @@ var MetadataResultComponent = class _MetadataResultComponent {
                     {{ 'metadata.results.translatedDescription' | translate }}
                     <span class="text-xs text-400 ml-1">({{ result.frenchTranslatedDescription.length }} chars)</span>
                   </label>
-                  <p-button 
-                    icon="pi pi-copy" 
+                  <p-button
+                    icon="pi pi-copy"
                     [text]="true"
                     [rounded]="true"
                     size="small"
@@ -21710,8 +23030,8 @@ var MetadataResultComponent = class _MetadataResultComponent {
                     {{ 'metadata.results.translatedKeywords' | translate }}
                     <span class="text-xs text-400 ml-1">({{ result.frenchTranslatedKeywords!.length }} chars)</span>
                   </label>
-                  <p-button 
-                    icon="pi pi-copy" 
+                  <p-button
+                    icon="pi pi-copy"
                     [text]="true"
                     [rounded]="true"
                     size="small"
@@ -21721,6 +23041,126 @@ var MetadataResultComponent = class _MetadataResultComponent {
                 </div>
                 <div class="meta-content p-2 surface-50 border-round">
                   <code class="text-sm">{{ result.frenchTranslatedKeywords }}</code>
+                </div>
+              </div>
+            </div>
+
+            <!-- Document Upload Section -->
+            <div *ngIf="canUploadDocument(result)" class="document-upload-section mt-4">
+              <ca-document-upload
+                [disabled]="isProcessingDocument(i)"
+                (fileSelected)="onDocumentFileSelected($event, i)">
+              </ca-document-upload>
+            </div>
+
+            <!-- Document Metadata (if available) -->
+            <div *ngIf="result.documentMetadata" class="document-metadata-section mt-4 p-3 surface-100 border-round">
+              <h4 class="flex align-items-center gap-2 mb-3">
+                <i class="pi pi-file-word"></i>
+                {{ 'metadata.results.documentMetadata' | translate }}
+              </h4>
+
+              <!-- Document Description -->
+              <div class="field mb-3">
+                <div class="flex align-items-center justify-content-between mb-1">
+                  <label class="font-semibold text-500 text-sm">
+                    {{ 'metadata.results.documentDescription' | translate }}
+                    <span class="text-xs text-400 ml-1">({{ result.documentMetadata.description.length }} chars)</span>
+                  </label>
+                  <p-button
+                    icon="pi pi-copy"
+                    [text]="true"
+                    [rounded]="true"
+                    size="small"
+                    (onClick)="copyToClipboard(result.documentMetadata.description)"
+                    [pTooltip]="'metadata.results.copyToClipboard' | translate">
+                  </p-button>
+                </div>
+                <div class="meta-content p-2 surface-50 border-round">
+                  <code class="text-sm">{{ result.documentMetadata.description }}</code>
+                </div>
+              </div>
+
+              <!-- Document Keywords -->
+              <div class="field">
+                <div class="flex align-items-center justify-content-between mb-1">
+                  <label class="font-semibold text-500 text-sm">
+                    {{ 'metadata.results.documentKeywords' | translate }}
+                    <span class="text-xs text-400 ml-1">({{ result.documentMetadata.keywords.length }} chars)</span>
+                  </label>
+                  <p-button
+                    icon="pi pi-copy"
+                    [text]="true"
+                    [rounded]="true"
+                    size="small"
+                    (onClick)="copyToClipboard(result.documentMetadata.keywords)"
+                    [pTooltip]="'metadata.results.copyToClipboard' | translate">
+                  </p-button>
+                </div>
+                <div class="meta-content p-2 surface-50 border-round">
+                  <code class="text-sm">{{ result.documentMetadata.keywords }}</code>
+                </div>
+              </div>
+            </div>
+
+            <!-- Evaluation Results (if available) -->
+            <div *ngIf="result.evaluationResult" class="evaluation-section mt-4 p-3 border-round" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+              <h4 class="flex align-items-center gap-2 mb-3">
+                <i class="pi pi-check-circle"></i>
+                {{ 'metadata.results.evaluation' | translate }}
+              </h4>
+
+              <!-- Suggested Description -->
+              <div class="field mb-3">
+                <div class="flex align-items-center justify-content-between mb-1">
+                  <label class="font-semibold text-sm">
+                    {{ 'metadata.results.suggestedDescription' | translate }}
+                    <span class="text-xs ml-1 opacity-80">({{ result.evaluationResult.suggestedDescription.length }} chars)</span>
+                  </label>
+                  <p-button
+                    icon="pi pi-copy"
+                    [text]="true"
+                    [rounded]="true"
+                    size="small"
+                    styleClass="text-white"
+                    (onClick)="copyToClipboard(result.evaluationResult.suggestedDescription)"
+                    [pTooltip]="'metadata.results.copyToClipboard' | translate">
+                  </p-button>
+                </div>
+                <div class="p-2 border-round" style="background: rgba(255,255,255,0.9); color: #333;">
+                  <code class="text-sm">{{ result.evaluationResult.suggestedDescription }}</code>
+                </div>
+              </div>
+
+              <!-- Suggested Keywords -->
+              <div class="field mb-3">
+                <div class="flex align-items-center justify-content-between mb-1">
+                  <label class="font-semibold text-sm">
+                    {{ 'metadata.results.suggestedKeywords' | translate }}
+                    <span class="text-xs ml-1 opacity-80">({{ result.evaluationResult.suggestedKeywords.length }} chars)</span>
+                  </label>
+                  <p-button
+                    icon="pi pi-copy"
+                    [text]="true"
+                    [rounded]="true"
+                    size="small"
+                    styleClass="text-white"
+                    (onClick)="copyToClipboard(result.evaluationResult.suggestedKeywords)"
+                    [pTooltip]="'metadata.results.copyToClipboard' | translate">
+                  </p-button>
+                </div>
+                <div class="p-2 border-round" style="background: rgba(255,255,255,0.9); color: #333;">
+                  <code class="text-sm">{{ result.evaluationResult.suggestedKeywords }}</code>
+                </div>
+              </div>
+
+              <!-- Rationale -->
+              <div class="field">
+                <label class="font-semibold text-sm mb-1 block">
+                  {{ 'metadata.results.rationale' | translate }}
+                </label>
+                <div class="p-2 border-round" style="background: rgba(255,255,255,0.9); color: #333;">
+                  <p class="text-sm m-0">{{ result.evaluationResult.rationale }}</p>
                 </div>
               </div>
             </div>
@@ -21734,10 +23174,16 @@ var MetadataResultComponent = class _MetadataResultComponent {
     type: Input
   }], showTranslations: [{
     type: Input
+  }], isProcessing: [{
+    type: Input
+  }], processingIndex: [{
+    type: Input
+  }], documentSelected: [{
+    type: Output
   }] });
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(MetadataResultComponent, { className: "MetadataResultComponent", filePath: "src/app/views/metadata-assistant/components/metadata-result/metadata-result.component.ts", lineNumber: 28 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(MetadataResultComponent, { className: "MetadataResultComponent", filePath: "src/app/views/metadata-assistant/components/metadata-result/metadata-result.component.ts", lineNumber: 30 });
 })();
 
 // src/app/views/metadata-assistant/components/csv-export/csv-export.component.ts
@@ -21821,12 +23267,9 @@ function CsvExportComponent_div_0_Template(rf, ctx) {
   }
 }
 var CsvExportComponent = class _CsvExportComponent {
-  translate;
   results = [];
   includeTranslations = false;
-  constructor(translate) {
-    this.translate = translate;
-  }
+  translate = inject(TranslateService);
   getTranslatedResultsCount() {
     return this.results.filter((r2) => r2.frenchTranslatedDescription).length;
   }
@@ -21901,7 +23344,7 @@ var CsvExportComponent = class _CsvExportComponent {
     return this.translate.instant("metadata.csv.exportButton", { count });
   }
   static \u0275fac = function CsvExportComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _CsvExportComponent)(\u0275\u0275directiveInject(TranslateService));
+    return new (__ngFactoryType__ || _CsvExportComponent)();
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _CsvExportComponent, selectors: [["ca-metadata-csv-export"]], inputs: { results: "results", includeTranslations: "includeTranslations" }, decls: 1, vars: 1, consts: [["class", "csv-export-container", 4, "ngIf"], [1, "csv-export-container"], ["pTemplate", "header"], [1, "export-content"], [1, "export-info", "mb-3"], [1, "text-sm", "text-500", "m-0"], [1, "export-stats", "mb-3", "p-3", "surface-100", "border-round"], [1, "flex", "align-items-center", "justify-content-between"], [1, "stat-item"], [1, "text-xs", "text-500", "block", "mb-1"], [1, "text-xl", "font-bold", "text-primary"], ["class", "stat-item", 4, "ngIf"], [1, "export-actions", "flex", "gap-2"], ["icon", "pi pi-file-export", "severity", "primary", 3, "onClick", "label"], [1, "export-note", "mt-3"], [1, "text-xs", "text-500"], [1, "pi", "pi-info-circle", "mr-1"], [1, "flex", "align-items-center", "p-3"], [1, "pi", "pi-download", "mr-2"], [1, "m-0"]], template: function CsvExportComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -21968,7 +23411,7 @@ var CsvExportComponent = class _CsvExportComponent {
     </div>
   </p-card>
 </div>`, styles: ["/* src/app/views/metadata-assistant/components/csv-export/csv-export.component.css */\n.csv-export-container {\n  width: 100%;\n  margin-top: 1.5rem;\n}\n.export-content {\n  padding: 0;\n}\n.export-stats {\n  background: var(--surface-100);\n}\n.stat-item {\n  text-align: center;\n}\n.preview-table {\n  overflow-x: auto;\n}\n.preview-table table {\n  font-size: 0.75rem;\n  table-layout: fixed;\n}\n.preview-table th {\n  font-weight: 600;\n  color: var(--text-color);\n  background: var(--surface-100);\n}\n.preview-table td {\n  color: var(--text-color-secondary);\n}\n.text-overflow-ellipsis {\n  text-overflow: ellipsis;\n}\n.white-space-nowrap {\n  white-space: nowrap;\n}\n.overflow-hidden {\n  overflow: hidden;\n}\n.export-actions {\n  display: flex;\n  gap: 0.5rem;\n}\n.export-note {\n  padding-top: 0.5rem;\n  border-top: 1px solid var(--surface-200);\n}\n.text-primary {\n  color: var(--primary-color);\n}\n.border-bottom-1 {\n  border-bottom-width: 1px;\n  border-bottom-style: solid;\n}\n.surface-border {\n  border-color: var(--surface-border);\n}\n/*# sourceMappingURL=csv-export.component.css.map */\n"] }]
-  }], () => [{ type: TranslateService }], { results: [{
+  }], null, { results: [{
     type: Input
   }], includeTranslations: [{
     type: Input
@@ -21978,571 +23421,8 @@ var CsvExportComponent = class _CsvExportComponent {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(CsvExportComponent, { className: "CsvExportComponent", filePath: "src/app/views/metadata-assistant/components/csv-export/csv-export.component.ts", lineNumber: 22 });
 })();
 
-// src/app/services/metadata-assistant.service.ts
-var ALLOWED_HOSTS = /* @__PURE__ */ new Set([
-  "cra-design.github.io",
-  "cra-proto.github.io",
-  "gc-proto.github.io",
-  "test.canada.ca",
-  "www.canada.ca"
-]);
-var MetadataAssistantService = class _MetadataAssistantService {
-  OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
-  SCRAPING_TIMEOUT = 3e4;
-  // 30 seconds
-  API_TIMEOUT = 6e4;
-  // 60 seconds
-  TRANSLATION_TIMEOUT = 9e4;
-  // 90 seconds with retry
-  // Default fallback models in order of preference
-  DEFAULT_FALLBACK_MODELS = [
-    "mistralai/mistral-small-3.2-24b-instruct:free",
-    "meta-llama/llama-3.3-70b-instruct:free",
-    "google/gemma-3-27b-it:free"
-  ];
-  http = inject(HttpClient);
-  apiKeyService = inject(ApiKeyService);
-  processUrls(options) {
-    const results = [];
-    const fallbackModels = options.fallbackModels || this.DEFAULT_FALLBACK_MODELS;
-    return from(options.urls).pipe(switchMap((url) => this.processUrl(url, options.model, options.translateToFrench, fallbackModels)), map((result) => {
-      results.push(result);
-      return results;
-    }), catchError((error) => {
-      console.error("Error processing URLs:", error);
-      return throwError(() => error);
-    }));
-  }
-  processUrl(url, model, translateToFrench, fallbackModels) {
-    return this.scrapeUrl(url).pipe(switchMap((scrapedContent) => {
-      if (!scrapedContent || scrapedContent.length < 50) {
-        return throwError(() => new Error("Content too short or invalid for processing"));
-      }
-      const language = this.detectLanguage(scrapedContent);
-      return this.generateMetadataWithFallback(scrapedContent, model, language, fallbackModels).pipe(switchMap((metadata) => {
-        const result = {
-          url,
-          scrapedContent,
-          metaDescription: metadata.description,
-          metaKeywords: metadata.keywords,
-          language,
-          modelUsed: metadata.modelUsed,
-          fallbackUsed: metadata.fallbackUsed
-        };
-        if (translateToFrench && language === "en") {
-          return this.translateMetadata(metadata).pipe(map((translated) => __spreadProps(__spreadValues({}, result), {
-            frenchTranslatedDescription: translated.description,
-            frenchTranslatedKeywords: translated.keywords
-          })));
-        }
-        return of(result);
-      }));
-    }));
-  }
-  scrapeUrl(url) {
-    try {
-      const parsedUrl = new URL(url);
-      if (!ALLOWED_HOSTS.has(parsedUrl.host)) {
-        return throwError(() => new Error(`Host not allowed: ${parsedUrl.host}. Only government domains are supported.`));
-      }
-    } catch {
-      return throwError(() => new Error("Invalid URL format"));
-    }
-    return from(fetch(`${url}?_=${Date.now()}`, {
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache"
-    })).pipe(timeout(this.SCRAPING_TIMEOUT), switchMap((response) => {
-      if (!response.ok) {
-        throw new Error(`Failed to fetch URL: HTTP ${response.status}`);
-      }
-      return from(response.text());
-    }), map((html) => this.extractTextContent(html)), catchError((error) => {
-      console.error("Error scraping URL:", error);
-      if (error.message?.includes("Host not allowed")) {
-        return throwError(() => error);
-      }
-      return throwError(() => new Error(`Failed to scrape URL: ${error.message || "Unknown error"}`));
-    }));
-  }
-  extractTextContent(html) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    let mainElement = this.findMainElement(doc);
-    if (!mainElement) {
-      console.warn("No main element found in page, attempting fallback to body content");
-      mainElement = doc.body;
-      if (!mainElement) {
-        console.error("No body element found in page");
-        return "";
-      }
-    }
-    const contentElement = mainElement.cloneNode(true);
-    const unwantedClasses = [
-      "provisional most-requested-bullets well well-sm brdr-0",
-      "pagedetails container",
-      "lnkbx",
-      "pagedetails",
-      "gc-prtts",
-      "alert alert-info",
-      "footer",
-      "nav",
-      "header",
-      "aside"
-    ];
-    unwantedClasses.forEach((className) => {
-      contentElement.querySelectorAll(`.${className.replace(/ /g, ".")}`).forEach((el) => el.remove());
-    });
-    ["footer", "nav", "header", "aside"].forEach((tagName) => {
-      contentElement.querySelectorAll(tagName).forEach((el) => el.remove());
-    });
-    contentElement.querySelectorAll("h2.h3").forEach((h2) => {
-      const text2 = h2.textContent || "";
-      if (text2.includes("On this page:") || text2.includes("Sur cette page :")) {
-        const nextSibling = h2.nextElementSibling;
-        if (nextSibling && nextSibling.tagName === "UL") {
-          nextSibling.querySelectorAll("li").forEach((li) => {
-            li.setAttribute("data-on-this-page", "true");
-          });
-          nextSibling.remove();
-        }
-        h2.remove();
-      }
-    });
-    contentElement.querySelectorAll("h2").forEach((h2) => {
-      const text2 = h2.textContent || "";
-      if (text2.includes("On this page") || text2.includes("Sur cette page")) {
-        let nextElement = h2.nextElementSibling;
-        while (nextElement && nextElement.tagName === "UL") {
-          nextElement.querySelectorAll("li").forEach((li) => {
-            li.setAttribute("data-on-this-page", "true");
-          });
-          nextElement = nextElement.nextElementSibling;
-        }
-      }
-    });
-    const allowedTags = ["h1", "h2", "h3", "h4", "p", "li"];
-    const textContent = [];
-    allowedTags.forEach((tag) => {
-      contentElement.querySelectorAll(tag).forEach((element) => {
-        if (tag === "h2") {
-          const text3 = element.textContent || "";
-          if (text3.includes("Chat with Charlie") || text3.includes("Clavardez avec Charlie")) {
-            return;
-          }
-        }
-        if (tag === "li" && element.hasAttribute("data-on-this-page")) {
-          return;
-        }
-        const text2 = element.textContent?.trim();
-        if (text2 && text2.length > 0) {
-          textContent.push(text2);
-        }
-      });
-    });
-    const fullText = textContent.join(" ");
-    console.log(`Extracted ${fullText.length} characters of content`);
-    if (fullText.length < 100) {
-      console.warn(`Very short content extracted: '${fullText}'`);
-    } else if (fullText.length > 2500) {
-      console.log(`Content truncated from ${fullText.length} to 2500 characters`);
-    }
-    return fullText.substring(0, 2500);
-  }
-  findMainElement(doc) {
-    const mainSelectors = [
-      'main[property="mainContentOfPage"][resource="#wb-main"][typeof="WebPageElement"]',
-      'main[property="mainContentOfPage"][resource="#wb-main"][typeof="WebPageElement"].col-md-9.col-md-push-3',
-      'main[role="main"][property="mainContentOfPage"].container',
-      'main[role="main"][property="mainContentOfPage"]'
-    ];
-    for (const selector of mainSelectors) {
-      const element = doc.querySelector(selector);
-      if (element) {
-        const isLastSelector = selector === mainSelectors[mainSelectors.length - 1];
-        if (isLastSelector) {
-          const containerDiv = element.querySelector("div.container");
-          if (containerDiv) {
-            console.log("Found main element with container div inside");
-            return containerDiv;
-          }
-        }
-        return element;
-      }
-    }
-    const mainElement = doc.querySelector('main[role="main"]');
-    if (mainElement) {
-      console.log("Found main element using generic selector");
-      const containerDiv = mainElement.querySelector("div.container");
-      if (containerDiv) {
-        console.log("Found container div inside main element");
-        return containerDiv;
-      }
-      return mainElement;
-    }
-    const plainMain = doc.querySelector("main");
-    if (plainMain) {
-      console.log("Found plain main element");
-      const containerDiv = plainMain.querySelector("div.container");
-      if (containerDiv) {
-        console.log("Found container div inside plain main element");
-        return containerDiv;
-      }
-      return plainMain;
-    }
-    const roleMain = doc.querySelector('[role="main"]');
-    if (roleMain) {
-      console.log('Found element with role="main"');
-      return roleMain;
-    }
-    return null;
-  }
-  detectLanguage(content) {
-    const frenchIndicators = [
-      "le",
-      "la",
-      "les",
-      "de",
-      "du",
-      "des",
-      "un",
-      "une",
-      "et",
-      "ou",
-      "mais",
-      "pour",
-      "avec",
-      "sans",
-      "sur",
-      "dans",
-      "par",
-      "que",
-      "qui",
-      "quoi",
-      "dont",
-      "o\xF9"
-    ];
-    const words = content.toLowerCase().split(/\s+/);
-    const frenchWordCount = words.filter((word) => frenchIndicators.includes(word)).length;
-    const frenchRatio = frenchWordCount / Math.max(words.length, 1);
-    return frenchRatio > 0.05 ? "fr" : "en";
-  }
-  generateMetadataWithFallback(content, primaryModel, language, fallbackModels) {
-    const modelsToTry = [primaryModel, ...fallbackModels.filter((m) => m !== primaryModel)];
-    return this.tryModelsInSequence(content, modelsToTry, language, 0, primaryModel);
-  }
-  tryModelsInSequence(content, models, language, attemptIndex, primaryModel) {
-    if (attemptIndex >= models.length) {
-      return throwError(() => new Error("All models failed due to rate limits or other errors"));
-    }
-    const currentModel = models[attemptIndex];
-    const fallbackUsed = attemptIndex > 0;
-    console.log(`Attempting metadata generation with model: ${currentModel} (attempt ${attemptIndex + 1}/${models.length})`);
-    return this.generateMetadata(content, currentModel, language).pipe(map((result) => __spreadProps(__spreadValues({}, result), {
-      modelUsed: currentModel,
-      fallbackUsed
-    })), catchError((error) => {
-      console.warn(`Model ${currentModel} failed:`, error.message);
-      if (this.isRateLimitError(error)) {
-        console.log(`Rate limit detected for ${currentModel}, trying next model...`);
-        return this.tryModelsInSequence(content, models, language, attemptIndex + 1, primaryModel);
-      }
-      if (attemptIndex < models.length - 1) {
-        console.log(`Error with ${currentModel}, trying next model...`);
-        return this.tryModelsInSequence(content, models, language, attemptIndex + 1, primaryModel);
-      }
-      return throwError(() => error);
-    }));
-  }
-  isRateLimitError(error) {
-    if (!error)
-      return false;
-    const errorMessage = error?.message || error?.toString() || "";
-    const errorLower = errorMessage.toLowerCase();
-    return errorLower.includes("rate limit") || errorLower.includes("quota exceeded") || errorLower.includes("too many requests") || errorLower.includes("429") || error?.status === 429;
-  }
-  generateMetadata(content, model, language) {
-    const apiKey = this.apiKeyService.getCurrentKey();
-    if (!apiKey) {
-      return throwError(() => new Error("API key not configured"));
-    }
-    const descriptionPrompt = language === "en" ? `As a search engine optimization expert, analyze the following content carefully and provide a concise, complete summary suitable for a meta description in English. The summary MUST be highly relevant to the specific content provided and capture its main topic and purpose. Use topic-specific terms found in the content, write in full sentences, and ensure the summary ends concisely within 275 characters. IMPORTANT: Provide ONLY the meta description itself with NO additional commentary or explanations.
-
-${content}
-
-Summary:` : `En tant qu'expert en r\xE9f\xE9rencement, analysez attentivement le contenu suivant et fournissez un r\xE9sum\xE9 concis et complet adapt\xE9 \xE0 une m\xE9ta-description en fran\xE7ais. Le r\xE9sum\xE9 DOIT \xEAtre parfaitement adapt\xE9 au contenu sp\xE9cifique fourni. Utilisez des termes sp\xE9cifiques au sujet, \xE9crivez en phrases compl\xE8tes, et assurez-vous que le r\xE9sum\xE9 se termine de mani\xE8re concise dans les 275 caract\xE8res. IMPORTANT: Fournissez UNIQUEMENT la m\xE9ta-description elle-m\xEAme SANS commentaire suppl\xE9mentaire.
-
-${content}
-
-R\xE9sum\xE9:`;
-    const keywordsPrompt = language === "en" ? `As a search engine optimization expert, carefully analyze the following content and identify 10 meaningful, topic-specific meta keywords that are DIRECTLY EXTRACTED from or strongly implied by the content. IMPORTANT: Return ONLY a comma-separated list of keywords with absolutely NO additional notes or commentary. Exclude 'Canada Revenue Agency' from the keywords.
-
-${content}
-
-Keywords:` : `En tant qu'expert en optimisation pour les moteurs de recherche, analysez attentivement le contenu suivant et identifiez 10 mots-cl\xE9s m\xE9ta significatifs qui sont DIRECTEMENT EXTRAITS du contenu. IMPORTANT: Retournez UNIQUEMENT une liste de mots-cl\xE9s s\xE9par\xE9s par des virgules sans AUCUNE note suppl\xE9mentaire. Excluez 'Agence du revenu du Canada' des mots-cl\xE9s.
-
-${content}
-
-Mots-cl\xE9s:`;
-    return this.callOpenRouter(descriptionPrompt, model, 200).pipe(switchMap((description) => {
-      return this.callOpenRouter(keywordsPrompt, model, 100).pipe(map((keywords) => ({
-        description: this.cleanMetadataResponse(description),
-        keywords: this.cleanKeywordsResponse(keywords)
-      })));
-    }));
-  }
-  translateMetadata(metadata) {
-    const apiKey = this.apiKeyService.getCurrentKey();
-    if (!apiKey) {
-      return throwError(() => new Error("API key not configured"));
-    }
-    const translationModel = "mistralai/mistral-small-3.2-24b-instruct:free";
-    const descriptionPrompt = `You are a professional translator specializing in Canadian government content. Translate the following English meta description to French, maintaining the formal tone used by the Canada Revenue Agency (CRA). 
-
-Important CRA-specific terminology:
-- "Canada Revenue Agency" \u2192 "Agence du revenu du Canada"
-- "income tax" \u2192 "imp\xF4t sur le revenu"
-- "benefits" \u2192 "prestations"
-- "tax return" \u2192 "d\xE9claration de revenus"
-- "GST/HST" \u2192 "TPS/TVH"
-- "business number" \u2192 "num\xE9ro d'entreprise"
-- "tax credit" \u2192 "cr\xE9dit d'imp\xF4t"
-- "deduction" \u2192 "d\xE9duction"
-- "tax-free savings account (TFSA)" \u2192 "compte d'\xE9pargne libre d'imp\xF4t (CELI)"
-- "registered retirement savings plan (RRSP)" \u2192 "r\xE9gime enregistr\xE9 d'\xE9pargne-retraite (REER)"
-
-IMPORTANT: Your response must contain ONLY the direct translation, with absolutely NO commentary, NO suggestions, NO explanations, and NO additional text of any kind. Return ONLY the translated text itself:
-
-${metadata.description}
-
-French translation:`;
-    const keywordsPrompt = `Translate each of these English keywords to French. IMPORTANT: Return ONLY the translated keywords in a comma-separated list. Provide absolutely NO commentary, NO suggestions, NO explanations, and NO additional text of any kind. Return ONLY a comma-separated list of the translated keywords:
-
-${metadata.keywords}
-
-French keywords (comma-separated):`;
-    return this.callOpenRouter(descriptionPrompt, translationModel, 200, this.TRANSLATION_TIMEOUT).pipe(
-      retry({ count: 1, delay: 2e3 }),
-      // Retry once after 2 seconds for cold starts
-      switchMap((description) => {
-        return this.callOpenRouter(keywordsPrompt, translationModel, 100, this.TRANSLATION_TIMEOUT).pipe(retry({ count: 1, delay: 2e3 }), map((keywords) => ({
-          description: this.cleanMetadataResponse(description),
-          keywords: this.cleanKeywordsResponse(keywords)
-        })));
-      })
-    );
-  }
-  callOpenRouter(prompt, model, maxTokens, timeoutMs = this.API_TIMEOUT) {
-    const apiKey = this.apiKeyService.getCurrentKey();
-    if (!apiKey) {
-      return throwError(() => new Error("API key not configured"));
-    }
-    const headers = new HttpHeaders({
-      "Authorization": `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-      "HTTP-Referer": "https://content-assistant.app",
-      "X-Title": "Content Assistant"
-    });
-    const payload = {
-      model,
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: maxTokens,
-      temperature: 0.3
-    };
-    return this.http.post(this.OPENROUTER_URL, payload, { headers }).pipe(timeout(timeoutMs), map((response) => {
-      if (response.choices && response.choices[0]?.message?.content) {
-        return response.choices[0].message.content;
-      }
-      throw new Error("Invalid response from API");
-    }), catchError((error) => {
-      console.error("OpenRouter API error:", error);
-      const httpError = error;
-      if (httpError.status === 429 || httpError.error?.error?.code === 429) {
-        return throwError(() => {
-          const rateLimitError = new Error("Rate limit exceeded");
-          rateLimitError.status = 429;
-          rateLimitError.originalError = error;
-          return rateLimitError;
-        });
-      }
-      const newError = new Error(httpError.error?.error?.message || httpError.message || "Failed to generate content");
-      newError.status = httpError.status;
-      newError.originalError = error;
-      return throwError(() => newError);
-    }));
-  }
-  cleanMetadataResponse(response) {
-    let cleaned = response.trim();
-    if (cleaned.startsWith('"') && cleaned.endsWith('"')) {
-      cleaned = cleaned.slice(1, -1);
-    }
-    const prefixes = [
-      "Here is a summary:",
-      "Summary:",
-      "Meta description:",
-      "Voici un r\xE9sum\xE9:",
-      "R\xE9sum\xE9:",
-      "M\xE9ta-description:",
-      "French translation:",
-      "Translation:"
-    ];
-    for (const prefix of prefixes) {
-      if (cleaned.toLowerCase().startsWith(prefix.toLowerCase())) {
-        cleaned = cleaned.substring(prefix.length).trim();
-      }
-    }
-    if (cleaned.length > 275) {
-      const lastPeriod = cleaned.lastIndexOf(".", 275);
-      if (lastPeriod > 200) {
-        cleaned = cleaned.substring(0, lastPeriod + 1);
-      } else {
-        cleaned = cleaned.substring(0, 275);
-      }
-    }
-    return cleaned;
-  }
-  cleanKeywordsResponse(response) {
-    let cleaned = response.trim();
-    if (cleaned.startsWith('"') && cleaned.endsWith('"')) {
-      cleaned = cleaned.slice(1, -1);
-    }
-    const prefixes = [
-      "Keywords:",
-      "Here are the keywords:",
-      "Meta keywords:",
-      "Mots-cl\xE9s:",
-      "Voici les mots-cl\xE9s:",
-      "French keywords:"
-    ];
-    for (const prefix of prefixes) {
-      if (cleaned.toLowerCase().startsWith(prefix.toLowerCase())) {
-        cleaned = cleaned.substring(prefix.length).trim();
-      }
-    }
-    const keywords = cleaned.split(",").map((k) => k.trim()).filter((k) => k.length > 0);
-    return keywords.join(", ");
-  }
-  static \u0275fac = function MetadataAssistantService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _MetadataAssistantService)();
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _MetadataAssistantService, factory: _MetadataAssistantService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MetadataAssistantService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
-})();
-
-// src/app/services/metadata-assistant-state.service.ts
-var MetadataAssistantStateService = class _MetadataAssistantStateService {
-  initialState = {
-    isProcessing: false,
-    currentUrl: "",
-    currentStep: "idle",
-    progress: 0,
-    totalUrls: 0,
-    processedUrls: 0,
-    results: [],
-    error: null,
-    selectedModel: "mistralai/mistral-small-3.2-24b-instruct:free",
-    translateToFrench: false
-  };
-  stateSubject = new BehaviorSubject(this.initialState);
-  state$ = this.stateSubject.asObservable();
-  constructor() {
-  }
-  getState() {
-    return this.stateSubject.value;
-  }
-  updateState(updates) {
-    const currentState = this.getState();
-    this.stateSubject.next(__spreadValues(__spreadValues({}, currentState), updates));
-  }
-  startProcessing(urls, model, translateToFrench) {
-    this.updateState({
-      isProcessing: true,
-      currentStep: "scraping",
-      progress: 0,
-      totalUrls: urls.length,
-      processedUrls: 0,
-      results: [],
-      error: null,
-      selectedModel: model,
-      translateToFrench
-    });
-  }
-  updateProgress(currentUrl, step) {
-    const state2 = this.getState();
-    const stepProgress = step === "scraping" ? 0.3 : step === "generating" ? 0.6 : 0.9;
-    const urlProgress = state2.processedUrls / Math.max(state2.totalUrls, 1);
-    const currentUrlProgress = stepProgress / Math.max(state2.totalUrls, 1);
-    this.updateState({
-      currentUrl,
-      currentStep: step,
-      progress: Math.min((urlProgress + currentUrlProgress) * 100, 100)
-    });
-  }
-  addResult(result) {
-    const state2 = this.getState();
-    this.updateState({
-      results: [...state2.results, result],
-      processedUrls: state2.processedUrls + 1,
-      progress: (state2.processedUrls + 1) / Math.max(state2.totalUrls, 1) * 100
-    });
-  }
-  completeProcessing() {
-    this.updateState({
-      isProcessing: false,
-      currentStep: "complete",
-      progress: 100,
-      currentUrl: ""
-    });
-  }
-  setError(error) {
-    this.updateState({
-      isProcessing: false,
-      currentStep: "idle",
-      error
-    });
-  }
-  reset() {
-    this.stateSubject.next(this.initialState);
-  }
-  setSelectedModel(model) {
-    this.updateState({ selectedModel: model });
-  }
-  setTranslateToFrench(translate) {
-    this.updateState({ translateToFrench: translate });
-  }
-  clearResults() {
-    this.updateState({
-      results: [],
-      progress: 0,
-      processedUrls: 0,
-      totalUrls: 0,
-      currentStep: "idle",
-      error: null
-    });
-  }
-  static \u0275fac = function MetadataAssistantStateService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _MetadataAssistantStateService)();
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _MetadataAssistantStateService, factory: _MetadataAssistantStateService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MetadataAssistantStateService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [], null);
-})();
-
 // src/app/views/metadata-assistant/metadata-assistant.component.ts
-function MetadataAssistantComponent_span_13_Template(rf, ctx) {
+function MetadataAssistantComponent_span_12_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span", 7);
     \u0275\u0275element(1, "i", 8);
@@ -22555,7 +23435,7 @@ function MetadataAssistantComponent_span_13_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 1, "page.apiKey.active"), " ");
   }
 }
-function MetadataAssistantComponent_span_15_Template(rf, ctx) {
+function MetadataAssistantComponent_span_14_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "span", 9);
     \u0275\u0275element(1, "i", 10);
@@ -22568,12 +23448,12 @@ function MetadataAssistantComponent_span_15_Template(rf, ctx) {
     \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(3, 1, "page.apiKey.notSet"), " ");
   }
 }
-function MetadataAssistantComponent_section_17_div_10_Template(rf, ctx) {
+function MetadataAssistantComponent_section_16_div_22_Template(rf, ctx) {
   if (rf & 1) {
     const _r3 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "div", 20)(1, "p-button", 21);
+    \u0275\u0275elementStart(0, "div", 28)(1, "p-button", 29);
     \u0275\u0275pipe(2, "translate");
-    \u0275\u0275listener("onClick", function MetadataAssistantComponent_section_17_div_10_Template_p_button_onClick_1_listener() {
+    \u0275\u0275listener("onClick", function MetadataAssistantComponent_section_16_div_22_Template_p_button_onClick_1_listener() {
       \u0275\u0275restoreView(_r3);
       const ctx_r1 = \u0275\u0275nextContext(2);
       return \u0275\u0275resetView(ctx_r1.reset());
@@ -22585,10 +23465,10 @@ function MetadataAssistantComponent_section_17_div_10_Template(rf, ctx) {
     \u0275\u0275property("label", \u0275\u0275pipeBind1(2, 2, "metadata.button.reset"))("outlined", true);
   }
 }
-function MetadataAssistantComponent_section_17_div_12_Template(rf, ctx) {
+function MetadataAssistantComponent_section_16_div_24_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div");
-    \u0275\u0275element(1, "ca-progress-indicator", 22);
+    \u0275\u0275element(1, "ca-progress-indicator", 30);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -22597,10 +23477,10 @@ function MetadataAssistantComponent_section_17_div_12_Template(rf, ctx) {
     \u0275\u0275property("progressText", ctx_r1.getProgressText())("processedCount", ctx_r1.state.processedUrls)("totalFiles", ctx_r1.state.totalUrls)("showProgress", true)("showSpinner", ctx_r1.state.isProcessing);
   }
 }
-function MetadataAssistantComponent_section_17_div_13_Template(rf, ctx) {
+function MetadataAssistantComponent_section_16_div_25_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 14);
-    \u0275\u0275element(1, "p-message", 23);
+    \u0275\u0275elementStart(0, "div", 19);
+    \u0275\u0275element(1, "p-message", 31);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -22609,70 +23489,205 @@ function MetadataAssistantComponent_section_17_div_13_Template(rf, ctx) {
     \u0275\u0275property("text", ctx_r1.state.error);
   }
 }
-function MetadataAssistantComponent_section_17_div_14_Template(rf, ctx) {
+function MetadataAssistantComponent_section_16_div_26_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 24);
-    \u0275\u0275element(1, "ca-metadata-result", 25)(2, "ca-metadata-csv-export", 26);
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 32)(1, "ca-metadata-result", 33);
+    \u0275\u0275listener("documentSelected", function MetadataAssistantComponent_section_16_div_26_Template_ca_metadata_result_documentSelected_1_listener($event) {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.onDocumentSelected($event.file, $event.index));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275element(2, "ca-metadata-csv-export", 34);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext(2);
     \u0275\u0275advance();
-    \u0275\u0275property("results", ctx_r1.state.results)("showTranslations", ctx_r1.state.translateToFrench);
+    \u0275\u0275property("results", ctx_r1.state.results)("showTranslations", ctx_r1.state.translateToFrench)("isProcessing", ctx_r1.state.isProcessing)("processingIndex", ctx_r1.state.documentProcessingIndex);
     \u0275\u0275advance();
     \u0275\u0275property("results", ctx_r1.state.results)("includeTranslations", ctx_r1.state.translateToFrench);
   }
 }
-function MetadataAssistantComponent_section_17_Template(rf, ctx) {
+function MetadataAssistantComponent_section_16_div_40_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 28)(1, "p-button", 29);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275listener("onClick", function MetadataAssistantComponent_section_16_div_40_Template_p_button_onClick_1_listener() {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.resetDocumentTab());
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275property("label", \u0275\u0275pipeBind1(2, 2, "metadata.button.reset"))("outlined", true);
+  }
+}
+function MetadataAssistantComponent_section_16_div_42_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div");
+    \u0275\u0275element(1, "ca-progress-indicator", 30);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("progressText", ctx_r1.getProgressText())("processedCount", ctx_r1.state.processedUrls)("totalFiles", ctx_r1.state.totalUrls)("showProgress", true)("showSpinner", ctx_r1.state.isProcessing);
+  }
+}
+function MetadataAssistantComponent_section_16_div_43_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 19);
+    \u0275\u0275element(1, "p-message", 31);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("text", ctx_r1.state.error);
+  }
+}
+function MetadataAssistantComponent_section_16_div_44_ng_template_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "strong");
+    \u0275\u0275text(1);
+    \u0275\u0275pipe(2, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(3);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275pipe(5, "translate");
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1("", \u0275\u0275pipeBind1(2, 2, "metadata.document.languageDetected"), ":");
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r1.documentLanguage === "en" ? \u0275\u0275pipeBind1(4, 4, "common.language.english") : \u0275\u0275pipeBind1(5, 6, "common.language.french"), " ");
+  }
+}
+function MetadataAssistantComponent_section_16_div_44_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 19)(1, "p-message", 35);
+    \u0275\u0275template(2, MetadataAssistantComponent_section_16_div_44_ng_template_2_Template, 6, 8, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementEnd()();
+  }
+}
+function MetadataAssistantComponent_section_16_div_45_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 32);
+    \u0275\u0275element(1, "ca-metadata-result", 36)(2, "ca-metadata-csv-export", 34);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("results", ctx_r1.documentResults)("showTranslations", false)("isProcessing", ctx_r1.state.isProcessing)("processingIndex", null);
+    \u0275\u0275advance();
+    \u0275\u0275property("results", ctx_r1.documentResults)("includeTranslations", false);
+  }
+}
+function MetadataAssistantComponent_section_16_Template(rf, ctx) {
   if (rf & 1) {
     const _r1 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "section")(1, "div", 11)(2, "div", 12)(3, "ca-url-input", 13);
-    \u0275\u0275listener("urlsChange", function MetadataAssistantComponent_section_17_Template_ca_url_input_urlsChange_3_listener($event) {
+    \u0275\u0275elementStart(0, "section")(1, "p-tabs", 11)(2, "p-tablist")(3, "p-tab", 12);
+    \u0275\u0275element(4, "i", 13);
+    \u0275\u0275text(5);
+    \u0275\u0275pipe(6, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(7, "p-tab", 14);
+    \u0275\u0275element(8, "i", 15);
+    \u0275\u0275text(9);
+    \u0275\u0275pipe(10, "translate");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(11, "p-tabpanels")(12, "p-tabpanel", 12)(13, "div", 16)(14, "div", 17)(15, "ca-url-input", 18);
+    \u0275\u0275listener("urlsChange", function MetadataAssistantComponent_section_16_Template_ca_url_input_urlsChange_15_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.onUrlsChange($event));
-    })("urlInputChange", function MetadataAssistantComponent_section_17_Template_ca_url_input_urlInputChange_3_listener($event) {
+    })("urlInputChange", function MetadataAssistantComponent_section_16_Template_ca_url_input_urlInputChange_15_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.onUrlInputChange($event));
     });
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(4, "div", 14)(5, "ca-shared-model-selector", 15);
-    \u0275\u0275listener("modelChange", function MetadataAssistantComponent_section_17_Template_ca_shared_model_selector_modelChange_5_listener($event) {
+    \u0275\u0275elementStart(16, "div", 19)(17, "ca-shared-model-selector", 20);
+    \u0275\u0275listener("modelChange", function MetadataAssistantComponent_section_16_Template_ca_shared_model_selector_modelChange_17_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.onModelChange($event));
-    })("translateChange", function MetadataAssistantComponent_section_17_Template_ca_shared_model_selector_translateChange_5_listener($event) {
+    })("translateChange", function MetadataAssistantComponent_section_16_Template_ca_shared_model_selector_translateChange_17_listener($event) {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.onTranslateToggle($event));
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275elementStart(6, "div", 14)(7, "p-button", 16);
-    \u0275\u0275pipe(8, "translate");
-    \u0275\u0275pipe(9, "translate");
-    \u0275\u0275listener("onClick", function MetadataAssistantComponent_section_17_Template_p_button_onClick_7_listener() {
+    \u0275\u0275elementStart(18, "div", 19)(19, "p-button", 21);
+    \u0275\u0275pipe(20, "translate");
+    \u0275\u0275pipe(21, "translate");
+    \u0275\u0275listener("onClick", function MetadataAssistantComponent_section_16_Template_p_button_onClick_19_listener() {
       \u0275\u0275restoreView(_r1);
       const ctx_r1 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r1.startProcessing());
     });
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(10, MetadataAssistantComponent_section_17_div_10_Template, 3, 4, "div", 17);
+    \u0275\u0275template(22, MetadataAssistantComponent_section_16_div_22_Template, 3, 4, "div", 22);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(11, "div", 12);
-    \u0275\u0275template(12, MetadataAssistantComponent_section_17_div_12_Template, 2, 5, "div", 5)(13, MetadataAssistantComponent_section_17_div_13_Template, 2, 1, "div", 18);
+    \u0275\u0275elementStart(23, "div", 17);
+    \u0275\u0275template(24, MetadataAssistantComponent_section_16_div_24_Template, 2, 5, "div", 5)(25, MetadataAssistantComponent_section_16_div_25_Template, 2, 1, "div", 23);
     \u0275\u0275elementEnd()();
-    \u0275\u0275template(14, MetadataAssistantComponent_section_17_div_14_Template, 3, 4, "div", 19);
+    \u0275\u0275template(26, MetadataAssistantComponent_section_16_div_26_Template, 3, 6, "div", 24);
     \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(27, "p-tabpanel", 14)(28, "div", 16)(29, "div", 17)(30, "ca-document-upload", 25);
+    \u0275\u0275listener("fileSelected", function MetadataAssistantComponent_section_16_Template_ca_document_upload_fileSelected_30_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onDocumentFileSelected($event));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(31, "div", 19)(32, "ca-shared-model-selector", 26);
+    \u0275\u0275listener("modelChange", function MetadataAssistantComponent_section_16_Template_ca_shared_model_selector_modelChange_32_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onModelChange($event));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(33, "div", 19);
+    \u0275\u0275element(34, "p-message", 27);
+    \u0275\u0275pipe(35, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(36, "div", 19)(37, "p-button", 21);
+    \u0275\u0275pipe(38, "translate");
+    \u0275\u0275pipe(39, "translate");
+    \u0275\u0275listener("onClick", function MetadataAssistantComponent_section_16_Template_p_button_onClick_37_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.startDocumentProcessing());
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(40, MetadataAssistantComponent_section_16_div_40_Template, 3, 4, "div", 22);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(41, "div", 17);
+    \u0275\u0275template(42, MetadataAssistantComponent_section_16_div_42_Template, 2, 5, "div", 5)(43, MetadataAssistantComponent_section_16_div_43_Template, 2, 1, "div", 23)(44, MetadataAssistantComponent_section_16_div_44_Template, 4, 0, "div", 23);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(45, MetadataAssistantComponent_section_16_div_45_Template, 3, 6, "div", 24);
+    \u0275\u0275elementEnd()()()();
   }
   if (rf & 2) {
     const ctx_r1 = \u0275\u0275nextContext();
-    \u0275\u0275advance(3);
+    \u0275\u0275advance(5);
+    \u0275\u0275textInterpolate1("", \u0275\u0275pipeBind1(6, 35, "metadata.tabs.scrapedContent"), " ");
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate1("", \u0275\u0275pipeBind1(10, 37, "metadata.tabs.documentUpload"), " ");
+    \u0275\u0275advance(6);
     \u0275\u0275property("disabled", ctx_r1.state.isProcessing);
     \u0275\u0275advance(2);
     \u0275\u0275property("selectedModel", ctx_r1.state.selectedModel)("models", ctx_r1.models)("label", "metadata.modelSelector.modelLabel")("cardTitle", "metadata.modelSelector.title")("showCard", true)("showTranslateOption", true)("translateToFrench", ctx_r1.state.translateToFrench)("disabled", ctx_r1.state.isProcessing);
     \u0275\u0275advance(2);
-    \u0275\u0275property("label", ctx_r1.state.isProcessing ? \u0275\u0275pipeBind1(8, 16, "metadata.button.processing") : \u0275\u0275pipeBind1(9, 18, "metadata.button.process"))("disabled", !ctx_r1.canProcess())("loading", ctx_r1.state.isProcessing);
+    \u0275\u0275property("label", ctx_r1.state.isProcessing ? \u0275\u0275pipeBind1(20, 39, "metadata.button.processing") : \u0275\u0275pipeBind1(21, 41, "metadata.button.process"))("disabled", !ctx_r1.canProcess())("loading", ctx_r1.state.isProcessing);
     \u0275\u0275advance(3);
     \u0275\u0275property("ngIf", ctx_r1.state.results.length > 0 && !ctx_r1.state.isProcessing);
     \u0275\u0275advance(2);
@@ -22681,12 +23696,30 @@ function MetadataAssistantComponent_section_17_Template(rf, ctx) {
     \u0275\u0275property("ngIf", ctx_r1.state.error);
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", ctx_r1.state.results.length > 0);
+    \u0275\u0275advance(4);
+    \u0275\u0275property("disabled", ctx_r1.state.isProcessing);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("selectedModel", ctx_r1.state.selectedModel)("models", ctx_r1.models)("label", "metadata.modelSelector.modelLabel")("cardTitle", "metadata.modelSelector.title")("showCard", true)("showTranslateOption", false)("disabled", ctx_r1.state.isProcessing);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("text", \u0275\u0275pipeBind1(35, 43, "metadata.document.help"));
+    \u0275\u0275advance(3);
+    \u0275\u0275property("label", ctx_r1.state.isProcessing ? \u0275\u0275pipeBind1(38, 45, "metadata.button.processing") : \u0275\u0275pipeBind1(39, 47, "metadata.button.process"))("disabled", !ctx_r1.canProcessDocument())("loading", ctx_r1.state.isProcessing);
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngIf", ctx_r1.documentResults.length > 0 && !ctx_r1.state.isProcessing);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", ctx_r1.state.isProcessing || ctx_r1.state.currentStep === "complete");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.state.error);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.documentLanguage && !ctx_r1.state.isProcessing);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.documentResults.length > 0);
   }
 }
-function MetadataAssistantComponent_div_19_Template(rf, ctx) {
+function MetadataAssistantComponent_div_18_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 27);
-    \u0275\u0275element(1, "p-message", 28);
+    \u0275\u0275elementStart(0, "div", 37);
+    \u0275\u0275element(1, "p-message", 38);
     \u0275\u0275pipe(2, "translate");
     \u0275\u0275elementEnd();
   }
@@ -22696,12 +23729,12 @@ function MetadataAssistantComponent_div_19_Template(rf, ctx) {
   }
 }
 var MetadataAssistantComponent = class _MetadataAssistantComponent {
-  translate;
-  metadataService;
-  stateService;
-  apiKeyService;
-  messageService;
   destroy$ = new Subject();
+  translate = inject(TranslateService);
+  metadataService = inject(MetadataAssistantService);
+  stateService = inject(MetadataAssistantStateService);
+  apiKeyService = inject(ApiKeyService);
+  messageService = inject(MessageService);
   state = {
     isProcessing: false,
     currentUrl: "",
@@ -22712,10 +23745,16 @@ var MetadataAssistantComponent = class _MetadataAssistantComponent {
     results: [],
     error: null,
     selectedModel: "mistralai/mistral-small-3.2-24b-instruct:free",
-    translateToFrench: false
+    translateToFrench: false,
+    documentProcessingIndex: null
   };
   urlInput = "";
   urls = [];
+  // Document tab properties
+  selectedDocument = null;
+  documentLanguage = null;
+  documentText = "";
+  documentResults = [];
   models = [
     {
       name: "Mistral Small 3.2 24B",
@@ -22731,15 +23770,13 @@ var MetadataAssistantComponent = class _MetadataAssistantComponent {
       name: "Google Gemma 3 27B",
       value: "google/gemma-3-27b-it:free",
       description: "metadata.models.gemmaDescription"
+    },
+    {
+      name: "Tencent Hunyuan A13B",
+      value: "tencent/hunyuan-a13b-instruct:free",
+      description: "metadata.models.hunyuanDescription"
     }
   ];
-  constructor(translate, metadataService, stateService, apiKeyService, messageService) {
-    this.translate = translate;
-    this.metadataService = metadataService;
-    this.stateService = stateService;
-    this.apiKeyService = apiKeyService;
-    this.messageService = messageService;
-  }
   ngOnInit() {
     this.stateService.state$.pipe(takeUntil(this.destroy$)).subscribe((state2) => {
       this.state = state2;
@@ -22752,8 +23789,8 @@ var MetadataAssistantComponent = class _MetadataAssistantComponent {
   onUrlsChange(urls) {
     this.urls = urls;
   }
-  onUrlInputChange(input) {
-    this.urlInput = input;
+  onUrlInputChange(input2) {
+    this.urlInput = input2;
   }
   isValidUrl(url) {
     try {
@@ -22763,8 +23800,8 @@ var MetadataAssistantComponent = class _MetadataAssistantComponent {
       return false;
     }
   }
-  onModelChange(model) {
-    this.stateService.setSelectedModel(model);
+  onModelChange(model2) {
+    this.stateService.setSelectedModel(model2);
   }
   onTranslateToggle(translate) {
     this.stateService.setTranslateToFrench(translate);
@@ -22832,54 +23869,194 @@ var MetadataAssistantComponent = class _MetadataAssistantComponent {
     return "";
   }
   getModelDisplayName(modelValue) {
-    const model = this.models.find((m) => m.value === modelValue);
-    return model ? model.name : modelValue;
+    const model2 = this.models.find((m) => m.value === modelValue);
+    return model2 ? model2.name : modelValue;
+  }
+  onDocumentSelected(file, resultIndex) {
+    if (!this.apiKeyService.hasApiKey$.value) {
+      this.stateService.setError(this.translate.instant("metadata.errors.noApiKey"));
+      return;
+    }
+    const result = this.state.results[resultIndex];
+    if (!result.frenchTranslatedDescription || !result.frenchTranslatedKeywords) {
+      this.messageService.add({
+        severity: "warn",
+        summary: this.translate.instant("metadata.document.errors.noTranslation"),
+        life: 4e3
+      });
+      return;
+    }
+    this.stateService.setDocumentProcessingIndex(resultIndex);
+    this.stateService.updateState({
+      isProcessing: true,
+      currentStep: "processing-document"
+    });
+    this.metadataService.processDocument(file).pipe(takeUntil(this.destroy$)).subscribe({
+      next: (documentMetadata) => {
+        this.stateService.updateResultWithDocumentMetadata(resultIndex, documentMetadata);
+        this.stateService.updateState({ currentStep: "evaluating" });
+        this.evaluateMetadata(resultIndex, documentMetadata);
+      },
+      error: (error) => {
+        console.error("Document processing error:", error);
+        this.stateService.updateState({
+          isProcessing: false,
+          documentProcessingIndex: null,
+          currentStep: "complete"
+        });
+        this.messageService.add({
+          severity: "error",
+          summary: this.translate.instant("metadata.document.errors.processingFailed"),
+          detail: error.message,
+          life: 5e3
+        });
+      }
+    });
+  }
+  evaluateMetadata(resultIndex, documentMetadata) {
+    const result = this.state.results[resultIndex];
+    const translatedMetadata = {
+      description: result.frenchTranslatedDescription,
+      keywords: result.frenchTranslatedKeywords
+    };
+    this.metadataService.evaluateMetadata(translatedMetadata, documentMetadata).pipe(takeUntil(this.destroy$)).subscribe({
+      next: (evaluationResult) => {
+        this.stateService.updateResultWithEvaluation(resultIndex, evaluationResult);
+        this.stateService.updateState({
+          isProcessing: false
+        });
+        this.messageService.add({
+          severity: "success",
+          summary: this.translate.instant("metadata.document.evaluationComplete"),
+          life: 4e3
+        });
+      },
+      error: (error) => {
+        console.error("Evaluation error:", error);
+        this.stateService.updateState({
+          isProcessing: false,
+          documentProcessingIndex: null,
+          currentStep: "complete"
+        });
+        this.messageService.add({
+          severity: "error",
+          summary: this.translate.instant("metadata.document.errors.evaluationFailed"),
+          detail: error.message,
+          life: 5e3
+        });
+      }
+    });
+  }
+  onDocumentFileSelected(file) {
+    this.selectedDocument = file;
+    this.documentLanguage = null;
+    this.documentText = "";
+  }
+  startDocumentProcessing() {
+    if (!this.apiKeyService.hasApiKey$.value) {
+      this.stateService.setError(this.translate.instant("metadata.errors.noApiKey"));
+      return;
+    }
+    if (!this.selectedDocument) {
+      this.stateService.setError(this.translate.instant("metadata.document.errors.processingFailed"));
+      return;
+    }
+    this.stateService.updateState({
+      isProcessing: true,
+      currentStep: "extracting-text",
+      totalUrls: 1,
+      processedUrls: 0,
+      currentUrl: this.selectedDocument.name
+    });
+    this.metadataService.processDocumentForMetadata(this.selectedDocument, this.state.selectedModel).pipe(takeUntil(this.destroy$)).subscribe({
+      next: (result) => {
+        this.documentLanguage = result.language;
+        this.documentText = result.text;
+        this.documentResults = [result.metadata];
+        this.stateService.updateState({
+          isProcessing: false,
+          currentStep: "complete",
+          processedUrls: 1
+        });
+        this.messageService.add({
+          severity: "success",
+          summary: this.translate.instant("metadata.progress.completeTitle"),
+          detail: this.translate.instant("metadata.document.languageDetected") + ": " + this.translate.instant(result.language === "en" ? "common.language.english" : "common.language.french"),
+          life: 4e3
+        });
+      },
+      error: (error) => {
+        console.error("Document processing error:", error);
+        this.stateService.updateState({
+          isProcessing: false,
+          currentStep: "idle"
+        });
+        this.messageService.add({
+          severity: "error",
+          summary: this.translate.instant("metadata.document.errors.processingFailed"),
+          detail: error.message,
+          life: 5e3
+        });
+      }
+    });
+  }
+  resetDocumentTab() {
+    this.selectedDocument = null;
+    this.documentLanguage = null;
+    this.documentText = "";
+    this.documentResults = [];
+    this.stateService.updateState({
+      isProcessing: false,
+      currentStep: "idle",
+      error: null
+    });
+  }
+  canProcessDocument() {
+    return this.apiKeyService.hasApiKey$.value && this.selectedDocument !== null && !this.state.isProcessing;
   }
   static \u0275fac = function MetadataAssistantComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _MetadataAssistantComponent)(\u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(MetadataAssistantService), \u0275\u0275directiveInject(MetadataAssistantStateService), \u0275\u0275directiveInject(ApiKeyService), \u0275\u0275directiveInject(MessageService));
+    return new (__ngFactoryType__ || _MetadataAssistantComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _MetadataAssistantComponent, selectors: [["ca-metadata-assistant"]], features: [\u0275\u0275ProvidersFeature([MessageService])], decls: 21, vars: 21, consts: [[1, "metadata-assistant-container"], ["id", "wb-cont"], [1, "api-key-status", "mb-4"], ["class", "text-green-600", 4, "ngIf"], ["class", "text-orange-600", 4, "ngIf"], [4, "ngIf"], ["class", "mt-4", 4, "ngIf"], [1, "text-green-600"], [1, "pi", "pi-check-circle"], [1, "text-orange-600"], [1, "pi", "pi-exclamation-circle"], [1, "grid"], [1, "col-12", "lg:col-6"], [3, "urlsChange", "urlInputChange", "disabled"], [1, "mt-3"], [3, "modelChange", "translateChange", "selectedModel", "models", "label", "cardTitle", "showCard", "showTranslateOption", "translateToFrench", "disabled"], ["icon", "pi pi-sparkles", "severity", "primary", "styleClass", "w-full", 3, "onClick", "label", "disabled", "loading"], ["class", "mt-2", 4, "ngIf"], ["class", "mt-3", 4, "ngIf"], ["class", "results-section mt-4", 4, "ngIf"], [1, "mt-2"], ["icon", "pi pi-refresh", "severity", "secondary", "styleClass", "w-full", 3, "onClick", "label", "outlined"], [3, "progressText", "processedCount", "totalFiles", "showProgress", "showSpinner"], ["severity", "error", "styleClass", "w-full", 3, "text"], [1, "results-section", "mt-4"], [3, "results", "showTranslations"], [3, "results", "includeTranslations"], [1, "mt-4"], ["severity", "warn", "styleClass", "w-full", 3, "text"]], template: function MetadataAssistantComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _MetadataAssistantComponent, selectors: [["ca-metadata-assistant"]], features: [\u0275\u0275ProvidersFeature([MessageService])], decls: 20, vars: 21, consts: [["default", ""], ["id", "wb-cont"], [1, "api-key-status", "mb-4"], ["class", "text-green-600", 4, "ngIf"], ["class", "text-orange-600", 4, "ngIf"], [4, "ngIf"], ["class", "mt-4", 4, "ngIf"], [1, "text-green-600"], [1, "pi", "pi-check-circle"], [1, "text-orange-600"], [1, "pi", "pi-exclamation-circle"], ["value", "0", 1, "mt-3"], ["value", "0"], [1, "pi", "pi-globe", "mr-1"], ["value", "1"], [1, "pi", "pi-file", "mr-1"], [1, "grid"], [1, "col-12", "lg:col-6"], [3, "urlsChange", "urlInputChange", "disabled"], [1, "mt-3"], [3, "modelChange", "translateChange", "selectedModel", "models", "label", "cardTitle", "showCard", "showTranslateOption", "translateToFrench", "disabled"], ["icon", "pi pi-sparkles", "severity", "primary", "styleClass", "w-full", 3, "onClick", "label", "disabled", "loading"], ["class", "mt-2", 4, "ngIf"], ["class", "mt-3", 4, "ngIf"], ["class", "results-section mt-4", 4, "ngIf"], [3, "fileSelected", "disabled"], [3, "modelChange", "selectedModel", "models", "label", "cardTitle", "showCard", "showTranslateOption", "disabled"], ["severity", "info", "styleClass", "w-full", 3, "text"], [1, "mt-2"], ["icon", "pi pi-refresh", "severity", "secondary", "styleClass", "w-full", 3, "onClick", "label", "outlined"], [3, "progressText", "processedCount", "totalFiles", "showProgress", "showSpinner"], ["severity", "error", "styleClass", "w-full", 3, "text"], [1, "results-section", "mt-4"], [3, "documentSelected", "results", "showTranslations", "isProcessing", "processingIndex"], [3, "results", "includeTranslations"], ["severity", "success", "styleClass", "w-full"], [3, "results", "showTranslations", "isProcessing", "processingIndex"], [1, "mt-4"], ["severity", "warn", "styleClass", "w-full", 3, "text"]], template: function MetadataAssistantComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0);
-      \u0275\u0275element(1, "p-toast");
-      \u0275\u0275elementStart(2, "h1", 1);
-      \u0275\u0275text(3);
-      \u0275\u0275pipe(4, "translate");
+      \u0275\u0275element(0, "p-toast");
+      \u0275\u0275elementStart(1, "h1", 1);
+      \u0275\u0275text(2);
+      \u0275\u0275pipe(3, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(5, "p");
-      \u0275\u0275text(6);
-      \u0275\u0275pipe(7, "translate");
+      \u0275\u0275elementStart(4, "p");
+      \u0275\u0275text(5);
+      \u0275\u0275pipe(6, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "section", 2)(9, "div")(10, "strong");
-      \u0275\u0275text(11);
-      \u0275\u0275pipe(12, "translate");
+      \u0275\u0275elementStart(7, "section", 2)(8, "div")(9, "strong");
+      \u0275\u0275text(10);
+      \u0275\u0275pipe(11, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275template(13, MetadataAssistantComponent_span_13_Template, 4, 3, "span", 3);
-      \u0275\u0275pipe(14, "async");
-      \u0275\u0275template(15, MetadataAssistantComponent_span_15_Template, 4, 3, "span", 4);
-      \u0275\u0275pipe(16, "async");
+      \u0275\u0275template(12, MetadataAssistantComponent_span_12_Template, 4, 3, "span", 3);
+      \u0275\u0275pipe(13, "async");
+      \u0275\u0275template(14, MetadataAssistantComponent_span_14_Template, 4, 3, "span", 4);
+      \u0275\u0275pipe(15, "async");
       \u0275\u0275elementEnd()();
-      \u0275\u0275template(17, MetadataAssistantComponent_section_17_Template, 15, 20, "section", 5);
-      \u0275\u0275pipe(18, "async");
-      \u0275\u0275template(19, MetadataAssistantComponent_div_19_Template, 3, 3, "div", 6);
-      \u0275\u0275pipe(20, "async");
-      \u0275\u0275elementEnd();
+      \u0275\u0275template(16, MetadataAssistantComponent_section_16_Template, 46, 49, "section", 5);
+      \u0275\u0275pipe(17, "async");
+      \u0275\u0275template(18, MetadataAssistantComponent_div_18_Template, 3, 3, "div", 6);
+      \u0275\u0275pipe(19, "async");
     }
     if (rf & 2) {
+      \u0275\u0275advance(2);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 7, "metadata.title"));
       \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(4, 7, "metadata.title"));
-      \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(7, 9, "metadata.description"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(6, 9, "metadata.description"));
       \u0275\u0275advance(5);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(12, 11, "page.apiKey.status"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(11, 11, "page.apiKey.status"));
       \u0275\u0275advance(2);
-      \u0275\u0275property("ngIf", \u0275\u0275pipeBind1(14, 13, ctx.apiKeyService.hasApiKey$));
+      \u0275\u0275property("ngIf", \u0275\u0275pipeBind1(13, 13, ctx.apiKeyService.hasApiKey$));
       \u0275\u0275advance(2);
-      \u0275\u0275property("ngIf", !\u0275\u0275pipeBind1(16, 15, ctx.apiKeyService.hasApiKey$));
+      \u0275\u0275property("ngIf", !\u0275\u0275pipeBind1(15, 15, ctx.apiKeyService.hasApiKey$));
       \u0275\u0275advance(2);
-      \u0275\u0275property("ngIf", \u0275\u0275pipeBind1(18, 17, ctx.apiKeyService.hasApiKey$));
+      \u0275\u0275property("ngIf", \u0275\u0275pipeBind1(17, 17, ctx.apiKeyService.hasApiKey$));
       \u0275\u0275advance(2);
-      \u0275\u0275property("ngIf", !\u0275\u0275pipeBind1(20, 19, ctx.apiKeyService.hasApiKey$));
+      \u0275\u0275property("ngIf", !\u0275\u0275pipeBind1(19, 19, ctx.apiKeyService.hasApiKey$));
     }
   }, dependencies: [
     CommonModule,
@@ -22895,12 +24072,19 @@ var MetadataAssistantComponent = class _MetadataAssistantComponent {
     Message,
     ToastModule,
     Toast,
+    TabsModule,
+    Tabs,
+    TabPanels,
+    TabPanel,
+    TabList,
+    Tab,
     SharedModelSelectorComponent,
     ProgressIndicatorComponent,
     UrlInputComponent,
     MetadataResultComponent,
-    CsvExportComponent
-  ], styles: ["\n\n.metadata-assistant-container[_ngcontent-%COMP%] {\n  padding: 1rem;\n}\n.api-key-status[_ngcontent-%COMP%] {\n  margin-bottom: 1.5rem;\n}\n.results-section[_ngcontent-%COMP%] {\n  margin-top: 2rem;\n}\n/*# sourceMappingURL=metadata-assistant.component.css.map */"] });
+    CsvExportComponent,
+    DocumentUploadComponent
+  ], styles: ["\n\n.api-key-status[_ngcontent-%COMP%] {\n  margin-bottom: 1.5rem;\n}\n.results-section[_ngcontent-%COMP%] {\n  margin-top: 2rem;\n}\n/*# sourceMappingURL=metadata-assistant.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MetadataAssistantComponent, [{
@@ -22913,142 +24097,311 @@ var MetadataAssistantComponent = class _MetadataAssistantComponent {
       CardModule,
       MessageModule,
       ToastModule,
+      TabsModule,
       SharedModelSelectorComponent,
       ProgressIndicatorComponent,
       UrlInputComponent,
       MetadataResultComponent,
-      CsvExportComponent
-    ], providers: [MessageService], template: `<div class="metadata-assistant-container">
-  <p-toast></p-toast>
-  <h1 id="wb-cont">{{ 'metadata.title' | translate }}</h1>
-  <p>{{ 'metadata.description' | translate }}</p>
+      CsvExportComponent,
+      DocumentUploadComponent
+    ], providers: [MessageService], template: `<p-toast></p-toast>
 
-  <!-- API Key Status -->
-  <section class="api-key-status mb-4">
-    <div>
-      <strong>{{ 'page.apiKey.status' | translate }}</strong>
-      <span *ngIf="apiKeyService.hasApiKey$ | async" class="text-green-600">
-        <i class="pi pi-check-circle"></i> {{ 'page.apiKey.active' | translate }}
-      </span>
-      <span *ngIf="!(apiKeyService.hasApiKey$ | async)" class="text-orange-600">
-        <i class="pi pi-exclamation-circle"></i> {{ 'page.apiKey.notSet' | translate }}
-      </span>
-    </div>
-  </section>
+<h1 id="wb-cont">{{ 'metadata.title' | translate }}</h1>
+<p>{{ 'metadata.description' | translate }}</p>
 
-  <!-- Main Content Area -->
-  <section *ngIf="apiKeyService.hasApiKey$ | async">
-    <div class="grid">
-      <!-- Left Column: Input & Settings -->
-      <div class="col-12 lg:col-6">
-        <!-- URL Input -->
-        <ca-url-input
-          [disabled]="state.isProcessing"
-          (urlsChange)="onUrlsChange($event)"
-          (urlInputChange)="onUrlInputChange($event)">
-        </ca-url-input>
-
-        <!-- Model Selector with Translation Option -->
-        <div class="mt-3">
-          <ca-shared-model-selector
-            [selectedModel]="state.selectedModel"
-            [models]="models"
-            [label]="'metadata.modelSelector.modelLabel'"
-            [cardTitle]="'metadata.modelSelector.title'"
-            [showCard]="true"
-            [showTranslateOption]="true"
-            [translateToFrench]="state.translateToFrench"
-            [disabled]="state.isProcessing"
-            (modelChange)="onModelChange($event)"
-            (translateChange)="onTranslateToggle($event)">
-          </ca-shared-model-selector>
-        </div>
-
-        <!-- Process Button -->
-        <div class="mt-3">
-          <p-button 
-            [label]="state.isProcessing ? ('metadata.button.processing' | translate) : ('metadata.button.process' | translate)"
-            icon="pi pi-sparkles"
-            [disabled]="!canProcess()"
-            [loading]="state.isProcessing"
-            severity="primary"
-            styleClass="w-full"
-            (onClick)="startProcessing()">
-          </p-button>
-        </div>
-
-        <!-- Reset Button -->
-        <div class="mt-2" *ngIf="state.results.length > 0 && !state.isProcessing">
-          <p-button 
-            [label]="'metadata.button.reset' | translate"
-            icon="pi pi-refresh"
-            severity="secondary"
-            [outlined]="true"
-            styleClass="w-full"
-            (onClick)="reset()">
-          </p-button>
-        </div>
-      </div>
-
-      <!-- Right Column: Progress & Error Messages -->
-      <div class="col-12 lg:col-6">
-        <!-- Progress Indicator -->
-        <div *ngIf="state.isProcessing || state.currentStep === 'complete'">
-          <ca-progress-indicator
-            [progressText]="getProgressText()"
-            [processedCount]="state.processedUrls"
-            [totalFiles]="state.totalUrls"
-            [showProgress]="true"
-            [showSpinner]="state.isProcessing">
-          </ca-progress-indicator>
-        </div>
-
-        <!-- Error Message -->
-        <div *ngIf="state.error" class="mt-3">
-          <p-message 
-            severity="error" 
-            [text]="state.error"
-            styleClass="w-full">
-          </p-message>
-        </div>
-      </div>
-    </div>
-
-    <!-- Results Section -->
-    <div class="results-section mt-4" *ngIf="state.results.length > 0">
-      <!-- Metadata Results -->
-      <ca-metadata-result
-        [results]="state.results"
-        [showTranslations]="state.translateToFrench">
-      </ca-metadata-result>
-
-      <!-- CSV Export -->
-      <ca-metadata-csv-export
-        [results]="state.results"
-        [includeTranslations]="state.translateToFrench">
-      </ca-metadata-csv-export>
-    </div>
-  </section>
-
-  <!-- No API Key Message -->
-  <div *ngIf="!(apiKeyService.hasApiKey$ | async)" class="mt-4">
-    <p-message 
-      severity="warn" 
-      [text]="'metadata.errors.noApiKey' | translate"
-      styleClass="w-full">
-    </p-message>
+<!-- API Key Status -->
+<section class="api-key-status mb-4">
+  <div>
+    <strong>{{ 'page.apiKey.status' | translate }}</strong>
+    <span *ngIf="apiKeyService.hasApiKey$ | async" class="text-green-600">
+      <i class="pi pi-check-circle"></i> {{ 'page.apiKey.active' | translate }}
+    </span>
+    <span *ngIf="!(apiKeyService.hasApiKey$ | async)" class="text-orange-600">
+      <i class="pi pi-exclamation-circle"></i> {{ 'page.apiKey.notSet' | translate }}
+    </span>
   </div>
-</div>`, styles: ["/* src/app/views/metadata-assistant/metadata-assistant.component.css */\n.metadata-assistant-container {\n  padding: 1rem;\n}\n.api-key-status {\n  margin-bottom: 1.5rem;\n}\n.results-section {\n  margin-top: 2rem;\n}\n/*# sourceMappingURL=metadata-assistant.component.css.map */\n"] }]
-  }], () => [{ type: TranslateService }, { type: MetadataAssistantService }, { type: MetadataAssistantStateService }, { type: ApiKeyService }, { type: MessageService }], null);
+</section>
+
+<!-- Tabs -->
+<section *ngIf="apiKeyService.hasApiKey$ | async">
+  <p-tabs value="0" class="mt-3">
+    <p-tablist>
+      <p-tab value="0">
+        <i class="pi pi-globe mr-1"></i>{{ 'metadata.tabs.scrapedContent' | translate }}
+      </p-tab>
+      <p-tab value="1">
+        <i class="pi pi-file mr-1"></i>{{ 'metadata.tabs.documentUpload' | translate }}
+      </p-tab>
+    </p-tablist>
+
+    <p-tabpanels>
+      <!-- Tab 1: Metadata from Scraped Content -->
+      <p-tabpanel value="0">
+        <div class="grid">
+          <!-- Left Column: Input & Settings -->
+          <div class="col-12 lg:col-6">
+            <!-- URL Input -->
+            <ca-url-input
+              [disabled]="state.isProcessing"
+              (urlsChange)="onUrlsChange($event)"
+              (urlInputChange)="onUrlInputChange($event)">
+            </ca-url-input>
+
+            <!-- Model Selector with Translation Option -->
+            <div class="mt-3">
+              <ca-shared-model-selector
+                [selectedModel]="state.selectedModel"
+                [models]="models"
+                [label]="'metadata.modelSelector.modelLabel'"
+                [cardTitle]="'metadata.modelSelector.title'"
+                [showCard]="true"
+                [showTranslateOption]="true"
+                [translateToFrench]="state.translateToFrench"
+                [disabled]="state.isProcessing"
+                (modelChange)="onModelChange($event)"
+                (translateChange)="onTranslateToggle($event)">
+              </ca-shared-model-selector>
+            </div>
+
+            <!-- Process Button -->
+            <div class="mt-3">
+              <p-button
+                [label]="state.isProcessing ? ('metadata.button.processing' | translate) : ('metadata.button.process' | translate)"
+                icon="pi pi-sparkles"
+                [disabled]="!canProcess()"
+                [loading]="state.isProcessing"
+                severity="primary"
+                styleClass="w-full"
+                (onClick)="startProcessing()">
+              </p-button>
+            </div>
+
+            <!-- Reset Button -->
+            <div class="mt-2" *ngIf="state.results.length > 0 && !state.isProcessing">
+              <p-button
+                [label]="'metadata.button.reset' | translate"
+                icon="pi pi-refresh"
+                severity="secondary"
+                [outlined]="true"
+                styleClass="w-full"
+                (onClick)="reset()">
+              </p-button>
+            </div>
+          </div>
+
+          <!-- Right Column: Progress & Error Messages -->
+          <div class="col-12 lg:col-6">
+            <!-- Progress Indicator -->
+            <div *ngIf="state.isProcessing || state.currentStep === 'complete'">
+              <ca-progress-indicator
+                [progressText]="getProgressText()"
+                [processedCount]="state.processedUrls"
+                [totalFiles]="state.totalUrls"
+                [showProgress]="true"
+                [showSpinner]="state.isProcessing">
+              </ca-progress-indicator>
+            </div>
+
+            <!-- Error Message -->
+            <div *ngIf="state.error" class="mt-3">
+              <p-message
+                severity="error"
+                [text]="state.error"
+                styleClass="w-full">
+              </p-message>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section mt-4" *ngIf="state.results.length > 0">
+          <!-- Metadata Results -->
+          <ca-metadata-result
+            [results]="state.results"
+            [showTranslations]="state.translateToFrench"
+            [isProcessing]="state.isProcessing"
+            [processingIndex]="state.documentProcessingIndex"
+            (documentSelected)="onDocumentSelected($event.file, $event.index)">
+          </ca-metadata-result>
+
+          <!-- CSV Export -->
+          <ca-metadata-csv-export
+            [results]="state.results"
+            [includeTranslations]="state.translateToFrench">
+          </ca-metadata-csv-export>
+        </div>
+      </p-tabpanel>
+
+      <!-- Tab 2: Metadata from Document Upload -->
+      <p-tabpanel value="1">
+        <div class="grid">
+          <!-- Left Column: Document Upload & Settings -->
+          <div class="col-12 lg:col-6">
+            <!-- Document Upload -->
+            <ca-document-upload
+              [disabled]="state.isProcessing"
+              (fileSelected)="onDocumentFileSelected($event)">
+            </ca-document-upload>
+
+            <!-- Model Selector -->
+            <div class="mt-3">
+              <ca-shared-model-selector
+                [selectedModel]="state.selectedModel"
+                [models]="models"
+                [label]="'metadata.modelSelector.modelLabel'"
+                [cardTitle]="'metadata.modelSelector.title'"
+                [showCard]="true"
+                [showTranslateOption]="false"
+                [disabled]="state.isProcessing"
+                (modelChange)="onModelChange($event)">
+              </ca-shared-model-selector>
+            </div>
+
+            <!-- Help Message -->
+            <div class="mt-3">
+              <p-message
+                severity="info"
+                [text]="'metadata.document.help' | translate"
+                styleClass="w-full">
+              </p-message>
+            </div>
+
+            <!-- Process Button -->
+            <div class="mt-3">
+              <p-button
+                [label]="state.isProcessing ? ('metadata.button.processing' | translate) : ('metadata.button.process' | translate)"
+                icon="pi pi-sparkles"
+                [disabled]="!canProcessDocument()"
+                [loading]="state.isProcessing"
+                severity="primary"
+                styleClass="w-full"
+                (onClick)="startDocumentProcessing()">
+              </p-button>
+            </div>
+
+            <!-- Reset Button -->
+            <div class="mt-2" *ngIf="documentResults.length > 0 && !state.isProcessing">
+              <p-button
+                [label]="'metadata.button.reset' | translate"
+                icon="pi pi-refresh"
+                severity="secondary"
+                [outlined]="true"
+                styleClass="w-full"
+                (onClick)="resetDocumentTab()">
+              </p-button>
+            </div>
+          </div>
+
+          <!-- Right Column: Progress & Error Messages -->
+          <div class="col-12 lg:col-6">
+            <!-- Progress Indicator -->
+            <div *ngIf="state.isProcessing || state.currentStep === 'complete'">
+              <ca-progress-indicator
+                [progressText]="getProgressText()"
+                [processedCount]="state.processedUrls"
+                [totalFiles]="state.totalUrls"
+                [showProgress]="true"
+                [showSpinner]="state.isProcessing">
+              </ca-progress-indicator>
+            </div>
+
+            <!-- Error Message -->
+            <div *ngIf="state.error" class="mt-3">
+              <p-message
+                severity="error"
+                [text]="state.error"
+                styleClass="w-full">
+              </p-message>
+            </div>
+
+            <!-- Language Detection Result -->
+            <div *ngIf="documentLanguage && !state.isProcessing" class="mt-3">
+              <p-message
+                severity="success"
+                styleClass="w-full">
+                <ng-template #default>
+                  <strong>{{ 'metadata.document.languageDetected' | translate }}:</strong>
+                  {{ documentLanguage === 'en' ? ('common.language.english' | translate) : ('common.language.french' | translate) }}
+                </ng-template>
+              </p-message>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Section for Documents -->
+        <div class="results-section mt-4" *ngIf="documentResults.length > 0">
+          <ca-metadata-result
+            [results]="documentResults"
+            [showTranslations]="false"
+            [isProcessing]="state.isProcessing"
+            [processingIndex]="null">
+          </ca-metadata-result>
+
+          <!-- CSV Export -->
+          <ca-metadata-csv-export
+            [results]="documentResults"
+            [includeTranslations]="false">
+          </ca-metadata-csv-export>
+        </div>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</section>
+
+<!-- No API Key Message -->
+<div *ngIf="!(apiKeyService.hasApiKey$ | async)" class="mt-4">
+  <p-message
+    severity="warn"
+    [text]="'metadata.errors.noApiKey' | translate"
+    styleClass="w-full">
+  </p-message>
+</div>
+`, styles: ["/* src/app/views/metadata-assistant/metadata-assistant.component.css */\n.api-key-status {\n  margin-bottom: 1.5rem;\n}\n.results-section {\n  margin-top: 2rem;\n}\n/*# sourceMappingURL=metadata-assistant.component.css.map */\n"] }]
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(MetadataAssistantComponent, { className: "MetadataAssistantComponent", filePath: "src/app/views/metadata-assistant/metadata-assistant.component.ts", lineNumber: 41 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(MetadataAssistantComponent, { className: "MetadataAssistantComponent", filePath: "src/app/views/metadata-assistant/metadata-assistant.component.ts", lineNumber: 45 });
+})();
+
+// src/app/views/llm-evaluation/llm-evaluation.component.ts
+var LlmEvaluationComponent = class _LlmEvaluationComponent {
+  static \u0275fac = function LlmEvaluationComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _LlmEvaluationComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LlmEvaluationComponent, selectors: [["ca-llm-evaluation"]], decls: 6, vars: 6, consts: [["id", "wb-cont"]], template: function LlmEvaluationComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "h1", 0);
+      \u0275\u0275text(1);
+      \u0275\u0275pipe(2, "translate");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(3, "p");
+      \u0275\u0275text(4);
+      \u0275\u0275pipe(5, "translate");
+      \u0275\u0275elementEnd();
+    }
+    if (rf & 2) {
+      \u0275\u0275advance();
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 2, "title.llmEvaluation"));
+      \u0275\u0275advance(3);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(5, 4, "llmEvaluation.content"));
+    }
+  }, dependencies: [CommonModule, TranslateModule, TranslatePipe], encapsulation: 2 });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LlmEvaluationComponent, [{
+    type: Component,
+    args: [{ selector: "ca-llm-evaluation", imports: [CommonModule, TranslateModule], template: `
+    <h1 id="wb-cont">{{ 'title.llmEvaluation' | translate }}</h1>
+    <p>{{ 'llmEvaluation.content' | translate }}</p>
+  ` }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LlmEvaluationComponent, { className: "LlmEvaluationComponent", filePath: "src/app/views/llm-evaluation/llm-evaluation.component.ts", lineNumber: 14 });
 })();
 
 // src/app/views/static/about.component.ts
 var AboutComponent = class _AboutComponent {
-  constructor() {
-  }
   static \u0275fac = function AboutComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _AboutComponent)();
   };
@@ -23078,7 +24431,7 @@ var AboutComponent = class _AboutComponent {
     <h1 id="wb-cont">{{ 'title.about' | translate}}</h1>
     <p>{{'about.content' | translate }}</p>    
   ` }]
-  }], () => [], null);
+  }], null, null);
 })();
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AboutComponent, { className: "AboutComponent", filePath: "src/app/views/static/about.component.ts", lineNumber: 13 });
@@ -23101,7 +24454,7 @@ function TestComponent_ng_template_21_Template(rf, ctx) {
     \u0275\u0275elementStart(0, "tr")(1, "td");
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
-    \u0275\u0275elementStart(3, "td")(4, "p-button", 15);
+    \u0275\u0275elementStart(3, "td")(4, "p-button", 16);
     \u0275\u0275listener("onClick", function TestComponent_ng_template_21_Template_p_button_onClick_4_listener() {
       const link_r2 = \u0275\u0275restoreView(_r1).$implicit;
       const ctx_r2 = \u0275\u0275nextContext();
@@ -23119,19 +24472,12 @@ function TestComponent_ng_template_21_Template(rf, ctx) {
   }
 }
 var TestComponent = class _TestComponent {
-  urlDataService;
-  uploadState;
-  router;
-  translate;
-  //Initialize stuff here
-  //This runs first, use it to inject services & other dependencies (delete if not needed)
-  constructor(urlDataService, uploadState, router, translate) {
-    this.urlDataService = urlDataService;
-    this.uploadState = uploadState;
-    this.router = router;
-    this.translate = translate;
-  }
-  //Add any services you're using
+  //inject any services you're using
+  urlDataService = inject(UrlDataService);
+  uploadState = inject(UploadStateService);
+  router = inject(Router);
+  translate = inject(TranslateService);
+  fetchService = inject(FetchService);
   //Your functions go here
   //This runs once after the constuctor, delete if not needed.
   ngOnInit() {
@@ -23172,7 +24518,13 @@ var TestComponent = class _TestComponent {
         });
         this.router.navigate(["page-assistant/compare"]);
       } catch (err) {
-        this.error = `${tryError} ${err.message || err || unknownError}`;
+        if (err instanceof Error) {
+          this.error = `${tryError} ${err.message}`;
+        } else if (typeof err === "string") {
+          this.error = `${tryError} ${err}`;
+        } else {
+          this.error = `${unknownError}`;
+        }
       } finally {
         this.loading = false;
       }
@@ -23185,10 +24537,30 @@ var TestComponent = class _TestComponent {
     { title: "Income earned illegally is taxable", url: "https://www.canada.ca/en/revenue-agency/corporate/scams-fraud/income-earned-illegally-taxable.html" },
     { title: "Return a payment - Canada Dental Benefit - Closed", url: "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/dental-benefit/return-payment.html" }
   ];
+  //Example for fetch service
+  testUrls = [
+    "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/goods-services-tax-harmonized-sales-tax-gst-hst-credit.html",
+    "https://cra-design.github.io/gst-hst-business/en/topics/gst-hst-businesses.html",
+    "https://www.canada.ca/en/revenue-agency/services/child-family-benefits/goods-services-tax-harmonized-sales-tax-gst-hst-credit.htm",
+    "https://www.canada.ca/en/broken-link-example.html",
+    "https://test.canada.ca/cra-arc/payroll/index.html"
+  ];
+  testFetch() {
+    return __async(this, null, function* () {
+      for (const url of this.testUrls) {
+        try {
+          const data = yield this.fetchService.fetchContent(url, "both", 5);
+          console.log(data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    });
+  }
   static \u0275fac = function TestComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _TestComponent)(\u0275\u0275directiveInject(UrlDataService), \u0275\u0275directiveInject(UploadStateService), \u0275\u0275directiveInject(Router), \u0275\u0275directiveInject(TranslateService));
+    return new (__ngFactoryType__ || _TestComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TestComponent, selectors: [["ca-test"]], decls: 40, vars: 12, consts: [["id", "wb-cont"], [3, "innerHTML"], [1, "flex", "flex-row", "gap-2"], ["label", "Primary"], ["label", "Secondary", "severity", "secondary"], ["label", "Help", "severity", "help"], ["label", "Info", "severity", "info"], ["label", "Success", "severity", "success"], ["label", "Danger", "severity", "danger"], ["label", "Warn", "severity", "warn"], ["label", "Contrast", "severity", "contrast"], [3, "value"], ["pTemplate", "header"], ["pTemplate", "body"], ["label", "your.translation.key", "name", "unique-name", 3, "selectedChange", "options", "selected"], ["variant", "text", "severity", "info", 3, "onClick"]], template: function TestComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _TestComponent, selectors: [["ca-test"]], decls: 43, vars: 12, consts: [["id", "wb-cont"], [3, "innerHTML"], [1, "flex", "flex-row", "gap-2"], ["label", "Primary"], ["label", "Secondary", "severity", "secondary"], ["label", "Help", "severity", "help"], ["label", "Info", "severity", "info"], ["label", "Success", "severity", "success"], ["label", "Danger", "severity", "danger"], ["label", "Warn", "severity", "warn"], ["label", "Contrast", "severity", "contrast"], [3, "value"], ["pTemplate", "header"], ["pTemplate", "body"], ["label", "your.translation.key", "name", "unique-name", 3, "selectedChange", "options", "selected"], ["label", "Test Fetch", "icon", "pi pi-file-import", 3, "onClick"], ["variant", "text", "severity", "info", 3, "onClick"]], template: function TestComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "h1", 0);
       \u0275\u0275text(1);
@@ -23240,6 +24612,14 @@ var TestComponent = class _TestComponent {
       });
       \u0275\u0275listener("selectedChange", function TestComponent_Template_ca_horizontal_radio_buttons_selectedChange_39_listener($event) {
         return ctx.yourFunction($event);
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(40, "h2");
+      \u0275\u0275text(41, "Fetch service example (check console log)");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(42, "p-button", 15);
+      \u0275\u0275listener("onClick", function TestComponent_Template_p_button_onClick_42_listener() {
+        return ctx.testFetch();
       });
       \u0275\u0275elementEnd();
     }
@@ -23310,11 +24690,13418 @@ var TestComponent = class _TestComponent {
 <p>The component emits the value of the selected radio button.</p>
 <ca-horizontal-radio-buttons label="your.translation.key" name="unique-name" [options]="yourArray"
                              [(selected)]="yourSelectedButton" (selectedChange)="yourFunction($event)">
-</ca-horizontal-radio-buttons>` }]
-  }], () => [{ type: UrlDataService }, { type: UploadStateService }, { type: Router }, { type: TranslateService }], null);
+</ca-horizontal-radio-buttons>
+<h2>Fetch service example (check console log)</h2>
+<p-button label="Test Fetch" icon="pi pi-file-import" (onClick)="testFetch()"></p-button>` }]
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TestComponent, { className: "TestComponent", filePath: "src/app/views/example/test.component.ts", lineNumber: 21 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(TestComponent, { className: "TestComponent", filePath: "src/app/views/example/test.component.ts", lineNumber: 24 });
+})();
+
+// node_modules/primeng/fesm2022/primeng-stepper.mjs
+var _c011 = ["*"];
+var _c111 = ["content"];
+var _c23 = (a0, a1, a2) => ({
+  activateCallback: a0,
+  value: a1,
+  active: a2
+});
+function Step_Conditional_0_Conditional_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-stepper-separator");
+  }
+}
+function Step_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 0);
+    \u0275\u0275listener("click", function Step_Conditional_0_Template_button_click_0_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onStepClick());
+    });
+    \u0275\u0275elementStart(1, "span", 1);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "span", 2);
+    \u0275\u0275projection(4);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(5, Step_Conditional_0_Conditional_5_Template, 1, 0, "p-stepper-separator");
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("tabindex", ctx_r1.isStepDisabled() ? -1 : void 0)("disabled", ctx_r1.isStepDisabled());
+    \u0275\u0275attribute("id", ctx_r1.id())("role", "tab")("aria-controls", ctx_r1.ariaControls());
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r1.value());
+    \u0275\u0275advance(3);
+    \u0275\u0275conditional(ctx_r1.isSeparatorVisible() ? 5 : -1);
+  }
+}
+function Step_Conditional_1_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Step_Conditional_1_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-stepper-separator");
+  }
+}
+function Step_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Step_Conditional_1_ng_container_0_Template, 1, 0, "ng-container", 3)(1, Step_Conditional_1_Conditional_1_Template, 1, 0, "p-stepper-separator");
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.content || ctx_r1._contentTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction3(3, _c23, ctx_r1.onStepClick.bind(ctx_r1), ctx_r1.value(), ctx_r1.active()));
+    \u0275\u0275advance();
+    \u0275\u0275conditional(ctx_r1.isSeparatorVisible() ? 1 : -1);
+  }
+}
+var _c33 = (a0) => ({
+  transitionParams: a0
+});
+var _c43 = (a0) => ({
+  value: "visible",
+  params: a0
+});
+var _c53 = (a0) => ({
+  value: "hidden",
+  params: a0
+});
+function StepPanel_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-stepper-separator");
+  }
+}
+function StepPanel_Conditional_2_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function StepPanel_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, StepPanel_Conditional_2_ng_container_0_Template, 1, 0, "ng-container", 1);
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r0.contentTemplate || ctx_r0._contentTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction3(2, _c23, ctx_r0.updateValue.bind(ctx_r0), ctx_r0.value(), ctx_r0.active()));
+  }
+}
+var theme8 = ({
+  dt
+}) => `
+.p-steplist {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    overflow-x: auto;
+}
+
+.p-step {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: ${dt("stepper.step.gap")};
+    padding: ${dt("stepper.step.padding")};
+}
+
+.p-step:last-of-type {
+    flex: initial;
+}
+
+.p-step-header {
+    border: 0 none;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background ${dt("stepper.transition.duration")}, color ${dt("stepper.transition.duration")}, border-color ${dt("stepper.transition.duration")}, outline-color ${dt("stepper.transition.duration")}, box-shadow ${dt("stepper.transition.duration")};
+    border-radius: ${dt("stepper.step.header.border.radius")};
+    outline-color: transparent;
+    background: transparent;
+    padding: ${dt("stepper.step.header.padding")};
+    gap: ${dt("stepper.step.header.gap")};
+}
+
+.p-step-header:focus-visible {
+    box-shadow: ${dt("stepper.step.header.focus.ring.shadow")};
+    outline: ${dt("stepper.step.header.focus.ring.width")} ${dt("stepper.step.header.focus.ring.style")} ${dt("stepper.step.header.focus.ring.color")};
+    outline-offset: ${dt("stepper.step.header.focus.ring.offset")};
+}
+
+.p-stepper.p-stepper-readonly .p-step {
+    cursor: auto;
+}
+
+.p-step-title {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    color: ${dt("stepper.step.title.color")};
+    font-weight: ${dt("stepper.step.title.font.weight")};
+    transition: background ${dt("stepper.transition.duration")}, color ${dt("stepper.transition.duration")}, border-color ${dt("stepper.transition.duration")}, box-shadow ${dt("stepper.transition.duration")}, outline-color ${dt("stepper.transition.duration")};
+}
+
+.p-step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${dt("stepper.step.number.color")};
+    border: 2px solid ${dt("stepper.step.number.border.color")};
+    background: ${dt("stepper.step.number.background")};
+    min-width: ${dt("stepper.step.number.size")};
+    height: ${dt("stepper.step.number.size")};
+    line-height: ${dt("stepper.step.number.size")};
+    font-size: ${dt("stepper.step.number.font.size")};
+    z-index: 1;
+    border-radius: ${dt("stepper.step.number.border.radius")};
+    position: relative;
+    font-weight: ${dt("stepper.step.number.font.weight")};
+}
+
+.p-step-number::after {
+    content: " ";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: ${dt("stepper.step.number.border.radius")};
+    box-shadow: ${dt("stepper.step.number.shadow")};
+}
+
+.p-step-active .p-step-header {
+    cursor: default;
+}
+
+.p-step-active .p-step-number {
+    background: ${dt("stepper.step.number.active.background")};
+    border-color: ${dt("stepper.step.number.active.border.color")};
+    color: ${dt("stepper.step.number.active.color")};
+}
+
+.p-step-active .p-step-title {
+    color: ${dt("stepper.step.title.active.color")};
+}
+
+.p-step:not(.p-disabled):focus-visible {
+    outline: ${dt("focus.ring.width")} ${dt("focus.ring.style")} ${dt("focus.ring.color")};
+    outline-offset: ${dt("focus.ring.offset")};
+}
+
+.p-step:has(~ .p-step-active) .p-stepper-separator {
+    background: ${dt("stepper.separator.active.background")};
+}
+
+.p-stepper-separator {
+    flex: 1 1 0;
+    background: ${dt("stepper.separator.background")};
+    width: 100%;
+    height: ${dt("stepper.separator.size")};
+    transition: background ${dt("stepper.transition.duration")}, color ${dt("stepper.transition.duration")}, border-color ${dt("stepper.transition.duration")}, box-shadow ${dt("stepper.transition.duration")}, outline-color ${dt("stepper.transition.duration")};
+}
+
+.p-steppanels {
+    padding: ${dt("stepper.steppanels.padding")};
+}
+
+.p-steppanel {
+    background: ${dt("stepper.steppanel.background")};
+    color: ${dt("stepper.steppanel.color")};
+}
+
+.p-stepper:has(.p-stepitem) {
+    display: flex;
+    flex-direction: column;
+}
+
+.p-stepitem {
+    display: flex;
+    flex-direction: column;
+    flex: initial;
+}
+
+.p-stepitem.p-stepitem-active {
+    flex: 1 1 auto;
+}
+
+.p-stepitem .p-step {
+    flex: initial;
+}
+
+.p-stepitem .p-steppanel-content {
+    width: 100%;
+    padding: ${dt("stepper.steppanel.padding")};
+    margin-inline-start: 1rem;
+}
+
+.p-stepitem .p-steppanel {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+.p-stepitem .p-stepper-separator {
+    flex: 0 0 auto;
+    width: ${dt("stepper.separator.size")};
+    height: auto;
+    margin: ${dt("stepper.separator.margin")};
+    position: relative;
+    left: calc(-1 * ${dt("stepper.separator.size")});
+}
+
+.p-stepitem .p-stepper-separator:dir(rtl) {
+    left: calc(-9 * ${dt("stepper.separator.size")});
+}
+
+.p-stepitem:has(~ .p-stepitem-active) .p-stepper-separator {
+    background: ${dt("stepper.separator.active.background")};
+}
+
+.p-stepitem:last-of-type .p-steppanel {
+    padding-inline-start: ${dt("stepper.step.number.size")};
+}
+/* For PrimeNG */
+.p-steppanel {
+    overflow: hidden;
+}
+
+.p-stepppanel:not(.ng-animating) {
+    overflow: inherit;
+}
+`;
+var classes8 = {
+  root: ({
+    props
+  }) => ["p-stepper p-component", {
+    "p-readonly": props.linear
+  }],
+  separator: "p-stepper-separator"
+};
+var StepperStyle = class _StepperStyle extends BaseStyle {
+  name = "stepper";
+  theme = theme8;
+  classes = classes8;
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275StepperStyle_BaseFactory;
+    return function StepperStyle_Factory(__ngFactoryType__) {
+      return (\u0275StepperStyle_BaseFactory || (\u0275StepperStyle_BaseFactory = \u0275\u0275getInheritedFactory(_StepperStyle)))(__ngFactoryType__ || _StepperStyle);
+    };
+  })();
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+    token: _StepperStyle,
+    factory: _StepperStyle.\u0275fac
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(StepperStyle, [{
+    type: Injectable
+  }], null, null);
+})();
+var StepperClasses;
+(function(StepperClasses2) {
+  StepperClasses2["root"] = "p-stepper";
+  StepperClasses2["separator"] = "p-stepper-separator";
+})(StepperClasses || (StepperClasses = {}));
+var StepList = class _StepList extends BaseComponent {
+  steps = contentChildren(forwardRef(() => Step));
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275StepList_BaseFactory;
+    return function StepList_Factory(__ngFactoryType__) {
+      return (\u0275StepList_BaseFactory || (\u0275StepList_BaseFactory = \u0275\u0275getInheritedFactory(_StepList)))(__ngFactoryType__ || _StepList);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _StepList,
+    selectors: [["p-step-list"]],
+    contentQueries: function StepList_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuerySignal(dirIndex, ctx.steps, Step, 4);
+      }
+      if (rf & 2) {
+        \u0275\u0275queryAdvance();
+      }
+    },
+    hostVars: 4,
+    hostBindings: function StepList_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        \u0275\u0275classProp("p-steplist", true)("p-component", true);
+      }
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c011,
+    decls: 1,
+    vars: 0,
+    template: function StepList_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275projection(0);
+      }
+    },
+    dependencies: [CommonModule],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(StepList, [{
+    type: Component,
+    args: [{
+      selector: "p-step-list",
+      standalone: true,
+      imports: [CommonModule],
+      template: ` <ng-content></ng-content>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      host: {
+        "[class.p-steplist]": "true",
+        "[class.p-component]": "true"
+      }
+    }]
+  }], null, null);
+})();
+var StepperSeparator = class _StepperSeparator extends BaseComponent {
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275StepperSeparator_BaseFactory;
+    return function StepperSeparator_Factory(__ngFactoryType__) {
+      return (\u0275StepperSeparator_BaseFactory || (\u0275StepperSeparator_BaseFactory = \u0275\u0275getInheritedFactory(_StepperSeparator)))(__ngFactoryType__ || _StepperSeparator);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _StepperSeparator,
+    selectors: [["p-stepper-separator"]],
+    hostVars: 4,
+    hostBindings: function StepperSeparator_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        \u0275\u0275classProp("p-stepper-separator", true)("p-component", true);
+      }
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c011,
+    decls: 1,
+    vars: 0,
+    template: function StepperSeparator_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275projection(0);
+      }
+    },
+    dependencies: [CommonModule],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(StepperSeparator, [{
+    type: Component,
+    args: [{
+      selector: "p-stepper-separator",
+      standalone: true,
+      imports: [CommonModule],
+      template: ` <ng-content></ng-content>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      host: {
+        "[class.p-stepper-separator]": "true",
+        "[class.p-component]": "true"
+      }
+    }]
+  }], null, null);
+})();
+var StepItem = class _StepItem extends BaseComponent {
+  pcStepper = inject(forwardRef(() => Stepper));
+  /**
+   * Value of step.
+   * @type {<number | undefined>}
+   * @defaultValue undefined
+   * @group Props
+   */
+  value = model();
+  isActive = computed(() => this.pcStepper.value() === this.value());
+  step = contentChild(forwardRef(() => Step));
+  stepPanel = contentChild(forwardRef(() => StepPanel));
+  constructor() {
+    super();
+    effect(() => {
+      this.step().value.set(this.value());
+    });
+    effect(() => {
+      this.stepPanel().value.set(this.value());
+    });
+  }
+  static \u0275fac = function StepItem_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _StepItem)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _StepItem,
+    selectors: [["p-step-item"]],
+    contentQueries: function StepItem_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuerySignal(dirIndex, ctx.step, Step, 5);
+        \u0275\u0275contentQuerySignal(dirIndex, ctx.stepPanel, StepPanel, 5);
+      }
+      if (rf & 2) {
+        \u0275\u0275queryAdvance(2);
+      }
+    },
+    hostVars: 5,
+    hostBindings: function StepItem_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        \u0275\u0275attribute("data-p-active", ctx.isActive());
+        \u0275\u0275classProp("p-stepitem", true)("p-component", true);
+      }
+    },
+    inputs: {
+      value: [1, "value"]
+    },
+    outputs: {
+      value: "valueChange"
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c011,
+    decls: 1,
+    vars: 0,
+    template: function StepItem_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275projection(0);
+      }
+    },
+    dependencies: [CommonModule],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(StepItem, [{
+    type: Component,
+    args: [{
+      selector: "p-step-item",
+      standalone: true,
+      imports: [CommonModule],
+      template: ` <ng-content></ng-content>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      host: {
+        "[class.p-stepitem]": "true",
+        "[class.p-component]": "true",
+        "[attr.data-p-active]": "isActive()"
+      }
+    }]
+  }], () => [], null);
+})();
+var Step = class _Step extends BaseComponent {
+  pcStepper = inject(forwardRef(() => Stepper));
+  /**
+   * Active value of stepper.
+   * @type {number}
+   * @defaultValue undefined
+   * @group Props
+   */
+  value = model();
+  /**
+   * Whether the step is disabled.
+   * @type {boolean}
+   * @defaultValue false
+   * @group Props
+   */
+  disabled = input(false, {
+    transform: (v) => transformToBoolean(v)
+  });
+  active = computed(() => this.pcStepper.isStepActive(this.value()));
+  isStepDisabled = computed(() => !this.active() && (this.pcStepper.linear() || this.disabled()));
+  id = computed(() => `${this.pcStepper.id()}_step_${this.value()}`);
+  ariaControls = computed(() => `${this.pcStepper.id()}_steppanel_${this.value()}`);
+  isSeparatorVisible = computed(() => {
+    if (this.pcStepper.stepList()) {
+      const steps = this.pcStepper.stepList().steps();
+      const index = steps.indexOf(this);
+      const stepLen = steps.length;
+      return index !== stepLen - 1;
+    } else {
+      return false;
+    }
+  });
+  /**
+   * Content template.
+   * @type {TemplateRef<StepContentTemplateContext>}
+   * @group Templates
+   */
+  content;
+  templates;
+  _contentTemplate;
+  ngAfterContentInit() {
+    this.templates?.forEach((item) => {
+      switch (item.getType()) {
+        case "content":
+          this._contentTemplate = item.template;
+          break;
+      }
+    });
+  }
+  onStepClick() {
+    this.pcStepper.updateValue(this.value());
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275Step_BaseFactory;
+    return function Step_Factory(__ngFactoryType__) {
+      return (\u0275Step_BaseFactory || (\u0275Step_BaseFactory = \u0275\u0275getInheritedFactory(_Step)))(__ngFactoryType__ || _Step);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _Step,
+    selectors: [["p-step"]],
+    contentQueries: function Step_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c111, 4);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.content = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    hostVars: 13,
+    hostBindings: function Step_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        \u0275\u0275attribute("aria-current", ctx.active() ? "step" : void 0)("role", "presentation")("data-p-active", ctx.active())("data-p-disabled", ctx.isStepDisabled())("data-pc-name", "step");
+        \u0275\u0275classProp("p-step", true)("p-step-active", ctx.active())("p-disabled", ctx.isStepDisabled())("p-component", true);
+      }
+    },
+    inputs: {
+      value: [1, "value"],
+      disabled: [1, "disabled"]
+    },
+    outputs: {
+      value: "valueChange"
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c011,
+    decls: 2,
+    vars: 1,
+    consts: [["type", "button", 1, "p-step-header", 3, "click", "tabindex", "disabled"], [1, "p-step-number"], [1, "p-step-title"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"]],
+    template: function Step_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275template(0, Step_Conditional_0_Template, 6, 7)(1, Step_Conditional_1_Template, 2, 7);
+      }
+      if (rf & 2) {
+        \u0275\u0275conditional(!ctx.content && !ctx._contentTemplate ? 0 : 1);
+      }
+    },
+    dependencies: [CommonModule, NgTemplateOutlet, StepperSeparator, SharedModule],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Step, [{
+    type: Component,
+    args: [{
+      selector: "p-step",
+      standalone: true,
+      imports: [CommonModule, StepperSeparator, SharedModule],
+      template: `
+        @if (!content && !_contentTemplate) {
+            <button [attr.id]="id()" class="p-step-header" [attr.role]="'tab'" [tabindex]="isStepDisabled() ? -1 : undefined" [attr.aria-controls]="ariaControls()" [disabled]="isStepDisabled()" (click)="onStepClick()" type="button">
+                <span class="p-step-number">{{ value() }}</span>
+                <span class="p-step-title">
+                    <ng-content></ng-content>
+                </span>
+            </button>
+            @if (isSeparatorVisible()) {
+                <p-stepper-separator />
+            }
+        } @else {
+            <ng-container *ngTemplateOutlet="content || _contentTemplate; context: { activateCallback: onStepClick.bind(this), value: value(), active: active() }"></ng-container>
+            @if (isSeparatorVisible()) {
+                <p-stepper-separator />
+            }
+        }
+    `,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      host: {
+        "[class.p-step]": "true",
+        "[class.p-step-active]": "active()",
+        "[class.p-disabled]": "isStepDisabled()",
+        "[class.p-component]": "true",
+        "[attr.aria-current]": 'active() ? "step" : undefined',
+        "[attr.role]": '"presentation"',
+        "[attr.data-p-active]": "active()",
+        "[attr.data-p-disabled]": "isStepDisabled()",
+        "[attr.data-pc-name]": '"step"'
+      }
+    }]
+  }], null, {
+    content: [{
+      type: ContentChild,
+      args: ["content", {
+        descendants: false
+      }]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }]
+  });
+})();
+var StepPanel = class _StepPanel extends BaseComponent {
+  pcStepper = inject(forwardRef(() => Stepper));
+  transitionOptions = computed(() => this.pcStepper.transitionOptions());
+  /**
+   * Active value of stepper.
+   * @type {number}
+   * @defaultValue undefined
+   * @group Props
+   */
+  value = model(void 0);
+  active = computed(() => this.pcStepper.value() === this.value());
+  ariaControls = computed(() => `${this.pcStepper.id()}_step_${this.value()}`);
+  id = computed(() => `${this.pcStepper.id()}_steppanel_${this.value()}`);
+  isVertical = computed(() => this.pcStepper.stepItems().length > 0);
+  isSeparatorVisible = computed(() => {
+    if (this.pcStepper.stepItems()) {
+      const stepLen = this.pcStepper.stepItems().length;
+      const stepPanelElements = find(this.pcStepper.el.nativeElement, '[data-pc-name="steppanel"]');
+      const index = findIndexInList(this.el.nativeElement, stepPanelElements);
+      return index !== stepLen - 1;
+    }
+  });
+  /**
+   * Content template.
+   * @param {StepPanelContentTemplateContext} context - Context of the template
+   * @see {@link StepPanelContentTemplateContext}
+   * @group Templates
+   */
+  contentTemplate;
+  templates;
+  _contentTemplate;
+  ngAfterContentInit() {
+    this.templates?.forEach((item) => {
+      switch (item.getType()) {
+        case "content":
+          this._contentTemplate = item.template;
+          break;
+      }
+    });
+  }
+  updateValue(value) {
+    this.pcStepper.updateValue(value);
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275StepPanel_BaseFactory;
+    return function StepPanel_Factory(__ngFactoryType__) {
+      return (\u0275StepPanel_BaseFactory || (\u0275StepPanel_BaseFactory = \u0275\u0275getInheritedFactory(_StepPanel)))(__ngFactoryType__ || _StepPanel);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _StepPanel,
+    selectors: [["p-step-panel"]],
+    contentQueries: function StepPanel_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c111, 5);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    hostVars: 11,
+    hostBindings: function StepPanel_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        \u0275\u0275attribute("role", "tabpanel")("aria-controls", ctx.ariaControls())("id", ctx.id())("data-p-active", ctx.active())("data-pc-name", "steppanel");
+        \u0275\u0275classProp("p-steppanel", true)("p-component", true)("p-steppanel-active", ctx.active());
+      }
+    },
+    inputs: {
+      value: [1, "value"]
+    },
+    outputs: {
+      value: "valueChange"
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    decls: 3,
+    vars: 11,
+    consts: [[1, "p-steppanel-content"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"]],
+    template: function StepPanel_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275template(0, StepPanel_Conditional_0_Template, 1, 0, "p-stepper-separator");
+        \u0275\u0275elementStart(1, "div", 0);
+        \u0275\u0275template(2, StepPanel_Conditional_2_Template, 1, 6, "ng-container");
+        \u0275\u0275elementEnd();
+      }
+      if (rf & 2) {
+        \u0275\u0275conditional(ctx.isSeparatorVisible() ? 0 : -1);
+        \u0275\u0275advance();
+        \u0275\u0275property("@content", ctx.isVertical() ? ctx.active() ? \u0275\u0275pureFunction1(5, _c43, \u0275\u0275pureFunction1(3, _c33, ctx.transitionOptions())) : \u0275\u0275pureFunction1(9, _c53, \u0275\u0275pureFunction1(7, _c33, ctx.transitionOptions())) : void 0);
+        \u0275\u0275advance();
+        \u0275\u0275conditional(ctx.active() ? 2 : -1);
+      }
+    },
+    dependencies: [CommonModule, NgTemplateOutlet, StepperSeparator, SharedModule],
+    encapsulation: 2,
+    data: {
+      animation: [trigger("content", [state("hidden", style({
+        height: "0",
+        visibility: "hidden"
+      })), state("visible", style({
+        height: "*",
+        visibility: "visible"
+      })), transition("visible <=> hidden", [animate("250ms cubic-bezier(0.86, 0, 0.07, 1)")]), transition("void => *", animate(0))])]
+    },
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(StepPanel, [{
+    type: Component,
+    args: [{
+      selector: "p-step-panel",
+      standalone: true,
+      imports: [CommonModule, StepperSeparator, SharedModule],
+      template: `
+        @if (isSeparatorVisible()) {
+            <p-stepper-separator />
+        }
+        <div class="p-steppanel-content" [@content]="isVertical() ? (active() ? { value: 'visible', params: { transitionParams: transitionOptions() } } : { value: 'hidden', params: { transitionParams: transitionOptions() } }) : undefined">
+            @if (active()) {
+                <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { activateCallback: updateValue.bind(this), value: value(), active: active() }"></ng-container>
+            }
+        </div>
+    `,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      host: {
+        "[class.p-steppanel]": "true",
+        "[class.p-component]": "true",
+        "[class.p-steppanel-active]": "active()",
+        "[attr.role]": '"tabpanel"',
+        "[attr.aria-controls]": "ariaControls()",
+        "[attr.id]": "id()",
+        "[attr.data-p-active]": "active()",
+        "[attr.data-pc-name]": '"steppanel"'
+      },
+      animations: [trigger("content", [state("hidden", style({
+        height: "0",
+        visibility: "hidden"
+      })), state("visible", style({
+        height: "*",
+        visibility: "visible"
+      })), transition("visible <=> hidden", [animate("250ms cubic-bezier(0.86, 0, 0.07, 1)")]), transition("void => *", animate(0))])]
+    }]
+  }], null, {
+    contentTemplate: [{
+      type: ContentChild,
+      args: ["content"]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }]
+  });
+})();
+var StepPanels = class _StepPanels extends BaseComponent {
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275StepPanels_BaseFactory;
+    return function StepPanels_Factory(__ngFactoryType__) {
+      return (\u0275StepPanels_BaseFactory || (\u0275StepPanels_BaseFactory = \u0275\u0275getInheritedFactory(_StepPanels)))(__ngFactoryType__ || _StepPanels);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _StepPanels,
+    selectors: [["p-step-panels"]],
+    hostVars: 4,
+    hostBindings: function StepPanels_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        \u0275\u0275classProp("p-steppanels", true)("p-component", true);
+      }
+    },
+    features: [\u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c011,
+    decls: 1,
+    vars: 0,
+    template: function StepPanels_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275projection(0);
+      }
+    },
+    dependencies: [CommonModule, SharedModule],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(StepPanels, [{
+    type: Component,
+    args: [{
+      selector: "p-step-panels",
+      standalone: true,
+      imports: [CommonModule, SharedModule],
+      template: ` <ng-content></ng-content>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      host: {
+        "[class.p-steppanels]": "true",
+        "[class.p-component]": "true"
+      }
+    }]
+  }], null, null);
+})();
+var Stepper = class _Stepper extends BaseComponent {
+  /**
+   * A model that can hold a numeric value or be undefined.
+   * @defaultValue undefined
+   * @type {ModelSignal<number | undefined>}
+   * @group Props
+   */
+  value = model(void 0);
+  /**
+   * A boolean variable that captures user input.
+   * @defaultValue false
+   * @type {InputSignalWithTransform<any, boolean >}
+   * @group Props
+   */
+  linear = input(false, {
+    transform: (v) => transformToBoolean(v)
+  });
+  /**
+   * Transition options of the animation.
+   * @defaultValue 400ms cubic-bezier(0.86, 0, 0.07, 1)
+   * @type {InputSignal<string >}
+   * @group Props
+   */
+  transitionOptions = input("400ms cubic-bezier(0.86, 0, 0.07, 1)");
+  _componentStyle = inject(StepperStyle);
+  id = signal(uuid("pn_id_"));
+  stepItems = contentChildren(StepItem);
+  steps = contentChildren(Step);
+  stepList = contentChild(StepList);
+  updateValue(value) {
+    this.value.set(value);
+  }
+  isStepActive(value) {
+    return this.value() === value;
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275Stepper_BaseFactory;
+    return function Stepper_Factory(__ngFactoryType__) {
+      return (\u0275Stepper_BaseFactory || (\u0275Stepper_BaseFactory = \u0275\u0275getInheritedFactory(_Stepper)))(__ngFactoryType__ || _Stepper);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _Stepper,
+    selectors: [["p-stepper"]],
+    contentQueries: function Stepper_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuerySignal(dirIndex, ctx.stepItems, StepItem, 4);
+        \u0275\u0275contentQuerySignal(dirIndex, ctx.steps, Step, 4);
+        \u0275\u0275contentQuerySignal(dirIndex, ctx.stepList, StepList, 5);
+      }
+      if (rf & 2) {
+        \u0275\u0275queryAdvance(3);
+      }
+    },
+    hostVars: 6,
+    hostBindings: function Stepper_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        \u0275\u0275attribute("role", "tablist")("id", ctx.id());
+        \u0275\u0275classProp("p-stepper", true)("p-component", true);
+      }
+    },
+    inputs: {
+      value: [1, "value"],
+      linear: [1, "linear"],
+      transitionOptions: [1, "transitionOptions"]
+    },
+    outputs: {
+      value: "valueChange"
+    },
+    features: [\u0275\u0275ProvidersFeature([StepperStyle]), \u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c011,
+    decls: 1,
+    vars: 0,
+    template: function Stepper_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275projectionDef();
+        \u0275\u0275projection(0);
+      }
+    },
+    dependencies: [CommonModule, SharedModule],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Stepper, [{
+    type: Component,
+    args: [{
+      selector: "p-stepper",
+      standalone: true,
+      imports: [CommonModule, SharedModule],
+      template: ` <ng-content></ng-content>`,
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      providers: [StepperStyle],
+      host: {
+        "[class.p-stepper]": "true",
+        "[class.p-component]": "true",
+        "[attr.role]": '"tablist"',
+        "[attr.id]": "id()"
+      }
+    }]
+  }], null, null);
+})();
+var StepperModule = class _StepperModule {
+  static \u0275fac = function StepperModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _StepperModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _StepperModule,
+    imports: [Stepper, StepList, StepPanels, StepPanel, StepItem, Step, StepperSeparator, SharedModule],
+    exports: [Stepper, StepList, StepPanels, StepPanel, StepItem, Step, StepperSeparator, SharedModule]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [Stepper, StepList, StepPanels, StepPanel, StepItem, Step, StepperSeparator, SharedModule, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(StepperModule, [{
+    type: NgModule,
+    args: [{
+      imports: [Stepper, StepList, StepPanels, StepPanel, StepItem, Step, StepperSeparator, SharedModule],
+      exports: [Stepper, StepList, StepPanels, StepPanel, StepItem, Step, StepperSeparator, SharedModule]
+    }]
+  }], null, null);
+})();
+
+// node_modules/primeng/fesm2022/primeng-confirmpopup.mjs
+var _c012 = ["content"];
+var _c113 = ["accepticon"];
+var _c24 = ["rejecticon"];
+var _c34 = ["headless"];
+var _c44 = (a0, a1) => ({
+  showTransitionParams: a0,
+  hideTransitionParams: a1
+});
+var _c54 = (a0) => ({
+  value: "open",
+  params: a0
+});
+var _c63 = (a0) => ({
+  $implicit: a0
+});
+function ConfirmPopup_div_0_ng_container_1_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function ConfirmPopup_div_0_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, ConfirmPopup_div_0_ng_container_1_ng_container_1_Template, 1, 0, "ng-container", 8);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.headlessTemplate || ctx_r1._headlessTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c63, ctx_r1.confirmation));
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_ng_container_2_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, ConfirmPopup_div_0_ng_template_2_ng_container_2_ng_container_1_Template, 1, 0, "ng-container", 8);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.contentTemplate || ctx_r1._contentTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c63, ctx_r1.confirmation));
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_ng_template_3_i_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 15);
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(4);
+    \u0275\u0275classMap(ctx_r1.confirmation == null ? null : ctx_r1.confirmation.icon);
+    \u0275\u0275property("ngClass", "p-confirmpopup-icon");
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, ConfirmPopup_div_0_ng_template_2_ng_template_3_i_0_Template, 1, 3, "i", 13);
+    \u0275\u0275elementStart(1, "span", 14);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("ngIf", ctx_r1.confirmation == null ? null : ctx_r1.confirmation.icon);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(ctx_r1.confirmation == null ? null : ctx_r1.confirmation.message);
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_p_button_6_i_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i");
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(4);
+    \u0275\u0275classMap(ctx_r1.confirmation == null ? null : ctx_r1.confirmation.rejectIcon);
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_p_button_6_2_ng_template_0_Template(rf, ctx) {
+}
+function ConfirmPopup_div_0_ng_template_2_p_button_6_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, ConfirmPopup_div_0_ng_template_2_p_button_6_2_ng_template_0_Template, 0, 0, "ng-template", null, 3, \u0275\u0275templateRefExtractor);
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_p_button_6_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-button", 16);
+    \u0275\u0275listener("onClick", function ConfirmPopup_div_0_ng_template_2_p_button_6_Template_p_button_onClick_0_listener() {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.onReject());
+    });
+    \u0275\u0275template(1, ConfirmPopup_div_0_ng_template_2_p_button_6_i_1_Template, 1, 2, "i", 17)(2, ConfirmPopup_div_0_ng_template_2_p_button_6_2_Template, 2, 0, null, 18);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("label", ctx_r1.rejectButtonLabel)("ngClass", "p-confirmpopup-reject-button")("styleClass", ctx_r1.confirmation == null ? null : ctx_r1.confirmation.rejectButtonStyleClass)("size", (ctx_r1.confirmation.rejectButtonProps == null ? null : ctx_r1.confirmation.rejectButtonProps.size) || "small")("text", (ctx_r1.confirmation.rejectButtonProps == null ? null : ctx_r1.confirmation.rejectButtonProps.text) || false)("buttonProps", ctx_r1.getRejectButtonProps());
+    \u0275\u0275attribute("aria-label", ctx_r1.rejectButtonLabel);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.confirmation == null ? null : ctx_r1.confirmation.rejectIcon)("ngIfElse", ctx_r1.rejecticon);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.rejectIconTemplate || ctx_r1._rejectIconTemplate);
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_p_button_7_i_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i");
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(4);
+    \u0275\u0275classMap(ctx_r1.confirmation == null ? null : ctx_r1.confirmation.acceptIcon);
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_p_button_7_2_ng_template_0_Template(rf, ctx) {
+}
+function ConfirmPopup_div_0_ng_template_2_p_button_7_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, ConfirmPopup_div_0_ng_template_2_p_button_7_2_ng_template_0_Template, 0, 0, "ng-template", null, 4, \u0275\u0275templateRefExtractor);
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_p_button_7_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-button", 19);
+    \u0275\u0275listener("onClick", function ConfirmPopup_div_0_ng_template_2_p_button_7_Template_p_button_onClick_0_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r1.onAccept());
+    });
+    \u0275\u0275template(1, ConfirmPopup_div_0_ng_template_2_p_button_7_i_1_Template, 1, 2, "i", 17)(2, ConfirmPopup_div_0_ng_template_2_p_button_7_2_Template, 2, 0, null, 18);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("label", ctx_r1.acceptButtonLabel)("ngClass", "p-confirmpopup-accept-button")("styleClass", ctx_r1.confirmation == null ? null : ctx_r1.confirmation.acceptButtonStyleClass)("size", (ctx_r1.confirmation.acceptButtonProps == null ? null : ctx_r1.confirmation.acceptButtonProps.size) || "small")("buttonProps", ctx_r1.getAcceptButtonProps());
+    \u0275\u0275attribute("aria-label", ctx_r1.acceptButtonLabel);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.confirmation == null ? null : ctx_r1.confirmation.acceptIcon)("ngIfElse", ctx_r1.accepticontemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.acceptIconTemplate || ctx_r1._acceptIconTemplate);
+  }
+}
+function ConfirmPopup_div_0_ng_template_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 9, 1);
+    \u0275\u0275template(2, ConfirmPopup_div_0_ng_template_2_ng_container_2_Template, 2, 4, "ng-container", 7)(3, ConfirmPopup_div_0_ng_template_2_ng_template_3_Template, 3, 2, "ng-template", null, 2, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "div", 10);
+    \u0275\u0275template(6, ConfirmPopup_div_0_ng_template_2_p_button_6_Template, 3, 10, "p-button", 11)(7, ConfirmPopup_div_0_ng_template_2_p_button_7_Template, 3, 9, "p-button", 12);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const withoutContentTemplate_r5 = \u0275\u0275reference(4);
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", ctx_r1.contentTemplate || ctx_r1._contentTemplate)("ngIfElse", withoutContentTemplate_r5);
+    \u0275\u0275advance(4);
+    \u0275\u0275property("ngIf", (ctx_r1.confirmation == null ? null : ctx_r1.confirmation.rejectVisible) !== false);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", (ctx_r1.confirmation == null ? null : ctx_r1.confirmation.acceptVisible) !== false);
+  }
+}
+function ConfirmPopup_div_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 6);
+    \u0275\u0275listener("click", function ConfirmPopup_div_0_Template_div_click_0_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onOverlayClick($event));
+    })("@animation.start", function ConfirmPopup_div_0_Template_div_animation_animation_start_0_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onAnimationStart($event));
+    })("@animation.done", function ConfirmPopup_div_0_Template_div_animation_animation_done_0_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.onAnimationEnd($event));
+    });
+    \u0275\u0275template(1, ConfirmPopup_div_0_ng_container_1_Template, 2, 4, "ng-container", 7)(2, ConfirmPopup_div_0_ng_template_2_Template, 8, 4, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const notHeadless_r6 = \u0275\u0275reference(3);
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275classMap(ctx_r1.styleClass);
+    \u0275\u0275property("ngClass", "p-confirmpopup p-component")("ngStyle", ctx_r1.style)("@animation", \u0275\u0275pureFunction1(10, _c54, \u0275\u0275pureFunction2(7, _c44, ctx_r1.showTransitionOptions, ctx_r1.hideTransitionOptions)));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.headlessTemplate || ctx_r1._headlessTemplate)("ngIfElse", notHeadless_r6);
+  }
+}
+var theme9 = ({
+  dt
+}) => `
+.p-confirmpopup {
+    position: absolute;
+    margin-top: ${dt("confirmpopup.gutter")};
+    top: 0;
+    left: 0;
+    background: ${dt("confirmpopup.background")};
+    color: ${dt("confirmpopup.color")};
+    border: 1px solid ${dt("confirmpopup.border.color")};
+    border-radius: ${dt("confirmpopup.border.radius")};
+    box-shadow: ${dt("confirmpopup.shadow")};
+}
+
+.p-confirmpopup-content {
+    display: flex;
+    align-items: center;
+    padding: ${dt("confirmpopup.content.padding")};
+    gap: ${dt("confirmpopup.content.gap")};
+}
+
+.p-confirmpopup-icon {
+    font-size: ${dt("confirmpopup.icon.size")};
+    width: ${dt("confirmpopup.icon.size")};
+    height: ${dt("confirmpopup.icon.size")};
+    color: ${dt("confirmpopup.icon.color")};
+}
+
+.p-confirmpopup-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: ${dt("confirmpopup.footer.gap")};
+    padding: ${dt("confirmpopup.footer.padding")};
+}
+
+.p-confirmpopup-footer button {
+    width: auto;
+}
+
+.p-confirmpopup-footer button:last-child {
+    margin: 0;
+}
+
+.p-confirmpopup-flipped {
+    margin-top: calc(${dt("confirmpopup.gutter")} * -1);
+    margin-bottom: ${dt("confirmpopup.gutter")};
+}
+
+.p-confirmpopup-enter-from {
+    opacity: 0;
+    transform: scaleY(0.8);
+}
+
+.p-confirmpopup-leave-to {
+    opacity: 0;
+}
+
+.p-confirmpopup-enter-active {
+    transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1), opacity 0.12s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.p-confirmpopup-leave-active {
+    transition: opacity 0.1s linear;
+}
+
+.p-confirmpopup:after,
+.p-confirmpopup:before {
+    bottom: 100%;
+    left: ${dt("confirmpopup.arrow.offset")};
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.p-confirmpopup:after {
+    border-width: calc(${dt("confirmpopup.gutter")} - 2px);
+    margin-left: calc(-1 * (${dt("confirmpopup.gutter")} - 2px));
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-color: ${dt("confirmpopup.background")};
+}
+
+.p-confirmpopup:before {
+    border-width: ${dt("confirmpopup.gutter")};
+    margin-left: calc(-1 * ${dt("confirmpopup.gutter")});
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-color: ${dt("confirmpopup.border.color")};
+}
+
+.p-confirmpopup-flipped:after,
+.p-confirmpopup-flipped:before {
+    bottom: auto;
+    top: 100%;
+}
+
+.p-confirmpopup-flipped:after {
+    border-bottom-color: transparent;
+    border-top-color: ${dt("confirmpopup.background")};
+}
+
+.p-confirmpopup-flipped:before {
+    border-bottom-color: transparent;
+    border-top-color: ${dt("confirmpopup.border.color")};
+}
+`;
+var classes9 = {
+  root: "p-confirmpopup p-component",
+  content: "p-confirmpopup-content",
+  icon: "p-confirmpopup-icon",
+  message: "p-confirmpopup-message",
+  footer: "p-confirmpopup-footer",
+  pcRejectButton: "p-confirmpopup-reject-button",
+  pcAcceptButton: "p-confirmpopup-accept-button"
+};
+var ConfirmPopupStyle = class _ConfirmPopupStyle extends BaseStyle {
+  name = "confirmpopup";
+  theme = theme9;
+  classes = classes9;
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275ConfirmPopupStyle_BaseFactory;
+    return function ConfirmPopupStyle_Factory(__ngFactoryType__) {
+      return (\u0275ConfirmPopupStyle_BaseFactory || (\u0275ConfirmPopupStyle_BaseFactory = \u0275\u0275getInheritedFactory(_ConfirmPopupStyle)))(__ngFactoryType__ || _ConfirmPopupStyle);
+    };
+  })();
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+    token: _ConfirmPopupStyle,
+    factory: _ConfirmPopupStyle.\u0275fac
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ConfirmPopupStyle, [{
+    type: Injectable
+  }], null, null);
+})();
+var ConfirmPopupClasses;
+(function(ConfirmPopupClasses2) {
+  ConfirmPopupClasses2["root"] = "p-confirmpopup";
+  ConfirmPopupClasses2["content"] = "p-confirmpopup-content";
+  ConfirmPopupClasses2["icon"] = "p-confirmpopup-icon";
+  ConfirmPopupClasses2["message"] = "p-confirmpopup-message";
+  ConfirmPopupClasses2["footer"] = "p-confirmpopup-footer";
+  ConfirmPopupClasses2["pcRejectButton"] = "p-confirmpopup-reject-button";
+  ConfirmPopupClasses2["pcAcceptButton"] = "p-confirmpopup-accept-button";
+})(ConfirmPopupClasses || (ConfirmPopupClasses = {}));
+var ConfirmPopup = class _ConfirmPopup extends BaseComponent {
+  el;
+  confirmationService;
+  renderer;
+  cd;
+  overlayService;
+  document;
+  /**
+   * Optional key to match the key of confirm object, necessary to use when component tree has multiple confirm dialogs.
+   * @group Props
+   */
+  key;
+  /**
+   * Element to receive the focus when the popup gets visible, valid values are "accept", "reject", and "none".
+   * @group Props
+   */
+  defaultFocus = "accept";
+  /**
+   * Transition options of the show animation.
+   * @group Props
+   */
+  showTransitionOptions = ".12s cubic-bezier(0, 0, 0.2, 1)";
+  /**
+   * Transition options of the hide animation.
+   * @group Props
+   */
+  hideTransitionOptions = ".1s linear";
+  /**
+   * Whether to automatically manage layering.
+   * @group Props
+   */
+  autoZIndex = true;
+  /**
+   * Base zIndex value to use in layering.
+   * @group Props
+   */
+  baseZIndex = 0;
+  /**
+   * Inline style of the component.
+   * @group Props
+   */
+  style;
+  /**
+   * Style class of the component.
+   * @group Props
+   */
+  styleClass;
+  /**
+   * Defines if the component is visible.
+   * @group Props
+   */
+  get visible() {
+    return this._visible;
+  }
+  set visible(value) {
+    this._visible = value;
+    this.cd.markForCheck();
+  }
+  container;
+  subscription;
+  confirmation;
+  contentTemplate;
+  acceptIconTemplate;
+  rejectIconTemplate;
+  headlessTemplate;
+  _contentTemplate;
+  _acceptIconTemplate;
+  _rejectIconTemplate;
+  _headlessTemplate;
+  _visible;
+  documentClickListener;
+  documentResizeListener;
+  scrollHandler;
+  window;
+  _componentStyle = inject(ConfirmPopupStyle);
+  constructor(el, confirmationService, renderer, cd, overlayService, document2) {
+    super();
+    this.el = el;
+    this.confirmationService = confirmationService;
+    this.renderer = renderer;
+    this.cd = cd;
+    this.overlayService = overlayService;
+    this.document = document2;
+    this.window = this.document.defaultView;
+    this.subscription = this.confirmationService.requireConfirmation$.subscribe((confirmation) => {
+      if (!confirmation) {
+        this.hide();
+        return;
+      }
+      if (confirmation.key === this.key) {
+        this.confirmation = confirmation;
+        const keys = Object.keys(confirmation);
+        keys.forEach((key) => {
+          this[key] = confirmation[key];
+        });
+        if (this.confirmation.accept) {
+          this.confirmation.acceptEvent = new EventEmitter();
+          this.confirmation.acceptEvent.subscribe(this.confirmation.accept);
+        }
+        if (this.confirmation.reject) {
+          this.confirmation.rejectEvent = new EventEmitter();
+          this.confirmation.rejectEvent.subscribe(this.confirmation.reject);
+        }
+        this.visible = true;
+      }
+    });
+  }
+  templates;
+  ngAfterContentInit() {
+    this.templates?.forEach((item) => {
+      switch (item.getType()) {
+        case "content":
+          this._contentTemplate = item.template;
+          break;
+        case "rejecticon":
+          this._rejectIconTemplate = item.template;
+          break;
+        case "accepticon":
+          this._acceptIconTemplate = item.template;
+          break;
+        case "headless":
+          this._headlessTemplate = item.template;
+          break;
+      }
+    });
+  }
+  option(name, k) {
+    const source = this;
+    if (source.hasOwnProperty(name)) {
+      if (k) {
+        return source[k];
+      }
+      return source[name];
+    }
+    return void 0;
+  }
+  onEscapeKeydown(event) {
+    if (this.confirmation && this.confirmation.closeOnEscape) {
+      this.onReject();
+    }
+  }
+  onAnimationStart(event) {
+    if (event.toState === "open") {
+      this.container = event.element;
+      this.renderer.appendChild(this.document.body, this.container);
+      this.align();
+      this.bindListeners();
+      const element = this.getElementToFocus();
+      if (element) {
+        element.focus();
+      }
+    }
+  }
+  onAnimationEnd(event) {
+    switch (event.toState) {
+      case "void":
+        this.onContainerDestroy();
+        break;
+    }
+  }
+  getAcceptButtonProps() {
+    return this.option("acceptButtonProps");
+  }
+  getRejectButtonProps() {
+    return this.option("rejectButtonProps");
+  }
+  getElementToFocus() {
+    switch (this.defaultFocus) {
+      case "accept":
+        return findSingle(this.container, ".p-confirm-popup-accept");
+      case "reject":
+        return findSingle(this.container, ".p-confirm-popup-reject");
+      case "none":
+        return null;
+    }
+  }
+  align() {
+    if (this.autoZIndex) {
+      zindexutils.set("overlay", this.container, this.config.zIndex.overlay);
+    }
+    if (!this.confirmation) {
+      return;
+    }
+    absolutePosition(this.container, this.confirmation?.target, false);
+    const containerOffset = getOffset(this.container);
+    const targetOffset = getOffset(this.confirmation?.target);
+    let arrowLeft = 0;
+    if (containerOffset.left < targetOffset.left) {
+      arrowLeft = targetOffset.left - containerOffset.left;
+    }
+    this.container.style.setProperty("--overlayArrowLeft", `${arrowLeft}px`);
+    if (containerOffset.top < targetOffset.top) {
+      addClass(this.container, "p-confirm-popup-flipped");
+    }
+  }
+  hide() {
+    this.visible = false;
+  }
+  onAccept() {
+    if (this.confirmation?.acceptEvent) {
+      this.confirmation.acceptEvent.emit();
+    }
+    this.hide();
+  }
+  onReject() {
+    if (this.confirmation?.rejectEvent) {
+      this.confirmation.rejectEvent.emit();
+    }
+    this.hide();
+  }
+  onOverlayClick(event) {
+    this.overlayService.add({
+      originalEvent: event,
+      target: this.el.nativeElement
+    });
+  }
+  bindListeners() {
+    setTimeout(() => {
+      this.bindDocumentClickListener();
+      this.bindDocumentResizeListener();
+      this.bindScrollListener();
+    });
+  }
+  unbindListeners() {
+    this.unbindDocumentClickListener();
+    this.unbindDocumentResizeListener();
+    this.unbindScrollListener();
+  }
+  bindDocumentClickListener() {
+    if (!this.documentClickListener) {
+      let documentEvent = isIOS() ? "touchstart" : "click";
+      const documentTarget = this.el ? this.el.nativeElement.ownerDocument : this.document;
+      this.documentClickListener = this.renderer.listen(documentTarget, documentEvent, (event) => {
+        if (this.confirmation && this.confirmation.dismissableMask !== false) {
+          let targetElement = this.confirmation.target;
+          if (this.container !== event.target && !this.container?.contains(event.target) && targetElement !== event.target && !targetElement.contains(event.target)) {
+            this.hide();
+          }
+        }
+      });
+    }
+  }
+  unbindDocumentClickListener() {
+    if (this.documentClickListener) {
+      this.documentClickListener();
+      this.documentClickListener = null;
+    }
+  }
+  onWindowResize() {
+    if (this.visible && !isTouchDevice()) {
+      this.hide();
+    }
+  }
+  bindDocumentResizeListener() {
+    if (!this.documentResizeListener) {
+      this.documentResizeListener = this.renderer.listen(this.window, "resize", this.onWindowResize.bind(this));
+    }
+  }
+  unbindDocumentResizeListener() {
+    if (this.documentResizeListener) {
+      this.documentResizeListener();
+      this.documentResizeListener = null;
+    }
+  }
+  bindScrollListener() {
+    if (!this.scrollHandler) {
+      this.scrollHandler = new ConnectedOverlayScrollHandler(this.confirmation?.target, () => {
+        if (this.visible) {
+          this.hide();
+        }
+      });
+    }
+    this.scrollHandler.bindScrollListener();
+  }
+  unbindScrollListener() {
+    if (this.scrollHandler) {
+      this.scrollHandler.unbindScrollListener();
+    }
+  }
+  unsubscribeConfirmationSubscriptions() {
+    if (this.confirmation) {
+      if (this.confirmation.acceptEvent) {
+        this.confirmation.acceptEvent.unsubscribe();
+      }
+      if (this.confirmation.rejectEvent) {
+        this.confirmation.rejectEvent.unsubscribe();
+      }
+    }
+  }
+  onContainerDestroy() {
+    this.unbindListeners();
+    this.unsubscribeConfirmationSubscriptions();
+    if (this.autoZIndex) {
+      zindexutils.clear(this.container);
+    }
+    this.confirmation = null;
+    this.container = null;
+  }
+  restoreAppend() {
+    if (this.container) {
+      this.renderer.removeChild(this.document.body, this.container);
+    }
+    this.onContainerDestroy();
+  }
+  get acceptButtonLabel() {
+    return this.confirmation?.acceptLabel || this.config.getTranslation(TranslationKeys.ACCEPT);
+  }
+  get rejectButtonLabel() {
+    return this.confirmation?.rejectLabel || this.config.getTranslation(TranslationKeys.REJECT);
+  }
+  ngOnDestroy() {
+    this.restoreAppend();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  static \u0275fac = function ConfirmPopup_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ConfirmPopup)(\u0275\u0275directiveInject(ElementRef), \u0275\u0275directiveInject(ConfirmationService), \u0275\u0275directiveInject(Renderer2), \u0275\u0275directiveInject(ChangeDetectorRef), \u0275\u0275directiveInject(OverlayService), \u0275\u0275directiveInject(DOCUMENT));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _ConfirmPopup,
+    selectors: [["p-confirmPopup"], ["p-confirmpopup"], ["p-confirm-popup"]],
+    contentQueries: function ConfirmPopup_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c012, 4);
+        \u0275\u0275contentQuery(dirIndex, _c113, 4);
+        \u0275\u0275contentQuery(dirIndex, _c24, 4);
+        \u0275\u0275contentQuery(dirIndex, _c34, 4);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.acceptIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.rejectIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headlessTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    hostBindings: function ConfirmPopup_HostBindings(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275listener("keydown.escape", function ConfirmPopup_keydown_escape_HostBindingHandler($event) {
+          return ctx.onEscapeKeydown($event);
+        }, false, \u0275\u0275resolveDocument);
+      }
+    },
+    inputs: {
+      key: "key",
+      defaultFocus: "defaultFocus",
+      showTransitionOptions: "showTransitionOptions",
+      hideTransitionOptions: "hideTransitionOptions",
+      autoZIndex: [2, "autoZIndex", "autoZIndex", booleanAttribute],
+      baseZIndex: [2, "baseZIndex", "baseZIndex", numberAttribute],
+      style: "style",
+      styleClass: "styleClass",
+      visible: "visible"
+    },
+    features: [\u0275\u0275ProvidersFeature([ConfirmPopupStyle]), \u0275\u0275InheritDefinitionFeature],
+    decls: 1,
+    vars: 1,
+    consts: [["notHeadless", ""], ["content", ""], ["withoutContentTemplate", ""], ["rejecticon", ""], ["accepticontemplate", ""], ["role", "alertdialog", 3, "ngClass", "ngStyle", "class", "click", 4, "ngIf"], ["role", "alertdialog", 3, "click", "ngClass", "ngStyle"], [4, "ngIf", "ngIfElse"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [1, "p-confirmpopup-content"], [1, "p-confirmpopup-footer"], ["type", "button", 3, "label", "ngClass", "styleClass", "size", "text", "buttonProps", "onClick", 4, "ngIf"], ["type", "button", 3, "label", "ngClass", "styleClass", "size", "buttonProps", "onClick", 4, "ngIf"], [3, "ngClass", "class", 4, "ngIf"], [1, "p-confirmpopup-message"], [3, "ngClass"], ["type", "button", 3, "onClick", "label", "ngClass", "styleClass", "size", "text", "buttonProps"], [3, "class", 4, "ngIf", "ngIfElse"], [4, "ngTemplateOutlet"], ["type", "button", 3, "onClick", "label", "ngClass", "styleClass", "size", "buttonProps"]],
+    template: function ConfirmPopup_Template(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275template(0, ConfirmPopup_div_0_Template, 4, 12, "div", 5);
+      }
+      if (rf & 2) {
+        \u0275\u0275property("ngIf", ctx.visible);
+      }
+    },
+    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, SharedModule, ButtonModule, Button],
+    encapsulation: 2,
+    data: {
+      animation: [trigger("animation", [state("void", style({
+        transform: "scaleY(0.8)",
+        opacity: 0
+      })), state("open", style({
+        transform: "translateY(0)",
+        opacity: 1
+      })), transition("void => open", animate("{{showTransitionParams}}")), transition("open => void", animate("{{hideTransitionParams}}"))])]
+    },
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ConfirmPopup, [{
+    type: Component,
+    args: [{
+      selector: "p-confirmPopup, p-confirmpopup, p-confirm-popup",
+      standalone: true,
+      imports: [CommonModule, SharedModule, ButtonModule],
+      template: `
+        <div
+            *ngIf="visible"
+            [ngClass]="'p-confirmpopup p-component'"
+            [ngStyle]="style"
+            [class]="styleClass"
+            role="alertdialog"
+            (click)="onOverlayClick($event)"
+            [@animation]="{
+                value: 'open',
+                params: { showTransitionParams: showTransitionOptions, hideTransitionParams: hideTransitionOptions }
+            }"
+            (@animation.start)="onAnimationStart($event)"
+            (@animation.done)="onAnimationEnd($event)"
+        >
+            <ng-container *ngIf="headlessTemplate || _headlessTemplate; else notHeadless">
+                <ng-container *ngTemplateOutlet="headlessTemplate || _headlessTemplate; context: { $implicit: confirmation }"></ng-container>
+            </ng-container>
+            <ng-template #notHeadless>
+                <div #content class="p-confirmpopup-content">
+                    <ng-container *ngIf="contentTemplate || _contentTemplate; else withoutContentTemplate">
+                        <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate; context: { $implicit: confirmation }"></ng-container>
+                    </ng-container>
+                    <ng-template #withoutContentTemplate>
+                        <i [ngClass]="'p-confirmpopup-icon'" [class]="confirmation?.icon" *ngIf="confirmation?.icon"></i>
+                        <span class="p-confirmpopup-message">{{ confirmation?.message }}</span>
+                    </ng-template>
+                </div>
+                <div class="p-confirmpopup-footer">
+                    <p-button
+                        type="button"
+                        [label]="rejectButtonLabel"
+                        (onClick)="onReject()"
+                        [ngClass]="'p-confirmpopup-reject-button'"
+                        [styleClass]="confirmation?.rejectButtonStyleClass"
+                        [size]="confirmation.rejectButtonProps?.size || 'small'"
+                        [text]="confirmation.rejectButtonProps?.text || false"
+                        *ngIf="confirmation?.rejectVisible !== false"
+                        [attr.aria-label]="rejectButtonLabel"
+                        [buttonProps]="getRejectButtonProps()"
+                    >
+                        <i [class]="confirmation?.rejectIcon" *ngIf="confirmation?.rejectIcon; else rejecticon"></i>
+                        <ng-template #rejecticon *ngTemplateOutlet="rejectIconTemplate || _rejectIconTemplate"></ng-template>
+                    </p-button>
+                    <p-button
+                        type="button"
+                        [label]="acceptButtonLabel"
+                        (onClick)="onAccept()"
+                        [ngClass]="'p-confirmpopup-accept-button'"
+                        [styleClass]="confirmation?.acceptButtonStyleClass"
+                        [size]="confirmation.acceptButtonProps?.size || 'small'"
+                        *ngIf="confirmation?.acceptVisible !== false"
+                        [attr.aria-label]="acceptButtonLabel"
+                        [buttonProps]="getAcceptButtonProps()"
+                    >
+                        <i [class]="confirmation?.acceptIcon" *ngIf="confirmation?.acceptIcon; else accepticontemplate"></i>
+                        <ng-template #accepticontemplate *ngTemplateOutlet="acceptIconTemplate || _acceptIconTemplate"></ng-template>
+                    </p-button>
+                </div>
+            </ng-template>
+        </div>
+    `,
+      animations: [trigger("animation", [state("void", style({
+        transform: "scaleY(0.8)",
+        opacity: 0
+      })), state("open", style({
+        transform: "translateY(0)",
+        opacity: 1
+      })), transition("void => open", animate("{{showTransitionParams}}")), transition("open => void", animate("{{hideTransitionParams}}"))])],
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      providers: [ConfirmPopupStyle]
+    }]
+  }], () => [{
+    type: ElementRef
+  }, {
+    type: ConfirmationService
+  }, {
+    type: Renderer2
+  }, {
+    type: ChangeDetectorRef
+  }, {
+    type: OverlayService
+  }, {
+    type: Document,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }], {
+    key: [{
+      type: Input
+    }],
+    defaultFocus: [{
+      type: Input
+    }],
+    showTransitionOptions: [{
+      type: Input
+    }],
+    hideTransitionOptions: [{
+      type: Input
+    }],
+    autoZIndex: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    baseZIndex: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    style: [{
+      type: Input
+    }],
+    styleClass: [{
+      type: Input
+    }],
+    visible: [{
+      type: Input
+    }],
+    contentTemplate: [{
+      type: ContentChild,
+      args: ["content", {
+        descendants: false
+      }]
+    }],
+    acceptIconTemplate: [{
+      type: ContentChild,
+      args: ["accepticon", {
+        descendants: false
+      }]
+    }],
+    rejectIconTemplate: [{
+      type: ContentChild,
+      args: ["rejecticon", {
+        descendants: false
+      }]
+    }],
+    headlessTemplate: [{
+      type: ContentChild,
+      args: ["headless", {
+        descendants: false
+      }]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }],
+    onEscapeKeydown: [{
+      type: HostListener,
+      args: ["document:keydown.escape", ["$event"]]
+    }]
+  });
+})();
+var ConfirmPopupModule = class _ConfirmPopupModule {
+  static \u0275fac = function ConfirmPopupModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ConfirmPopupModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _ConfirmPopupModule,
+    imports: [ConfirmPopup, SharedModule],
+    exports: [ConfirmPopup, SharedModule]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [ConfirmPopup, SharedModule, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ConfirmPopupModule, [{
+    type: NgModule,
+    args: [{
+      imports: [ConfirmPopup, SharedModule],
+      exports: [ConfirmPopup, SharedModule]
+    }]
+  }], null, null);
+})();
+
+// src/app/views/ia-assistant/services/ia-state.service.ts
+var IaStateService = class _IaStateService {
+  production = environment.production;
+  //Active step
+  activeStep = signal(1);
+  getActiveStep = computed(() => this.activeStep());
+  setActiveStep(step) {
+    this.activeStep.set(step);
+  }
+  // Step 1: Validate URLs
+  urlData = signal({
+    rawUrls: "",
+    includePrototypeLinks: false,
+    urlTotal: 0,
+    urlChecked: 0,
+    urlPercent: 0,
+    isValidating: false,
+    isValidated: false,
+    isOk: false,
+    urlPairs: []
+  });
+  getUrlData = computed(() => this.urlData());
+  setUrlData(partial) {
+    this.urlData.update((curr) => __spreadValues(__spreadValues({}, curr), partial));
+  }
+  // Step 2: Breadcrumbs
+  breadcrumbData = signal({
+    breadcrumbs: [],
+    rootPages: [],
+    progress: 0,
+    step: "",
+    hasBreakBeforeRoot: false,
+    hasBreakAfterRoot: false
+  });
+  getBreadcrumbData = computed(() => this.breadcrumbData());
+  setBreadcrumbData(partial) {
+    this.breadcrumbData.update((curr) => __spreadValues(__spreadValues({}, curr), partial));
+  }
+  // Step 3: Search criteria
+  searchData = signal({
+    rawTerms: "",
+    terms: []
+  });
+  getSearchData = computed(() => this.searchData());
+  setSearchData(partial) {
+    this.searchData.update((curr) => __spreadValues(__spreadValues({}, curr), partial));
+  }
+  // Parse raw terms into terms array
+  updateTerms() {
+    this.searchData().terms = this.searchData().rawTerms.split(/[\n;\t]+/).map((term) => term.trim()).filter(Boolean).map((term) => {
+      try {
+        if (term.startsWith("regex:")) {
+          const pattern = term.slice(6);
+          return new RegExp(pattern, "smi");
+        } else
+          return term.toLowerCase();
+      } catch (error) {
+        console.error(error);
+        return `invalid ${term}`;
+      }
+    });
+    this.searchData().terms = Array.from(new Set(this.searchData().terms));
+  }
+  // Step 4: IA tree
+  iaData = signal({
+    iaTree: [],
+    brokenLinks: [],
+    searchMatches: []
+  });
+  getIaData = computed(() => this.iaData());
+  setIaData(partial) {
+    this.iaData.update((curr) => __spreadValues(__spreadValues({}, curr), partial));
+  }
+  // Step 5: GitHub export (optional)
+  gitHubData = signal({
+    owner: "cra-design",
+    repo: "",
+    branch: "main"
+  });
+  getGitHubData = computed(() => this.gitHubData());
+  setGitHubData(partial) {
+    this.gitHubData.update((curr) => __spreadValues(__spreadValues({}, curr), partial));
+  }
+  // Reset
+  resetIaFlow(mode = "all") {
+    const step = this.activeStep();
+    if (step > 1) {
+      this.activeStep.set(step - 1);
+    }
+    if (step === 1) {
+      this.urlData.set({
+        rawUrls: mode === "all" ? "" : this.urlData().rawUrls,
+        includePrototypeLinks: false,
+        urlTotal: 0,
+        urlChecked: 0,
+        urlPercent: 0,
+        isValidating: false,
+        isValidated: false,
+        isOk: false,
+        urlPairs: []
+      });
+      this.gitHubData.set({ owner: "cra-design", repo: "", branch: "main" });
+    }
+    if (step <= 2) {
+      this.breadcrumbData.set({
+        breadcrumbs: [],
+        rootPages: [],
+        progress: 0,
+        step: "",
+        hasBreakBeforeRoot: false,
+        hasBreakAfterRoot: false
+      });
+    }
+    if (step <= 3) {
+      this.searchData.set({
+        rawTerms: "",
+        terms: []
+      });
+    }
+    if (step <= 4) {
+      this.iaData.set({
+        iaTree: [],
+        brokenLinks: [],
+        searchMatches: []
+      });
+    }
+    this.saveToLocalStorage();
+  }
+  // Get IA state
+  getIaState() {
+    return {
+      version: 0.1,
+      activeStep: this.activeStep(),
+      urlData: this.urlData(),
+      breadcrumbData: this.breadcrumbData(),
+      searchData: this.searchData(),
+      iaData: this.iaData(),
+      gitHubData: this.gitHubData()
+    };
+  }
+  // Save IA state to local storage (browser memory)
+  saveToLocalStorage() {
+    const state2 = this.getIaState();
+    const cleanTree = this.removeParents(state2.iaData.iaTree);
+    const cleanState = __spreadProps(__spreadValues({}, state2), {
+      iaData: __spreadProps(__spreadValues({}, state2.iaData), {
+        iaTree: cleanTree
+      })
+    });
+    console.log("Clean state:", cleanState);
+    localStorage.setItem("iaState", JSON.stringify(cleanState));
+    if (!this.production) {
+      console.groupCollapsed("IA State saved to localStorage");
+      console.log("Active step:", state2.activeStep);
+      console.log("--- URL Data ---");
+      console.table({
+        rawUrls: state2.urlData.rawUrls,
+        includePrototypeLinks: state2.urlData.includePrototypeLinks,
+        isValidating: state2.urlData.isValidating,
+        isValidated: state2.urlData.isValidated,
+        isOk: state2.urlData.isOk
+      });
+      console.log("URL Pairs:", state2.urlData.urlPairs);
+      console.log("--- Breadcrumb Data ---");
+      console.table({
+        breadcrumbProgress: state2.breadcrumbData.progress,
+        hasBreakBeforeRoot: state2.breadcrumbData.hasBreakBeforeRoot,
+        hasBreakAfterRoot: state2.breadcrumbData.hasBreakAfterRoot
+      });
+      console.log("Breadcrumbs:", state2.breadcrumbData.breadcrumbs);
+      console.log("Root Pages:", state2.breadcrumbData.rootPages);
+      console.log("--- Search Data ---");
+      console.log("Terms:", state2.searchData.terms);
+      console.log("--- IA Data ---");
+      console.log("IA Tree:", state2.iaData.iaTree);
+      console.log("Broken Links:", state2.iaData.brokenLinks);
+      console.log("Search Matches:", state2.iaData.searchMatches);
+      console.log("--- GitHub Data ---");
+      console.table({
+        owner: state2.gitHubData.owner,
+        repo: state2.gitHubData.repo,
+        branch: state2.gitHubData.branch
+      });
+      console.groupEnd();
+    }
+  }
+  removeParents(nodes) {
+    return nodes.map((node) => {
+      const _a = node, { parent } = _a, rest = __objRest(_a, ["parent"]);
+      return __spreadProps(__spreadValues({}, rest), {
+        children: node.children ? this.removeParents(node.children) : []
+      });
+    });
+  }
+  // Load from local storage (browser memory)
+  loadFromLocalStorage() {
+    const saved = localStorage.getItem("iaState");
+    if (!saved)
+      return;
+    const state2 = JSON.parse(saved);
+    this.activeStep.set(state2.activeStep);
+    this.urlData.set(state2.urlData);
+    this.breadcrumbData.set(state2.breadcrumbData);
+    this.searchData.set(state2.searchData);
+    this.iaData.set(state2.iaData);
+    this.gitHubData.set(state2.gitHubData);
+  }
+  // Export as JSON (for sharing with someone else)
+  exportIaState() {
+    const state2 = this.getIaState();
+    const cleanTree = this.removeParents(state2.iaData.iaTree);
+    const exportState = __spreadProps(__spreadValues({}, state2), {
+      searchData: {
+        rawTerms: state2.searchData.rawTerms
+      },
+      iaData: __spreadProps(__spreadValues({}, state2.iaData), {
+        iaTree: cleanTree
+      })
+    });
+    const data = JSON.stringify(exportState, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "ia-state.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+  // Import JSON
+  importIaState(event) {
+    const file = event.files?.[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const state2 = JSON.parse(reader.result);
+        if (state2.version !== 0.1) {
+          console.warn("Incompatible IA state version. Import skipped.");
+          return;
+        }
+        this.urlData.set(state2.urlData);
+        this.breadcrumbData.set(state2.breadcrumbData);
+        this.searchData.set(state2.searchData);
+        this.updateTerms();
+        this.iaData.set(state2.iaData);
+        this.gitHubData.set(state2.gitHubData || { owner: "cra-design", repo: "", branch: "main" });
+        this.saveToLocalStorage();
+        console.log("IA state successfully imported");
+      } catch (error) {
+        console.error("Invalid IA state file", error);
+      }
+    };
+    reader.readAsText(file);
+  }
+  // Export TreeNode as CSV
+  exportIaTreeAsCsv() {
+    const iaTree = this.iaData().iaTree;
+    const rows = [];
+    rows.push([
+      "Page Title (h1)",
+      "URL",
+      "Prototype URL",
+      "In scope",
+      "Orphaned",
+      "Parent URL",
+      "Old Parent URL",
+      "Status"
+    ].join(","));
+    const walk = (nodes, parentUrl = null) => {
+      for (const node of nodes) {
+        const data = node.data;
+        if (data.customStyleKey === "template") {
+          if (node.children?.length) {
+            walk(node.children, data.url);
+          }
+          continue;
+        }
+        let customStyle = "";
+        switch (data.customStyleKey) {
+          case "new":
+            customStyle = "New page";
+            break;
+          case "rot":
+            customStyle = "Remove ROT";
+            break;
+          case "move":
+            customStyle = "Page move";
+            break;
+          default:
+            customStyle = "";
+        }
+        if (data.originalParent && data.originalParent !== parentUrl && customStyle === "") {
+          customStyle = "Page move";
+        }
+        let oldParent = "";
+        if (data.originalParent && data.originalParent !== parentUrl) {
+          oldParent = data.originalParent;
+        }
+        rows.push([
+          `"${data.h1 || ""}"`,
+          data.url || "",
+          data.prototype || "",
+          data.isUserAdded ? "Yes" : "No",
+          data.notOrphan ? "No" : "Yes",
+          parentUrl || "",
+          oldParent || "",
+          customStyle || ""
+        ].join(","));
+        if (node.children?.length) {
+          walk(node.children, data.url);
+        }
+      }
+    };
+    walk(iaTree);
+    const blob = new Blob([rows.join("\n")], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "ia-tree.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+  static \u0275fac = function IaStateService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _IaStateService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _IaStateService, factory: _IaStateService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(IaStateService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/views/ia-assistant/components/link-list.component.ts
+function LinkListComponent_ng_container_0_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "p", 3);
+    \u0275\u0275text(2, "Only links from the following domains are allowed:");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "ul", 3)(4, "li");
+    \u0275\u0275text(5, "www.canada.ca");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementContainerEnd();
+  }
+}
+function LinkListComponent_ng_container_0_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "p", 3);
+    \u0275\u0275text(2, "Only links from the following domains are allowed:");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "ul", 3)(4, "li");
+    \u0275\u0275text(5, "www.canada.ca");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "li");
+    \u0275\u0275text(7, "test.canada.ca");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(8, "li");
+    \u0275\u0275text(9, "gc-proto.github.io");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(10, "li");
+    \u0275\u0275text(11, "cra-proto.github.io");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(12, "li");
+    \u0275\u0275text(13, "cra-design.github.io");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementContainerEnd();
+  }
+}
+function LinkListComponent_ng_container_0_div_4_p_iftalabel_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-iftalabel")(1, "input", 9);
+    \u0275\u0275twoWayListener("ngModelChange", function LinkListComponent_ng_container_0_div_4_p_iftalabel_1_Template_input_ngModelChange_1_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const url_r3 = \u0275\u0275nextContext().$implicit;
+      \u0275\u0275twoWayBindingSet(url_r3.originalHref, $event) || (url_r3.originalHref = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "label", 10);
+    \u0275\u0275text(3, "Original URL");
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const url_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275twoWayProperty("ngModel", url_r3.originalHref);
+  }
+}
+function LinkListComponent_ng_container_0_div_4_p_tag_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-tag", 11);
+  }
+}
+function LinkListComponent_ng_container_0_div_4_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div");
+    \u0275\u0275template(1, LinkListComponent_ng_container_0_div_4_p_iftalabel_1_Template, 4, 1, "p-iftalabel", 0);
+    \u0275\u0275elementStart(2, "p-inputgroup");
+    \u0275\u0275template(3, LinkListComponent_ng_container_0_div_4_p_tag_3_Template, 1, 0, "p-tag", 4);
+    \u0275\u0275elementStart(4, "p-iftalabel")(5, "input", 5);
+    \u0275\u0275twoWayListener("ngModelChange", function LinkListComponent_ng_container_0_div_4_Template_input_ngModelChange_5_listener($event) {
+      const url_r3 = \u0275\u0275restoreView(_r1).$implicit;
+      \u0275\u0275twoWayBindingSet(url_r3.href, $event) || (url_r3.href = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(6, "label", 6);
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(8, "p-inputgroup-addon")(9, "p-button", 7);
+    \u0275\u0275listener("click", function LinkListComponent_ng_container_0_div_4_Template_p_button_click_9_listener($event) {
+      const url_r3 = \u0275\u0275restoreView(_r1).$implicit;
+      const ctx_r3 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r3.approve.emit({ url: url_r3, event: $event }));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(10, "p-inputgroup-addon")(11, "p-button", 8);
+    \u0275\u0275listener("click", function LinkListComponent_ng_container_0_div_4_Template_p_button_click_11_listener() {
+      const url_r3 = \u0275\u0275restoreView(_r1).$implicit;
+      const ctx_r3 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r3.remove.emit(url_r3));
+    });
+    \u0275\u0275elementEnd()()()();
+  }
+  if (rf & 2) {
+    const url_r3 = ctx.$implicit;
+    const ctx_r3 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", url_r3.originalHref);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", ctx_r3.type === "proto");
+    \u0275\u0275advance(2);
+    \u0275\u0275property("id", ctx_r3.labelKey);
+    \u0275\u0275twoWayProperty("ngModel", url_r3.href);
+    \u0275\u0275advance();
+    \u0275\u0275property("for", ctx_r3.labelKey);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1("", ctx_r3.labelKey, " URL");
+    \u0275\u0275advance(4);
+    \u0275\u0275property("pTooltip", ctx_r3.type === "proto" ? "Remove link" : "Remove item");
+  }
+}
+function LinkListComponent_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "div", 1);
+    \u0275\u0275template(2, LinkListComponent_ng_container_0_ng_container_2_Template, 6, 0, "ng-container", 0)(3, LinkListComponent_ng_container_0_ng_container_3_Template, 14, 0, "ng-container", 0)(4, LinkListComponent_ng_container_0_div_4_Template, 12, 7, "div", 2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext();
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", ctx_r3.labelKey === "Blocked" && ctx_r3.type === "prod");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r3.labelKey === "Blocked" && ctx_r3.type === "proto");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngForOf", ctx_r3.links);
+  }
+}
+var LinkListComponent = class _LinkListComponent {
+  labelKey;
+  links;
+  type = "prod";
+  approve = new EventEmitter();
+  remove = new EventEmitter();
+  static \u0275fac = function LinkListComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _LinkListComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _LinkListComponent, selectors: [["ca-link-list"]], inputs: { labelKey: "labelKey", links: "links", type: "type" }, outputs: { approve: "approve", remove: "remove" }, decls: 1, vars: 1, consts: [[4, "ngIf"], [1, "flex", "flex-column", "gap-2"], [4, "ngFor", "ngForOf"], [1, "my-0"], ["icon", "pi pi-github", "value", "Prototype", 4, "ngIf"], ["type", "text", "pInputText", "", "variant", "outlined", "pSize", "small", "fluid", "", 3, "ngModelChange", "id", "ngModel"], [3, "for"], ["icon", "pi pi-check-circle", "pTooltip", "Revalidate", "tooltipPosition", "top", "severity", "success", "variant", "text", 3, "click"], ["icon", "pi pi-times-circle", "tooltipPosition", "top", "severity", "danger", "variant", "text", 3, "click", "pTooltip"], ["type", "text", "id", "original", "pInputText", "", "disabled", "", "pSize", "small", "fluid", "", 1, "ng-invalid", "ng-dirty", "bg-white", 3, "ngModelChange", "ngModel"], ["for", "original"], ["icon", "pi pi-github", "value", "Prototype"]], template: function LinkListComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275template(0, LinkListComponent_ng_container_0_Template, 5, 3, "ng-container", 0);
+    }
+    if (rf & 2) {
+      \u0275\u0275property("ngIf", ctx.links == null ? null : ctx.links.length);
+    }
+  }, dependencies: [CommonModule, NgForOf, NgIf, FormsModule, DefaultValueAccessor, NgControlStatus, NgModel, IftaLabelModule, IftaLabel, InputTextModule, InputText, InputGroupModule, InputGroup, InputGroupAddonModule, InputGroupAddon, ButtonModule, Button, Tooltip, TagModule, Tag], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n/*# sourceMappingURL=link-list.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LinkListComponent, [{
+    type: Component,
+    args: [{ selector: "ca-link-list", imports: [CommonModule, FormsModule, IftaLabelModule, InputTextModule, InputGroupModule, InputGroupAddonModule, ButtonModule, Tooltip, TagModule], template: `
+<ng-container *ngIf="links?.length">
+  <!--h2 class="mb-0">{{ labelKey }} links</h2-->
+  <div class="flex flex-column gap-2">
+    <ng-container *ngIf="labelKey === 'Blocked' && type === 'prod'">
+      <p class="my-0">Only links from the following domains are allowed:</p>
+      <ul class="my-0">
+          <li>www.canada.ca</li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="labelKey === 'Blocked' && type === 'proto'">
+      <p class="my-0">Only links from the following domains are allowed:</p>
+      <ul class="my-0">
+          <li>www.canada.ca</li>
+          <li>test.canada.ca</li>
+          <li>gc-proto.github.io</li>
+          <li>cra-proto.github.io</li>
+          <li>cra-design.github.io</li>
+      </ul>
+    </ng-container>
+    <div *ngFor="let url of links">
+      <p-iftalabel *ngIf="url.originalHref">
+        <input type="text" id="original" pInputText [(ngModel)]="url.originalHref" disabled pSize="small" class="ng-invalid ng-dirty bg-white" fluid/>
+        <label for="original">Original URL</label>
+      </p-iftalabel>
+        <p-inputgroup>
+          <p-tag *ngIf="type === 'proto'" icon="pi pi-github" value="Prototype" />
+          <p-iftalabel>          
+            <input type="text" [id]="labelKey" pInputText variant="outlined" [(ngModel)]="url.href" pSize="small" fluid/>
+            <label [for]="labelKey">{{ labelKey }} URL</label>          
+          </p-iftalabel>
+          <p-inputgroup-addon>
+            <p-button icon="pi pi-check-circle" pTooltip="Revalidate" tooltipPosition="top" severity="success" variant="text" (click)="approve.emit({ url, event: $event })" />
+          </p-inputgroup-addon>
+          <p-inputgroup-addon>
+            <p-button icon="pi pi-times-circle" [pTooltip]="type === 'proto' ? 'Remove link':'Remove item'" tooltipPosition="top" severity="danger" variant="text" (click)="remove.emit(url)" />
+          </p-inputgroup-addon>
+        </p-inputgroup>
+    </div>
+  </div>
+</ng-container>
+  `, styles: ["/* angular:styles/component:css;219558ef63f119a92210704329b58a3cdceaa4fb296db559e672f74512827dc7;/home/naomi/content-assistant/src/app/views/ia-assistant/components/link-list.component.ts */\n:host {\n  display: block;\n}\n/*# sourceMappingURL=link-list.component.css.map */\n"] }]
+  }], null, { labelKey: [{
+    type: Input
+  }], links: [{
+    type: Input
+  }], type: [{
+    type: Input
+  }], approve: [{
+    type: Output
+  }], remove: [{
+    type: Output
+  }] });
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(LinkListComponent, { className: "LinkListComponent", filePath: "src/app/views/ia-assistant/components/link-list.component.ts", lineNumber: 65 });
+})();
+
+// src/app/views/ia-assistant/components/validate-urls.component.ts
+function ValidateUrlsComponent_p_table_8_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr")(1, "th");
+    \u0275\u0275text(2, "Production URL");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "th");
+    \u0275\u0275text(4, "Prototype URL");
+    \u0275\u0275elementEnd()();
+  }
+}
+function ValidateUrlsComponent_p_table_8_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr")(1, "td");
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "td");
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const url_r1 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(url_r1.production.href);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(url_r1.prototype == null ? null : url_r1.prototype.href);
+  }
+}
+function ValidateUrlsComponent_p_table_8_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p-table", 18);
+    \u0275\u0275template(1, ValidateUrlsComponent_p_table_8_ng_template_1_Template, 5, 0, "ng-template", null, 0, \u0275\u0275templateRefExtractor)(3, ValidateUrlsComponent_p_table_8_ng_template_3_Template, 5, 2, "ng-template", null, 1, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("value", ctx_r1.iaState.getUrlData().urlPairs)("scrollable", true);
+  }
+}
+function ValidateUrlsComponent_ng_container_10_h2_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2");
+    \u0275\u0275text(1, "Validating links");
+    \u0275\u0275elementEnd();
+  }
+}
+function ValidateUrlsComponent_ng_container_10_h2_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2");
+    \u0275\u0275text(1, "Validated links");
+    \u0275\u0275elementEnd();
+  }
+}
+function ValidateUrlsComponent_ng_container_10_ng_template_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate2("", ctx_r1.iaState.getUrlData().urlChecked, "/", ctx_r1.iaState.getUrlData().urlTotal, "");
+  }
+}
+function ValidateUrlsComponent_ng_container_10_div_6_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "p-chip", 23);
+    \u0275\u0275element(2, "i", 24);
+    \u0275\u0275elementStart(3, "span");
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const url_r3 = ctx.$implicit;
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(url_r3.href);
+  }
+}
+function ValidateUrlsComponent_ng_container_10_div_6_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "p-chip", 25);
+    \u0275\u0275element(2, "i", 24);
+    \u0275\u0275elementStart(3, "span");
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const url_r4 = ctx.$implicit;
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(url_r4.href);
+  }
+}
+function ValidateUrlsComponent_ng_container_10_div_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 21);
+    \u0275\u0275template(1, ValidateUrlsComponent_ng_container_10_div_6_ng_container_1_Template, 5, 1, "ng-container", 22)(2, ValidateUrlsComponent_ng_container_10_div_6_ng_container_2_Template, 5, 1, "ng-container", 22);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngForOf", ctx_r1.urlsChecking);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngForOf", ctx_r1.urlsProtoChecking);
+  }
+}
+function ValidateUrlsComponent_ng_container_10_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, ValidateUrlsComponent_ng_container_10_h2_1_Template, 2, 0, "h2", 9)(2, ValidateUrlsComponent_ng_container_10_h2_2_Template, 2, 0, "h2", 9);
+    \u0275\u0275elementStart(3, "p-progressbar", 19);
+    \u0275\u0275template(4, ValidateUrlsComponent_ng_container_10_ng_template_4_Template, 2, 2, "ng-template", null, 2, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(6, ValidateUrlsComponent_ng_container_10_div_6_Template, 3, 2, "div", 20);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.urlsChecking.length > 0);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.urlsChecking.length === 0);
+    \u0275\u0275advance();
+    \u0275\u0275property("value", ctx_r1.iaState.getUrlData().urlPercent);
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngIf", ctx_r1.urlsChecking.length > 0 || ctx_r1.urlsProtoChecking.length > 0);
+  }
+}
+function ValidateUrlsComponent_h2_12_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 26);
+    \u0275\u0275text(1, "Broken links");
+    \u0275\u0275elementEnd();
+  }
+}
+function ValidateUrlsComponent_ca_link_list_14_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "ca-link-list", 27);
+    \u0275\u0275listener("approve", function ValidateUrlsComponent_ca_link_list_14_Template_ca_link_list_approve_0_listener($event) {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.approve($event.url, $event.event, "prod"));
+    })("remove", function ValidateUrlsComponent_ca_link_list_14_Template_ca_link_list_remove_0_listener($event) {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.remove($event, "prod"));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("links", ctx_r1.urlsBad);
+  }
+}
+function ValidateUrlsComponent_ca_link_list_15_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "ca-link-list", 28);
+    \u0275\u0275listener("approve", function ValidateUrlsComponent_ca_link_list_15_Template_ca_link_list_approve_0_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.approve($event.url, $event.event, "proto"));
+    })("remove", function ValidateUrlsComponent_ca_link_list_15_Template_ca_link_list_remove_0_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.remove($event, "proto"));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("links", ctx_r1.urlsProtoBad);
+  }
+}
+function ValidateUrlsComponent_h2_16_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 26);
+    \u0275\u0275text(1, "Redirected links");
+    \u0275\u0275elementEnd();
+  }
+}
+function ValidateUrlsComponent_ca_link_list_18_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "ca-link-list", 29);
+    \u0275\u0275listener("approve", function ValidateUrlsComponent_ca_link_list_18_Template_ca_link_list_approve_0_listener($event) {
+      \u0275\u0275restoreView(_r7);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.approve($event.url, $event.event, "prod"));
+    })("remove", function ValidateUrlsComponent_ca_link_list_18_Template_ca_link_list_remove_0_listener($event) {
+      \u0275\u0275restoreView(_r7);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.remove($event, "prod"));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("links", ctx_r1.urlsRedirected);
+  }
+}
+function ValidateUrlsComponent_ca_link_list_19_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "ca-link-list", 30);
+    \u0275\u0275listener("approve", function ValidateUrlsComponent_ca_link_list_19_Template_ca_link_list_approve_0_listener($event) {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.approve($event.url, $event.event, "proto"));
+    })("remove", function ValidateUrlsComponent_ca_link_list_19_Template_ca_link_list_remove_0_listener($event) {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.remove($event, "proto"));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("links", ctx_r1.urlsProtoRedirected);
+  }
+}
+function ValidateUrlsComponent_h2_20_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 26);
+    \u0275\u0275text(1, "Blocked links");
+    \u0275\u0275elementEnd();
+  }
+}
+function ValidateUrlsComponent_ca_link_list_22_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "ca-link-list", 31);
+    \u0275\u0275listener("approve", function ValidateUrlsComponent_ca_link_list_22_Template_ca_link_list_approve_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.approve($event.url, $event.event, "prod"));
+    })("remove", function ValidateUrlsComponent_ca_link_list_22_Template_ca_link_list_remove_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.remove($event, "prod"));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("links", ctx_r1.urlsBlocked);
+  }
+}
+function ValidateUrlsComponent_ca_link_list_23_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r10 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "ca-link-list", 32);
+    \u0275\u0275listener("approve", function ValidateUrlsComponent_ca_link_list_23_Template_ca_link_list_approve_0_listener($event) {
+      \u0275\u0275restoreView(_r10);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.approve($event.url, $event.event, "proto"));
+    })("remove", function ValidateUrlsComponent_ca_link_list_23_Template_ca_link_list_remove_0_listener($event) {
+      \u0275\u0275restoreView(_r10);
+      const ctx_r1 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r1.remove($event, "proto"));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("links", ctx_r1.urlsProtoBlocked);
+  }
+}
+function ValidateUrlsComponent_ng_container_24_li_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li");
+    \u0275\u0275element(1, "i", 34);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const url_r11 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(url_r11.href);
+  }
+}
+function ValidateUrlsComponent_ng_container_24_li_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li");
+    \u0275\u0275element(1, "i", 35);
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const url_r12 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(url_r12.href);
+  }
+}
+function ValidateUrlsComponent_ng_container_24_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "h2", 26);
+    \u0275\u0275text(2, "Valid links");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "ul", 33);
+    \u0275\u0275template(4, ValidateUrlsComponent_ng_container_24_li_4_Template, 3, 1, "li", 22)(5, ValidateUrlsComponent_ng_container_24_li_5_Template, 3, 1, "li", 22);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(4);
+    \u0275\u0275property("ngForOf", ctx_r1.urlsOk);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngForOf", ctx_r1.urlsProtoOk);
+  }
+}
+var ValidateUrlsComponent = class _ValidateUrlsComponent {
+  iaState = inject(IaStateService);
+  fetchService = inject(FetchService);
+  confirmationService = inject(ConfirmationService);
+  ngOnInit() {
+    this.iaState.loadFromLocalStorage();
+  }
+  resetProgress() {
+    const { urlPairs } = this.iaState.getUrlData();
+    const urlTotal = urlPairs.length + urlPairs.filter((p2) => p2.prototype).length;
+    this.iaState.setUrlData({
+      urlTotal,
+      urlChecked: 0,
+      urlPercent: 0
+    });
+  }
+  /*** Advance to step 2 if all URLs are good ***/
+  goToStep2() {
+    if (this.urlsOk.length + this.urlsProtoOk.length === this.iaState.getUrlData().urlTotal && this.urlsOk.length > 0) {
+      this.iaState.saveToLocalStorage();
+      this.iaState.setActiveStep(2);
+    }
+  }
+  /*** Set URL pairs from user input & set boolean if any prototypes were included ***/
+  setUrlPairs() {
+    this.iaState.resetIaFlow("form");
+    const rawUrls = this.iaState.getUrlData().rawUrls;
+    let urlPairs = rawUrls.split(/\r?\n/).map((line) => line.trim().toLowerCase()).filter(Boolean).map((line) => {
+      const [prod, proto] = line.split(/[\t,; ]+/);
+      const production = { href: prod?.trim() || "", status: "checking" };
+      const prototype = proto ? { href: proto.trim(), status: "checking" } : void 0;
+      return { production, prototype };
+    });
+    urlPairs = Array.from(new Map(urlPairs.map((p2) => [p2.production.href, p2])).values());
+    this.iaState.setUrlData({
+      urlPairs,
+      includePrototypeLinks: urlPairs.some((p2) => p2.prototype && p2.prototype.href !== "")
+      //check for any prototype links
+    });
+  }
+  onPasteUrls() {
+    setTimeout(() => this.setUrlPairs(), 0);
+  }
+  /*** Validate a single URL item ***/
+  checkStatus(link) {
+    return __async(this, null, function* () {
+      try {
+        const response = yield this.fetchService.fetchStatus(link.href, "prod", 5, "random");
+        if (!response.ok || response.url.includes("404.html")) {
+          link.status = "bad";
+        } else if (response.url !== link.href) {
+          link.status = "redirect";
+          link.originalHref = link.href;
+          link.href = response.url;
+        } else {
+          link.status = "ok";
+        }
+      } catch (error) {
+        console.error(error);
+        if (error.message.startsWith("Blocked host")) {
+          link.status = "blocked";
+        } else
+          link.status = "bad";
+      }
+    });
+  }
+  /*** Validate a URL item array (half of the URL pair) ***/
+  validateUrlItems(urls) {
+    return __async(this, null, function* () {
+      const urlsToCheck = urls.map((url) => this.checkStatus(url).finally(() => {
+        const { urlChecked: urlChecked2, urlTotal } = this.iaState.getUrlData();
+        this.iaState.setUrlData({
+          urlChecked: urlChecked2 + 1,
+          urlPercent: (urlChecked2 + 1) / urlTotal * 100
+        });
+      }));
+      yield Promise.all(urlsToCheck);
+      const badUrls = urls.filter((url) => url.status === "bad");
+      badUrls.forEach((badUrl) => badUrl.status = "checking");
+      const { urlChecked } = this.iaState.getUrlData();
+      this.iaState.setUrlData({ urlChecked: urlChecked - badUrls.length });
+      const urlsToRecheck = badUrls.map((badUrl) => this.checkStatus(badUrl).finally(() => {
+        const { urlChecked: urlChecked2, urlTotal } = this.iaState.getUrlData();
+        this.iaState.setUrlData({
+          urlChecked: urlChecked2 + 1,
+          urlPercent: (urlChecked2 + 1) / urlTotal * 100
+        });
+      }));
+      yield Promise.all(urlsToRecheck);
+    });
+  }
+  /*** Validate URL pairs ***/
+  validateUrlPairs() {
+    return __async(this, null, function* () {
+      this.setUrlPairs();
+      const { urlPairs, includePrototypeLinks } = this.iaState.getUrlData();
+      if (!urlPairs?.length)
+        return;
+      this.resetProgress();
+      this.iaState.setUrlData({ isValidating: true });
+      yield this.validateUrlItems(urlPairs.map((p2) => p2.production));
+      if (includePrototypeLinks) {
+        yield this.validateUrlItems(urlPairs.map((p2) => p2.prototype).filter((p2) => !!p2));
+      }
+      this.iaState.setUrlData({
+        isValidating: false,
+        isValidated: true,
+        isOk: this.iaState.getUrlData().urlPairs.every((p2) => p2.production.status === "ok")
+      });
+      this.goToStep2();
+    });
+  }
+  /*** Filter based on status***/
+  get urlsChecking() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.production).filter((u) => u.status === "checking");
+  }
+  get urlsBlocked() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.production).filter((u) => u.status === "blocked");
+  }
+  get urlsBad() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.production).filter((u) => u.status === "bad");
+  }
+  get urlsRedirected() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.production).filter((u) => u.status === "redirect");
+  }
+  get urlsOk() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.production).filter((u) => u.status === "ok");
+  }
+  get urlsProtoChecking() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.prototype).filter((u) => !!u && u.status === "checking");
+  }
+  get urlsProtoBlocked() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.prototype).filter((u) => !!u && u.status === "blocked");
+  }
+  get urlsProtoBad() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.prototype).filter((u) => !!u && u.status === "bad");
+  }
+  get urlsProtoRedirected() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.prototype).filter((u) => !!u && u.status === "redirect");
+  }
+  get urlsProtoOk() {
+    return this.iaState.getUrlData().urlPairs.map((p2) => p2.prototype).filter((u) => !!u && u.status === "ok");
+  }
+  /*** Remove a bad link pair or just the link for prototypes ***/
+  remove(link, type) {
+    let { urlPairs, urlChecked, urlTotal } = this.iaState.getUrlData();
+    let decrement = 1;
+    if (type === "prod") {
+      const pair = urlPairs.find((p2) => p2.production === link);
+      if (pair?.prototype)
+        decrement += 1;
+      urlPairs = urlPairs.filter((p2) => p2.production !== link);
+    } else {
+      const pair = urlPairs.find((p2) => p2.prototype === link);
+      if (pair) {
+        pair.prototype = void 0;
+      }
+    }
+    this.iaState.setUrlData({
+      urlPairs,
+      urlChecked: urlChecked - decrement,
+      urlTotal: urlTotal - decrement,
+      urlPercent: urlTotal - decrement > 0 ? (urlChecked - decrement) / (urlTotal - decrement) * 100 : 0,
+      isOk: urlPairs.every((p2) => p2.production.status === "ok")
+    });
+    this.goToStep2();
+  }
+  /*** Approve an edited link for revalidation ***/
+  approve(link, $event, type) {
+    link.href = link.href.trim().toLowerCase();
+    const { urlPairs } = this.iaState.getUrlData();
+    const urlsToCheck = type === "prod" ? urlPairs.map((p2) => p2.production) : urlPairs.map((p2) => p2.prototype).filter((p2) => !!p2);
+    if (urlsToCheck.some((u) => u !== link && u.href === link.href)) {
+      if (type === "prod") {
+        this.confirmDuplicate($event, link);
+        return;
+      } else {
+        this.confirmProtoDuplicate($event, link);
+        return;
+      }
+    }
+    this.revalidate(link);
+  }
+  /*** Revalidates a single link rather than the whole array ***/
+  revalidate(link) {
+    const { urlChecked, urlTotal } = this.iaState.getUrlData();
+    link.status = "checking";
+    this.iaState.setUrlData({
+      urlChecked: urlChecked - 1,
+      urlPercent: (urlChecked - 1) / urlTotal * 100
+    });
+    this.checkStatus(link).finally(() => {
+      const { urlChecked: urlChecked2, urlTotal: urlTotal2 } = this.iaState.getUrlData();
+      this.iaState.setUrlData({
+        urlChecked: urlChecked2 + 1,
+        urlPercent: (urlChecked2 + 1) / urlTotal2 * 100,
+        isOk: this.iaState.getUrlData().urlPairs.every((p2) => p2.production.status === "ok")
+      });
+      this.goToStep2();
+    });
+  }
+  /*** Popup message for duplicate production links ***/
+  confirmDuplicate(event, link) {
+    this.confirmationService.confirm({
+      target: event.currentTarget,
+      message: "This URL is already included. Do you want to remove the duplicate link?",
+      icon: "pi pi-exclamation-triangle",
+      rejectButtonProps: {
+        label: "Cancel",
+        severity: "secondary",
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: "Yes",
+        severity: "danger"
+      },
+      accept: () => {
+        this.remove(link, "prod");
+      },
+      reject: () => {
+        console.log("Cancel adding duplicate link");
+      }
+    });
+  }
+  /*** Popup message for duplicate prototype links ***/
+  confirmProtoDuplicate(event, link) {
+    this.confirmationService.confirm({
+      target: event.currentTarget,
+      message: "This prototype URL was already included for another page. Do you want to keep it anyway?",
+      icon: "pi pi-exclamation-triangle",
+      rejectButtonProps: {
+        label: "Cancel",
+        severity: "secondary",
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: "Yes",
+        severity: "success"
+      },
+      accept: () => {
+        this.revalidate(link);
+      },
+      reject: () => {
+        console.log("Cancel adding duplicate link");
+      }
+    });
+  }
+  static \u0275fac = function ValidateUrlsComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ValidateUrlsComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ValidateUrlsComponent, selectors: [["ca-validate-urls"]], decls: 25, vars: 15, consts: [["header", ""], ["body", ""], ["content", ""], [1, "my-0"], [1, "my-0", "text-color-secondary", "text-xs"], ["id", "urls", "autoResize", "true", "rows", "5", "pTextarea", "", "fluid", "", 3, "ngModelChange", "change", "paste", "ngModel"], ["for", "urls"], ["size", "small", "stripedRows", "", "scrollHeight", "400px", "styleClass", "mb-2", 3, "value", "scrollable", 4, "ngIf"], ["label", "Validate URLs", "icon", "pi pi-check-square", 3, "onClick", "loading", "disabled"], [4, "ngIf"], ["class", "mb-0", 4, "ngIf"], [1, "flex", "flex-column", "gap-2"], ["labelKey", "Broken", "type", "prod", 3, "links", "approve", "remove", 4, "ngIf"], ["labelKey", "Broken", "type", "proto", 3, "links", "approve", "remove", 4, "ngIf"], ["labelKey", "Redirected", "type", "prod", 3, "links", "approve", "remove", 4, "ngIf"], ["labelKey", "Redirected", "type", "proto", 3, "links", "approve", "remove", 4, "ngIf"], ["labelKey", "Blocked", "type", "prod", 3, "links", "approve", "remove", 4, "ngIf"], ["labelKey", "Blocked", "type", "proto", 3, "links", "approve", "remove", 4, "ngIf"], ["size", "small", "stripedRows", "", "scrollHeight", "400px", "styleClass", "mb-2", 3, "value", "scrollable"], [3, "value"], ["class", "flex flex-column gap-2 mt-3", 4, "ngIf"], [1, "flex", "flex-column", "gap-2", "mt-3"], [4, "ngFor", "ngForOf"], ["styleClass", "bg-yellow-100 text-black-alpha-90", 1, "max-w-max"], [1, "pi", "pi-spin", "pi-spinner"], ["styleClass", "bg-orange-100 text-black-alpha-90", 1, "max-w-max"], [1, "mb-0"], ["labelKey", "Broken", "type", "prod", 3, "approve", "remove", "links"], ["labelKey", "Broken", "type", "proto", 3, "approve", "remove", "links"], ["labelKey", "Redirected", "type", "prod", 3, "approve", "remove", "links"], ["labelKey", "Redirected", "type", "proto", 3, "approve", "remove", "links"], ["labelKey", "Blocked", "type", "prod", 3, "approve", "remove", "links"], ["labelKey", "Blocked", "type", "proto", 3, "approve", "remove", "links"], [1, "my-0", "list-none"], [1, "pi", "pi-check", "text-green-500", "mr-2"], [1, "pi", "pi-check", "text-blue-500", "mr-2"]], template: function ValidateUrlsComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "h2", 3);
+      \u0275\u0275text(1, "Canada.ca URLs");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(2, "p", 4);
+      \u0275\u0275text(3, "Paste some relevant Canada.ca URLs to get started. These links will be crawled to find any child pages to include in your inventory. Each link should begin on a new line. If you have prototype links, you can paste both columns or separate them with a comma or semicolon.");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(4, "p-iftalabel")(5, "textarea", 5);
+      \u0275\u0275twoWayListener("ngModelChange", function ValidateUrlsComponent_Template_textarea_ngModelChange_5_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.iaState.getUrlData().rawUrls, $event) || (ctx.iaState.getUrlData().rawUrls = $event);
+        return $event;
+      });
+      \u0275\u0275listener("change", function ValidateUrlsComponent_Template_textarea_change_5_listener() {
+        return ctx.setUrlPairs();
+      })("paste", function ValidateUrlsComponent_Template_textarea_paste_5_listener() {
+        return ctx.onPasteUrls();
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(6, "label", 6);
+      \u0275\u0275text(7, "URLs");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275template(8, ValidateUrlsComponent_p_table_8_Template, 5, 2, "p-table", 7);
+      \u0275\u0275elementStart(9, "p-button", 8);
+      \u0275\u0275listener("onClick", function ValidateUrlsComponent_Template_p_button_onClick_9_listener() {
+        return ctx.validateUrlPairs();
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(10, ValidateUrlsComponent_ng_container_10_Template, 7, 4, "ng-container", 9);
+      \u0275\u0275element(11, "p-confirmpopup");
+      \u0275\u0275template(12, ValidateUrlsComponent_h2_12_Template, 2, 0, "h2", 10);
+      \u0275\u0275elementStart(13, "div", 11);
+      \u0275\u0275template(14, ValidateUrlsComponent_ca_link_list_14_Template, 1, 1, "ca-link-list", 12)(15, ValidateUrlsComponent_ca_link_list_15_Template, 1, 1, "ca-link-list", 13);
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(16, ValidateUrlsComponent_h2_16_Template, 2, 0, "h2", 10);
+      \u0275\u0275elementStart(17, "div", 11);
+      \u0275\u0275template(18, ValidateUrlsComponent_ca_link_list_18_Template, 1, 1, "ca-link-list", 14)(19, ValidateUrlsComponent_ca_link_list_19_Template, 1, 1, "ca-link-list", 15);
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(20, ValidateUrlsComponent_h2_20_Template, 2, 0, "h2", 10);
+      \u0275\u0275elementStart(21, "div", 11);
+      \u0275\u0275template(22, ValidateUrlsComponent_ca_link_list_22_Template, 1, 1, "ca-link-list", 16)(23, ValidateUrlsComponent_ca_link_list_23_Template, 1, 1, "ca-link-list", 17);
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(24, ValidateUrlsComponent_ng_container_24_Template, 6, 2, "ng-container", 9);
+    }
+    if (rf & 2) {
+      \u0275\u0275advance(5);
+      \u0275\u0275twoWayProperty("ngModel", ctx.iaState.getUrlData().rawUrls);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("ngIf", ctx.iaState.getUrlData().includePrototypeLinks);
+      \u0275\u0275advance();
+      \u0275\u0275property("loading", ctx.iaState.getUrlData().isValidating)("disabled", ctx.iaState.getUrlData().rawUrls.length === 0 || ctx.iaState.getUrlData().isValidated);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.iaState.getUrlData().isValidating || ctx.iaState.getUrlData().isValidated);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngIf", ctx.urlsBad.length > 0 || ctx.urlsProtoBad.length > 0);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngIf", ctx.urlsBad.length > 0);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.urlsProtoBad.length > 0);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.urlsRedirected.length > 0 || ctx.urlsProtoRedirected.length > 0);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngIf", ctx.urlsRedirected.length > 0);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.urlsProtoRedirected.length > 0);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.urlsBlocked.length > 0 || ctx.urlsProtoBlocked.length > 0);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngIf", ctx.urlsBlocked.length > 0);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.urlsProtoBlocked.length > 0);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.urlsOk.length > 0 || ctx.urlsProtoOk.length > 0);
+    }
+  }, dependencies: [
+    CommonModule,
+    NgForOf,
+    NgIf,
+    FormsModule,
+    DefaultValueAccessor,
+    NgControlStatus,
+    NgModel,
+    TranslateModule,
+    ProgressBarModule,
+    ProgressBar,
+    ConfirmPopupModule,
+    ConfirmPopup,
+    TextareaModule,
+    Textarea,
+    InputTextModule,
+    IftaLabelModule,
+    IftaLabel,
+    InputGroupModule,
+    InputGroupAddonModule,
+    ButtonModule,
+    Button,
+    TooltipModule,
+    TableModule,
+    Table,
+    ChipModule,
+    Chip,
+    LinkListComponent
+  ], encapsulation: 2 });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ValidateUrlsComponent, [{
+    type: Component,
+    args: [{ selector: "ca-validate-urls", imports: [
+      CommonModule,
+      FormsModule,
+      TranslateModule,
+      ProgressBarModule,
+      ConfirmPopupModule,
+      TextareaModule,
+      InputTextModule,
+      IftaLabelModule,
+      InputGroupModule,
+      InputGroupAddonModule,
+      ButtonModule,
+      TooltipModule,
+      TableModule,
+      ChipModule,
+      LinkListComponent
+    ], template: `<!--Enter URLs-->
+<h2 class="my-0">Canada.ca URLs</h2>
+<p class="my-0 text-color-secondary text-xs">Paste some relevant Canada.ca URLs to get started. These links will be crawled to find any child pages to include in your inventory. Each link should begin on a new line. If you have prototype links, you can paste both columns or separate them with a comma or semicolon.</p>
+
+<p-iftalabel>
+    <textarea id="urls" autoResize="true" rows="5" pTextarea [(ngModel)]="iaState.getUrlData().rawUrls" (change)="setUrlPairs()" (paste)="onPasteUrls()" fluid></textarea>
+    <label for="urls">URLs</label>
+</p-iftalabel>
+
+<!--Show url pairs if prototype links were included-->
+<p-table [value]="iaState.getUrlData().urlPairs" *ngIf="iaState.getUrlData().includePrototypeLinks" size="small" stripedRows [scrollable]="true" scrollHeight="400px" styleClass="mb-2">
+    <ng-template #header>
+        <tr>
+            <th>Production URL</th>
+            <th>Prototype URL</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-url>
+        <tr>
+            <td>{{ url.production.href }}</td>
+            <td>{{ url.prototype?.href }}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<!--Validate links button-->
+<p-button label="Validate URLs" icon="pi pi-check-square" [loading]="iaState.getUrlData().isValidating" (onClick)="validateUrlPairs()" [disabled]="iaState.getUrlData().rawUrls.length === 0 || iaState.getUrlData().isValidated" />
+
+<!--Show link validation-->
+<ng-container *ngIf="iaState.getUrlData().isValidating || iaState.getUrlData().isValidated">
+    <h2 *ngIf="urlsChecking.length > 0">Validating links</h2>
+    <h2 *ngIf="urlsChecking.length === 0">Validated links</h2>
+
+    <p-progressbar [value]="iaState.getUrlData().urlPercent">
+        <ng-template #content let-value>
+            <span>{{iaState.getUrlData().urlChecked}}/{{iaState.getUrlData().urlTotal}}</span>
+        </ng-template>
+    </p-progressbar>
+
+    <div class="flex flex-column gap-2 mt-3" *ngIf="urlsChecking.length > 0 || urlsProtoChecking.length > 0">
+        <ng-container *ngFor="let url of urlsChecking">
+            <p-chip styleClass="bg-yellow-100 text-black-alpha-90" class="max-w-max">
+                <i class="pi pi-spin pi-spinner"></i>
+                <span>{{ url.href }}</span>
+            </p-chip>
+        </ng-container>
+        <ng-container *ngFor="let url of urlsProtoChecking">
+            <p-chip styleClass="bg-orange-100 text-black-alpha-90" class="max-w-max">
+                <i class="pi pi-spin pi-spinner"></i>
+                <span>{{ url.href }}</span>
+            </p-chip>
+        </ng-container>
+    </div>
+</ng-container>
+
+<p-confirmpopup />
+<h2 *ngIf="urlsBad.length > 0 || urlsProtoBad.length > 0" class="mb-0">Broken links</h2>
+<div class="flex flex-column gap-2">
+    <ca-link-list labelKey="Broken"
+                  [links]="urlsBad"
+                  type="prod"
+                  (approve)="approve($event.url, $event.event, 'prod')"
+                  (remove)="remove($event, 'prod')"
+                  *ngIf="urlsBad.length > 0">
+    </ca-link-list>
+    <ca-link-list labelKey="Broken"
+                  [links]="urlsProtoBad"
+                  type="proto"
+                  (approve)="approve($event.url, $event.event, 'proto')"
+                  (remove)="remove($event, 'proto')"
+                  *ngIf="urlsProtoBad.length > 0">
+    </ca-link-list>
+</div>
+<h2 *ngIf="urlsRedirected.length > 0 || urlsProtoRedirected.length > 0" class="mb-0">Redirected links</h2>
+<div class="flex flex-column gap-2">
+    <ca-link-list labelKey="Redirected"
+                  [links]="urlsRedirected"
+                  type="prod"
+                  (approve)="approve($event.url, $event.event, 'prod')"
+                  (remove)="remove($event, 'prod')"
+                  *ngIf="urlsRedirected.length > 0">
+    </ca-link-list>
+    <ca-link-list labelKey="Redirected"
+                  [links]="urlsProtoRedirected"
+                  type="proto"
+                  (approve)="approve($event.url, $event.event, 'proto')"
+                  (remove)="remove($event, 'proto')"
+                  *ngIf="urlsProtoRedirected.length > 0">
+    </ca-link-list>
+</div>
+<h2 *ngIf="urlsBlocked.length > 0 || urlsProtoBlocked.length > 0" class="mb-0">Blocked links</h2>
+<div class="flex flex-column gap-2">
+    <ca-link-list labelKey="Blocked"
+                  [links]="urlsBlocked"
+                  type="prod"
+                  (approve)="approve($event.url, $event.event, 'prod')"
+                  (remove)="remove($event, 'prod')"
+                  *ngIf="urlsBlocked.length > 0">
+    </ca-link-list>
+    <ca-link-list labelKey="Blocked"
+                  [links]="urlsProtoBlocked"
+                  type="proto"
+                  (approve)="approve($event.url, $event.event, 'proto')"
+                  (remove)="remove($event, 'proto')"
+                  *ngIf="urlsProtoBlocked.length > 0">
+    </ca-link-list>
+</div>
+<ng-container *ngIf="urlsOk.length > 0 || urlsProtoOk.length > 0">
+    <h2 class="mb-0">Valid links</h2>
+    <ul class="my-0 list-none">
+        <li *ngFor="let url of urlsOk"><i class="pi pi-check text-green-500 mr-2"></i>{{ url.href }}</li>
+        <li *ngFor="let url of urlsProtoOk"><i class="pi pi-check text-blue-500 mr-2"></i>{{ url.href }}</li>
+    </ul>
+</ng-container>` }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ValidateUrlsComponent, { className: "ValidateUrlsComponent", filePath: "src/app/views/ia-assistant/components/validate-urls.component.ts", lineNumber: 36 });
+})();
+
+// src/app/views/ia-assistant/services/ia-relationship.service.ts
+var IaRelationshipService = class _IaRelationshipService {
+  fetchService = inject(FetchService);
+  //Get breadcrumb
+  getBreadcrumb(doc, baseUrl) {
+    const breadcrumbItems = doc.querySelectorAll(".breadcrumb li a");
+    const breadcrumbArray = [];
+    breadcrumbItems.forEach((el) => {
+      const rawHref = el.getAttribute("href") || "";
+      let absoluteUrl = "";
+      try {
+        absoluteUrl = new URL(rawHref, baseUrl).href;
+      } catch {
+        console.warn(`Invalid breadcrumb href: ${rawHref}`);
+      }
+      breadcrumbArray.push({
+        label: el.textContent?.trim() || "",
+        url: absoluteUrl
+      });
+    });
+    return breadcrumbArray;
+  }
+  //Add breadcrumb trail & H1 to user input urls (keep prototype url for later use)
+  getAllBreadcrumbs(urlPairs) {
+    return __async(this, null, function* () {
+      const results = [];
+      for (const pair of urlPairs) {
+        const prodUrl = pair.production.href;
+        if (!prodUrl)
+          continue;
+        try {
+          const doc = yield this.fetchService.fetchContent(prodUrl, "prod", 5, "random");
+          const breadcrumb = this.getBreadcrumb(doc, "https://www.canada.ca");
+          const h1Elements = Array.from(doc.querySelectorAll("h1"));
+          const h1 = h1Elements.map((e) => e.textContent?.trim()).filter(Boolean).join("<br>");
+          results.push({
+            href: prodUrl,
+            h1,
+            breadcrumb,
+            descendants: [],
+            minDepth: 0,
+            prototype: pair.prototype?.href
+          });
+        } catch (error) {
+          console.error(`Error fetching ${prodUrl}:`, error);
+        }
+      }
+      return results;
+    });
+  }
+  //Gets root URLs by checking to see if each page is in the breadcrumb of another page
+  getRoots(pages) {
+    const byHref = new Map(pages.map((p2) => [p2.href, p2]));
+    for (const page of pages) {
+      for (const crumb of page.breadcrumb) {
+        const ancestor = byHref.get(crumb.url);
+        if (!ancestor || ancestor.href === page.href)
+          continue;
+        if (!ancestor.descendants.includes(page.href)) {
+          ancestor.descendants.push(page.href);
+        }
+      }
+    }
+    const descendantSet = new Set(pages.flatMap((p2) => p2.descendants));
+    const roots = pages.filter((p2) => !descendantSet.has(p2.href));
+    for (const root of roots) {
+      let minDepth = 2;
+      for (const childHref of root.descendants) {
+        const childPage = byHref.get(childHref);
+        if (!childPage)
+          continue;
+        const index = childPage.breadcrumb.findIndex((bc) => bc.url === root.href);
+        if (index !== -1) {
+          const depth = childPage.breadcrumb.length + 2 - index;
+          minDepth = Math.max(minDepth, depth);
+        }
+      }
+      root.minDepth = minDepth;
+    }
+    return roots;
+  }
+  //Colors and styles for breadcrumbs
+  Icons = {
+    pending: "pi pi-question-circle",
+    valid: "pi pi-arrow-circle-right",
+    orphan: "pi pi-times-circle",
+    error: "pi pi-times"
+  };
+  Colors = {
+    gray: "text-gray-400 hover:text-gray-600",
+    green: "text-green-500 hover:text-green-600",
+    red: "text-red-500 hover:text-red-600",
+    blue: "text-blue-500 hover:text-blue-600"
+  };
+  Modifiers = {
+    bold: "font-bold",
+    errorBorder: "border-dotted"
+  };
+  //Filter out redundant breadcrumb trails (so we can do least number of fetches in validation step)
+  filterBreadcrumbs(pages) {
+    const trails = pages.map((p2) => [
+      ...p2.breadcrumb[0] ? [__spreadProps(__spreadValues({}, p2.breadcrumb[0]), {
+        styleClass: this.Colors.green,
+        linkTooltip: "Breadcrumb root"
+      })] : [],
+      ...p2.breadcrumb.slice(1).map((crumb) => __spreadProps(__spreadValues({}, crumb), {
+        icon: `${this.Icons.pending} ${this.Colors.gray}`,
+        iconTooltip: "Validation pending",
+        styleClass: this.Colors.gray,
+        linkTooltip: "Validation pending"
+      })),
+      {
+        label: p2.h1,
+        url: p2.href,
+        icon: `${this.Icons.pending} ${this.Colors.gray}`,
+        iconTooltip: "Validation pending",
+        styleClass: this.Colors.gray,
+        linkTooltip: "Validation pending"
+      }
+    ].filter(Boolean));
+    const filtered = trails.filter((trail) => !trails.some((other) => other !== trail && other.length > trail.length && trail.every((crumb, i) => other[i]?.url === crumb.url)));
+    filtered.sort((a, b) => {
+      const minLength = Math.min(a.length, b.length);
+      for (let i = 0; i < minLength; i++) {
+        if (a[i].url !== b[i].url) {
+          return a[i].url.localeCompare(b[i].url);
+        }
+      }
+      return a.length - b.length;
+    });
+    for (const page of pages) {
+      if (page.prototype) {
+        for (const breadcrumb of filtered) {
+          for (const crumb of breadcrumb) {
+            if (crumb.url === page.href) {
+              crumb.prototype = page.prototype;
+            }
+          }
+        }
+      }
+    }
+    return filtered;
+  }
+  //Check if breadcrumb parent pages link to their children
+  validateBreadcrumbs(breadcrumbs) {
+    return __async(this, null, function* () {
+      for (const breadcrumb of breadcrumbs) {
+        for (let i = 1; i < breadcrumb.length; i++) {
+          const parent = breadcrumb[i - 1];
+          const child = breadcrumb[i];
+          if (!parent.url || !child.url) {
+            child.icon = `${this.Icons.error} ${this.Colors.red}`;
+            child.iconTooltip = "Link missing from breadcrumb";
+            child.valid = false;
+            continue;
+          }
+          try {
+            const doc = yield this.fetchService.fetchContent(parent.url, "prod", 5, "random");
+            const links = Array.from(doc.querySelectorAll("a")).map((a) => a.getAttribute("href")).filter((href) => !!href).map((href) => {
+              try {
+                return new URL(href, parent.url).href;
+              } catch {
+                return href;
+              }
+            });
+            if (links.includes(child.url)) {
+              child.icon = `${this.Icons.valid} ${this.Colors.green}`;
+              child.iconTooltip = "Valid connection";
+              child.valid = true;
+              child.styleClass = this.Colors.green;
+              child.linkTooltip = "Valid child page";
+            } else {
+              child.icon = `${this.Icons.orphan} ${this.Colors.red}`;
+              child.iconTooltip = "No link from parent";
+              child.valid = false;
+              child.styleClass = this.Colors.red;
+              child.linkTooltip = "IA Orphan";
+            }
+          } catch (error) {
+            console.error(`Error validating breadcrumb link from ${parent.url} to ${child.url}:`, error);
+            child.icon = `${this.Icons.error} ${this.Colors.red}`;
+            child.iconTooltip = "Error validating link";
+            child.valid = false;
+            child.styleClass = `${this.Colors.red} ${this.Modifiers.errorBorder}`;
+            child.linkTooltip = "Error validating link";
+          }
+        }
+      }
+      return breadcrumbs;
+    });
+  }
+  highlightBreadcrumbs(breadcrumbs, rootPages) {
+    const rootSet = new Set(rootPages.map((r2) => r2.href));
+    const descendantSet = new Set(rootPages.flatMap((r2) => r2.descendants || []));
+    const depthMap = new Map(rootPages.map((r2) => [r2.href, r2.minDepth]));
+    let hasBreakAfterRoot = false;
+    let hasBreakBeforeRoot = false;
+    const highlighted = breadcrumbs.map((chain) => {
+      let isAfterRoot = false;
+      let broken = false;
+      return chain.map((crumb) => {
+        const isRoot = rootSet.has(crumb.url);
+        const isDescendant = descendantSet.has(crumb.url);
+        crumb.isRoot = isRoot;
+        crumb.isDescendant = isDescendant;
+        crumb.minDepth = depthMap.get(crumb.url);
+        crumb.isBeforeRoot = false;
+        if (isRoot) {
+          isAfterRoot = true;
+          broken = false;
+          crumb.styleClass = `${this.Colors.blue} ${this.Modifiers.bold}`;
+          crumb.linkTooltip = "Starting point for IA crawl (user-added page)";
+        } else if (isAfterRoot) {
+          if (broken) {
+            crumb.styleClass = this.Colors.red;
+            crumb.linkTooltip = "Descendant of IA orphan";
+          } else if (crumb.icon?.includes("pi-times")) {
+            broken = true;
+            hasBreakAfterRoot = true;
+          }
+        } else {
+          if (crumb.icon?.includes("pi-times")) {
+            hasBreakBeforeRoot = true;
+          }
+          crumb.styleClass = this.Colors.gray;
+          crumb.linkTooltip = "Page will be shown in IA map for context but no links will be crawled";
+          crumb.isBeforeRoot = true;
+        }
+        if (isDescendant) {
+          crumb.styleClass += ` ${this.Modifiers.bold}`;
+          crumb.linkTooltip += " (user-added page)";
+        }
+        return crumb;
+      });
+    });
+    return { breadcrumbs: highlighted, hasBreakAfterRoot, hasBreakBeforeRoot };
+  }
+  static \u0275fac = function IaRelationshipService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _IaRelationshipService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _IaRelationshipService, factory: _IaRelationshipService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(IaRelationshipService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/views/ia-assistant/components/set-roots.component.ts
+function SetRootsComponent_h2_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2");
+    \u0275\u0275text(1, "Validating breadcrumb");
+    \u0275\u0275elementEnd();
+  }
+}
+function SetRootsComponent_h2_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2");
+    \u0275\u0275text(1, "Validated breadcrumb");
+    \u0275\u0275elementEnd();
+  }
+}
+function SetRootsComponent_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r0.breadcrumbData().step);
+  }
+}
+function SetRootsComponent_h2_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 6);
+    \u0275\u0275text(1, "Root pages");
+    \u0275\u0275elementEnd();
+  }
+}
+function SetRootsComponent_ng_container_7_ul_4_ng_container_8_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "li");
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const page_r2 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(page_r2);
+  }
+}
+function SetRootsComponent_ng_container_7_ul_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "ul")(1, "li");
+    \u0275\u0275text(2, "Crawl depth ");
+    \u0275\u0275elementStart(3, "strong");
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(5, " to reach user-added child pages");
+    \u0275\u0275element(6, "br");
+    \u0275\u0275text(7);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(8, SetRootsComponent_ng_container_7_ul_4_ng_container_8_Template, 3, 1, "ng-container", 5);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const root_r3 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance(4);
+    \u0275\u0275textInterpolate(root_r3.minDepth);
+    \u0275\u0275advance(3);
+    \u0275\u0275textInterpolate1(" ", root_r3.href, " ");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngForOf", root_r3.descendants);
+  }
+}
+function SetRootsComponent_ng_container_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "li")(2, "a", 7);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(4, SetRootsComponent_ng_container_7_ul_4_Template, 9, 3, "ul", 1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const root_r3 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275property("href", root_r3.href, \u0275\u0275sanitizeUrl);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(root_r3.h1);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", root_r3.descendants.length > 0);
+  }
+}
+function SetRootsComponent_h2_8_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "h2", 6);
+    \u0275\u0275text(1, "Breadcrumb branches");
+    \u0275\u0275elementEnd();
+  }
+}
+function SetRootsComponent_ng_container_10_ng_container_3_span_2_i_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 16);
+  }
+}
+function SetRootsComponent_ng_container_10_ng_container_3_span_2_i_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 17);
+    \u0275\u0275pipe(1, "translate");
+    \u0275\u0275pipe(2, "translate");
+  }
+  if (rf & 2) {
+    const crumb_r4 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275classMap(crumb_r4.icon);
+    \u0275\u0275property("pTooltip", \u0275\u0275pipeBind1(1, 4, `${crumb_r4.iconTooltip}`));
+    \u0275\u0275attribute("aria-label", \u0275\u0275pipeBind1(2, 6, `${crumb_r4.iconTooltip}`));
+  }
+}
+function SetRootsComponent_ng_container_10_ng_container_3_span_2_i_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 16);
+  }
+}
+function SetRootsComponent_ng_container_10_ng_container_3_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 13);
+    \u0275\u0275template(1, SetRootsComponent_ng_container_10_ng_container_3_span_2_i_1_Template, 1, 0, "i", 14)(2, SetRootsComponent_ng_container_10_ng_container_3_span_2_i_2_Template, 3, 8, "i", 15)(3, SetRootsComponent_ng_container_10_ng_container_3_span_2_i_3_Template, 1, 0, "i", 14);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const crumb_r4 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", crumb_r4.icon);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", crumb_r4.icon);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", crumb_r4.icon);
+  }
+}
+function SetRootsComponent_ng_container_10_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "span", 10);
+    \u0275\u0275template(2, SetRootsComponent_ng_container_10_ng_container_3_span_2_Template, 4, 3, "span", 11);
+    \u0275\u0275elementStart(3, "a", 12);
+    \u0275\u0275pipe(4, "translate");
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const crumb_r4 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", crumb_r4.icon);
+    \u0275\u0275advance();
+    \u0275\u0275property("href", crumb_r4.url, \u0275\u0275sanitizeUrl)("ngClass", crumb_r4.styleClass)("pTooltip", \u0275\u0275pipeBind1(4, 5, `${crumb_r4.linkTooltip}`));
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(crumb_r4.label);
+  }
+}
+function SetRootsComponent_ng_container_10_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "li", 8)(2, "div", 9);
+    \u0275\u0275template(3, SetRootsComponent_ng_container_10_ng_container_3_Template, 6, 7, "ng-container", 5);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const breadcrumb_r5 = ctx.$implicit;
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngForOf", breadcrumb_r5);
+  }
+}
+function SetRootsComponent_ng_container_11_p_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p", 21);
+    \u0275\u0275text(1, "One or more of your pages is an IA orphan and will not be included in your IA tree if we crawl from the detected root pages.");
+    \u0275\u0275element(2, "br");
+    \u0275\u0275text(3, "To-do: automatically set IA orphans as roots so their child pages are crawled");
+    \u0275\u0275elementEnd();
+  }
+}
+function SetRootsComponent_ng_container_11_p_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p", 22);
+    \u0275\u0275text(1, "One or more pages in the breadcrumb are IA orphans. These should be fixed if possible but they won't impact the crawl since they occur before the detected root pages.");
+    \u0275\u0275elementEnd();
+  }
+}
+function SetRootsComponent_ng_container_11_p_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p", 23);
+    \u0275\u0275text(1, "There are no problems with your breadcrumb!");
+    \u0275\u0275elementEnd();
+  }
+}
+function SetRootsComponent_ng_container_11_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, SetRootsComponent_ng_container_11_p_1_Template, 4, 0, "p", 18)(2, SetRootsComponent_ng_container_11_p_2_Template, 2, 0, "p", 19)(3, SetRootsComponent_ng_container_11_p_3_Template, 2, 0, "p", 20);
+    \u0275\u0275elementStart(4, "p");
+    \u0275\u0275text(5, "To-do: set up method for user to change which pages to crawl");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.breadcrumbData().hasBreakAfterRoot);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.breadcrumbData().hasBreakBeforeRoot && !ctx_r0.breadcrumbData().hasBreakAfterRoot);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r0.breadcrumbData().hasBreakBeforeRoot && !ctx_r0.breadcrumbData().hasBreakAfterRoot);
+  }
+}
+var SetRootsComponent = class _SetRootsComponent {
+  iaState = inject(IaStateService);
+  iaService = inject(IaRelationshipService);
+  fetchService = inject(FetchService);
+  ngOnInit() {
+    return __async(this, null, function* () {
+      yield this.checkBreadcrumbs();
+    });
+  }
+  breadcrumbData = this.iaState.getBreadcrumbData;
+  checkBreadcrumbs() {
+    return __async(this, null, function* () {
+      console.log(this.breadcrumbData().progress);
+      if (this.breadcrumbData().progress >= 100)
+        return;
+      if (this.breadcrumbData().progress < 60) {
+        this.iaState.setBreadcrumbData({ progress: 0, step: "" });
+        this.iaState.setBreadcrumbData({ progress: 20, step: "Getting all breadcrumbs" });
+        const allPages = yield this.iaService.getAllBreadcrumbs(this.iaState.getUrlData().urlPairs);
+        this.iaState.setBreadcrumbData({ progress: 40, step: "Finding root pages" });
+        yield this.fetchService.simulateDelay(2e3);
+        this.breadcrumbData().rootPages = this.iaService.getRoots(allPages);
+        this.iaState.setBreadcrumbData({ progress: 50, step: "Filtering breadcrumbs" });
+        yield this.fetchService.simulateDelay(2e3);
+        this.breadcrumbData().breadcrumbs = this.iaService.filterBreadcrumbs(allPages);
+      }
+      if (this.breadcrumbData().progress < 90) {
+        this.iaState.saveToLocalStorage();
+        this.iaState.setBreadcrumbData({ progress: 60, step: "Validating breadcrumbs" });
+        this.breadcrumbData().breadcrumbs = yield this.iaService.validateBreadcrumbs(this.breadcrumbData().breadcrumbs);
+      }
+      this.iaState.setBreadcrumbData({ progress: 90, step: "Highlighting breadcrumbs" });
+      yield this.fetchService.simulateDelay(2e3);
+      const { breadcrumbs: highlighted, hasBreakAfterRoot, hasBreakBeforeRoot } = this.iaService.highlightBreadcrumbs(this.breadcrumbData().breadcrumbs, this.breadcrumbData().rootPages);
+      this.iaState.setBreadcrumbData({
+        breadcrumbs: highlighted,
+        hasBreakAfterRoot,
+        hasBreakBeforeRoot,
+        progress: 100,
+        step: "Complete"
+      });
+      this.iaState.saveToLocalStorage();
+    });
+  }
+  static \u0275fac = function SetRootsComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _SetRootsComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SetRootsComponent, selectors: [["ca-set-roots"]], decls: 12, vars: 8, consts: [["content", ""], [4, "ngIf"], [3, "value"], ["class", "mb-0", 4, "ngIf"], [1, "mt-0"], [4, "ngFor", "ngForOf"], [1, "mb-0"], ["target", "_blank", 1, "text-color-secondary", "hover:text-color", "no-underline", "flex-wrap", 3, "href"], [1, "mb-3", "pl-2"], [1, "flex", "flex-row", "flex-wrap", "gap-1"], [1, "flex", "flex-row", "align-items-center", "justify-content-around", "gap-1", "max-w-12rem"], ["class", "flex flex-row", 4, "ngIf"], ["target", "_blank", "tooltipPosition", "top", 1, "no-underline", "flex-wrap", "hover:bg-surface", "p-1", "-mx-1", "border-2", "shadow-2", "border-round-lg", "text-center", 3, "href", "ngClass", "pTooltip"], [1, "flex", "flex-row"], ["class", "pi pi-minus text-gray-300", "aria-hidden", "true", "style", "font-size: 1.25rem", 4, "ngIf"], ["tooltipPosition", "top", "style", "font-size: 1.25rem", 3, "class", "pTooltip", 4, "ngIf"], ["aria-hidden", "true", 1, "pi", "pi-minus", "text-gray-300", 2, "font-size", "1.25rem"], ["tooltipPosition", "top", 2, "font-size", "1.25rem", 3, "pTooltip"], ["class", "text-red-500", 4, "ngIf"], ["class", "text-blue-500", 4, "ngIf"], ["class", "text-green-500", 4, "ngIf"], [1, "text-red-500"], [1, "text-blue-500"], [1, "text-green-500"]], template: function SetRootsComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275template(0, SetRootsComponent_h2_0_Template, 2, 0, "h2", 1)(1, SetRootsComponent_h2_1_Template, 2, 0, "h2", 1);
+      \u0275\u0275elementStart(2, "p-progressbar", 2);
+      \u0275\u0275template(3, SetRootsComponent_ng_template_3_Template, 2, 1, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(5, SetRootsComponent_h2_5_Template, 2, 0, "h2", 3);
+      \u0275\u0275elementStart(6, "ol", 4);
+      \u0275\u0275template(7, SetRootsComponent_ng_container_7_Template, 5, 3, "ng-container", 5);
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(8, SetRootsComponent_h2_8_Template, 2, 0, "h2", 3);
+      \u0275\u0275elementStart(9, "ol", 4);
+      \u0275\u0275template(10, SetRootsComponent_ng_container_10_Template, 4, 1, "ng-container", 5);
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(11, SetRootsComponent_ng_container_11_Template, 6, 3, "ng-container", 1);
+    }
+    if (rf & 2) {
+      \u0275\u0275property("ngIf", ctx.breadcrumbData().progress < 100);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.breadcrumbData().progress === 100);
+      \u0275\u0275advance();
+      \u0275\u0275property("value", ctx.breadcrumbData().progress);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("ngIf", ctx.breadcrumbData().rootPages.length > 0);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngForOf", ctx.breadcrumbData().rootPages);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.breadcrumbData().breadcrumbs.length > 0);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngForOf", ctx.breadcrumbData().breadcrumbs);
+      \u0275\u0275advance();
+      \u0275\u0275property("ngIf", ctx.breadcrumbData().progress === 100);
+    }
+  }, dependencies: [CommonModule, NgClass, NgForOf, NgIf, FormsModule, TranslateModule, TranslatePipe, ProgressBarModule, ProgressBar, TooltipModule, Tooltip], encapsulation: 2 });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SetRootsComponent, [{
+    type: Component,
+    args: [{ selector: "ca-set-roots", imports: [
+      CommonModule,
+      FormsModule,
+      TranslateModule,
+      ProgressBarModule,
+      TooltipModule
+    ], template: '<h2 *ngIf="breadcrumbData().progress < 100">Validating breadcrumb</h2>\n<h2 *ngIf="breadcrumbData().progress === 100">Validated breadcrumb</h2>\n<!--Progress bar-->\n<p-progressbar [value]="breadcrumbData().progress">\n    <ng-template #content let-value>\n        <span>{{breadcrumbData().step}}</span>\n    </ng-template>\n</p-progressbar>\n\n<!--Display detected root pages-->\n<h2 *ngIf="breadcrumbData().rootPages.length > 0" class="mb-0">Root pages</h2>\n<ol class="mt-0">\n    <ng-container *ngFor="let root of breadcrumbData().rootPages">\n        <li><a [href]="root.href" target="_blank" class="text-color-secondary hover:text-color no-underline flex-wrap">{{root.h1}}</a>\n            <!--Display user-added children of roots-->\n            <ul *ngIf="root.descendants.length > 0">\n                <li>Crawl depth <strong>{{root.minDepth}}</strong> to reach user-added child pages<br>\n                    {{root.href}}\n                </li>\n                <ng-container *ngFor="let page of root.descendants">\n                    <li>{{page}}</li>\n                </ng-container>\n            </ul>\n        </li>\n    </ng-container>\n</ol>\n\n<!--Display detected breadcrumb trails-->\n<h2 *ngIf="breadcrumbData().breadcrumbs.length > 0" class="mb-0">Breadcrumb branches</h2>\n<ol class="mt-0">\n    <ng-container *ngFor="let breadcrumb of breadcrumbData().breadcrumbs">\n        <li class="mb-3 pl-2">\n            <div class="flex flex-row flex-wrap gap-1">\n                <ng-container *ngFor="let crumb of breadcrumb">\n                    <span class="flex flex-row align-items-center justify-content-around gap-1 max-w-12rem">\n                        <span class="flex flex-row" *ngIf="crumb.icon">\n                            <i *ngIf="crumb.icon" class="pi pi-minus text-gray-300" aria-hidden="true" style="font-size: 1.25rem"></i>\n                            <i *ngIf="crumb.icon" [class]="crumb.icon" [pTooltip]="`${crumb.iconTooltip}` | translate" tooltipPosition="top" [attr.aria-label]="`${crumb.iconTooltip}` | translate" style="font-size: 1.25rem"></i>\n                            <i *ngIf="crumb.icon" class="pi pi-minus text-gray-300" aria-hidden="true" style="font-size: 1.25rem"></i>\n                        </span>\n                        <a [href]="crumb.url" target="_blank" class="no-underline flex-wrap hover:bg-surface p-1 -mx-1 border-2 shadow-2 border-round-lg text-center" [ngClass]="crumb.styleClass" [pTooltip]="`${crumb.linkTooltip}` | translate" tooltipPosition="top">{{crumb.label}}</a>\n                    </span>\n                </ng-container>\n            </div>\n        </li>\n    </ng-container>\n</ol>\n<ng-container *ngIf="breadcrumbData().progress === 100">\n    <p *ngIf="breadcrumbData().hasBreakAfterRoot" class="text-red-500">One or more of your pages is an IA orphan and will not be included in your IA tree if we crawl from the detected root pages.<br>To-do: automatically set IA orphans as roots so their child pages are crawled</p>\n    <p *ngIf="breadcrumbData().hasBreakBeforeRoot && !breadcrumbData().hasBreakAfterRoot" class="text-blue-500">One or more pages in the breadcrumb are IA orphans. These should be fixed if possible but they won\'t impact the crawl since they occur before the detected root pages.</p>\n    <p *ngIf="!breadcrumbData().hasBreakBeforeRoot && !breadcrumbData().hasBreakAfterRoot" class="text-green-500">There are no problems with your breadcrumb!</p>\n    <p>To-do: set up method for user to change which pages to crawl</p>\n</ng-container>' }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SetRootsComponent, { className: "SetRootsComponent", filePath: "src/app/views/ia-assistant/components/set-roots.component.ts", lineNumber: 22 });
+})();
+
+// src/app/views/ia-assistant/components/search-criteria.component.ts
+function SearchCriteriaComponent_p_chip_12_p_badge_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-badge", 8);
+  }
+}
+function SearchCriteriaComponent_p_chip_12_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-chip", 6);
+    \u0275\u0275listener("onRemove", function SearchCriteriaComponent_p_chip_12_Template_p_chip_onRemove_0_listener() {
+      const term_r2 = \u0275\u0275restoreView(_r1).$implicit;
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.removeTerm(term_r2));
+    });
+    \u0275\u0275template(1, SearchCriteriaComponent_p_chip_12_p_badge_1_Template, 1, 0, "p-badge", 7);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const term_r2 = ctx.$implicit;
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275property("label", term_r2.toString())("styleClass", ctx_r2.getTermColor(term_r2))("removable", true);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.isRegex(term_r2));
+  }
+}
+var SearchCriteriaComponent = class _SearchCriteriaComponent {
+  iaState = inject(IaStateService);
+  ngOnInit() {
+    this.iaState.updateTerms();
+  }
+  searchData = this.iaState.getSearchData;
+  updateRawTerms() {
+    this.searchData().rawTerms = this.searchData().terms.map((term) => {
+      if (term instanceof RegExp) {
+        return `regex:${term.source}`;
+      } else {
+        return term;
+      }
+    }).join("; ");
+  }
+  onKeydownTerm(event) {
+    if (event.key === ";" || event.key === "Enter" || event.key === "Tab") {
+      this.iaState.updateTerms();
+    }
+  }
+  onPasteTerm() {
+    setTimeout(() => this.iaState.updateTerms(), 0);
+  }
+  removeTerm(term) {
+    this.searchData().terms = this.searchData().terms.filter((t2) => t2 !== term);
+    console.log(this.searchData().terms);
+    this.updateRawTerms();
+  }
+  isRegex(term) {
+    return term instanceof RegExp;
+  }
+  getTermColor(term) {
+    if (this.isRegex(term))
+      return "bg-blue-100";
+    else if (typeof term === "string" && term.startsWith("invalid regex"))
+      return "bg-red-100";
+    else
+      return "bg-green-100";
+  }
+  static \u0275fac = function SearchCriteriaComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _SearchCriteriaComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SearchCriteriaComponent, selectors: [["ca-search-criteria"]], decls: 13, vars: 2, consts: [[1, "my-0"], [1, "my-0", "text-color-secondary", "text-xs"], ["id", "search", "autoResize", "true", "rows", "2", "pTextarea", "", "fluid", "", "placeholder", "", 3, "ngModelChange", "blur", "keydown", "paste", "ngModel"], ["for", "search"], [1, "flex", "gap-2", "flex-wrap"], [3, "label", "styleClass", "removable", "onRemove", 4, "ngFor", "ngForOf"], [3, "onRemove", "label", "styleClass", "removable"], ["value", "regex", "severity", "info", 4, "ngIf"], ["value", "regex", "severity", "info"]], template: function SearchCriteriaComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "h2", 0);
+      \u0275\u0275text(1, "Search criteria");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(2, "p", 1);
+      \u0275\u0275text(3, "Enter terms separated by semicolons or new lines. These will be used to include additional pages in your result, even if there is no direct breadcrumb IA relationship between the pages. The search is ");
+      \u0275\u0275elementStart(4, "strong");
+      \u0275\u0275text(5, "not");
+      \u0275\u0275elementEnd();
+      \u0275\u0275text(6, ' case-sensitive. Regex patterns should begin with "regex:".');
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(7, "p-iftalabel")(8, "textarea", 2);
+      \u0275\u0275twoWayListener("ngModelChange", function SearchCriteriaComponent_Template_textarea_ngModelChange_8_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.searchData().rawTerms, $event) || (ctx.searchData().rawTerms = $event);
+        return $event;
+      });
+      \u0275\u0275listener("blur", function SearchCriteriaComponent_Template_textarea_blur_8_listener() {
+        ctx.iaState.updateTerms();
+        return ctx.updateRawTerms();
+      })("keydown", function SearchCriteriaComponent_Template_textarea_keydown_8_listener($event) {
+        return ctx.onKeydownTerm($event);
+      })("paste", function SearchCriteriaComponent_Template_textarea_paste_8_listener() {
+        return ctx.onPasteTerm();
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(9, "label", 3);
+      \u0275\u0275text(10, "Search terms (optional)");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(11, "div", 4);
+      \u0275\u0275template(12, SearchCriteriaComponent_p_chip_12_Template, 2, 4, "p-chip", 5);
+      \u0275\u0275elementEnd();
+    }
+    if (rf & 2) {
+      \u0275\u0275advance(8);
+      \u0275\u0275twoWayProperty("ngModel", ctx.searchData().rawTerms);
+      \u0275\u0275advance(4);
+      \u0275\u0275property("ngForOf", ctx.searchData().terms);
+    }
+  }, dependencies: [
+    CommonModule,
+    NgForOf,
+    NgIf,
+    FormsModule,
+    DefaultValueAccessor,
+    NgControlStatus,
+    NgModel,
+    TranslateModule,
+    TextareaModule,
+    Textarea,
+    IftaLabelModule,
+    IftaLabel,
+    ChipModule,
+    Chip,
+    BadgeModule,
+    Badge
+  ], encapsulation: 2 });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SearchCriteriaComponent, [{
+    type: Component,
+    args: [{ selector: "ca-search-criteria", imports: [
+      CommonModule,
+      FormsModule,
+      TranslateModule,
+      TextareaModule,
+      IftaLabelModule,
+      ChipModule,
+      BadgeModule
+    ], template: '<h2 class="my-0">Search criteria</h2>\n<p class="my-0 text-color-secondary text-xs">Enter terms separated by semicolons or new lines. These will be used to include additional pages in your result, even if there is no direct breadcrumb IA relationship between the pages. The search is <strong>not</strong> case-sensitive. Regex patterns should begin with "regex:".</p>\n<p-iftalabel>\n    <textarea id="search" autoResize="true" rows="2" pTextarea [(ngModel)]="searchData().rawTerms" (blur)="iaState.updateTerms(); updateRawTerms();" (keydown)="onKeydownTerm($event)" (paste)="onPasteTerm()" fluid\n              placeholder=""></textarea>\n    <label for="search">Search terms (optional)</label>\n</p-iftalabel>\n\n<div class="flex gap-2 flex-wrap">\n    <p-chip *ngFor="let term of searchData().terms" [label]="term.toString()" [styleClass]="getTermColor(term)" [removable]="true" (onRemove)="removeTerm(term)"><p-badge *ngIf="isRegex(term)" value="regex" severity="info"></p-badge></p-chip>\n</div>' }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SearchCriteriaComponent, { className: "SearchCriteriaComponent", filePath: "src/app/views/ia-assistant/components/search-criteria.component.ts", lineNumber: 18 });
+})();
+
+// node_modules/primeng/fesm2022/primeng-toggleswitch.mjs
+var _c013 = ["handle"];
+var _c114 = ["input"];
+var _c25 = (a0) => ({
+  checked: a0
+});
+function ToggleSwitch_Conditional_5_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function ToggleSwitch_Conditional_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, ToggleSwitch_Conditional_5_ng_container_0_Template, 1, 0, "ng-container", 4);
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r1.handleTemplate || ctx_r1._handleTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c25, ctx_r1.checked()));
+  }
+}
+var theme10 = ({
+  dt
+}) => `
+.p-toggleswitch {
+    display: inline-block;
+    width: ${dt("toggleswitch.width")};
+    height: ${dt("toggleswitch.height")};
+}
+
+.p-toggleswitch-input {
+    cursor: pointer;
+    appearance: none;
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    z-index: 1;
+    outline: 0 none;
+    border-radius: ${dt("toggleswitch.border.radius")};
+}
+
+.p-toggleswitch-slider {
+    display: inline-block;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    border-width: ${dt("toggleswitch.border.width")};
+    border-style: solid;
+    border-color: ${dt("toggleswitch.border.color")};
+    background: ${dt("toggleswitch.background")};
+    transition: background ${dt("toggleswitch.transition.duration")}, color ${dt("toggleswitch.transition.duration")}, border-color ${dt("toggleswitch.transition.duration")}, outline-color ${dt("toggleswitch.transition.duration")}, box-shadow ${dt("toggleswitch.transition.duration")};
+    border-radius: ${dt("toggleswitch.border.radius")};
+    outline-color: transparent;
+    box-shadow: ${dt("toggleswitch.shadow")};
+}
+
+.p-toggleswitch-handle {
+    position: absolute;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: ${dt("toggleswitch.handle.background")};
+    color: ${dt("toggleswitch.handle.color")};
+    width: ${dt("toggleswitch.handle.size")};
+    height: ${dt("toggleswitch.handle.size")};
+    inset-inline-start: ${dt("toggleswitch.gap")};
+    margin-block-start: calc(-1 * calc(${dt("toggleswitch.handle.size")} / 2));
+    border-radius: ${dt("toggleswitch.handle.border.radius")};
+    transition: background ${dt("toggleswitch.transition.duration")}, color ${dt("toggleswitch.transition.duration")}, inset-inline-start ${dt("toggleswitch.slide.duration")}, box-shadow ${dt("toggleswitch.slide.duration")};
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
+    background: ${dt("toggleswitch.checked.background")};
+    border-color: ${dt("toggleswitch.checked.border.color")};
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle {
+    background: ${dt("toggleswitch.handle.checked.background")};
+    color: ${dt("toggleswitch.handle.checked.color")};
+    inset-inline-start: calc(${dt("toggleswitch.width")} - calc(${dt("toggleswitch.handle.size")} + ${dt("toggleswitch.gap")}));
+}
+
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover) .p-toggleswitch-slider {
+    background: ${dt("toggleswitch.hover.background")};
+    border-color: ${dt("toggleswitch.hover.border.color")};
+}
+
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover) .p-toggleswitch-handle {
+    background: ${dt("toggleswitch.handle.hover.background")};
+    color: ${dt("toggleswitch.handle.hover.color")};
+}
+
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover).p-toggleswitch-checked .p-toggleswitch-slider {
+    background: ${dt("toggleswitch.checked.hover.background")};
+    border-color: ${dt("toggleswitch.checked.hover.border.color")};
+}
+
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:hover).p-toggleswitch-checked .p-toggleswitch-handle {
+    background: ${dt("toggleswitch.handle.checked.hover.background")};
+    color: ${dt("toggleswitch.handle.checked.hover.color")};
+}
+
+.p-toggleswitch:not(.p-disabled):has(.p-toggleswitch-input:focus-visible) .p-toggleswitch-slider {
+    box-shadow: ${dt("toggleswitch.focus.ring.shadow")};
+    outline: ${dt("toggleswitch.focus.ring.width")} ${dt("toggleswitch.focus.ring.style")} ${dt("toggleswitch.focus.ring.color")};
+    outline-offset: ${dt("toggleswitch.focus.ring.offset")};
+}
+
+.p-toggleswitch.p-invalid > .p-toggleswitch-slider {
+    border-color: ${dt("toggleswitch.invalid.border.color")};
+}
+
+.p-toggleswitch.p-disabled {
+    opacity: 1;
+}
+
+.p-toggleswitch.p-disabled .p-toggleswitch-slider {
+    background: ${dt("toggleswitch.disabled.background")};
+}
+
+.p-toggleswitch.p-disabled .p-toggleswitch-handle {
+    background: ${dt("toggleswitch.handle.disabled.background")};
+}
+
+/* For PrimeNG */
+
+p-toggleSwitch.ng-invalid.ng-dirty > .p-toggleswitch > .p-toggleswitch-slider,
+p-toggle-switch.ng-invalid.ng-dirty > .p-toggleswitch > .p-toggleswitch-slider,
+p-toggleswitch.ng-invalid.ng-dirty > .p-toggleswitch > .p-toggleswitch-slider {
+    border-color: ${dt("toggleswitch.invalid.border.color")};
+}`;
+var inlineStyles2 = {
+  root: {
+    position: "relative"
+  }
+};
+var classes10 = {
+  root: ({
+    instance
+  }) => ({
+    "p-toggleswitch p-component": true,
+    "p-toggleswitch-checked": instance.checked(),
+    "p-disabled": instance.disabled,
+    "p-invalid": instance.invalid
+  }),
+  input: "p-toggleswitch-input",
+  slider: "p-toggleswitch-slider",
+  handle: "p-toggleswitch-handle"
+};
+var ToggleSwitchStyle = class _ToggleSwitchStyle extends BaseStyle {
+  name = "toggleswitch";
+  theme = theme10;
+  classes = classes10;
+  inlineStyles = inlineStyles2;
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275ToggleSwitchStyle_BaseFactory;
+    return function ToggleSwitchStyle_Factory(__ngFactoryType__) {
+      return (\u0275ToggleSwitchStyle_BaseFactory || (\u0275ToggleSwitchStyle_BaseFactory = \u0275\u0275getInheritedFactory(_ToggleSwitchStyle)))(__ngFactoryType__ || _ToggleSwitchStyle);
+    };
+  })();
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+    token: _ToggleSwitchStyle,
+    factory: _ToggleSwitchStyle.\u0275fac
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ToggleSwitchStyle, [{
+    type: Injectable
+  }], null, null);
+})();
+var ToggleSwitchClasses;
+(function(ToggleSwitchClasses2) {
+  ToggleSwitchClasses2["root"] = "p-toggleswitch";
+  ToggleSwitchClasses2["input"] = "p-toggleswitch-input";
+  ToggleSwitchClasses2["slider"] = "p-toggleswitch-slider";
+})(ToggleSwitchClasses || (ToggleSwitchClasses = {}));
+var TOGGLESWITCH_VALUE_ACCESSOR = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => ToggleSwitch),
+  multi: true
+};
+var ToggleSwitch = class _ToggleSwitch extends BaseComponent {
+  /**
+   * Inline style of the component.
+   * @group Props
+   */
+  style;
+  /**
+   * Style class of the component.
+   * @group Props
+   */
+  styleClass;
+  /**
+   * Index of the element in tabbing order.
+   * @group Props
+   */
+  tabindex;
+  /**
+   * Identifier of the input element.
+   * @group Props
+   */
+  inputId;
+  /**
+   * Name of the input element.
+   * @group Props
+   */
+  name;
+  /**
+   * When present, it specifies that the element should be disabled.
+   * @group Props
+   */
+  disabled;
+  /**
+   * When present, it specifies that the component cannot be edited.
+   * @group Props
+   */
+  readonly;
+  /**
+   * Value in checked state.
+   * @group Props
+   */
+  trueValue = true;
+  /**
+   * Value in unchecked state.
+   * @group Props
+   */
+  falseValue = false;
+  /**
+   * Used to define a string that autocomplete attribute the current element.
+   * @group Props
+   */
+  ariaLabel;
+  /**
+   * Establishes relationships between the component and label(s) where its value should be one or more element IDs.
+   * @group Props
+   */
+  ariaLabelledBy;
+  /**
+   * When present, it specifies that the component should automatically get focus on load.
+   * @group Props
+   */
+  autofocus;
+  /**
+   * Callback to invoke when the on value change.
+   * @param {ToggleSwitchChangeEvent} event - Custom change event.
+   * @group Emits
+   */
+  onChange = new EventEmitter();
+  input;
+  /**
+   * Callback to invoke when the on value change.
+   * @type {TemplateRef<ToggleSwitchHandleTemplateContext>} context - Context of the template
+   * @example
+   * ```html
+   * <ng-template #handle let-checked="checked"> </ng-template>
+   * ```
+   * @see {@link ToggleSwitchHandleTemplateContext}
+   * @group Templates
+   */
+  handleTemplate;
+  _handleTemplate;
+  modelValue = false;
+  focused = false;
+  onModelChange = () => {
+  };
+  onModelTouched = () => {
+  };
+  _componentStyle = inject(ToggleSwitchStyle);
+  templates;
+  ngAfterContentInit() {
+    this.templates.forEach((item) => {
+      switch (item.getType()) {
+        case "handle":
+          this._handleTemplate = item.template;
+          break;
+        default:
+          this._handleTemplate = item.template;
+          break;
+      }
+    });
+  }
+  onClick(event) {
+    if (!this.disabled && !this.readonly) {
+      this.modelValue = this.checked() ? this.falseValue : this.trueValue;
+      this.onModelChange(this.modelValue);
+      this.onChange.emit({
+        originalEvent: event,
+        checked: this.modelValue
+      });
+      this.input.nativeElement.focus();
+    }
+  }
+  onFocus() {
+    this.focused = true;
+  }
+  onBlur() {
+    this.focused = false;
+    this.onModelTouched();
+  }
+  writeValue(value) {
+    this.modelValue = value;
+    this.cd.markForCheck();
+  }
+  registerOnChange(fn) {
+    this.onModelChange = fn;
+  }
+  registerOnTouched(fn) {
+    this.onModelTouched = fn;
+  }
+  setDisabledState(val) {
+    this.disabled = val;
+    this.cd.markForCheck();
+  }
+  checked() {
+    return this.modelValue === this.trueValue;
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275ToggleSwitch_BaseFactory;
+    return function ToggleSwitch_Factory(__ngFactoryType__) {
+      return (\u0275ToggleSwitch_BaseFactory || (\u0275ToggleSwitch_BaseFactory = \u0275\u0275getInheritedFactory(_ToggleSwitch)))(__ngFactoryType__ || _ToggleSwitch);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _ToggleSwitch,
+    selectors: [["p-toggleswitch"], ["p-toggleSwitch"], ["p-toggle-switch"]],
+    contentQueries: function ToggleSwitch_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c013, 4);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.handleTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    viewQuery: function ToggleSwitch_Query(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275viewQuery(_c114, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.input = _t.first);
+      }
+    },
+    inputs: {
+      style: "style",
+      styleClass: "styleClass",
+      tabindex: [2, "tabindex", "tabindex", numberAttribute],
+      inputId: "inputId",
+      name: "name",
+      disabled: [2, "disabled", "disabled", booleanAttribute],
+      readonly: [2, "readonly", "readonly", booleanAttribute],
+      trueValue: "trueValue",
+      falseValue: "falseValue",
+      ariaLabel: "ariaLabel",
+      ariaLabelledBy: "ariaLabelledBy",
+      autofocus: [2, "autofocus", "autofocus", booleanAttribute]
+    },
+    outputs: {
+      onChange: "onChange"
+    },
+    features: [\u0275\u0275ProvidersFeature([TOGGLESWITCH_VALUE_ACCESSOR, ToggleSwitchStyle]), \u0275\u0275InheritDefinitionFeature],
+    decls: 6,
+    vars: 23,
+    consts: [["input", ""], [3, "click", "ngClass", "ngStyle"], ["type", "checkbox", "role", "switch", 3, "focus", "blur", "ngClass", "checked", "disabled", "pAutoFocus"], [3, "ngClass"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"]],
+    template: function ToggleSwitch_Template(rf, ctx) {
+      if (rf & 1) {
+        const _r1 = \u0275\u0275getCurrentView();
+        \u0275\u0275elementStart(0, "div", 1);
+        \u0275\u0275listener("click", function ToggleSwitch_Template_div_click_0_listener($event) {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onClick($event));
+        });
+        \u0275\u0275elementStart(1, "input", 2, 0);
+        \u0275\u0275listener("focus", function ToggleSwitch_Template_input_focus_1_listener() {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onFocus());
+        })("blur", function ToggleSwitch_Template_input_blur_1_listener() {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onBlur());
+        });
+        \u0275\u0275elementEnd();
+        \u0275\u0275elementStart(3, "span", 3)(4, "div", 3);
+        \u0275\u0275template(5, ToggleSwitch_Conditional_5_Template, 1, 4, "ng-container");
+        \u0275\u0275elementEnd()()();
+      }
+      if (rf & 2) {
+        \u0275\u0275styleMap(ctx.sx("root"));
+        \u0275\u0275classMap(ctx.styleClass);
+        \u0275\u0275property("ngClass", ctx.cx("root"))("ngStyle", ctx.style);
+        \u0275\u0275attribute("data-pc-name", "toggleswitch")("data-pc-section", "root");
+        \u0275\u0275advance();
+        \u0275\u0275property("ngClass", ctx.cx("input"))("checked", ctx.checked())("disabled", ctx.disabled)("pAutoFocus", ctx.autofocus);
+        \u0275\u0275attribute("id", ctx.inputId)("aria-checked", ctx.checked())("aria-labelledby", ctx.ariaLabelledBy)("aria-label", ctx.ariaLabel)("name", ctx.name)("tabindex", ctx.tabindex)("data-pc-section", "hiddenInput");
+        \u0275\u0275advance(2);
+        \u0275\u0275property("ngClass", ctx.cx("slider"));
+        \u0275\u0275attribute("data-pc-section", "slider");
+        \u0275\u0275advance();
+        \u0275\u0275property("ngClass", ctx.cx("handle"));
+        \u0275\u0275advance();
+        \u0275\u0275conditional(ctx.handleTemplate || ctx._handleTemplate ? 5 : -1);
+      }
+    },
+    dependencies: [CommonModule, NgClass, NgTemplateOutlet, NgStyle, AutoFocus, SharedModule],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ToggleSwitch, [{
+    type: Component,
+    args: [{
+      selector: "p-toggleswitch, p-toggleSwitch, p-toggle-switch",
+      standalone: true,
+      imports: [CommonModule, AutoFocus, SharedModule],
+      template: `
+        <div [ngClass]="cx('root')" [style]="sx('root')" [ngStyle]="style" [class]="styleClass" (click)="onClick($event)" [attr.data-pc-name]="'toggleswitch'" [attr.data-pc-section]="'root'">
+            <input
+                #input
+                [attr.id]="inputId"
+                type="checkbox"
+                role="switch"
+                [ngClass]="cx('input')"
+                [checked]="checked()"
+                [disabled]="disabled"
+                [attr.aria-checked]="checked()"
+                [attr.aria-labelledby]="ariaLabelledBy"
+                [attr.aria-label]="ariaLabel"
+                [attr.name]="name"
+                [attr.tabindex]="tabindex"
+                (focus)="onFocus()"
+                (blur)="onBlur()"
+                [attr.data-pc-section]="'hiddenInput'"
+                [pAutoFocus]="autofocus"
+            />
+            <span [ngClass]="cx('slider')" [attr.data-pc-section]="'slider'">
+                <div [ngClass]="cx('handle')">
+                    @if (handleTemplate || _handleTemplate) {
+                        <ng-container *ngTemplateOutlet="handleTemplate || _handleTemplate; context: { checked: checked() }" />
+                    }
+                </div>
+            </span>
+        </div>
+    `,
+      providers: [TOGGLESWITCH_VALUE_ACCESSOR, ToggleSwitchStyle],
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None
+    }]
+  }], null, {
+    style: [{
+      type: Input
+    }],
+    styleClass: [{
+      type: Input
+    }],
+    tabindex: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    inputId: [{
+      type: Input
+    }],
+    name: [{
+      type: Input
+    }],
+    disabled: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    readonly: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    trueValue: [{
+      type: Input
+    }],
+    falseValue: [{
+      type: Input
+    }],
+    ariaLabel: [{
+      type: Input
+    }],
+    ariaLabelledBy: [{
+      type: Input
+    }],
+    autofocus: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    onChange: [{
+      type: Output
+    }],
+    input: [{
+      type: ViewChild,
+      args: ["input"]
+    }],
+    handleTemplate: [{
+      type: ContentChild,
+      args: ["handle", {
+        descendants: false
+      }]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }]
+  });
+})();
+var ToggleSwitchModule = class _ToggleSwitchModule {
+  static \u0275fac = function ToggleSwitchModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ToggleSwitchModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _ToggleSwitchModule,
+    imports: [ToggleSwitch, SharedModule],
+    exports: [ToggleSwitch, SharedModule]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [ToggleSwitch, SharedModule, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ToggleSwitchModule, [{
+    type: NgModule,
+    args: [{
+      imports: [ToggleSwitch, SharedModule],
+      exports: [ToggleSwitch, SharedModule]
+    }]
+  }], null, null);
+})();
+
+// src/app/views/ia-assistant/services/ia-tree.service.ts
+var IaTreeService = class _IaTreeService {
+  theme = inject(ThemeService);
+  fetchService = inject(FetchService);
+  iaState = inject(IaStateService);
+  //For tracking progress while building IA chart
+  iaData = this.iaState.getIaData;
+  searchData = this.iaState.getSearchData;
+  isChartLoading = false;
+  iaProgress = 0;
+  totalUrls = 0;
+  processedUrls = 0;
+  //Pages to skip children when building IA chart
+  skipFormsAndPubs = /* @__PURE__ */ new Set([
+    "https://www.canada.ca/en/revenue-agency/services/forms-publications/forms.html",
+    "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/formulaires.html",
+    "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications.html",
+    "https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/publications.html"
+  ]);
+  //Set background color
+  get bgColors() {
+    return this.theme.darkMode() ? this.bgColorsDark : this.bgColorsLight;
+  }
+  bgColorsLight = [
+    "surface-0 hover:bg-primary-50",
+    "bg-primary-50 hover:bg-primary-100",
+    "bg-primary-100 hover:bg-primary-200",
+    "bg-primary-200 hover:bg-primary-300",
+    "bg-primary-300 hover:bg-primary-400",
+    "bg-primary-400 hover:bg-primary-500",
+    "bg-primary-500 hover:bg-primary-600 text-white",
+    "bg-primary-600 hover:bg-primary-700 text-white",
+    "bg-primary-700 hover:bg-primary-800 text-white",
+    "bg-primary-800 hover:bg-primary-900 text-white"
+  ];
+  bgColorsDark = [
+    "surface-0 hover:bg-primary-900",
+    "bg-primary-900 hover:bg-primary-800",
+    "bg-primary-800 hover:bg-primary-700",
+    "bg-primary-700 hover:bg-primary-600",
+    "bg-primary-600 hover:bg-primary-500",
+    "bg-primary-500 hover:bg-primary-400",
+    "bg-primary-400 hover:bg-primary-300  text-black",
+    "bg-primary-300 hover:bg-primary-200 text-black",
+    "bg-primary-200 hover:bg-primary-100 text-black",
+    "bg-primary-100 hover:bg-primary-50 text-black"
+  ];
+  get contextStyles() {
+    return this.theme.darkMode() ? this.contextStylesDark : this.contextStylesLight;
+  }
+  contextStylesLight = {
+    new: "bg-green-200 hover:bg-green-300 text-black",
+    rot: "bg-red-200 hover:bg-red-300 text-black",
+    move: "bg-yellow-200 hover:bg-yellow-300 text-black",
+    template: "surface-200 hover:surface-300 text-black"
+  };
+  contextStylesDark = {
+    new: "bg-green-700 hover:bg-green-600 text-white",
+    rot: "bg-red-700 hover:bg-red-600 text-white",
+    move: "bg-yellow-700 hover:bg-yellow-600 text-black",
+    template: "surface-200 hover:surface-300 text-white"
+  };
+  updateNodeStyles(nodes, level = 0) {
+    if (!nodes)
+      return;
+    for (const node of nodes) {
+      const borderStyle = node.data?.borderStyle || "border-2 border-primary border-round shadow-2";
+      const bgClass = this.bgColors[level % this.bgColors.length];
+      const bgStyle = this.contextStyles[node.data?.customStyleKey] ?? bgClass;
+      node.styleClass = `${borderStyle} ${bgStyle}`;
+      if (node.children && node.children.length > 0) {
+        const nextLevel = node.data.customStyleKey === "template" ? level : level + 1;
+        this.updateNodeStyles(node.children, nextLevel);
+      }
+    }
+  }
+  //Step 2a: Get single page IA data
+  getPageMetaAndLinks(url) {
+    return __async(this, null, function* () {
+      try {
+        const doc = yield this.fetchService.fetchContent(url, "prod", 5);
+        const h1Elements = Array.from(doc.querySelectorAll("h1"));
+        const h1 = h1Elements.map((e) => e.textContent?.trim()).filter(Boolean).join("<br>");
+        const breadcrumb = Array.from(doc.querySelectorAll(".breadcrumb li a")).map((a) => new URL(a.getAttribute("href") || "", url).href);
+        const anchors = Array.from(doc.querySelectorAll("main a[href]"));
+        const baseUrl = new URL(url).origin;
+        const links = Array.from(new Set(
+          //unique set
+          anchors.map((a) => {
+            const u = new URL(a.getAttribute("href") || "", url);
+            u.hash = "";
+            return u.href;
+          }).filter((u) => u.startsWith(baseUrl) && u !== url)
+          // on same domain but not self
+        ));
+        const result = { h1, breadcrumb, links, status: 200 };
+        if (this.searchData().terms && this.searchData().terms.length > 0) {
+          const pageText = doc.body?.textContent?.toLowerCase() ?? "";
+          const matched = this.searchData().terms.some((term) => {
+            if (typeof term === "string") {
+              return pageText.includes(term);
+            } else {
+              return term.test(pageText);
+            }
+          });
+          if (matched) {
+            this.iaData().searchMatches.push({
+              url,
+              h1: h1 ?? "Missing H1"
+            });
+          }
+        }
+        return result;
+      } catch (err) {
+        console.error(`Failed to fetch ${url}`, err);
+        return { status: 0 };
+      }
+    });
+  }
+  //Step 2b: Crawl all child pages for IA data
+  buildIaTree(urls, depth, parentUrl, level = 0) {
+    return __async(this, null, function* () {
+      if (depth <= 0)
+        return [];
+      if (!parentUrl && level === 0) {
+        this.isChartLoading = true;
+        this.iaProgress = 5;
+        this.processedUrls = 0;
+        this.totalUrls = urls.length;
+      }
+      const nodes = [];
+      const bgClass = this.bgColors[level % this.bgColors.length];
+      for (const url of urls) {
+        const meta = yield this.getPageMetaAndLinks(url);
+        this.processedUrls++;
+        this.iaProgress = Math.round(this.processedUrls / this.totalUrls * 100);
+        if ((!meta || meta.status !== 200) && this.iaData().brokenLinks) {
+          this.iaData().brokenLinks.push({
+            parentUrl,
+            url,
+            status: meta?.status || 0
+          });
+          continue;
+        }
+        if (!meta.breadcrumb || !meta.links)
+          continue;
+        if (parentUrl && meta.breadcrumb.at(-1) !== parentUrl) {
+          continue;
+        }
+        let crawled = false;
+        if (depth > 1) {
+          crawled = true;
+        }
+        const node = {
+          label: meta.h1,
+          data: {
+            h1: meta.h1,
+            url,
+            originalParent: parentUrl,
+            editing: null,
+            customStyle: false,
+            customStyleKey: null,
+            borderStyle: "border-2 border-primary border-round shadow-2",
+            isRoot: false,
+            isCrawled: crawled,
+            crawlDepth: 0,
+            isUserAdded: false,
+            notOrphan: true,
+            prototype: null
+          },
+          expanded: true,
+          styleClass: `border-2 border-primary border-round shadow-2 ${bgClass}`,
+          children: []
+        };
+        if (meta.links?.length && depth > 1) {
+          this.totalUrls += meta.links.length;
+          const total = meta.links.length;
+          let limit = total;
+          if (this.skipFormsAndPubs.has(url)) {
+            limit = 5;
+          }
+          console.log(`Crawling ${total} links from ${url}, depth ${depth}, limit ${limit}`);
+          const links = meta.links.slice(0, limit);
+          node.children = yield this.buildIaTree(links, depth - 1, url, level + 1);
+          if (total > limit) {
+            console.log(`... adding dummy node for ${total - limit} additional links`);
+            node.children?.push({
+              label: `+ ${total - limit} more...`,
+              data: {
+                h1: `+ ${total - limit} more...`,
+                url,
+                originalParent: url,
+                editing: null,
+                customStyle: true,
+                customStyleKey: "template",
+                borderStyle: "border-2 border-primary border-round shadow-2 border-dashed",
+                isRoot: false,
+                isCrawled: true,
+                crawlDepth: 0,
+                isUserAdded: false,
+                notOrphan: true,
+                prototype: null
+              },
+              expanded: true,
+              styleClass: `border-2 border-primary border-round shadow-2 border-dashed surface-100 hover:surface-200`,
+              children: []
+            });
+          }
+        }
+        nodes.push(node);
+      }
+      if (!parentUrl && level === 0) {
+        this.iaProgress = 100;
+        setTimeout(() => {
+          this.isChartLoading = false;
+          this.iaProgress = 0;
+        }, 1e3);
+      }
+      if (this.iaData().searchMatches && level === 0) {
+        const uniqueMatches = new Map(this.iaData().searchMatches.map((m) => [m.url, m]));
+        this.iaData().searchMatches.length = 0;
+        this.iaData().searchMatches.push(...uniqueMatches.values());
+      }
+      return nodes;
+    });
+  }
+  //NEEDS TESTING
+  //Build initial context for crawl (i.e. the start of the breadcrumb)
+  setTreeContext(iaTree, breadcrumbs) {
+    return __async(this, null, function* () {
+      const findChildByUrl = (nodes, url) => {
+        if (!nodes || !url)
+          return void 0;
+        return nodes.find((n) => n.data?.url === url);
+      };
+      for (const breadcrumb of breadcrumbs) {
+        let currentLevel = iaTree;
+        let parentUrl = null;
+        for (const crumb of breadcrumb) {
+          let node = findChildByUrl(currentLevel, crumb.url);
+          if (!node) {
+            node = {
+              label: crumb.label,
+              data: {
+                h1: crumb.label,
+                url: crumb.url ?? null,
+                originalParent: parentUrl,
+                editing: null,
+                customStyle: crumb.isBeforeRoot ?? false,
+                customStyleKey: crumb.isBeforeRoot ? "template" : null,
+                borderStyle: "border-2 border-primary border-round shadow-2",
+                isRoot: crumb.isRoot,
+                isCrawled: false,
+                crawlDepth: crumb.minDepth,
+                //todo: double-check the depth we calculated in findRoots is being passed along
+                isUserAdded: crumb.isRoot || crumb.isDescendant,
+                notOrphan: crumb.valid,
+                prototype: crumb.prototype ?? null
+              },
+              expanded: true,
+              styleClass: "border-2 border-primary border-round shadow-2 surface-ground",
+              children: []
+            };
+            currentLevel.push(node);
+          }
+          parentUrl = node.data.url ?? null;
+          currentLevel = node.children;
+        }
+      }
+    });
+  }
+  //Find the root pages we need to crawl
+  findCrawlRoots(nodes) {
+    const roots = [];
+    const walk = (list) => {
+      for (const n of list) {
+        if (n.data?.isRoot) {
+          roots.push(n);
+        }
+        if (n.children?.length) {
+          walk(n.children);
+        }
+      }
+    };
+    walk(nodes);
+    return roots;
+  }
+  //Crawl from pages marked as data.isRoot
+  crawlFromRoots(node) {
+    return __async(this, null, function* () {
+      const roots = this.findCrawlRoots(node);
+      let index = 1;
+      const numRoots = roots.length;
+      for (const root of roots) {
+        if (!root.data?.url)
+          continue;
+        console.log(`Crawling from root: ${root.data.url}`);
+        console.log(`Min Depth: ${root.data.crawlDepth}`);
+        const depth = Math.max(root.data.crawlDepth ?? 0, 2);
+        console.log(`Depth: ${depth}`);
+        const children = yield this.buildIaTree([root.data.url], depth, void 0, 0);
+        if (children.length > 0) {
+          const builtRoot = children[0];
+          root.children = this.mergeChildren(root.children ?? [], builtRoot.children ?? []);
+          root.data.isCrawled = true;
+        }
+        console.log(`Crawl ${index} of ${numRoots} complete`);
+        index++;
+        root.data.isRoot = false;
+      }
+    });
+  }
+  //Merges discovered children with existing user add-added or breadcrumb children
+  mergeChildren(current, crawled) {
+    const map2 = /* @__PURE__ */ new Map();
+    for (const child of current) {
+      if (child.data?.url) {
+        map2.set(child.data.url, child);
+      }
+    }
+    for (const child of crawled) {
+      const url = child.data?.url;
+      if (!url)
+        continue;
+      if (!map2.has(url)) {
+        map2.set(url, child);
+      } else {
+        const existingNode = map2.get(url);
+        if (child.children?.length) {
+          if (existingNode.children?.length) {
+            existingNode.children = this.mergeChildren(existingNode.children ?? [], child.children ?? []);
+          } else {
+            existingNode.children = child.children;
+          }
+        }
+        existingNode.data.isCrawled = existingNode.data.isCrawled || child.data.isCrawled;
+      }
+    }
+    return Array.from(map2.values());
+  }
+  static \u0275fac = function IaTreeService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _IaTreeService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _IaTreeService, factory: _IaTreeService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(IaTreeService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/views/ia-assistant/components/ia-tree.component.ts
+var _c014 = ["chartContainer"];
+var _c115 = ["cm"];
+var _c26 = () => ({ "min-width": "50rem" });
+function IaTreeComponent_ng_container_2_p_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p");
+    \u0275\u0275text(1, "No child pages found.");
+    \u0275\u0275elementEnd();
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_p_tab_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p-tab", 23);
+    \u0275\u0275text(1, "Broken links");
+    \u0275\u0275elementEnd();
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_p_tab_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p-tab", 25);
+    \u0275\u0275text(1, "Search matches");
+    \u0275\u0275elementEnd();
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_18_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 28)(1, "span");
+    \u0275\u0275text(2);
+    \u0275\u0275pipe(3, "translate");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "p-toggleswitch", 29);
+    \u0275\u0275twoWayListener("ngModelChange", function IaTreeComponent_ng_container_2_p_tabs_4_div_18_Template_p_toggleswitch_ngModelChange_4_listener($event) {
+      const key_r5 = \u0275\u0275restoreView(_r4).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(3);
+      \u0275\u0275twoWayBindingSet(ctx_r1.toggles[key_r5], $event) || (ctx_r1.toggles[key_r5] = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const key_r5 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 2, `ia.toggle.${key_r5}`));
+    \u0275\u0275advance(2);
+    \u0275\u0275twoWayProperty("ngModel", ctx_r1.toggles[key_r5]);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_0_i_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 40);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_0_p_button_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "p-button", 41);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("rounded", true);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_0_p_togglebutton_5_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-togglebutton", 42);
+    \u0275\u0275twoWayListener("ngModelChange", function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_0_p_togglebutton_5_Template_p_togglebutton_ngModelChange_0_listener($event) {
+      \u0275\u0275restoreView(_r7);
+      const node_r8 = \u0275\u0275nextContext(2).$implicit;
+      \u0275\u0275twoWayBindingSet(node_r8.data.isUserAdded, $event) || (node_r8.data.isUserAdded = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const node_r8 = \u0275\u0275nextContext(2).$implicit;
+    \u0275\u0275twoWayProperty("ngModel", node_r8.data.isUserAdded);
+    \u0275\u0275property("pTooltip", node_r8.data.isUserAdded ? "In-scope" : "Out-of-scope");
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 35)(1, "span", 36);
+    \u0275\u0275template(2, IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_0_i_2_Template, 1, 0, "i", 37);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "span", 36);
+    \u0275\u0275template(4, IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_0_p_button_4_Template, 1, 1, "p-button", 38)(5, IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_0_p_togglebutton_5_Template, 1, 2, "p-togglebutton", 39);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const node_r8 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(4);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", !node_r8.data.notOrphan && node_r8.data.originalParent && ctx_r1.toggles["orphan"]);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", node_r8.data.prototype && ctx_r1.toggles["proto"]);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.toggles["scope"]);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_3_i_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 46);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_3_p_button_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-button", 47);
+    \u0275\u0275listener("click", function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_3_p_button_2_Template_p_button_click_0_listener() {
+      \u0275\u0275restoreView(_r9);
+      const node_r8 = \u0275\u0275nextContext(2).$implicit;
+      const ctx_r1 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r1.getChildPages(node_r8));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275property("rounded", true);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 43);
+    \u0275\u0275template(1, IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_3_i_1_Template, 1, 0, "i", 44)(2, IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_3_p_button_2_Template, 1, 1, "p-button", 45);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const node_r8 = \u0275\u0275nextContext().$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(4);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", node_r8.data.isRoot && !node_r8.data.isCrawled && ctx_r1.toggles["crawl"]);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !node_r8.data.isRoot && !node_r8.data.isCrawled && ctx_r1.toggles["crawl"]);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275template(0, IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_0_Template, 6, 3, "div", 32);
+    \u0275\u0275elementStart(1, "p")(2, "a", 33);
+    \u0275\u0275listener("click", function IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_Template_a_click_2_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r1 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r1.onNodeClick($event));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(3, IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_div_3_Template, 3, 2, "div", 34);
+  }
+  if (rf & 2) {
+    const node_r8 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(4);
+    \u0275\u0275property("ngIf", !ctx_r1.getToggleStates().allFalse);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("href", node_r8.data.url, \u0275\u0275sanitizeUrl)("innerHTML", node_r8.label, \u0275\u0275sanitizeHtml);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r1.getToggleStates().allFalse);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_div_20_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 30, 2)(2, "p-organization-chart", 31);
+    \u0275\u0275template(3, IaTreeComponent_ng_container_2_p_tabs_4_div_20_ng_template_3_Template, 4, 4, "ng-template", 22);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("value", ctx_r1.iaData().iaTree);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_i_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 53);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_i_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 54);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_i_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 55);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_i_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "i", 56);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_ng_container_5_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r10 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "a", 33);
+    \u0275\u0275listener("click", function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_ng_container_5_Template_a_click_1_listener($event) {
+      \u0275\u0275restoreView(_r10);
+      const ctx_r1 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r1.onNodeClick($event));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const node_r11 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275property("href", node_r11.data.url, \u0275\u0275sanitizeUrl)("innerHTML", node_r11.label, \u0275\u0275sanitizeHtml);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_6_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r12 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-inputgroup")(1, "input", 57);
+    \u0275\u0275twoWayListener("ngModelChange", function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_6_Template_input_ngModelChange_1_listener($event) {
+      \u0275\u0275restoreView(_r12);
+      const node_r11 = \u0275\u0275nextContext().$implicit;
+      \u0275\u0275twoWayBindingSet(node_r11.label, $event) || (node_r11.label = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275listener("keydown", function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_6_Template_input_keydown_1_listener($event) {
+      \u0275\u0275restoreView(_r12);
+      const ctx_r1 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r1.onInputKeydown($event));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "p-inputgroup-addon")(3, "p-button", 58);
+    \u0275\u0275listener("onClick", function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_6_Template_p_button_onClick_3_listener() {
+      \u0275\u0275restoreView(_r12);
+      const ctx_r1 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r1.saveNode());
+    });
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    const node_r11 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275twoWayProperty("ngModel", node_r11.label);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_7_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r13 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-inputgroup")(1, "input", 57);
+    \u0275\u0275twoWayListener("ngModelChange", function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_7_Template_input_ngModelChange_1_listener($event) {
+      \u0275\u0275restoreView(_r13);
+      const node_r11 = \u0275\u0275nextContext().$implicit;
+      \u0275\u0275twoWayBindingSet(node_r11.data.url, $event) || (node_r11.data.url = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275listener("keydown", function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_7_Template_input_keydown_1_listener($event) {
+      \u0275\u0275restoreView(_r13);
+      const ctx_r1 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r1.onInputKeydown($event));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "p-inputgroup-addon")(3, "p-button", 58);
+    \u0275\u0275listener("onClick", function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_7_Template_p_button_onClick_3_listener() {
+      \u0275\u0275restoreView(_r13);
+      const ctx_r1 = \u0275\u0275nextContext(4);
+      return \u0275\u0275resetView(ctx_r1.saveNode());
+    });
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    const node_r11 = \u0275\u0275nextContext().$implicit;
+    \u0275\u0275advance();
+    \u0275\u0275twoWayProperty("ngModel", node_r11.data.url);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 48);
+    \u0275\u0275template(1, IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_i_1_Template, 1, 0, "i", 49)(2, IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_i_2_Template, 1, 0, "i", 50)(3, IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_i_3_Template, 1, 0, "i", 51)(4, IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_i_4_Template, 1, 0, "i", 52)(5, IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_ng_container_5_Template, 2, 2, "ng-container", 5)(6, IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_6_Template, 4, 1, "p-inputgroup", 5)(7, IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_p_inputgroup_7_Template, 4, 1, "p-inputgroup", 5);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const node_r11 = ctx.$implicit;
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", node_r11.children.length > 0 && !ctx_r1.draggable && !node_r11.data.editing);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", (node_r11.children.length === 0 || !node_r11.children) && !ctx_r1.draggable && !node_r11.data.editing);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.draggable);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", node_r11.data.editing);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !node_r11.data.editing);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", node_r11.data.editing === "label");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", node_r11.data.editing === "link");
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_p_31_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1, " or on any detected child pages");
+    \u0275\u0275elementEnd();
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_p_31_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p");
+    \u0275\u0275text(1, "No broken links found on this page");
+    \u0275\u0275template(2, IaTreeComponent_ng_container_2_p_tabs_4_p_31_span_2_Template, 2, 0, "span", 5);
+    \u0275\u0275text(3, ".");
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    let tmp_5_0;
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", (tmp_5_0 = ctx_r1.iaData().iaTree[0].children) == null ? null : tmp_5_0.length);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_p_table_32_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr")(1, "th");
+    \u0275\u0275text(2, "Parent page");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "th");
+    \u0275\u0275text(4, "Broken link");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "th");
+    \u0275\u0275text(6, "Status");
+    \u0275\u0275elementEnd()();
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_p_table_32_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "tr")(1, "td");
+    \u0275\u0275text(2);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "td");
+    \u0275\u0275text(4);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "td");
+    \u0275\u0275text(6);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const rowData_r14 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(rowData_r14.parentUrl);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(rowData_r14.url);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate(rowData_r14.status);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_p_table_32_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p-table", 59);
+    \u0275\u0275template(1, IaTreeComponent_ng_container_2_p_tabs_4_p_table_32_ng_template_1_Template, 7, 0, "ng-template", null, 3, \u0275\u0275templateRefExtractor)(3, IaTreeComponent_ng_container_2_p_tabs_4_p_table_32_ng_template_3_Template, 7, 3, "ng-template", null, 4, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("value", ctx_r1.iaData().brokenLinks)("tableStyle", \u0275\u0275pureFunction0(2, _c26));
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_p_36_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p");
+    \u0275\u0275text(1, "No matches found.");
+    \u0275\u0275elementEnd();
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_ng_container_38_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "li")(2, "a", 60);
+    \u0275\u0275text(3);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const match_r15 = ctx.$implicit;
+    \u0275\u0275advance(2);
+    \u0275\u0275property("href", match_r15.url, \u0275\u0275sanitizeUrl);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(match_r15.h1);
+  }
+}
+function IaTreeComponent_ng_container_2_p_tabs_4_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-tabs", 7)(1, "p-tablist")(2, "p-tab", 7);
+    \u0275\u0275text(3, "Chart");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "p-tab", 8);
+    \u0275\u0275text(5, "Table");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(6, IaTreeComponent_ng_container_2_p_tabs_4_p_tab_6_Template, 2, 0, "p-tab", 9)(7, IaTreeComponent_ng_container_2_p_tabs_4_p_tab_7_Template, 2, 0, "p-tab", 10);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(8, "p-tabpanels")(9, "p-tabpanel", 7)(10, "div", 11)(11, "p-inputgroup", 12)(12, "p-inputgroup-addon", 13)(13, "p-button", 14);
+    \u0275\u0275listener("click", function IaTreeComponent_ng_container_2_p_tabs_4_Template_p_button_click_13_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.onMainToggleClick());
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(14, "p-button", 15);
+    \u0275\u0275listener("click", function IaTreeComponent_ng_container_2_p_tabs_4_Template_p_button_click_14_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const togglesPopover_r3 = \u0275\u0275reference(16);
+      return \u0275\u0275resetView(togglesPopover_r3.toggle($event));
+    });
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(15, "p-popover", null, 0)(17, "div", 16);
+    \u0275\u0275template(18, IaTreeComponent_ng_container_2_p_tabs_4_div_18_Template, 5, 4, "div", 17);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(19, "p-button", 18);
+    \u0275\u0275listener("click", function IaTreeComponent_ng_container_2_p_tabs_4_Template_p_button_click_19_listener() {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.maximize(ctx_r1.chartContainer));
+    });
+    \u0275\u0275elementEnd()();
+    \u0275\u0275template(20, IaTreeComponent_ng_container_2_p_tabs_4_div_20_Template, 4, 1, "div", 19);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(21, "p-tabpanel", 8);
+    \u0275\u0275element(22, "p-contextMenu", 20, 1);
+    \u0275\u0275elementStart(24, "h2");
+    \u0275\u0275text(25, "IA structure tree");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(26, "p-tree", 21);
+    \u0275\u0275twoWayListener("selectionChange", function IaTreeComponent_ng_container_2_p_tabs_4_Template_p_tree_selectionChange_26_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      \u0275\u0275twoWayBindingSet(ctx_r1.selectedNode, $event) || (ctx_r1.selectedNode = $event);
+      return \u0275\u0275resetView($event);
+    });
+    \u0275\u0275listener("onNodeDrop", function IaTreeComponent_ng_container_2_p_tabs_4_Template_p_tree_onNodeDrop_26_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.handleNodeDrop($event));
+    })("onNodeContextMenuSelect", function IaTreeComponent_ng_container_2_p_tabs_4_Template_p_tree_onNodeContextMenuSelect_26_listener($event) {
+      \u0275\u0275restoreView(_r1);
+      const ctx_r1 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r1.onNodeContextMenu($event));
+    });
+    \u0275\u0275template(27, IaTreeComponent_ng_container_2_p_tabs_4_ng_template_27_Template, 8, 7, "ng-template", 22);
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(28, "p-tabpanel", 23)(29, "h2");
+    \u0275\u0275text(30, "Broken links");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(31, IaTreeComponent_ng_container_2_p_tabs_4_p_31_Template, 4, 1, "p", 5)(32, IaTreeComponent_ng_container_2_p_tabs_4_p_table_32_Template, 5, 3, "p-table", 24);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(33, "p-tabpanel", 25)(34, "h2");
+    \u0275\u0275text(35, "Search matches");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(36, IaTreeComponent_ng_container_2_p_tabs_4_p_36_Template, 2, 0, "p", 5);
+    \u0275\u0275elementStart(37, "ol", 26);
+    \u0275\u0275template(38, IaTreeComponent_ng_container_2_p_tabs_4_ng_container_38_Template, 4, 2, "ng-container", 27);
+    \u0275\u0275elementEnd()()()();
+  }
+  if (rf & 2) {
+    const cm_r16 = \u0275\u0275reference(23);
+    const ctx_r1 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("ngIf", ctx_r1.iaData().brokenLinks.length > 0);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.iaData().searchMatches.length > 0);
+    \u0275\u0275advance(6);
+    \u0275\u0275property("icon", ctx_r1.getMainToggleIcon())("label", ctx_r1.getMainToggleLabel());
+    \u0275\u0275advance(5);
+    \u0275\u0275property("ngForOf", ctx_r1.toggleKeys);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", ctx_r1.iaData().iaTree.length > 0);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("model", ctx_r1.options);
+    \u0275\u0275advance(4);
+    \u0275\u0275property("value", ctx_r1.iaData().iaTree)("selectionMode", ctx_r1.selectable ? "multiple" : null);
+    \u0275\u0275twoWayProperty("selection", ctx_r1.selectedNode);
+    \u0275\u0275property("draggableNodes", ctx_r1.draggable)("droppableNodes", true)("validateDrop", true)("contextMenu", cm_r16);
+    \u0275\u0275advance(5);
+    \u0275\u0275property("ngIf", ctx_r1.iaData().brokenLinks.length === 0);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.iaData().brokenLinks.length > 0);
+    \u0275\u0275advance(4);
+    \u0275\u0275property("ngIf", ctx_r1.iaData().searchMatches.length === 0);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngForOf", ctx_r1.iaData().searchMatches);
+  }
+}
+function IaTreeComponent_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "h2");
+    \u0275\u0275text(2, "IA structure");
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(3, IaTreeComponent_ng_container_2_p_3_Template, 2, 0, "p", 5)(4, IaTreeComponent_ng_container_2_p_tabs_4_Template, 39, 18, "p-tabs", 6);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r1 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngIf", ctx_r1.iaData().iaTree.length === 0);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r1.iaData().iaTree.length > 0);
+  }
+}
+var IaTreeComponent = class _IaTreeComponent {
+  translate = inject(TranslateService);
+  locationStrategy = inject(LocationStrategy);
+  theme = inject(ThemeService);
+  iaTreeService = inject(IaTreeService);
+  fetchService = inject(FetchService);
+  iaState = inject(IaStateService);
+  production = environment.production;
+  iaData = this.iaState.getIaData;
+  isDev = false;
+  constructor() {
+    effect(() => {
+      this.theme.darkMode();
+      this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+    });
+  }
+  ngOnInit() {
+    return __async(this, null, function* () {
+      const params = new URLSearchParams(window.location.search);
+      this.isDev = params.get("dev") === "true";
+      this.options = [
+        ...this.baseMenu
+      ];
+      this.baseHref = this.locationStrategy.getBaseHref();
+      this.iaTreeService.setTreeContext(this.iaData().iaTree, this.iaState.getBreadcrumbData().breadcrumbs);
+      yield this.iaTreeService.crawlFromRoots(this.iaData().iaTree);
+      this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+      this.iaState.saveToLocalStorage();
+    });
+  }
+  //Toggle visibility of indicators in the tree chart
+  toggles = {
+    orphan: true,
+    crawl: true,
+    scope: true,
+    proto: true
+  };
+  get toggleKeys() {
+    return Object.keys(this.toggles);
+  }
+  getToggleStates() {
+    const values = Object.values(this.toggles);
+    const allTrue = values.every((v) => v);
+    const allFalse = values.every((v) => !v);
+    return { allTrue, allFalse };
+  }
+  onMainToggleClick() {
+    const { allTrue } = this.getToggleStates();
+    const newValue = !allTrue;
+    this.toggleKeys.forEach((key) => this.toggles[key] = newValue);
+  }
+  getMainToggleIcon() {
+    const { allTrue, allFalse } = this.getToggleStates();
+    if (allTrue)
+      return "pi pi-eye";
+    if (allFalse)
+      return "pi pi-eye-slash";
+    return "pi pi-minus";
+  }
+  getMainToggleLabel() {
+    const { allTrue, allFalse } = this.getToggleStates();
+    if (allTrue)
+      return "All visible                       ";
+    if (allFalse)
+      return "All hidden";
+    return "Some visible";
+  }
+  //End of toggle code
+  //Get child pages
+  getChildPages(node) {
+    return __async(this, null, function* () {
+      console.log(node);
+      node.data.isRoot = true;
+      yield this.fetchService.simulateDelay(2e3);
+      yield this.iaTreeService.crawlFromRoots(this.iaData().iaTree);
+      this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+    });
+  }
+  //End of get child pages
+  //Prevent default click on org chart links <-- Do we want this?? 
+  onNodeClick(event) {
+    if (event.button === 0) {
+      event.preventDefault();
+    }
+  }
+  //Full screen element
+  chartContainer;
+  maximize(elRef) {
+    const element = elRef.nativeElement;
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  }
+  //Context menu
+  cm;
+  options = [];
+  //options for editing chart nodes
+  baseMenu = [
+    {
+      label: "Edit label",
+      icon: "pi pi-pen-to-square",
+      command: () => {
+        console.log("Edit ", this.selectedNode);
+        this.editNode("label");
+      }
+    },
+    {
+      label: "Edit url",
+      icon: "pi pi-link",
+      command: () => {
+        console.log("Edit ", this.selectedNode);
+        this.editNode("link");
+      }
+    },
+    {
+      separator: true
+    },
+    {
+      label: "Add child page",
+      icon: "pi pi-plus",
+      command: () => {
+        console.log("Add ", this.selectedNode);
+        this.addChildNode();
+      }
+    },
+    {
+      label: "Delete page",
+      icon: "pi pi-trash",
+      command: () => {
+        console.log("Delete ", this.selectedNode);
+        this.deleteNode();
+      }
+    },
+    {
+      separator: true
+    },
+    {
+      label: "Change template",
+      icon: "pi pi-sync",
+      items: [
+        {
+          label: "Split into subway pattern",
+          icon: "pi pi-sitemap",
+          command: () => {
+            console.log("Change template ", this.selectedNode);
+            this.addParentNode("subway");
+          }
+        },
+        {
+          label: "Combine into single page",
+          icon: "pi pi-file-check",
+          command: () => {
+            console.log("Change template ", this.selectedNode);
+            this.addParentNode("combine");
+          }
+        }
+      ]
+    },
+    {
+      label: "Change style",
+      icon: "pi pi-palette",
+      items: [
+        {
+          label: "New page",
+          icon: "pi pi-file-plus",
+          command: () => {
+            this.selectedNode.data.customStyleKey = "new";
+            this.selectedNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+            this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+            this.selectedNode = null;
+          }
+        },
+        {
+          label: "ROT",
+          icon: "pi pi-trash",
+          command: () => {
+            this.selectedNode.data.customStyleKey = "rot";
+            this.selectedNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+            this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+            this.selectedNode = null;
+          }
+        },
+        {
+          label: "Page move",
+          icon: "pi pi-sitemap",
+          command: () => {
+            this.selectedNode.data.customStyleKey = "move";
+            this.selectedNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+            this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+            this.selectedNode = null;
+          }
+        },
+        {
+          separator: true
+        },
+        {
+          label: "Reset custom style",
+          icon: "pi pi-replay",
+          command: () => {
+            this.selectedNode.data.customStyle = false;
+            this.selectedNode.data.customStyleKey = null;
+            this.selectedNode.data.borderStyle = "border-2 border-primary border-round shadow-2";
+            this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+            this.selectedNode = null;
+          }
+        }
+      ]
+    },
+    {
+      separator: true
+    },
+    {
+      label: "Export to CSV",
+      icon: "pi pi-file-export",
+      disabled: true,
+      // TODO: implement export
+      command: () => {
+        console.log("Export ", this.selectedNode);
+        this.exportTable();
+      }
+    },
+    {
+      separator: true
+    },
+    {
+      label: "Open page in new page assistant",
+      icon: "pi pi-sparkles",
+      command: () => {
+        console.log("Open link in page assistant ", this.selectedNode);
+        this.openInPageAssistant();
+      }
+    },
+    {
+      label: "Open page in new tab",
+      icon: "pi pi-external-link",
+      command: () => {
+        console.log("Open link in new tab ", this.selectedNode);
+        this.openNodeUrl();
+      }
+    }
+  ];
+  selectedNode;
+  draggable = true;
+  selectable = true;
+  //For tracking previous states
+  editingNode = null;
+  undoArray = [];
+  //for loading in page assistant
+  baseHref = null;
+  onNodeContextMenu(event) {
+    if (this.editingNode) {
+      this.editingNode.data.editing = null;
+    }
+    this.selectedNode = event.node;
+    const customStyle = this.selectedNode.data.customStyle;
+    this.options.forEach((item) => {
+      if (item.label === "Open page in new page assistant" || item.label === "Open page in new tab") {
+        item.disabled = !this.selectedNode?.data?.url?.trim();
+      }
+      if (item.label === "Change template" || item.label === "Change style") {
+        item.disabled = customStyle;
+      }
+    });
+  }
+  onInputKeydown(event) {
+    if (event.key === "Enter") {
+      this.saveNode();
+      console.log("Saved ", this.selectedNode);
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    if (event.key === " ") {
+      event.stopPropagation();
+    }
+  }
+  editNode(mode = "label") {
+    if (this.selectedNode) {
+      this.selectedNode.data.editing = mode;
+      this.editingNode = this.selectedNode;
+      this.draggable = false;
+      this.selectable = false;
+      setTimeout(() => {
+        const input2 = document.querySelector("input.ia-label");
+        input2?.focus();
+      });
+    }
+  }
+  saveNode() {
+    if (this.selectedNode) {
+      this.selectedNode.data.editing = null;
+    }
+    if (this.selectedNode.data.url === "https://www.canada.ca/") {
+      this.editNode("link");
+      return;
+    }
+    this.draggable = true;
+    this.selectable = false;
+  }
+  addChildNode() {
+    if (!this.selectedNode)
+      return;
+    if (!this.selectedNode.children) {
+      this.selectedNode.children = [];
+    }
+    const newNode = {
+      label: "New page",
+      data: {
+        h1: "New page",
+        url: "https://www.canada.ca/",
+        // default URL
+        editing: false,
+        customStyle: false,
+        customStyleKey: "new",
+        borderStyle: "border-2 border-primary border-round border-dashed shadow-2"
+      },
+      children: []
+    };
+    this.selectedNode.children.push(newNode);
+    this.selectedNode.expanded = true;
+    this.selectedNode = newNode;
+    this.editNode("label");
+    this.updateMenu();
+    this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+  }
+  //Will be used to create a container to mark pages for template change
+  addParentNode(action) {
+    if (!this.selectedNode)
+      return;
+    const findParent = (nodes, parentNode2) => {
+      for (const node of nodes) {
+        if (node === this.selectedNode) {
+          return {
+            parentContainer: nodes,
+            // found at this level
+            parentNode: parentNode2 ?? null
+          };
+        }
+        if (node.children) {
+          const searchChildNodes = findParent(node.children, node);
+          if (searchChildNodes)
+            return searchChildNodes;
+        }
+      }
+      return null;
+    };
+    const location = findParent(this.iaData().iaTree || []);
+    if (!location)
+      return;
+    const { parentContainer, parentNode } = location;
+    const label = action === "subway" ? "Split into subway pattern" : "Combine into single page";
+    const newParentNode = {
+      label,
+      data: {
+        h1: label,
+        url: "",
+        originalParent: parentNode?.data?.url ?? "",
+        editing: false,
+        customStyle: true,
+        // prevents style changes
+        customStyleKey: "template",
+        isContainer: true,
+        // used to keep child nodes at proper level and prevent drag/drop of these wrappers into each other
+        borderStyle: "border-2 border-primary border-round border-dashed shadow-2"
+      },
+      expanded: true,
+      children: [this.selectedNode]
+    };
+    const index = parentContainer.indexOf(this.selectedNode);
+    if (index !== -1) {
+      parentContainer.splice(index, 1, newParentNode);
+    }
+    this.selectedNode = newParentNode;
+    this.updateMenu();
+    this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+  }
+  //TODO: if this was notOrphan, update crawl status of parent node so that this node can be rediscovered on crawl
+  deleteNode() {
+    if (!this.iaData().iaTree || !this.selectedNode)
+      return;
+    const nodeToDelete = this.selectedNode;
+    const rootIndex = this.iaData().iaTree.findIndex((n) => n === nodeToDelete);
+    if (rootIndex > -1) {
+      console.warn("Cannot delete root node.");
+      return;
+    }
+    const findAndDelete = (nodes) => {
+      for (const node of nodes) {
+        const children = node.children ?? [];
+        const childIndex = children.findIndex((c) => c === nodeToDelete);
+        if (childIndex > -1) {
+          this.undoArray.push({ node: nodeToDelete, parent: node, index: childIndex });
+          children.splice(childIndex, 1);
+          node.children = children.length ? children : void 0;
+          return true;
+        }
+        if (children.length && findAndDelete(children)) {
+          return true;
+        }
+      }
+      return false;
+    };
+    findAndDelete(this.iaData().iaTree);
+    this.updateMenu();
+  }
+  restoreNode() {
+    if (this.undoArray.length === 0)
+      return;
+    const last = this.undoArray.pop();
+    if (last.parent?.children) {
+      last.parent.children.splice(last.index, 0, last.node);
+    } else {
+      console.warn("Cannot restore node: parent missing.");
+      return;
+    }
+    this.selectedNode = last.node;
+    if (!this.selectedNode.data.customStyle) {
+      this.selectedNode.data.customStyleKey = "rot";
+      this.selectedNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+      this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+    }
+    this.updateMenu();
+  }
+  //Add undo option under delete if there is something to restore
+  updateMenu() {
+    this.options = [...this.baseMenu];
+    const deleteIndex = this.options.findIndex((option) => option.label === "Delete page");
+    if (this.undoArray.length > 0 && deleteIndex !== -1) {
+      this.options.splice(deleteIndex + 1, 0, {
+        label: "Restore page",
+        icon: "pi pi-history",
+        command: () => this.restoreNode()
+      });
+    }
+  }
+  //Placeholder for export function
+  exportTable() {
+  }
+  //Open link in new tab
+  openNodeUrl() {
+    window.open(this.selectedNode.data.url, "_blank");
+  }
+  //Make share link a service so it can be used on both share.component.ts and here
+  openInPageAssistant() {
+    const baseUrl = (window.location.origin + this.baseHref).replace(/\/+$/, "");
+    const urlParam = encodeURIComponent(this.selectedNode.data.url);
+    const shareLink = `${baseUrl}/page-assistant/share?url=${urlParam}`;
+    console.log("Open in page assistant: ", shareLink);
+    window.open(shareLink, "_blank");
+  }
+  handleNodeDrop(event) {
+    const dragNode = event.dragNode;
+    const dropNode = event.dropNode;
+    if (!dragNode || !dropNode)
+      return;
+    if ((dropNode.data.isContainer || dropNode.parent?.data?.isContainer) && dragNode.data.isContainer)
+      return;
+    event.accept?.();
+    if (dragNode.data.customStyleKey === "move") {
+      dragNode.data.customStyleKey = "";
+      dragNode.data.borderStyle = "border-2 border-primary border-round shadow-2";
+    }
+    const targetEl = event.originalEvent?.target;
+    const tag = targetEl.tagName.toLowerCase();
+    const droppedOnNode = tag !== "li";
+    const dragParentUrl = dragNode.data.originalParent;
+    const dropUrl = dropNode.data.url;
+    const dropParentUrl = dropNode.parent?.data?.url ?? "";
+    const dropGrandparentUrl = dropNode.parent?.data?.originalParent ?? "";
+    if (droppedOnNode) {
+      console.log("Dropped on node");
+      console.log("Checking if parentUrl matches node Url:\n", dropUrl);
+    } else {
+      console.log("Dropped between nodes");
+      console.log("Checking if parentUrl matches sibling parent Url:\n", dropParentUrl);
+    }
+    const droppedOnParent = droppedOnNode && dragParentUrl === dropUrl;
+    const reorderedSiblings = !droppedOnNode && dragParentUrl === dropParentUrl;
+    const droppedOnContainerSibling = dropNode.data.isContainer && droppedOnNode && dragParentUrl === dropParentUrl;
+    const droppedBetweenContainerSibling = dropNode.parent?.data?.isContainer && !droppedOnNode && dragParentUrl === dropGrandparentUrl;
+    const isCustom = dragNode.data.customStyle;
+    if (!(droppedOnParent || reorderedSiblings || droppedOnContainerSibling || droppedBetweenContainerSibling || isCustom || dragNode.data.customStyleKey === "new")) {
+      dragNode.data.customStyleKey = "move";
+      dragNode.data.borderStyle = "border-2 border-primary border-round border-dashed shadow-2";
+    }
+    const treeRoot = targetEl.closest(".p-tree");
+    treeRoot?.querySelectorAll(".p-tree-node-dragover").forEach((el) => {
+      el.classList.remove("p-tree-node-dragover");
+    });
+    console.log("Drag parent URL", dragNode.data.originalParent);
+    this.iaTreeService.updateNodeStyles(this.iaData().iaTree, 0);
+  }
+  static \u0275fac = function IaTreeComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _IaTreeComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _IaTreeComponent, selectors: [["ca-ia-tree"]], viewQuery: function IaTreeComponent_Query(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275viewQuery(_c014, 5);
+      \u0275\u0275viewQuery(_c115, 5);
+    }
+    if (rf & 2) {
+      let _t;
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.chartContainer = _t.first);
+      \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.cm = _t.first);
+    }
+  }, features: [\u0275\u0275ProvidersFeature([TreeDragDropService])], decls: 3, vars: 1, consts: [["togglesPopover", ""], ["cm", ""], ["chartContainer", ""], ["header", ""], ["body", ""], [4, "ngIf"], ["value", "0", 4, "ngIf"], ["value", "0"], ["value", "1"], ["value", "2", 4, "ngIf"], ["value", "3", 4, "ngIf"], [1, "flex", "flex-row", "justify-content-between", "align-items-center", "gap-2", "mb-2"], [1, "max-w-max"], [1, "secondary-outline"], ["severity", "secondary", "text", "", 1, "w-10rem", 3, "click", "icon", "label"], ["icon", "pi pi-chevron-down", "severity", "secondary", "text", "", 3, "click"], [1, "flex", "flex-column", "gap-3"], ["class", "flex flex-row justify-content-between align-items-center gap-2", 4, "ngFor", "ngForOf"], ["label", "Maximize IA chart", "severity", "secondary", "outlined", "", "styleClass", "secondary-outline", "icon", "pi pi-window-maximize", 3, "click"], ["class", "overflow-auto max-h-75vh surface-ground surface-border border-1 py-3 mb-3 ia-chart-container", 4, "ngIf"], [3, "model"], ["styleClass", "w-full md:w-[30rem]", "draggableScope", "self", "droppableScope", "self", 3, "selectionChange", "onNodeDrop", "onNodeContextMenuSelect", "value", "selectionMode", "selection", "draggableNodes", "droppableNodes", "validateDrop", "contextMenu"], ["pTemplate", "default"], ["value", "2"], ["size", "small", "stripedRows", "", 3, "value", "tableStyle", 4, "ngIf"], ["value", "3"], [1, "mt-0"], [4, "ngFor", "ngForOf"], [1, "flex", "flex-row", "justify-content-between", "align-items-center", "gap-2"], [3, "ngModelChange", "ngModel"], [1, "overflow-auto", "max-h-75vh", "surface-ground", "surface-border", "border-1", "py-3", "mb-3", "ia-chart-container"], [3, "value"], ["class", "flex flex-row gap-2 justify-content-between align-items-center -mx-2 -my-3", 4, "ngIf"], ["target", "_blank", 1, "ia-label", 3, "click", "href", "innerHTML"], ["class", "flex flex-row gap-2 justify-content-center align-items-center", 4, "ngIf"], [1, "flex", "flex-row", "gap-2", "justify-content-between", "align-items-center", "-mx-2", "-my-3"], [1, "flex", "gap-2"], ["class", "pi pi-sitemap text-red-500", "pTooltip", "IA orphan", "tooltipPosition", "top", 4, "ngIf"], ["icon", "pi pi-github", "pTooltip", "has prototype", "tooltipPosition", "top", "text", "", "severity", "secondary", "class", "-mr-4 -my-1", 3, "rounded", 4, "ngIf"], ["class", "p-button-rounded p-button-outlined p-button-sm pr-0 -mr-3 -my-1 transparent-toggle", "offIcon", "pi pi-lock", "offLabel", "", "onIcon", "pi pi-lock-open", "onLabel", "", "tooltipPosition", "top", "ariaLabel", "Mark as in-scope", 3, "ngModel", "pTooltip", "ngModelChange", 4, "ngIf"], ["pTooltip", "IA orphan", "tooltipPosition", "top", 1, "pi", "pi-sitemap", "text-red-500"], ["icon", "pi pi-github", "pTooltip", "has prototype", "tooltipPosition", "top", "text", "", "severity", "secondary", 1, "-mr-4", "-my-1", 3, "rounded"], ["offIcon", "pi pi-lock", "offLabel", "", "onIcon", "pi pi-lock-open", "onLabel", "", "tooltipPosition", "top", "ariaLabel", "Mark as in-scope", 1, "p-button-rounded", "p-button-outlined", "p-button-sm", "pr-0", "-mr-3", "-my-1", "transparent-toggle", 3, "ngModelChange", "ngModel", "pTooltip"], [1, "flex", "flex-row", "gap-2", "justify-content-center", "align-items-center"], ["class", "pi pi-spin pi-spinner text-color-secondary -my-3", "pTooltip", "crawling", "tooltipPosition", "top", 4, "ngIf"], ["icon", "pi pi-plus-circle", "pTooltip", "Get child pages?", "tooltipPosition", "top", "text", "", "severity", "primary", "class", "-my-4", 3, "rounded", "click", 4, "ngIf"], ["pTooltip", "crawling", "tooltipPosition", "top", 1, "pi", "pi-spin", "pi-spinner", "text-color-secondary", "-my-3"], ["icon", "pi pi-plus-circle", "pTooltip", "Get child pages?", "tooltipPosition", "top", "text", "", "severity", "primary", 1, "-my-4", 3, "click", "rounded"], [1, "flex", "flex-row", "align-items-center", "gap-2", "w-full"], ["class", "pi pi-folder", 4, "ngIf"], ["class", "pi pi-file", 4, "ngIf"], ["class", "pi pi-arrows-alt cursor-move text-color-secondary", 4, "ngIf"], ["class", "pi pi-pencil text-color-secondary", 4, "ngIf"], [1, "pi", "pi-folder"], [1, "pi", "pi-file"], [1, "pi", "pi-arrows-alt", "cursor-move", "text-color-secondary"], [1, "pi", "pi-pencil", "text-color-secondary"], ["type", "text", "pInputText", "", "pSize", "small", 1, "ia-label", 3, "ngModelChange", "keydown", "ngModel"], ["icon", "pi pi-check", "severity", "secondary", "size", "small", 3, "onClick"], ["size", "small", "stripedRows", "", 3, "value", "tableStyle"], ["target", "_blank", 1, "no-underline", 3, "href"]], template: function IaTreeComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "p");
+      \u0275\u0275text(1, "To do: set up crawl for root URLs to complete IA tree, also set up referring link/search term/url structure crawl (for unique links that aren't in the IA tree)");
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(2, IaTreeComponent_ng_container_2_Template, 5, 2, "ng-container", 5);
+    }
+    if (rf & 2) {
+      \u0275\u0275advance(2);
+      \u0275\u0275property("ngIf", ctx.iaData().iaTree);
+    }
+  }, dependencies: [CommonModule, NgForOf, NgIf, FormsModule, DefaultValueAccessor, NgControlStatus, NgModel, TranslateModule, TranslatePipe, TableModule, Table, PrimeTemplate, ButtonModule, Button, OrganizationChartModule, OrganizationChart, ProgressBarModule, InputNumberModule, InputTextModule, InputText, TreeTableModule, Tree, ContextMenuModule, ContextMenu, InputGroupModule, InputGroup, InputGroupAddonModule, InputGroupAddon, TooltipModule, Tooltip, ToggleButtonModule, ToggleButton, PopoverModule, Popover, ToggleSwitchModule, ToggleSwitch, TabsModule, Tabs, TabPanels, TabPanel, TabList, Tab], styles: ["\n\n[_nghost-%COMP%] {\n  display: block;\n}\n.ia-label[_ngcontent-%COMP%] {\n  white-space: pre-line;\n  display: inline-block;\n  color: var(--text-color) !important;\n  text-decoration: none !important;\n}\n  .p-tree li[class*=text-white] > .p-tree-node-content .ia-label {\n  color: #ffffff !important;\n}\n  .p-tree li[class*=text-black] > .p-tree-node-content .ia-label {\n  color: #000000 !important;\n}\n  .p-tree .p-tree-node-content:hover {\n  background-color: unset !important;\n}\n  .ia-chart-container .p-organizationchart-node a {\n  color: var(--text-color) !important;\n  text-decoration: none !important;\n}\n  .ia-chart-container .p-organizationchart-node.text-white a {\n  color: #ffffff !important;\n}\n  .ia-chart-container .p-organizationchart-node.text-black a {\n  color: #000000 !important;\n}\n  .transparent-toggle:hover {\n  background-color: var(--p-primary-50) !important;\n}\n  .transparent-toggle {\n  background-color: unset !important;\n  border: none !important;\n}\n/*# sourceMappingURL=ia-tree.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(IaTreeComponent, [{
+    type: Component,
+    args: [{ selector: "ca-ia-tree", imports: [
+      CommonModule,
+      FormsModule,
+      TranslateModule,
+      TableModule,
+      ButtonModule,
+      OrganizationChartModule,
+      ProgressBarModule,
+      InputNumberModule,
+      InputTextModule,
+      TreeTableModule,
+      Tree,
+      ContextMenuModule,
+      InputGroupModule,
+      InputGroupAddonModule,
+      TooltipModule,
+      ToggleButtonModule,
+      PopoverModule,
+      ToggleSwitchModule,
+      TabsModule
+    ], providers: [TreeDragDropService], template: `<p>To do: set up crawl for root URLs to complete IA tree, also set up referring link/search term/url structure crawl (for unique links that aren't in the IA tree)</p>
+<ng-container *ngIf="iaData().iaTree">
+
+    <h2>IA structure</h2>
+    <p *ngIf="iaData().iaTree.length === 0">No child pages found.</p>
+
+    <p-tabs value="0" *ngIf="iaData().iaTree.length > 0">
+        <p-tablist>
+            <p-tab value="0">Chart</p-tab>
+            <p-tab value="1">Table</p-tab>
+            <p-tab value="2" *ngIf="iaData().brokenLinks.length > 0">Broken links</p-tab>
+            <p-tab value="3" *ngIf="iaData().searchMatches.length > 0">Search matches</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+            <p-tabpanel value="0">
+                <!--OPTIONS-->
+                <div class="flex flex-row justify-content-between align-items-center gap-2 mb-2">
+                    <p-inputgroup class="max-w-max">
+                        <p-inputgroup-addon class="secondary-outline">
+                            <p-button [icon]="getMainToggleIcon()" [label]="getMainToggleLabel()" (click)="onMainToggleClick()"
+                                      severity="secondary" text class="w-10rem" />
+                            <p-button icon="pi pi-chevron-down" (click)="togglesPopover.toggle($event)"
+                                      severity="secondary" text />
+                        </p-inputgroup-addon>
+                    </p-inputgroup>
+                    <!--div class="flex flex-row border-1 align-items-center border-round-sm secondary-outline">
+                            <p-button [icon]="getMainToggleIcon()" [label]="getMainToggleLabel()" (click)="onMainToggleClick()"
+                                      severity="secondary" text class="w-10rem" />
+                            <p-button icon="pi pi-chevron-down" (click)="togglesPopover.toggle($event)"
+                                      severity="secondary" text />
+                        </div-->
+                    <p-popover #togglesPopover>
+                        <div class="flex flex-column gap-3">
+                            <div class="flex flex-row justify-content-between align-items-center gap-2" *ngFor="let key of toggleKeys">
+                                <span>{{ \`ia.toggle.\${key}\` | translate }}</span>
+                                <p-toggleswitch [(ngModel)]="toggles[key]"></p-toggleswitch>
+                            </div>
+                        </div>
+                    </p-popover>
+                    <p-button label="Maximize IA chart" severity="secondary" outlined styleClass="secondary-outline" (click)="maximize(chartContainer)" icon="pi pi-window-maximize" />
+                </div>
+                <!--CHART-->
+                <div #chartContainer *ngIf="iaData().iaTree.length > 0" class="overflow-auto max-h-75vh surface-ground surface-border border-1 py-3 mb-3 ia-chart-container">
+                    <p-organization-chart [value]="iaData().iaTree">
+                        <ng-template let-node pTemplate="default">
+                            <!--STATUS ICONS-->
+                            <div class="flex flex-row gap-2 justify-content-between align-items-center -mx-2 -my-3" *ngIf="!getToggleStates().allFalse">
+                                <!--Orphan status-->
+                                <span class="flex gap-2">
+                                    <!--i class="pi pi-verified text-green-500" pTooltip="Linked from parent" tooltipPosition="top" *ngIf="node.data.notOrphan && toggles['orphan']"></i-->
+                                    <i class="pi pi-sitemap text-red-500" pTooltip="IA orphan" tooltipPosition="top" *ngIf="!node.data.notOrphan && node.data.originalParent && toggles['orphan']"></i>
+                                </span>
+                                <!--Scope status-->
+                                <span class="flex gap-2">
+                                    <p-button icon="pi pi-github" pTooltip="has prototype" tooltipPosition="top" [rounded]="true" text severity="secondary" class="-mr-4 -my-1" *ngIf="node.data.prototype && toggles['proto']" />
+                                    <p-togglebutton [(ngModel)]="node.data.isUserAdded" class="p-button-rounded p-button-outlined p-button-sm pr-0 -mr-3 -my-1 transparent-toggle" *ngIf="toggles['scope']"
+                                                    offIcon="pi pi-lock" offLabel="" onIcon="pi pi-lock-open" onLabel=""
+                                                    [pTooltip]="node.data.isUserAdded ? 'In-scope' : 'Out-of-scope'" tooltipPosition="top" ariaLabel="Mark as in-scope" />
+
+                                </span>
+                            </div>
+                            <!--PAGE-->
+                            <p><a [href]="node.data.url" target="_blank" (click)="onNodeClick($event)" [innerHTML]="node.label" class="ia-label"></a></p>
+                            <!--CRAWL STATUS-->
+                            <div class="flex flex-row gap-2 justify-content-center align-items-center" *ngIf="!getToggleStates().allFalse">
+                                <i class="pi pi-spin pi-spinner text-color-secondary -my-3" pTooltip="crawling" tooltipPosition="top" *ngIf="node.data.isRoot && !node.data.isCrawled && toggles['crawl']"></i>
+                                <p-button icon="pi pi-plus-circle" (click)="getChildPages(node)" pTooltip="Get child pages?" tooltipPosition="top" [rounded]="true" text severity="primary" class="-my-4" *ngIf="!node.data.isRoot && !node.data.isCrawled && toggles['crawl']" />
+                            </div>
+                        </ng-template>
+                    </p-organization-chart>
+                </div>
+            </p-tabpanel>
+            <p-tabpanel value="1">
+                <!--TREE TABLE-->
+                <p-contextMenu #cm [model]="options"></p-contextMenu>
+                <h2>IA structure tree</h2>
+                <p-tree [value]="iaData().iaTree" styleClass="w-full md:w-[30rem]"
+                        [selectionMode]="selectable ? 'multiple' : null" [(selection)]="selectedNode"
+                        [draggableNodes]="draggable" [droppableNodes]="true" draggableScope="self" droppableScope="self" (onNodeDrop)="handleNodeDrop($event)" [validateDrop]="true"
+                        [contextMenu]="cm" (onNodeContextMenuSelect)="onNodeContextMenu($event)">
+                    <ng-template pTemplate="default" let-node>
+                        <div class="flex flex-row align-items-center gap-2 w-full">
+                            <i class="pi pi-folder" *ngIf="node.children.length > 0 && !draggable && !node.data.editing"></i>
+                            <i class="pi pi-file" *ngIf="(node.children.length === 0 || !node.children) && !draggable && !node.data.editing"></i>
+                            <i *ngIf="draggable" class="pi pi-arrows-alt cursor-move text-color-secondary"></i>
+                            <i *ngIf="node.data.editing" class="pi pi-pencil text-color-secondary"></i>
+                            <ng-container *ngIf="!node.data.editing"><a [href]="node.data.url" target="_blank" (click)="onNodeClick($event)" [innerHTML]="node.label" class="ia-label"></a></ng-container>
+                            <p-inputgroup *ngIf="node.data.editing === 'label'">
+                                <input type="text" pInputText [(ngModel)]="node.label" pSize="small" class="ia-label" (keydown)="onInputKeydown($event)" />
+                                <p-inputgroup-addon><p-button icon="pi pi-check" severity="secondary" size="small" (onClick)="saveNode()" /></p-inputgroup-addon>
+                            </p-inputgroup>
+                            <p-inputgroup *ngIf="node.data.editing === 'link'">
+                                <input type="text" pInputText [(ngModel)]="node.data.url" pSize="small" class="ia-label" (keydown)="onInputKeydown($event)" />
+                                <p-inputgroup-addon><p-button icon="pi pi-check" severity="secondary" size="small" (onClick)="saveNode()" /></p-inputgroup-addon>
+                            </p-inputgroup>
+                        </div>
+                    </ng-template>
+                </p-tree>
+            </p-tabpanel>
+            <p-tabpanel value="2">
+                <!--BROKEN LINKS-->
+                <h2>Broken links</h2>
+                <p *ngIf="iaData().brokenLinks.length === 0">No broken links found on this page<span *ngIf="iaData().iaTree[0].children?.length"> or on any detected child pages</span>.</p>
+                <p-table *ngIf="iaData().brokenLinks.length > 0" [value]="iaData().brokenLinks" size="small" stripedRows [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template #header>
+                        <tr>
+                            <th>Parent page</th>
+                            <th>Broken link</th>
+                            <th>Status</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-rowData>
+                        <tr>
+                            <td>{{ rowData.parentUrl }}</td>
+                            <td>{{ rowData.url }}</td>
+                            <td>{{ rowData.status }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-tabpanel>
+            <p-tabpanel value="3">
+                <!--Search Matches-->
+                <h2>Search matches</h2>
+                <p *ngIf="iaData().searchMatches.length === 0">No matches found.</p>
+                <ol class="mt-0">
+                    <ng-container *ngFor="let match of iaData().searchMatches">
+                        <li><a [href]="match.url" target="_blank" class="no-underline">{{match.h1}}</a></li>
+                    </ng-container>
+                </ol>
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
+</ng-container>`, styles: ["/* angular:styles/component:css;9a93770ea141d081e54eb414c0d33e6ca7cb03d141457e5b29bfd7a65f253928;/home/naomi/content-assistant/src/app/views/ia-assistant/components/ia-tree.component.ts */\n:host {\n  display: block;\n}\n.ia-label {\n  white-space: pre-line;\n  display: inline-block;\n  color: var(--text-color) !important;\n  text-decoration: none !important;\n}\n::ng-deep .p-tree li[class*=text-white] > .p-tree-node-content .ia-label {\n  color: #ffffff !important;\n}\n::ng-deep .p-tree li[class*=text-black] > .p-tree-node-content .ia-label {\n  color: #000000 !important;\n}\n::ng-deep .p-tree .p-tree-node-content:hover {\n  background-color: unset !important;\n}\n::ng-deep .ia-chart-container .p-organizationchart-node a {\n  color: var(--text-color) !important;\n  text-decoration: none !important;\n}\n::ng-deep .ia-chart-container .p-organizationchart-node.text-white a {\n  color: #ffffff !important;\n}\n::ng-deep .ia-chart-container .p-organizationchart-node.text-black a {\n  color: #000000 !important;\n}\n::ng-deep .transparent-toggle:hover {\n  background-color: var(--p-primary-50) !important;\n}\n::ng-deep .transparent-toggle {\n  background-color: unset !important;\n  border: none !important;\n}\n/*# sourceMappingURL=ia-tree.component.css.map */\n"] }]
+  }], () => [], { chartContainer: [{
+    type: ViewChild,
+    args: ["chartContainer"]
+  }], cm: [{
+    type: ViewChild,
+    args: ["cm"]
+  }] });
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(IaTreeComponent, { className: "IaTreeComponent", filePath: "src/app/views/ia-assistant/components/ia-tree.component.ts", lineNumber: 97 });
+})();
+
+// src/app/views/ia-assistant/ia-assistant.component.ts
+function IaAssistantComponent_ng_template_9_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 12)(1, "p-button", 13);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_9_Template_p_button_onClick_1_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.iaState.saveToLocalStorage());
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "p-button", 14);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_9_Template_p_button_onClick_2_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.iaState.exportIaState());
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "p-button", 15);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_9_Template_p_button_onClick_3_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.iaState.exportIaTreeAsCsv());
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "p-button", 16);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_9_Template_p_button_onClick_4_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.goToGitHubExport());
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275property("disabled", ctx_r2.iaState.getIaData().iaTree.length === 0);
+    \u0275\u0275advance();
+    \u0275\u0275property("disabled", ctx_r2.iaState.getIaData().iaTree.length === 0);
+  }
+}
+function IaAssistantComponent_ng_template_11_Template(rf, ctx) {
+}
+function IaAssistantComponent_ng_template_13_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 12)(1, "p-fileUpload", 17, 4);
+    \u0275\u0275listener("uploadHandler", function IaAssistantComponent_ng_template_13_Template_p_fileUpload_uploadHandler_1_listener($event) {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.iaState.importIaState($event));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "p-button", 18);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_13_Template_p_button_onClick_3_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.iaState.resetIaFlow());
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275property("customUpload", true);
+  }
+}
+function IaAssistantComponent_ng_template_27_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 19);
+    \u0275\u0275element(1, "ca-validate-urls");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "div", 20)(3, "p-button", 21);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_27_Template_p_button_onClick_3_listener() {
+      const activateCallback_r6 = \u0275\u0275restoreView(_r5).activateCallback;
+      const ctx_r2 = \u0275\u0275nextContext();
+      activateCallback_r6(2);
+      return \u0275\u0275resetView(ctx_r2.iaState.saveToLocalStorage());
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance(3);
+    \u0275\u0275property("disabled", !ctx_r2.iaState.getUrlData().isValidated || !ctx_r2.iaState.getUrlData().isOk);
+  }
+}
+function IaAssistantComponent_ng_template_30_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 19);
+    \u0275\u0275element(1, "ca-set-roots");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "div", 22)(3, "p-button", 23);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_30_Template_p_button_onClick_3_listener() {
+      const activateCallback_r8 = \u0275\u0275restoreView(_r7).activateCallback;
+      const ctx_r2 = \u0275\u0275nextContext();
+      activateCallback_r8(1);
+      return \u0275\u0275resetView(ctx_r2.iaState.saveToLocalStorage());
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "p-button", 24);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_30_Template_p_button_onClick_4_listener() {
+      const activateCallback_r8 = \u0275\u0275restoreView(_r7).activateCallback;
+      const ctx_r2 = \u0275\u0275nextContext();
+      activateCallback_r8(3);
+      return \u0275\u0275resetView(ctx_r2.iaState.saveToLocalStorage());
+    });
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance(4);
+    \u0275\u0275property("disabled", ctx_r2.iaState.getBreadcrumbData().progress !== 100);
+  }
+}
+function IaAssistantComponent_ng_template_33_p_button_4_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r11 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-button", 27);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_33_p_button_4_Template_p_button_onClick_0_listener() {
+      \u0275\u0275restoreView(_r11);
+      const activateCallback_r10 = \u0275\u0275nextContext().activateCallback;
+      const ctx_r2 = \u0275\u0275nextContext();
+      activateCallback_r10(4);
+      return \u0275\u0275resetView(ctx_r2.iaState.saveToLocalStorage());
+    });
+    \u0275\u0275elementEnd();
+  }
+}
+function IaAssistantComponent_ng_template_33_p_button_5_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r12 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-button", 28);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_33_p_button_5_Template_p_button_onClick_0_listener() {
+      \u0275\u0275restoreView(_r12);
+      const activateCallback_r10 = \u0275\u0275nextContext().activateCallback;
+      return \u0275\u0275resetView(activateCallback_r10(4));
+    });
+    \u0275\u0275elementEnd();
+  }
+}
+function IaAssistantComponent_ng_template_33_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 19);
+    \u0275\u0275element(1, "ca-search-criteria");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "div", 22)(3, "p-button", 23);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_33_Template_p_button_onClick_3_listener() {
+      const activateCallback_r10 = \u0275\u0275restoreView(_r9).activateCallback;
+      return \u0275\u0275resetView(activateCallback_r10(2));
+    });
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(4, IaAssistantComponent_ng_template_33_p_button_4_Template, 1, 0, "p-button", 25)(5, IaAssistantComponent_ng_template_33_p_button_5_Template, 1, 0, "p-button", 26);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance(4);
+    \u0275\u0275property("ngIf", ctx_r2.iaState.getIaData().iaTree.length === 0);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.iaState.getIaData().iaTree.length > 0);
+  }
+}
+function IaAssistantComponent_ng_template_36_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r13 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 19);
+    \u0275\u0275element(1, "ca-ia-tree");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(2, "div", 29)(3, "p-button", 23);
+    \u0275\u0275listener("onClick", function IaAssistantComponent_ng_template_36_Template_p_button_onClick_3_listener() {
+      const activateCallback_r14 = \u0275\u0275restoreView(_r13).activateCallback;
+      return \u0275\u0275resetView(activateCallback_r14(3));
+    });
+    \u0275\u0275elementEnd()();
+  }
+}
+var IaAssistantComponent = class _IaAssistantComponent {
+  iaState = inject(IaStateService);
+  router = inject(Router);
+  goToGitHubExport() {
+    this.iaState.saveToLocalStorage();
+    this.router.navigate(["/ia-assistant/github"]);
+  }
+  static \u0275fac = function IaAssistantComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _IaAssistantComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _IaAssistantComponent, selectors: [["ca-ia-assistant"]], decls: 38, vars: 16, consts: [["start", ""], ["center", ""], ["end", ""], ["content", ""], ["fileUploadRef", ""], ["id", "wb-cont"], [1, "border-1", "secondary-outline", "p-3"], [1, "border-y-1", "secondary-outline", "surface-card", "sticky", "top-0", "z-5", "-m-3", "mb-1"], ["styleClass", "p-1"], [3, "valueChange", "value", "linear"], [1, "-mx-4"], [3, "value"], [1, "flex", "gap-1"], ["icon", "pi pi-save", "pTooltip", "Save session", "tooltipPosition", "top", "outlined", "", "styleClass", "secondary-outline", "severity", "secondary", 3, "onClick"], ["icon", "pi pi-file-export", "pTooltip", "Export JSON file", "tooltipPosition", "top", "outlined", "", "styleClass", "secondary-outline", "severity", "secondary", 3, "onClick"], ["icon", "pi pi-download", "pTooltip", "Download CSV", "tooltipPosition", "top", "outlined", "", "styleClass", "secondary-outline", "severity", "secondary", 3, "onClick", "disabled"], ["icon", "pi pi-github", "pTooltip", "Export to GitHub", "tooltipPosition", "top", "outlined", "", "styleClass", "secondary-outline", "severity", "secondary", 3, "onClick", "disabled"], ["name", "iaStateFile", "accept", ".json", "auto", "true", "mode", "basic", "chooseLabel", "Import JSON", "chooseIcon", "pi pi-file-import", "outlined", "", "styleClass", "upload-secondary-outline", "severity", "secondary", "pTooltip", "Import JSON file", "tooltipPosition", "top", 3, "uploadHandler", "customUpload"], ["icon", "pi pi-trash", "pTooltip", "Reset", "tooltipPosition", "top", "outlined", "", "styleClass", "secondary-outline", "severity", "danger", 3, "onClick"], [1, "flex", "flex-column", "gap-2", "p-3", "border-2", "border-dashed", "border-primary"], [1, "flex", "pt-4", "gap-2", "justify-content-between"], ["label", "Next", "icon", "pi pi-arrow-right", "iconPos", "right", 1, "ml-auto", 3, "onClick", "disabled"], [1, "flex", "pt-4", "justify-content-between"], ["label", "Back", "severity", "secondary", "icon", "pi pi-arrow-left", 3, "onClick"], ["label", "Next", "icon", "pi pi-arrow-right", "iconPos", "right", 3, "onClick", "disabled"], ["label", "Build IA Tree", "icon", "pi pi-arrow-right", "iconPos", "right", 3, "onClick", 4, "ngIf"], ["label", "Next", "icon", "pi pi-arrow-right", "iconPos", "right", 3, "onClick", 4, "ngIf"], ["label", "Build IA Tree", "icon", "pi pi-arrow-right", "iconPos", "right", 3, "onClick"], ["label", "Next", "icon", "pi pi-arrow-right", "iconPos", "right", 3, "onClick"], [1, "flex", "pt-4", "justify-content-start"]], template: function IaAssistantComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      const _r1 = \u0275\u0275getCurrentView();
+      \u0275\u0275elementStart(0, "h1", 5);
+      \u0275\u0275text(1);
+      \u0275\u0275pipe(2, "translate");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(3, "p");
+      \u0275\u0275text(4);
+      \u0275\u0275pipe(5, "translate");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(6, "div", 6)(7, "div", 7)(8, "p-toolbar", 8);
+      \u0275\u0275template(9, IaAssistantComponent_ng_template_9_Template, 5, 2, "ng-template", null, 0, \u0275\u0275templateRefExtractor)(11, IaAssistantComponent_ng_template_11_Template, 0, 0, "ng-template", null, 1, \u0275\u0275templateRefExtractor)(13, IaAssistantComponent_ng_template_13_Template, 4, 1, "ng-template", null, 2, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(15, "p-stepper", 9);
+      \u0275\u0275twoWayListener("valueChange", function IaAssistantComponent_Template_p_stepper_valueChange_15_listener($event) {
+        \u0275\u0275restoreView(_r1);
+        \u0275\u0275twoWayBindingSet(ctx.iaState.activeStep, $event) || (ctx.iaState.activeStep = $event);
+        return \u0275\u0275resetView($event);
+      });
+      \u0275\u0275elementStart(16, "p-step-list", 10)(17, "p-step", 11);
+      \u0275\u0275text(18, "Enter and validate URLs");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(19, "p-step", 11);
+      \u0275\u0275text(20, "Set initial pages to crawl");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(21, "p-step", 11);
+      \u0275\u0275text(22, "Add search criteria");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(23, "p-step", 11);
+      \u0275\u0275text(24, "Build IA tree");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(25, "p-step-panels")(26, "p-step-panel", 11);
+      \u0275\u0275template(27, IaAssistantComponent_ng_template_27_Template, 4, 1, "ng-template", null, 3, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(29, "p-step-panel", 11);
+      \u0275\u0275template(30, IaAssistantComponent_ng_template_30_Template, 5, 1, "ng-template", null, 3, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(32, "p-step-panel", 11);
+      \u0275\u0275template(33, IaAssistantComponent_ng_template_33_Template, 6, 2, "ng-template", null, 3, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(35, "p-step-panel", 11);
+      \u0275\u0275template(36, IaAssistantComponent_ng_template_36_Template, 4, 0, "ng-template", null, 3, \u0275\u0275templateRefExtractor);
+      \u0275\u0275elementEnd()()()();
+    }
+    if (rf & 2) {
+      \u0275\u0275advance();
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(2, 12, "title.ia"));
+      \u0275\u0275advance(3);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(5, 14, "ia.description"));
+      \u0275\u0275advance(11);
+      \u0275\u0275twoWayProperty("value", ctx.iaState.activeStep);
+      \u0275\u0275property("linear", true);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("value", 1);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("value", 2);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("value", 3);
+      \u0275\u0275advance(2);
+      \u0275\u0275property("value", 4);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 1);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 2);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 3);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("value", 4);
+    }
+  }, dependencies: [
+    CommonModule,
+    NgIf,
+    FormsModule,
+    TranslateModule,
+    TranslatePipe,
+    TextareaModule,
+    InputTextModule,
+    IftaLabelModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    ButtonModule,
+    Button,
+    FileUploadModule,
+    FileUpload,
+    ProgressBarModule,
+    ChipModule,
+    StepperModule,
+    Stepper,
+    StepList,
+    StepPanels,
+    StepPanel,
+    Step,
+    ConfirmPopupModule,
+    TableModule,
+    BadgeModule,
+    TooltipModule,
+    Tooltip,
+    ToolbarModule,
+    Toolbar,
+    PopoverModule,
+    DropdownModule,
+    SearchCriteriaComponent,
+    IaTreeComponent,
+    ValidateUrlsComponent,
+    SetRootsComponent
+  ], styles: ["\n\n  .upload-secondary-outline .p-button {\n  border: 1px solid var(--p-zinc-200) !important;\n  background-color: transparent !important;\n  color: var(--p-button-secondary-color);\n}\n  .upload-secondary-outline .p-button:hover {\n  background-color: var(--p-button-outlined-secondary-hover-background);\n  color: var(--p-button-secondary-hover-color);\n}\n  .upload-secondary-outline .p-button-label {\n  display: none;\n}\n/*# sourceMappingURL=ia-assistant.component.css.map */"] });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(IaAssistantComponent, [{
+    type: Component,
+    args: [{ selector: "ca-ia-assistant", imports: [
+      CommonModule,
+      FormsModule,
+      TranslateModule,
+      TextareaModule,
+      InputTextModule,
+      IftaLabelModule,
+      InputGroupModule,
+      InputGroupAddonModule,
+      ButtonModule,
+      FileUploadModule,
+      ProgressBarModule,
+      ChipModule,
+      StepperModule,
+      ConfirmPopupModule,
+      TableModule,
+      BadgeModule,
+      TooltipModule,
+      ToolbarModule,
+      PopoverModule,
+      DropdownModule,
+      SearchCriteriaComponent,
+      IaTreeComponent,
+      ValidateUrlsComponent,
+      SetRootsComponent
+    ], template: `<h1 id="wb-cont">{{ 'title.ia' | translate}}</h1>
+<p>{{'ia.description' | translate }}</p>
+
+<div class="border-1 secondary-outline p-3">
+    <div class="border-y-1 secondary-outline surface-card sticky top-0 z-5 -m-3 mb-1">
+        <p-toolbar styleClass="p-1">
+            <ng-template #start>
+                <div class="flex gap-1">
+                    <p-button icon="pi pi-save" pTooltip="Save session" tooltipPosition="top" outlined styleClass="secondary-outline" severity="secondary" (onClick)="iaState.saveToLocalStorage()" />
+                    <p-button icon="pi pi-file-export" pTooltip="Export JSON file" tooltipPosition="top" outlined styleClass="secondary-outline" severity="secondary" (onClick)="iaState.exportIaState()" />
+
+                    <p-button icon="pi pi-download" pTooltip="Download CSV" tooltipPosition="top" outlined styleClass="secondary-outline" severity="secondary" (onClick)="iaState.exportIaTreeAsCsv()" [disabled]="iaState.getIaData().iaTree.length === 0" />
+
+                    <p-button icon="pi pi-github" pTooltip="Export to GitHub" tooltipPosition="top" outlined styleClass="secondary-outline" severity="secondary" (onClick)="goToGitHubExport()" [disabled]="iaState.getIaData().iaTree.length === 0" />
+
+                    <!--p-button *ngIf="isDev" icon="pi pi-github" pTooltip="Export to GitHub" tooltipPosition="top" outlined styleClass="secondary-outline" severity="secondary" (onClick)="op.toggle($event)" [disabled]="iaState.getIaData().iaTree.length === 0" />
+
+
+                    <p-popover #op>
+                        <div class="flex flex-column gap-2">
+                            <p-iftalabel>
+                                <input type="text" id="owner" pInputText [(ngModel)]="owner" pSize="small" fluid (blur)="updateRepoList()" />
+                                <label for="repo">Owner</label>
+                            </p-iftalabel>
+                            <p-iftalabel>
+                                <input type="text" id="repo" pInputText [(ngModel)]="repo" pSize="small" fluid />
+                                <label for="repo">Repository</label>
+                            </p-iftalabel>
+                            <p-dropdown
+                                        [options]="repos"
+                                        [(ngModel)]="repo"
+                                        placeholder="Select a repo">
+                            </p-dropdown>
+                            <p-iftalabel>
+                                <input type="text" id="branch" pInputText [(ngModel)]="branch" pSize="small" fluid />
+                                <label for="branch">Branch</label>
+                            </p-iftalabel>
+                            <p-iftalabel>
+                                <input type="text" id="token" pInputText [(ngModel)]="userToken" pSize="small" fluid />
+                                <label for="token">GitHub Token</label>
+                            </p-iftalabel>
+                            <p-button icon="pi pi-github" label="Export to GitHub" severity="primary" (onClick)="exportProjectToGitHub(owner,repo,branch,userToken,true)" [disabled]="iaState.getIaData().iaTree.length === 0" />
+
+                        </div>
+                    </p-popover-->
+
+                </div>
+            </ng-template>
+            <ng-template #center>
+
+            </ng-template>
+            <ng-template #end>
+                <div class="flex gap-1">
+                    <p-fileUpload #fileUploadRef name="iaStateFile" accept=".json" auto="true" mode="basic"
+                                  [customUpload]="true" (uploadHandler)="iaState.importIaState($event)"
+                                  chooseLabel="Import JSON" chooseIcon="pi pi-file-import" outlined styleClass="upload-secondary-outline" severity="secondary" pTooltip="Import JSON file" tooltipPosition="top" />
+                    <p-button icon="pi pi-trash" pTooltip="Reset" tooltipPosition="top" outlined styleClass="secondary-outline" severity="danger" (onClick)="iaState.resetIaFlow()" />
+                </div>
+            </ng-template>
+        </p-toolbar>
+    </div>
+    <p-stepper [(value)]="iaState.activeStep" [linear]="true">
+        <p-step-list class="-mx-4">
+            <p-step [value]="1">Enter and validate URLs</p-step>
+            <p-step [value]="2">Set initial pages to crawl</p-step>
+            <p-step [value]="3">Add search criteria</p-step>
+            <p-step [value]="4">Build IA tree</p-step>
+        </p-step-list>
+        <p-step-panels>
+
+            <p-step-panel [value]="1">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-column gap-2 p-3 border-2 border-dashed border-primary">
+
+                        <ca-validate-urls></ca-validate-urls>
+
+                        <!--p>TEST LINKS
+                            <br>https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4001/employers-guide-payroll-deductions-remittances.html
+                            <br>https://www.canada.ca/en/revenue-agency/services/forms-publications/publications.html
+                            <br>https://www.canada.ca/en/services/taxes/income-tax.html
+                            <br>https://www.canada.ca/en.html<br>
+
+                            <br>Top 5 search results for GST:
+                            <br>https://www.canada.ca/en/revenue-agency/services/child-family-benefits/goods-services-tax-harmonized-sales-tax-gst-hst-credit.html
+                            <br>https://www.canada.ca/en/revenue-agency/services/child-family-benefits/goods-services-tax-harmonized-sales-tax-gst-hst-credit/goods-services-tax-harmonized-sales-tax-gst-hst-credit-payment-amounts-tax-years-2013-2015.html
+                            <br>https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses.html
+                            <br>https://www.canada.ca/en/services/taxes/resources-for-small-and-medium-businesses/gst-hst.html
+                            <br>https://www.canada.ca/en/revenue-agency/services/child-family-benefits/goods-services-tax-harmonized-sales-tax-gst-hst-credit/goods-services-tax-harmonized-sales-tax-gst-hst-credit-payment-amounts-tax-year-2016.html
+                        </p-->
+
+                    </div>
+                    <div class="flex pt-4 gap-2 justify-content-between">
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" class="ml-auto" (onClick)="activateCallback(2); iaState.saveToLocalStorage();" [disabled]="!iaState.getUrlData().isValidated || !iaState.getUrlData().isOk" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="2">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-column gap-2 p-3 border-2 border-dashed border-primary">
+
+                        <ca-set-roots></ca-set-roots>
+
+                    </div>
+                    <div class="flex pt-4 justify-content-between">
+                        <p-button label="Back" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(1); iaState.saveToLocalStorage();" />
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(3); iaState.saveToLocalStorage();" [disabled]="iaState.getBreadcrumbData().progress !== 100" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="3">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-column gap-2 p-3 border-2 border-dashed border-primary">
+
+                        <ca-search-criteria></ca-search-criteria>
+
+                    </div>
+                    <div class="flex pt-4 justify-content-between">
+                        <p-button label="Back" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(2)" />
+                        <p-button label="Build IA Tree" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(4); iaState.saveToLocalStorage();" *ngIf="iaState.getIaData().iaTree.length === 0" />
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right" (onClick)="activateCallback(4)" *ngIf="iaState.getIaData().iaTree.length > 0"></p-button>
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="4">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <div class="flex flex-column gap-2 p-3 border-2 border-dashed border-primary">
+
+                        <ca-ia-tree></ca-ia-tree>
+
+                    </div>
+                    <div class="flex pt-4 justify-content-start">
+                        <p-button label="Back" severity="secondary" icon="pi pi-arrow-left" (onClick)="activateCallback(3)" />
+                    </div>
+                </ng-template>
+            </p-step-panel>
+
+        </p-step-panels>
+    </p-stepper>
+</div>`, styles: ["/* angular:styles/component:css;59d84de9e62055b88cf35acb7b824d1f3f6cb65bf585bd8213d7e42f57354ff4;/home/naomi/content-assistant/src/app/views/ia-assistant/ia-assistant.component.ts */\n::ng-deep .upload-secondary-outline .p-button {\n  border: 1px solid var(--p-zinc-200) !important;\n  background-color: transparent !important;\n  color: var(--p-button-secondary-color);\n}\n::ng-deep .upload-secondary-outline .p-button:hover {\n  background-color: var(--p-button-outlined-secondary-hover-background);\n  color: var(--p-button-secondary-hover-color);\n}\n::ng-deep .upload-secondary-outline .p-button-label {\n  display: none;\n}\n/*# sourceMappingURL=ia-assistant.component.css.map */\n"] }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(IaAssistantComponent, { className: "IaAssistantComponent", filePath: "src/app/views/ia-assistant/ia-assistant.component.ts", lineNumber: 54 });
+})();
+
+// node_modules/primeng/fesm2022/primeng-autocomplete.mjs
+var _c015 = ["item"];
+var _c116 = ["empty"];
+var _c27 = ["header"];
+var _c35 = ["footer"];
+var _c45 = ["selecteditem"];
+var _c55 = ["group"];
+var _c64 = ["loader"];
+var _c73 = ["removeicon"];
+var _c83 = ["loadingicon"];
+var _c93 = ["clearicon"];
+var _c103 = ["dropdownicon"];
+var _c117 = ["container"];
+var _c123 = ["focusInput"];
+var _c133 = ["multiIn"];
+var _c143 = ["multiContainer"];
+var _c152 = ["ddBtn"];
+var _c162 = ["items"];
+var _c172 = ["scroller"];
+var _c182 = ["overlay"];
+var _c192 = (a0) => ({
+  "p-autocomplete-chip-item": true,
+  "p-focus": a0
+});
+var _c20 = (a0) => ({
+  $implicit: a0
+});
+var _c21 = (a0, a1) => ({
+  class: "p-autocomplete-chip-icon",
+  removeCallback: a0,
+  index: a1
+});
+var _c222 = (a0) => ({
+  height: a0
+});
+var _c232 = (a0, a1) => ({
+  $implicit: a0,
+  options: a1
+});
+var _c242 = (a0) => ({
+  options: a0
+});
+var _c252 = () => ({});
+var _c262 = (a0, a1) => ({
+  $implicit: a0,
+  index: a1
+});
+function AutoComplete_input_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "input", 19, 3);
+    \u0275\u0275listener("input", function AutoComplete_input_2_Template_input_input_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInput($event));
+    })("keydown", function AutoComplete_input_2_Template_input_keydown_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onKeyDown($event));
+    })("change", function AutoComplete_input_2_Template_input_change_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputChange($event));
+    })("focus", function AutoComplete_input_2_Template_input_focus_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputFocus($event));
+    })("blur", function AutoComplete_input_2_Template_input_blur_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputBlur($event));
+    })("paste", function AutoComplete_input_2_Template_input_paste_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputPaste($event));
+    })("keyup", function AutoComplete_input_2_Template_input_keyup_0_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputKeyUp($event));
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    let tmp_26_0;
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275classMap(ctx_r2.inputStyleClass);
+    \u0275\u0275property("pAutoFocus", ctx_r2.autofocus)("ngClass", "p-autocomplete-input")("ngStyle", ctx_r2.inputStyle)("type", ctx_r2.type)("variant", ctx_r2.variant)("autocomplete", ctx_r2.autocomplete)("required", ctx_r2.required)("name", ctx_r2.name)("pSize", ctx_r2.size)("tabindex", !ctx_r2.disabled ? ctx_r2.tabindex : -1)("readonly", ctx_r2.readonly)("disabled", ctx_r2.disabled)("fluid", ctx_r2.hasFluid);
+    \u0275\u0275attribute("value", ctx_r2.inputValue())("id", ctx_r2.inputId)("placeholder", ctx_r2.placeholder)("maxlength", ctx_r2.maxlength)("aria-label", ctx_r2.ariaLabel)("aria-labelledby", ctx_r2.ariaLabelledBy)("aria-required", ctx_r2.required)("aria-expanded", (tmp_26_0 = ctx_r2.overlayVisible) !== null && tmp_26_0 !== void 0 ? tmp_26_0 : false)("aria-controls", ctx_r2.overlayVisible ? ctx_r2.id + "_list" : null)("aria-activedescendant", ctx_r2.focused ? ctx_r2.focusedOptionId : void 0);
+  }
+}
+function AutoComplete_ng_container_3_TimesIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "TimesIcon", 22);
+    \u0275\u0275listener("click", function AutoComplete_ng_container_3_TimesIcon_1_Template_TimesIcon_click_0_listener() {
+      \u0275\u0275restoreView(_r4);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.clear());
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275property("styleClass", "p-autocomplete-clear-icon");
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AutoComplete_ng_container_3_span_2_1_ng_template_0_Template(rf, ctx) {
+}
+function AutoComplete_ng_container_3_span_2_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AutoComplete_ng_container_3_span_2_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function AutoComplete_ng_container_3_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "span", 23);
+    \u0275\u0275listener("click", function AutoComplete_ng_container_3_span_2_Template_span_click_0_listener() {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.clear());
+    });
+    \u0275\u0275template(1, AutoComplete_ng_container_3_span_2_1_Template, 1, 0, null, 24);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275attribute("aria-hidden", true);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.clearIconTemplate || ctx_r2._clearIconTemplate);
+  }
+}
+function AutoComplete_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, AutoComplete_ng_container_3_TimesIcon_1_Template, 1, 2, "TimesIcon", 20)(2, AutoComplete_ng_container_3_span_2_Template, 2, 2, "span", 21);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.clearIconTemplate && !ctx_r2._clearIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.clearIconTemplate || ctx_r2._clearIconTemplate);
+  }
+}
+function AutoComplete_ul_4_li_2_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function AutoComplete_ul_4_li_2_p_chip_3_ng_container_1_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "span", 33);
+    \u0275\u0275listener("click", function AutoComplete_ul_4_li_2_p_chip_3_ng_container_1_ng_template_1_Template_span_click_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const i_r8 = \u0275\u0275nextContext(3).index;
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(!ctx_r2.readonly ? ctx_r2.removeOption($event, i_r8) : "");
+    });
+    \u0275\u0275element(1, "TimesCircleIcon", 34);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275advance();
+    \u0275\u0275property("styleClass", "p-autocomplete-chip-icon");
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AutoComplete_ul_4_li_2_p_chip_3_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, AutoComplete_ul_4_li_2_p_chip_3_ng_container_1_ng_template_1_Template, 2, 2, "ng-template", null, 6, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementContainerEnd();
+  }
+}
+function AutoComplete_ul_4_li_2_p_chip_3_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-chip", 32);
+    \u0275\u0275listener("onRemove", function AutoComplete_ul_4_li_2_p_chip_3_Template_p_chip_onRemove_0_listener($event) {
+      \u0275\u0275restoreView(_r7);
+      const i_r8 = \u0275\u0275nextContext().index;
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(!ctx_r2.readonly ? ctx_r2.removeOption($event, i_r8) : "");
+    });
+    \u0275\u0275template(1, AutoComplete_ul_4_li_2_p_chip_3_ng_container_1_Template, 3, 0, "ng-container", 15);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const option_r10 = \u0275\u0275nextContext().$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("label", ctx_r2.getOptionLabel(option_r10))("removable", true);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.removeIconTemplate && !ctx_r2._removeIconTemplate);
+  }
+}
+function AutoComplete_ul_4_li_2_span_4_1_ng_template_0_Template(rf, ctx) {
+}
+function AutoComplete_ul_4_li_2_span_4_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AutoComplete_ul_4_li_2_span_4_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function AutoComplete_ul_4_li_2_span_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275template(1, AutoComplete_ul_4_li_2_span_4_1_Template, 1, 0, null, 30);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const i_r8 = \u0275\u0275nextContext().index;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.removeIconTemplate || ctx_r2._removeIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction2(2, _c21, ctx_r2.removeOption.bind(ctx_r2), i_r8));
+  }
+}
+function AutoComplete_ul_4_li_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li", 29, 5);
+    \u0275\u0275template(2, AutoComplete_ul_4_li_2_ng_container_2_Template, 1, 0, "ng-container", 30)(3, AutoComplete_ul_4_li_2_p_chip_3_Template, 2, 3, "p-chip", 31)(4, AutoComplete_ul_4_li_2_span_4_Template, 2, 5, "span", 15);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const option_r10 = ctx.$implicit;
+    const i_r8 = ctx.index;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngClass", \u0275\u0275pureFunction1(10, _c192, ctx_r2.focusedMultipleOptionIndex() === i_r8));
+    \u0275\u0275attribute("id", ctx_r2.id + "_multiple_option_" + i_r8)("aria-label", ctx_r2.getOptionLabel(option_r10))("aria-setsize", ctx_r2.modelValue().length)("aria-posinset", i_r8 + 1)("aria-selected", true);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.selectedItemTemplate || ctx_r2._selectedItemTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(12, _c20, option_r10));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.selectedItemTemplate && !ctx_r2._selectedItemTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.removeIconTemplate || ctx_r2._removeIconTemplate);
+  }
+}
+function AutoComplete_ul_4_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "ul", 25, 4);
+    \u0275\u0275listener("focus", function AutoComplete_ul_4_Template_ul_focus_0_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onMultipleContainerFocus($event));
+    })("blur", function AutoComplete_ul_4_Template_ul_blur_0_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onMultipleContainerBlur($event));
+    })("keydown", function AutoComplete_ul_4_Template_ul_keydown_0_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onMultipleContainerKeyDown($event));
+    });
+    \u0275\u0275template(2, AutoComplete_ul_4_li_2_Template, 5, 14, "li", 26);
+    \u0275\u0275elementStart(3, "li", 27)(4, "input", 28, 3);
+    \u0275\u0275listener("input", function AutoComplete_ul_4_Template_input_input_4_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInput($event));
+    })("keydown", function AutoComplete_ul_4_Template_input_keydown_4_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onKeyDown($event));
+    })("change", function AutoComplete_ul_4_Template_input_change_4_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputChange($event));
+    })("focus", function AutoComplete_ul_4_Template_input_focus_4_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputFocus($event));
+    })("blur", function AutoComplete_ul_4_Template_input_blur_4_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputBlur($event));
+    })("paste", function AutoComplete_ul_4_Template_input_paste_4_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputPaste($event));
+    })("keyup", function AutoComplete_ul_4_Template_input_keyup_4_listener($event) {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onInputKeyUp($event));
+    });
+    \u0275\u0275elementEnd()()();
+  }
+  if (rf & 2) {
+    let tmp_28_0;
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275property("ngClass", ctx_r2.inputMultipleClass)("tabindex", -1);
+    \u0275\u0275attribute("aria-orientation", "horizontal")("aria-activedescendant", ctx_r2.focused ? ctx_r2.focusedMultipleOptionId : void 0);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngForOf", ctx_r2.modelValue());
+    \u0275\u0275advance(2);
+    \u0275\u0275classMap(ctx_r2.inputStyleClass);
+    \u0275\u0275property("pAutoFocus", ctx_r2.autofocus)("ngClass", ctx_r2.inputClass)("ngStyle", ctx_r2.inputStyle)("autocomplete", ctx_r2.autocomplete)("required", ctx_r2.required)("tabindex", !ctx_r2.disabled ? ctx_r2.tabindex : -1)("readonly", ctx_r2.readonly)("disabled", ctx_r2.disabled);
+    \u0275\u0275attribute("type", ctx_r2.type)("id", ctx_r2.inputId)("name", ctx_r2.name)("placeholder", !ctx_r2.filled ? ctx_r2.placeholder : null)("maxlength", ctx_r2.maxlength)("aria-label", ctx_r2.ariaLabel)("aria-labelledby", ctx_r2.ariaLabelledBy)("aria-required", ctx_r2.required)("aria-expanded", (tmp_28_0 = ctx_r2.overlayVisible) !== null && tmp_28_0 !== void 0 ? tmp_28_0 : false)("aria-controls", ctx_r2.overlayVisible ? ctx_r2.id + "_list" : null)("aria-activedescendant", ctx_r2.focused ? ctx_r2.focusedOptionId : void 0);
+  }
+}
+function AutoComplete_ng_container_5_SpinnerIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "SpinnerIcon", 37);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("styleClass", "p-autocomplete-loader")("spin", true);
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AutoComplete_ng_container_5_span_2_1_ng_template_0_Template(rf, ctx) {
+}
+function AutoComplete_ng_container_5_span_2_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AutoComplete_ng_container_5_span_2_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function AutoComplete_ng_container_5_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 38);
+    \u0275\u0275template(1, AutoComplete_ng_container_5_span_2_1_Template, 1, 0, null, 24);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275attribute("aria-hidden", true);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.loadingIconTemplate || ctx_r2._loadingIconTemplate);
+  }
+}
+function AutoComplete_ng_container_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, AutoComplete_ng_container_5_SpinnerIcon_1_Template, 1, 3, "SpinnerIcon", 35)(2, AutoComplete_ng_container_5_span_2_Template, 2, 2, "span", 36);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.loadingIconTemplate && !ctx_r2._loadingIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.loadingIconTemplate || ctx_r2._loadingIconTemplate);
+  }
+}
+function AutoComplete_button_6_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "span", 41);
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngClass", ctx_r2.dropdownIcon);
+    \u0275\u0275attribute("aria-hidden", true);
+  }
+}
+function AutoComplete_button_6_ng_container_3_ChevronDownIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "ChevronDownIcon");
+  }
+}
+function AutoComplete_button_6_ng_container_3_2_ng_template_0_Template(rf, ctx) {
+}
+function AutoComplete_button_6_ng_container_3_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AutoComplete_button_6_ng_container_3_2_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function AutoComplete_button_6_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, AutoComplete_button_6_ng_container_3_ChevronDownIcon_1_Template, 1, 0, "ChevronDownIcon", 15)(2, AutoComplete_button_6_ng_container_3_2_Template, 1, 0, null, 24);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.dropdownIconTemplate && !ctx_r2._dropdownIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.dropdownIconTemplate || ctx_r2._dropdownIconTemplate);
+  }
+}
+function AutoComplete_button_6_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r11 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "button", 39, 7);
+    \u0275\u0275listener("click", function AutoComplete_button_6_Template_button_click_0_listener($event) {
+      \u0275\u0275restoreView(_r11);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.handleDropdownClick($event));
+    });
+    \u0275\u0275template(2, AutoComplete_button_6_span_2_Template, 1, 2, "span", 40)(3, AutoComplete_button_6_ng_container_3_Template, 3, 2, "ng-container", 15);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275property("disabled", ctx_r2.disabled);
+    \u0275\u0275attribute("aria-label", ctx_r2.dropdownAriaLabel)("tabindex", ctx_r2.tabindex);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngIf", ctx_r2.dropdownIcon);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.dropdownIcon);
+  }
+}
+function AutoComplete_ng_template_9_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function AutoComplete_ng_template_9_p_scroller_3_ng_template_2_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function AutoComplete_ng_template_9_p_scroller_3_ng_template_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AutoComplete_ng_template_9_p_scroller_3_ng_template_2_ng_container_0_Template, 1, 0, "ng-container", 30);
+  }
+  if (rf & 2) {
+    const items_r13 = ctx.$implicit;
+    const scrollerOptions_r14 = ctx.options;
+    \u0275\u0275nextContext(2);
+    const buildInItems_r15 = \u0275\u0275reference(6);
+    \u0275\u0275property("ngTemplateOutlet", buildInItems_r15)("ngTemplateOutletContext", \u0275\u0275pureFunction2(2, _c232, items_r13, scrollerOptions_r14));
+  }
+}
+function AutoComplete_ng_template_9_p_scroller_3_ng_container_4_ng_template_1_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function AutoComplete_ng_template_9_p_scroller_3_ng_container_4_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AutoComplete_ng_template_9_p_scroller_3_ng_container_4_ng_template_1_ng_container_0_Template, 1, 0, "ng-container", 30);
+  }
+  if (rf & 2) {
+    const scrollerOptions_r16 = ctx.options;
+    const ctx_r2 = \u0275\u0275nextContext(4);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.loaderTemplate || ctx_r2._loaderTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(2, _c242, scrollerOptions_r16));
+  }
+}
+function AutoComplete_ng_template_9_p_scroller_3_ng_container_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, AutoComplete_ng_template_9_p_scroller_3_ng_container_4_ng_template_1_Template, 1, 4, "ng-template", null, 10, \u0275\u0275templateRefExtractor);
+    \u0275\u0275elementContainerEnd();
+  }
+}
+function AutoComplete_ng_template_9_p_scroller_3_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r12 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "p-scroller", 46, 9);
+    \u0275\u0275listener("onLazyLoad", function AutoComplete_ng_template_9_p_scroller_3_Template_p_scroller_onLazyLoad_0_listener($event) {
+      \u0275\u0275restoreView(_r12);
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onLazyLoad.emit($event));
+    });
+    \u0275\u0275template(2, AutoComplete_ng_template_9_p_scroller_3_ng_template_2_Template, 1, 5, "ng-template", null, 2, \u0275\u0275templateRefExtractor)(4, AutoComplete_ng_template_9_p_scroller_3_ng_container_4_Template, 3, 0, "ng-container", 15);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275styleMap(\u0275\u0275pureFunction1(8, _c222, ctx_r2.scrollHeight));
+    \u0275\u0275property("items", ctx_r2.visibleOptions())("itemSize", ctx_r2.virtualScrollItemSize || ctx_r2._itemSize)("autoSize", true)("lazy", ctx_r2.lazy)("options", ctx_r2.virtualScrollOptions);
+    \u0275\u0275advance(4);
+    \u0275\u0275property("ngIf", ctx_r2.loaderTemplate || ctx_r2._loaderTemplate);
+  }
+}
+function AutoComplete_ng_template_9_ng_container_4_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function AutoComplete_ng_template_9_ng_container_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, AutoComplete_ng_template_9_ng_container_4_ng_container_1_Template, 1, 0, "ng-container", 30);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275nextContext();
+    const buildInItems_r15 = \u0275\u0275reference(6);
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", buildInItems_r15)("ngTemplateOutletContext", \u0275\u0275pureFunction2(3, _c232, ctx_r2.visibleOptions(), \u0275\u0275pureFunction0(2, _c252)));
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_0_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const option_r17 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r2.getOptionGroupLabel(option_r17.optionGroup));
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_0_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "li", 50);
+    \u0275\u0275template(2, AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_0_span_2_Template, 2, 1, "span", 15)(3, AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_0_ng_container_3_Template, 1, 0, "ng-container", 30);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r17 = \u0275\u0275nextContext();
+    const option_r17 = ctx_r17.$implicit;
+    const i_r19 = ctx_r17.index;
+    const scrollerOptions_r20 = \u0275\u0275nextContext().options;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngStyle", \u0275\u0275pureFunction1(5, _c222, scrollerOptions_r20.itemSize + "px"));
+    \u0275\u0275attribute("id", ctx_r2.id + "_" + ctx_r2.getOptionIndex(i_r19, scrollerOptions_r20));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.groupTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.groupTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction1(7, _c20, option_r17.optionGroup));
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_1_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span");
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const option_r17 = \u0275\u0275nextContext(2).$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r2.getOptionLabel(option_r17));
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_1_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r21 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "li", 51);
+    \u0275\u0275listener("click", function AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_1_Template_li_click_1_listener($event) {
+      \u0275\u0275restoreView(_r21);
+      const option_r17 = \u0275\u0275nextContext().$implicit;
+      const ctx_r2 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r2.onOptionSelect($event, option_r17));
+    })("mouseenter", function AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_1_Template_li_mouseenter_1_listener($event) {
+      \u0275\u0275restoreView(_r21);
+      const i_r19 = \u0275\u0275nextContext().index;
+      const scrollerOptions_r20 = \u0275\u0275nextContext().options;
+      const ctx_r2 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r2.onOptionMouseEnter($event, ctx_r2.getOptionIndex(i_r19, scrollerOptions_r20)));
+    });
+    \u0275\u0275template(2, AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_1_span_2_Template, 2, 1, "span", 15)(3, AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_1_ng_container_3_Template, 1, 0, "ng-container", 30);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r17 = \u0275\u0275nextContext();
+    const option_r17 = ctx_r17.$implicit;
+    const i_r19 = ctx_r17.index;
+    const scrollerOptions_r20 = \u0275\u0275nextContext().options;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngStyle", \u0275\u0275pureFunction1(12, _c222, scrollerOptions_r20.itemSize + "px"))("ngClass", ctx_r2.optionClass(option_r17, i_r19, scrollerOptions_r20));
+    \u0275\u0275attribute("id", ctx_r2.id + "_" + ctx_r2.getOptionIndex(i_r19, scrollerOptions_r20))("aria-label", ctx_r2.getOptionLabel(option_r17))("aria-selected", ctx_r2.isSelected(option_r17))("aria-disabled", ctx_r2.isOptionDisabled(option_r17))("data-p-focused", ctx_r2.focusedOptionIndex() === ctx_r2.getOptionIndex(i_r19, scrollerOptions_r20))("aria-setsize", ctx_r2.ariaSetSize)("aria-posinset", ctx_r2.getAriaPosInset(ctx_r2.getOptionIndex(i_r19, scrollerOptions_r20)));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.itemTemplate && !ctx_r2._itemTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.itemTemplate || ctx_r2._itemTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction2(14, _c262, option_r17, scrollerOptions_r20.getOptions ? scrollerOptions_r20.getOptions(i_r19) : i_r19));
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_ng_template_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_0_Template, 4, 9, "ng-container", 15)(1, AutoComplete_ng_template_9_ng_template_5_ng_template_2_ng_container_1_Template, 4, 17, "ng-container", 15);
+  }
+  if (rf & 2) {
+    const option_r17 = ctx.$implicit;
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275property("ngIf", ctx_r2.isOptionGroup(option_r17));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.isOptionGroup(option_r17));
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_li_3_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275text(1);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(4);
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate1(" ", ctx_r2.searchResultMessageText, " ");
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_li_3_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0, null, 12);
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_li_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "li", 52);
+    \u0275\u0275template(1, AutoComplete_ng_template_9_ng_template_5_li_3_ng_container_1_Template, 2, 1, "ng-container", 53)(2, AutoComplete_ng_template_9_ng_template_5_li_3_ng_container_2_Template, 2, 0, "ng-container", 24);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const scrollerOptions_r20 = \u0275\u0275nextContext().options;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("ngStyle", \u0275\u0275pureFunction1(4, _c222, scrollerOptions_r20.itemSize + "px"));
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.emptyTemplate && !ctx_r2._emptyTemplate)("ngIfElse", ctx_r2.empty);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.emptyTemplate || ctx_r2._emptyTemplate);
+  }
+}
+function AutoComplete_ng_template_9_ng_template_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "ul", 47, 11);
+    \u0275\u0275template(2, AutoComplete_ng_template_9_ng_template_5_ng_template_2_Template, 2, 2, "ng-template", 48)(3, AutoComplete_ng_template_9_ng_template_5_li_3_Template, 3, 6, "li", 49);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const items_r22 = ctx.$implicit;
+    const scrollerOptions_r20 = ctx.options;
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275styleMap(scrollerOptions_r20.contentStyle);
+    \u0275\u0275property("ngClass", scrollerOptions_r20.contentStyleClass);
+    \u0275\u0275attribute("id", ctx_r2.id + "_list")("aria-label", ctx_r2.listLabel);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngForOf", items_r22);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !items_r22 || items_r22 && items_r22.length === 0 && ctx_r2.showEmptyMessage);
+  }
+}
+function AutoComplete_ng_template_9_ng_container_7_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function AutoComplete_ng_template_9_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 42);
+    \u0275\u0275template(1, AutoComplete_ng_template_9_ng_container_1_Template, 1, 0, "ng-container", 24);
+    \u0275\u0275elementStart(2, "div", 43);
+    \u0275\u0275template(3, AutoComplete_ng_template_9_p_scroller_3_Template, 5, 10, "p-scroller", 44)(4, AutoComplete_ng_template_9_ng_container_4_Template, 2, 6, "ng-container", 15);
+    \u0275\u0275elementEnd();
+    \u0275\u0275template(5, AutoComplete_ng_template_9_ng_template_5_Template, 4, 7, "ng-template", null, 8, \u0275\u0275templateRefExtractor)(7, AutoComplete_ng_template_9_ng_container_7_Template, 1, 0, "ng-container", 24);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(8, "span", 45);
+    \u0275\u0275text(9);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275classMap(ctx_r2.panelStyleClass);
+    \u0275\u0275property("ngClass", ctx_r2.panelClass)("ngStyle", ctx_r2.panelStyle);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.headerTemplate || ctx_r2._headerTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275styleProp("max-height", ctx_r2.virtualScroll ? "auto" : ctx_r2.scrollHeight);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.virtualScroll);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.virtualScroll);
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.footerTemplate || ctx_r2._footerTemplate);
+    \u0275\u0275advance(2);
+    \u0275\u0275textInterpolate1(" ", ctx_r2.selectedMessageText, " ");
+  }
+}
+var theme11 = ({
+  dt
+}) => `
+.p-autocomplete {
+    display: inline-flex;
+}
+
+.p-autocomplete-loader {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5rem;
+    inset-inline-end: ${dt("autocomplete.padding.x")};
+}
+
+.p-autocomplete:has(.p-autocomplete-dropdown) .p-autocomplete-loader {
+    inset-inline-end: calc(${dt("autocomplete.dropdown.width")} + ${dt("autocomplete.padding.x")});
+}
+
+.p-autocomplete:has(.p-autocomplete-dropdown) .p-autocomplete-input {
+    flex: 1 1 auto;
+    width: 1%;
+}
+
+.p-autocomplete:has(.p-autocomplete-dropdown) .p-autocomplete-input,
+.p-autocomplete:has(.p-autocomplete-dropdown) .p-autocomplete-input-multiple {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+}
+
+.p-autocomplete-dropdown {
+    cursor: pointer;
+    display: inline-flex;
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    width: ${dt("autocomplete.dropdown.width")};
+    border-start-end-radius: ${dt("autocomplete.dropdown.border.radius")};
+    border-end-end-radius: ${dt("autocomplete.dropdown.border.radius")};
+    background: ${dt("autocomplete.dropdown.background")};
+    border: 1px solid ${dt("autocomplete.dropdown.border.color")};
+    border-inline-start: 0 none;
+    color: ${dt("autocomplete.dropdown.color")};
+    transition: background ${dt("autocomplete.transition.duration")}, color ${dt("autocomplete.transition.duration")}, border-color ${dt("autocomplete.transition.duration")}, outline-color ${dt("autocomplete.transition.duration")}, box-shadow ${dt("autocomplete.transition.duration")};
+    outline-color: transparent;
+}
+
+.p-autocomplete-dropdown:not(:disabled):hover {
+    background: ${dt("autocomplete.dropdown.hover.background")};
+    border-color: ${dt("autocomplete.dropdown.hover.border.color")};
+    color: ${dt("autocomplete.dropdown.hover.color")};
+}
+
+.p-autocomplete-dropdown:not(:disabled):active {
+    background: ${dt("autocomplete.dropdown.active.background")};
+    border-color: ${dt("autocomplete.dropdown.active.border.color")};
+    color: ${dt("autocomplete.dropdown.active.color")};
+}
+
+.p-autocomplete-dropdown:focus-visible {
+    box-shadow: ${dt("autocomplete.dropdown.focus.ring.shadow")};
+    outline: ${dt("autocomplete.dropdown.focus.ring.width")} ${dt("autocomplete.dropdown.focus.ring.style")} ${dt("autocomplete.dropdown.focus.ring.color")};
+    outline-offset: ${dt("autocomplete.dropdown.focus.ring.offset")};
+}
+
+.p-autocomplete .p-autocomplete-overlay {
+    min-width: 100%;
+}
+
+.p-autocomplete-overlay {
+    background: ${dt("autocomplete.overlay.background")};
+    color: ${dt("autocomplete.overlay.color")};
+    border: 1px solid ${dt("autocomplete.overlay.border.color")};
+    border-radius: ${dt("autocomplete.overlay.border.radius")};
+    box-shadow: ${dt("autocomplete.overlay.shadow")};
+}
+
+.p-autocomplete-list-container {
+    overflow: auto;
+}
+
+.p-autocomplete-list {
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: ${dt("autocomplete.list.gap")};
+    padding: ${dt("autocomplete.list.padding")};
+}
+
+.p-autocomplete-option {
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: ${dt("autocomplete.option.padding")};
+    border: 0 none;
+    color: ${dt("autocomplete.option.color")};
+    background: transparent;
+    transition: background ${dt("autocomplete.transition.duration")}, color ${dt("autocomplete.transition.duration")}, border-color ${dt("autocomplete.transition.duration")};
+    border-radius: ${dt("autocomplete.option.border.radius")};
+}
+
+.p-autocomplete-option:not(.p-autocomplete-option-selected):not(.p-disabled).p-focus {
+    background: ${dt("autocomplete.option.focus.background")};
+    color: ${dt("autocomplete.option.focus.color")};
+}
+
+.p-autocomplete-option-selected {
+    background: ${dt("autocomplete.option.selected.background")};
+    color: ${dt("autocomplete.option.selected.color")};
+}
+
+.p-autocomplete-option-selected.p-focus {
+    background: ${dt("autocomplete.option.selected.focus.background")};
+    color: ${dt("autocomplete.option.selected.focus.color")};
+}
+
+.p-autocomplete-option-group {
+    margin: 0;
+    padding: ${dt("autocomplete.option.group.padding")};
+    color: ${dt("autocomplete.option.group.color")};
+    background: ${dt("autocomplete.option.group.background")};
+    font-weight: ${dt("autocomplete.option.group.font.weight")};
+}
+
+.p-autocomplete-input-multiple {
+    margin: 0;
+    list-style-type: none;
+    cursor: text;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: calc(${dt("autocomplete.padding.y")} / 2) ${dt("autocomplete.padding.x")};
+    gap: calc(${dt("autocomplete.padding.y")} / 2);
+    color: ${dt("autocomplete.color")};
+    background: ${dt("autocomplete.background")};
+    border: 1px solid ${dt("autocomplete.border.color")};
+    border-radius: ${dt("autocomplete.border.radius")};
+    width: 100%;
+    transition: background ${dt("autocomplete.transition.duration")}, color ${dt("autocomplete.transition.duration")}, border-color ${dt("autocomplete.transition.duration")}, outline-color ${dt("autocomplete.transition.duration")}, box-shadow ${dt("autocomplete.transition.duration")};
+    outline-color: transparent;
+    box-shadow: ${dt("autocomplete.shadow")};
+}
+
+.p-autocomplete:not(.p-disabled):hover .p-autocomplete-input-multiple {
+    border-color: ${dt("autocomplete.hover.border.color")};
+}
+
+.p-autocomplete:not(.p-disabled).p-focus .p-autocomplete-input-multiple {
+    border-color: ${dt("autocomplete.focus.border.color")};
+    box-shadow: ${dt("autocomplete.focus.ring.shadow")};
+    outline: ${dt("autocomplete.focus.ring.width")} ${dt("autocomplete.focus.ring.style")} ${dt("autocomplete.focus.ring.color")};
+    outline-offset: ${dt("autocomplete.focus.ring.offset")};
+}
+
+.p-autocomplete.p-invalid .p-autocomplete-input-multiple {
+    border-color: ${dt("autocomplete.invalid.border.color")};
+}
+
+.p-variant-filled.p-autocomplete-input-multiple {
+    background: ${dt("autocomplete.filled.background")};
+}
+
+.p-autocomplete:not(.p-disabled):hover .p-variant-filled.p-autocomplete-input-multiple {
+    background: ${dt("autocomplete.filled.hover.background")};
+}
+
+.p-autocomplete:not(.p-disabled).p-focus .p-variant-filled.p-autocomplete-input-multiple  {
+    background: ${dt("autocomplete.filled.focus.background")};
+}
+
+.p-autocomplete.p-disabled {
+    opacity: 1;
+}
+
+.p-autocomplete.p-disabled .p-autocomplete-input-multiple {
+    opacity: 1;
+    background: ${dt("autocomplete.disabled.background")};
+    color: ${dt("autocomplete.disabled.color")};
+}
+
+.p-autocomplete-chip.p-chip {
+    padding-block-start: calc(${dt("autocomplete.padding.y")} / 2);
+    padding-block-end: calc(${dt("autocomplete.padding.y")} / 2);
+    border-radius: ${dt("autocomplete.chip.border.radius")};
+}
+
+.p-autocomplete-input-multiple:has(.p-autocomplete-chip) {
+    padding-inline-start: calc(${dt("autocomplete.padding.y")} / 2);
+    padding-inline-end: calc(${dt("autocomplete.padding.y")} / 2);
+}
+
+.p-autocomplete-chip-item.p-focus .p-autocomplete-chip {
+    background: ${dt("autocomplete.chip.focus.background")};
+    color: ${dt("autocomplete.chip.focus.color")};
+}
+
+.p-autocomplete-input-chip {
+    flex: 1 1 auto;
+    display: inline-flex;
+    padding-block-start: calc(${dt("autocomplete.padding.y")} / 2);
+    padding-block-end: calc(${dt("autocomplete.padding.y")} / 2);
+}
+
+.p-autocomplete-input-chip input {
+    border: 0 none;
+    outline: 0 none;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+    width: 100%;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-size: 1rem;
+    color: inherit;
+}
+
+.p-autocomplete-input-chip input::placeholder {
+    color: ${dt("autocomplete.placeholder.color")};
+}
+
+.p-autocomplete-empty-message {
+    padding: ${dt("autocomplete.empty.message.padding")};
+}
+
+.p-autocomplete-fluid {
+    display: flex;
+}
+
+.p-autocomplete-fluid:has(.p-autocomplete-dropdown) .p-autocomplete-input {
+    width: 1%;
+}
+
+.p-autocomplete:has(.p-inputtext-sm) .p-autocomplete-dropdown {
+    width: ${dt("autocomplete.dropdown.sm.width")};
+}
+
+.p-autocomplete:has(.p-inputtext-sm) .p-autocomplete-dropdown .p-icon {
+    font-size: ${dt("form.field.sm.font.size")};
+    width: ${dt("form.field.sm.font.size")};
+    height: ${dt("form.field.sm.font.size")};
+}
+
+.p-autocomplete:has(.p-inputtext-lg) .p-autocomplete-dropdown {
+    width: ${dt("autocomplete.dropdown.lg.width")};
+}
+
+.p-autocomplete:has(.p-inputtext-lg) .p-autocomplete-dropdown .p-icon {
+    font-size: ${dt("form.field.lg.font.size")};
+    width: ${dt("form.field.lg.font.size")};
+    height: ${dt("form.field.lg.font.size")};
+}
+
+.p-autocomplete-clear-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5rem;
+    cursor: pointer;
+    right: ${dt("autocomplete.padding.x")};
+    color: ${dt("autocomplete.dropdown.color")};
+}
+
+.p-autocomplete:has(.p-autocomplete-dropdown) .p-autocomplete-clear-icon {
+    right: calc(${dt("autocomplete.padding.x")} + ${dt("autocomplete.dropdown.width")});
+}
+p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input,
+p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input-multiple,
+p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input,
+p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input-multiple
+p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input,
+p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input-multiple {
+    border-color: ${dt("autocomplete.invalid.border.color")};
+}
+p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input:enabled:focus,
+p-autoComplete.ng-invalid.ng-dirty:not(.p-disabled).p-focus .p-autocomplete-input-multiple,
+p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input:enabled:focus,
+p-auto-complete.ng-invalid.ng-dirty:not(.p-disabled).p-focus .p-autocomplete-input-multiple,
+p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input:enabled:focus,
+p-autocomplete.ng-invalid.ng-dirty:not(.p-disabled).p-focus .p-autocomplete-input-multiple {
+    border-color: ${dt("autocomplete.focus.border.color")};
+}
+p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input-chip input::placeholder,
+p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input-chip input::placeholder,
+p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input-chip input::placeholder {
+    color: ${dt("autocomplete.invalid.placeholder.color")};
+}
+
+p-autoComplete.ng-invalid.ng-dirty .p-autocomplete-input::placeholder,
+p-auto-complete.ng-invalid.ng-dirty .p-autocomplete-input::placeholder,
+p-autocomplete.ng-invalid.ng-dirty .p-autocomplete-input::placeholder {
+    color: ${dt("autocomplete.invalid.placeholder.color")};
+}`;
+var inlineStyles3 = {
+  root: {
+    position: "relative"
+  }
+};
+var classes11 = {
+  root: ({
+    instance
+  }) => ({
+    "p-autocomplete p-component p-inputwrapper": true,
+    "p-disabled": instance.disabled,
+    "p-focus": instance.focused,
+    "p-inputwrapper-filled": instance.filled,
+    "p-inputwrapper-focus": instance.focused && !instance.disabled || instance.autofocus || instance.overlayVisible,
+    "p-autocomplete-open": instance.overlayVisible,
+    "p-autocomplete-clearable": instance.showClear && !instance.disabled,
+    // 'p-invalid': instance.invalid,
+    "p-autocomplete-fluid": instance.hasFluid
+  }),
+  pcInput: "p-autocomplete-input",
+  inputMultiple: ({
+    instance
+  }) => ({
+    "p-autocomplete-input-multiple": true,
+    "p-variant-filled": (instance.variant ?? (instance.config.inputStyle() || instance.config.inputVariant())) === "filled"
+  }),
+  chipItem: ({
+    instance,
+    i
+  }) => ["p-autocomplete-chip-item", {
+    "p-focus": instance.focusedMultipleOptionIndex === i
+  }],
+  pcChip: "p-autocomplete-chip",
+  chipIcon: "p-autocomplete-chip-icon",
+  inputChip: "p-autocomplete-input-chip",
+  loader: "p-autocomplete-loader",
+  dropdown: "p-autocomplete-dropdown",
+  overlay: "p-autocomplete-overlay p-component",
+  list: "p-autocomplete-list",
+  optionGroup: "p-autocomplete-option-group",
+  option: ({
+    instance,
+    option,
+    i,
+    getItemOptions
+  }) => ({
+    "p-autocomplete-option": true,
+    "p-autocomplete-option-selected": instance.isSelected(option),
+    "p-focus": instance.focusedOptionIndex === instance.getOptionIndex(i, getItemOptions),
+    "p-disabled": instance.isOptionDisabled(option)
+  }),
+  emptyMessage: "p-autocomplete-empty-message"
+};
+var AutoCompleteStyle = class _AutoCompleteStyle extends BaseStyle {
+  name = "autocomplete";
+  theme = theme11;
+  classes = classes11;
+  inlineStyles = inlineStyles3;
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275AutoCompleteStyle_BaseFactory;
+    return function AutoCompleteStyle_Factory(__ngFactoryType__) {
+      return (\u0275AutoCompleteStyle_BaseFactory || (\u0275AutoCompleteStyle_BaseFactory = \u0275\u0275getInheritedFactory(_AutoCompleteStyle)))(__ngFactoryType__ || _AutoCompleteStyle);
+    };
+  })();
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+    token: _AutoCompleteStyle,
+    factory: _AutoCompleteStyle.\u0275fac
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AutoCompleteStyle, [{
+    type: Injectable
+  }], null, null);
+})();
+var AutoCompleteClasses;
+(function(AutoCompleteClasses2) {
+  AutoCompleteClasses2["root"] = "p-autocomplete";
+  AutoCompleteClasses2["pcInput"] = "p-autocomplete-input";
+  AutoCompleteClasses2["inputMultiple"] = "p-autocomplete-input-multiple";
+  AutoCompleteClasses2["chipItem"] = "p-autocomplete-chip-item";
+  AutoCompleteClasses2["pcChip"] = "p-autocomplete-chip";
+  AutoCompleteClasses2["chipIcon"] = "p-autocomplete-chip-icon";
+  AutoCompleteClasses2["inputChip"] = "p-autocomplete-input-chip";
+  AutoCompleteClasses2["loader"] = "p-autocomplete-loader";
+  AutoCompleteClasses2["dropdown"] = "p-autocomplete-dropdown";
+  AutoCompleteClasses2["panel"] = "p-autocomplete-overlay";
+  AutoCompleteClasses2["list"] = "p-autocomplete-list";
+  AutoCompleteClasses2["optionGroup"] = "p-autocomplete-option-group";
+  AutoCompleteClasses2["option"] = "p-autocomplete-option";
+  AutoCompleteClasses2["emptyMessage"] = "p-autocomplete-empty-message";
+})(AutoCompleteClasses || (AutoCompleteClasses = {}));
+var AUTOCOMPLETE_VALUE_ACCESSOR = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => AutoComplete),
+  multi: true
+};
+var AutoComplete = class _AutoComplete extends BaseComponent {
+  overlayService;
+  zone;
+  /**
+   * Minimum number of characters to initiate a search.
+   * @group Props
+   */
+  minLength = 1;
+  /**
+   * Delay between keystrokes to wait before sending a query.
+   * @group Props
+   */
+  delay = 300;
+  /**
+   * Inline style of the component.
+   * @group Props
+   */
+  style;
+  /**
+   * Inline style of the overlay panel element.
+   * @group Props
+   */
+  panelStyle;
+  /**
+   * Style class of the component.
+   * @group Props
+   */
+  styleClass;
+  /**
+   * Style class of the overlay panel element.
+   * @group Props
+   */
+  panelStyleClass;
+  /**
+   * Inline style of the input field.
+   * @group Props
+   */
+  inputStyle;
+  /**
+   * Identifier of the focus input to match a label defined for the component.
+   * @group Props
+   */
+  inputId;
+  /**
+   * Inline style of the input field.
+   * @group Props
+   */
+  inputStyleClass;
+  /**
+   * Hint text for the input field.
+   * @group Props
+   */
+  placeholder;
+  /**
+   * When present, it specifies that the input cannot be typed.
+   * @group Props
+   */
+  readonly;
+  /**
+   * When present, it specifies that the component should be disabled.
+   * @group Props
+   */
+  disabled;
+  /**
+   * Maximum height of the suggestions panel.
+   * @group Props
+   */
+  scrollHeight = "200px";
+  /**
+   * Defines if data is loaded and interacted with in lazy manner.
+   * @group Props
+   */
+  lazy = false;
+  /**
+   * Whether the data should be loaded on demand during scroll.
+   * @group Props
+   */
+  virtualScroll;
+  /**
+   * Height of an item in the list for VirtualScrolling.
+   * @group Props
+   */
+  virtualScrollItemSize;
+  /**
+   * Whether to use the scroller feature. The properties of scroller component can be used like an object in it.
+   * @group Props
+   */
+  virtualScrollOptions;
+  /**
+   * Maximum number of character allows in the input field.
+   * @group Props
+   */
+  maxlength;
+  /**
+   * Name of the input element.
+   * @group Props
+   */
+  name;
+  /**
+   * When present, it specifies that an input field must be filled out before submitting the form.
+   * @group Props
+   */
+  required;
+  /**
+   * Defines the size of the component.
+   * @group Props
+   */
+  size;
+  /**
+   * Target element to attach the overlay, valid values are "body" or a local ng-template variable of another element (note: use binding with brackets for template variables, e.g. [appendTo]="mydiv" for a div element having #mydiv as variable name).
+   * @group Props
+   */
+  appendTo;
+  /**
+   * When enabled, highlights the first item in the list by default.
+   * @group Props
+   */
+  autoHighlight;
+  /**
+   * When present, autocomplete clears the manual input if it does not match of the suggestions to force only accepting values from the suggestions.
+   * @group Props
+   */
+  forceSelection;
+  /**
+   * Type of the input, defaults to "text".
+   * @group Props
+   */
+  type = "text";
+  /**
+   * Whether to automatically manage layering.
+   * @group Props
+   */
+  autoZIndex = true;
+  /**
+   * Base zIndex value to use in layering.
+   * @group Props
+   */
+  baseZIndex = 0;
+  /**
+   * Defines a string that labels the input for accessibility.
+   * @group Props
+   */
+  ariaLabel;
+  /**
+   * Defines a string that labels the dropdown button for accessibility.
+   * @group Props
+   */
+  dropdownAriaLabel;
+  /**
+   * Specifies one or more IDs in the DOM that labels the input field.
+   * @group Props
+   */
+  ariaLabelledBy;
+  /**
+   * Icon class of the dropdown icon.
+   * @group Props
+   */
+  dropdownIcon;
+  /**
+   * Ensures uniqueness of selected items on multiple mode.
+   * @group Props
+   */
+  unique = true;
+  /**
+   * Whether to display options as grouped when nested options are provided.
+   * @group Props
+   */
+  group;
+  /**
+   * Whether to run a query when input receives focus.
+   * @group Props
+   */
+  completeOnFocus = false;
+  /**
+   * When enabled, a clear icon is displayed to clear the value.
+   * @group Props
+   */
+  showClear = false;
+  /**
+   * Field of a suggested object to resolve and display.
+   * @group Props
+   * @deprecated use optionLabel property instead
+   */
+  field;
+  /**
+   * Displays a button next to the input field when enabled.
+   * @group Props
+   */
+  dropdown;
+  /**
+   * Whether to show the empty message or not.
+   * @group Props
+   */
+  showEmptyMessage = true;
+  /**
+   * Specifies the behavior dropdown button. Default "blank" mode sends an empty string and "current" mode sends the input value.
+   * @group Props
+   */
+  dropdownMode = "blank";
+  /**
+   * Specifies if multiple values can be selected.
+   * @group Props
+   */
+  multiple;
+  /**
+   * Index of the element in tabbing order.
+   * @group Props
+   */
+  tabindex;
+  /**
+   * A property to uniquely identify a value in options.
+   * @group Props
+   */
+  dataKey;
+  /**
+   * Text to display when there is no data. Defaults to global value in i18n translation configuration.
+   * @group Props
+   */
+  emptyMessage;
+  /**
+   * Transition options of the show animation.
+   * @group Props
+   */
+  showTransitionOptions = ".12s cubic-bezier(0, 0, 0.2, 1)";
+  /**
+   * Transition options of the hide animation.
+   * @group Props
+   */
+  hideTransitionOptions = ".1s linear";
+  /**
+   * When present, it specifies that the component should automatically get focus on load.
+   * @group Props
+   */
+  autofocus;
+  /**
+   * Used to define a string that autocomplete attribute the current element.
+   * @group Props
+   */
+  autocomplete = "off";
+  /**
+   * Name of the options field of an option group.
+   * @group Props
+   */
+  optionGroupChildren = "items";
+  /**
+   * Name of the label field of an option group.
+   * @group Props
+   */
+  optionGroupLabel = "label";
+  /**
+   * Options for the overlay element.
+   * @group Props
+   */
+  overlayOptions;
+  /**
+   * An array of suggestions to display.
+   * @group Props
+   */
+  get suggestions() {
+    return this._suggestions();
+  }
+  set suggestions(value) {
+    this._suggestions.set(value);
+    this.handleSuggestionsChange();
+  }
+  /**
+   * Element dimensions of option for virtual scrolling.
+   * @group Props
+   * @deprecated use virtualScrollItemSize property instead.
+   */
+  get itemSize() {
+    return this._itemSize;
+  }
+  set itemSize(val) {
+    this._itemSize = val;
+    console.log("The itemSize property is deprecated, use virtualScrollItemSize property instead.");
+  }
+  /**
+   * Property name or getter function to use as the label of an option.
+   * @group Props
+   */
+  optionLabel;
+  /**
+   * Property name or getter function to use as the value of an option.
+   * @group Props
+   */
+  optionValue;
+  /**
+   * Unique identifier of the component.
+   * @group Props
+   */
+  id;
+  /**
+   * Text to display when the search is active. Defaults to global value in i18n translation configuration.
+   * @group Props
+   * @defaultValue '{0} results are available'
+   */
+  searchMessage;
+  /**
+   * Text to display when filtering does not return any results. Defaults to global value in i18n translation configuration.
+   * @group Props
+   * @defaultValue 'No selected item'
+   */
+  emptySelectionMessage;
+  /**
+   * Text to be displayed in hidden accessible field when options are selected. Defaults to global value in i18n translation configuration.
+   * @group Props
+   * @defaultValue '{0} items selected'
+   */
+  selectionMessage;
+  /**
+   * Whether to focus on the first visible or selected element when the overlay panel is shown.
+   * @group Props
+   */
+  autoOptionFocus = false;
+  /**
+   * When enabled, the focused option is selected.
+   * @group Props
+   */
+  selectOnFocus;
+  /**
+   * Locale to use in searching. The default locale is the host environment's current locale.
+   * @group Props
+   */
+  searchLocale;
+  /**
+   * Property name or getter function to use as the disabled flag of an option, defaults to false when not defined.
+   * @group Props
+   */
+  optionDisabled;
+  /**
+   * When enabled, the hovered option will be focused.
+   * @group Props
+   */
+  focusOnHover = true;
+  /**
+   * Whether typeahead is active or not.
+   * @defaultValue true
+   * @group Props
+   */
+  typeahead = true;
+  /**
+   * Specifies the input variant of the component.
+   * @group Props
+   */
+  variant;
+  /**
+   * Spans 100% width of the container when enabled.
+   * @group Props
+   */
+  fluid = false;
+  /**
+   * Callback to invoke to search for suggestions.
+   * @param {AutoCompleteCompleteEvent} event - Custom complete event.
+   * @group Emits
+   */
+  completeMethod = new EventEmitter();
+  /**
+   * Callback to invoke when a suggestion is selected.
+   * @param {AutoCompleteSelectEvent} event - custom select event.
+   * @group Emits
+   */
+  onSelect = new EventEmitter();
+  /**
+   * Callback to invoke when a selected value is removed.
+   * @param {AutoCompleteUnselectEvent} event - custom unselect event.
+   * @group Emits
+   */
+  onUnselect = new EventEmitter();
+  /**
+   * Callback to invoke when the component receives focus.
+   * @param {Event} event - Browser event.
+   * @group Emits
+   */
+  onFocus = new EventEmitter();
+  /**
+   * Callback to invoke when the component loses focus.
+   * @param {Event} event - Browser event.
+   * @group Emits
+   */
+  onBlur = new EventEmitter();
+  /**
+   * Callback to invoke to when dropdown button is clicked.
+   * @param {AutoCompleteDropdownClickEvent} event - custom dropdown click event.
+   * @group Emits
+   */
+  onDropdownClick = new EventEmitter();
+  /**
+   * Callback to invoke when clear button is clicked.
+   * @param {Event} event - Browser event.
+   * @group Emits
+   */
+  onClear = new EventEmitter();
+  /**
+   * Callback to invoke on input key up.
+   * @param {KeyboardEvent} event - Keyboard event.
+   * @group Emits
+   */
+  onKeyUp = new EventEmitter();
+  /**
+   * Callback to invoke on overlay is shown.
+   * @param {Event} event - Browser event.
+   * @group Emits
+   */
+  onShow = new EventEmitter();
+  /**
+   * Callback to invoke on overlay is hidden.
+   * @param {Event} event - Browser event.
+   * @group Emits
+   */
+  onHide = new EventEmitter();
+  /**
+   * Callback to invoke on lazy load data.
+   * @param {AutoCompleteLazyLoadEvent} event - Lazy load event.
+   * @group Emits
+   */
+  onLazyLoad = new EventEmitter();
+  containerEL;
+  inputEL;
+  multiInputEl;
+  multiContainerEL;
+  dropdownButton;
+  itemsViewChild;
+  scroller;
+  overlayViewChild;
+  _itemSize;
+  itemsWrapper;
+  /**
+   * Custom item template.
+   * @group Templates
+   */
+  itemTemplate;
+  /**
+   * Custom empty message template.
+   * @group Templates
+   */
+  emptyTemplate;
+  /**
+   * Custom header template.
+   * @group Templates
+   */
+  headerTemplate;
+  /**
+   * Custom footer template.
+   * @group Templates
+   */
+  footerTemplate;
+  /**
+   * Custom selected item template.
+   * @group Templates
+   */
+  selectedItemTemplate;
+  /**
+   * Custom group item template.
+   * @group Templates
+   */
+  groupTemplate;
+  /**
+   * Custom loader template.
+   * @group Templates
+   */
+  loaderTemplate;
+  /**
+   * Custom remove icon template.
+   * @group Templates
+   */
+  removeIconTemplate;
+  /**
+   * Custom loading icon template.
+   * @group Templates
+   */
+  loadingIconTemplate;
+  /**
+   * Custom clear icon template.
+   * @group Templates
+   */
+  clearIconTemplate;
+  /**
+   * Custom dropdown icon template.
+   * @group Templates
+   */
+  dropdownIconTemplate;
+  primeng = inject(PrimeNG);
+  value;
+  _suggestions = signal(null);
+  onModelChange = () => {
+  };
+  onModelTouched = () => {
+  };
+  timeout;
+  overlayVisible;
+  suggestionsUpdated;
+  highlightOption;
+  highlightOptionChanged;
+  focused = false;
+  _filled;
+  get filled() {
+    return this._filled;
+  }
+  set filled(value) {
+    this._filled = value;
+  }
+  loading;
+  scrollHandler;
+  listId;
+  searchTimeout;
+  dirty = false;
+  _itemTemplate;
+  _groupTemplate;
+  _selectedItemTemplate;
+  _headerTemplate;
+  _emptyTemplate;
+  _footerTemplate;
+  _loaderTemplate;
+  _removeIconTemplate;
+  _loadingIconTemplate;
+  _clearIconTemplate;
+  _dropdownIconTemplate;
+  modelValue = signal(null);
+  focusedMultipleOptionIndex = signal(-1);
+  focusedOptionIndex = signal(-1);
+  _componentStyle = inject(AutoCompleteStyle);
+  visibleOptions = computed(() => {
+    return this.group ? this.flatOptions(this._suggestions()) : this._suggestions() || [];
+  });
+  inputValue = computed(() => {
+    const modelValue = this.modelValue();
+    const selectedOption = this.optionValueSelected ? (this.suggestions || []).find((item) => resolveFieldData(item, this.optionValue) === modelValue) : modelValue;
+    if (isNotEmpty(modelValue)) {
+      if (typeof modelValue === "object" || this.optionValueSelected) {
+        const label = this.getOptionLabel(selectedOption);
+        return label != null ? label : modelValue;
+      } else {
+        return modelValue;
+      }
+    } else {
+      return "";
+    }
+  });
+  get focusedMultipleOptionId() {
+    return this.focusedMultipleOptionIndex() !== -1 ? `${this.id}_multiple_option_${this.focusedMultipleOptionIndex()}` : null;
+  }
+  get focusedOptionId() {
+    return this.focusedOptionIndex() !== -1 ? `${this.id}_${this.focusedOptionIndex()}` : null;
+  }
+  get rootClass() {
+    return this._componentStyle.classes.root({
+      instance: this
+    });
+  }
+  get inputMultipleClass() {
+    return this._componentStyle.classes.inputMultiple({
+      instance: this
+    });
+  }
+  get panelClass() {
+    return {
+      "p-autocomplete-overlay p-component": true,
+      "p-input-filled": this.config.inputStyle() === "filled" || this.config.inputVariant() === "filled",
+      "p-ripple-disabled": this.config.ripple() === false
+    };
+  }
+  get inputClass() {
+    return {
+      "p-autocomplete-input": !this.multiple,
+      "p-autocomplete-dd-input": this.dropdown
+    };
+  }
+  get searchResultMessageText() {
+    return isNotEmpty(this.visibleOptions()) && this.overlayVisible ? this.searchMessageText.replaceAll("{0}", this.visibleOptions().length) : this.emptySearchMessageText;
+  }
+  get searchMessageText() {
+    return this.searchMessage || this.config.translation.searchMessage || "";
+  }
+  get emptySearchMessageText() {
+    return this.emptyMessage || this.config.translation.emptySearchMessage || "";
+  }
+  get selectionMessageText() {
+    return this.selectionMessage || this.config.translation.selectionMessage || "";
+  }
+  get emptySelectionMessageText() {
+    return this.emptySelectionMessage || this.config.translation.emptySelectionMessage || "";
+  }
+  get selectedMessageText() {
+    return this.hasSelectedOption() ? this.selectionMessageText.replaceAll("{0}", this.multiple ? this.modelValue().length : "1") : this.emptySelectionMessageText;
+  }
+  get ariaSetSize() {
+    return this.visibleOptions().filter((option) => !this.isOptionGroup(option)).length;
+  }
+  get listLabel() {
+    return this.config.getTranslation(TranslationKeys.ARIA)["listLabel"];
+  }
+  get virtualScrollerDisabled() {
+    return !this.virtualScroll;
+  }
+  get optionValueSelected() {
+    return typeof this.modelValue() === "string" && this.optionValue;
+  }
+  chipItemClass(index) {
+    return this._componentStyle.classes.chipItem({
+      instance: this,
+      i: index
+    });
+  }
+  optionClass(option, i, scrollerOptions) {
+    return {
+      "p-autocomplete-option": true,
+      "p-autocomplete-option-selected": this.isSelected(option),
+      "p-focus": this.focusedOptionIndex() === this.getOptionIndex(i, scrollerOptions),
+      "p-disabled": this.isOptionDisabled(option)
+    };
+  }
+  constructor(overlayService, zone) {
+    super();
+    this.overlayService = overlayService;
+    this.zone = zone;
+    effect(() => {
+      this.filled = isNotEmpty(this.modelValue());
+    });
+  }
+  ngOnInit() {
+    super.ngOnInit();
+    this.id = this.id || uuid("pn_id_");
+    this.cd.detectChanges();
+  }
+  templates;
+  ngAfterContentInit() {
+    this.templates.forEach((item) => {
+      switch (item.getType()) {
+        case "item":
+          this._itemTemplate = item.template;
+          break;
+        case "group":
+          this._groupTemplate = item.template;
+          break;
+        case "selecteditem":
+          this._selectedItemTemplate = item.template;
+          break;
+        case "selectedItem":
+          this._selectedItemTemplate = item.template;
+          break;
+        case "header":
+          this._headerTemplate = item.template;
+          break;
+        case "empty":
+          this._emptyTemplate = item.template;
+          break;
+        case "footer":
+          this._footerTemplate = item.template;
+          break;
+        case "loader":
+          this._loaderTemplate = item.template;
+          break;
+        case "removetokenicon":
+          this._removeIconTemplate = item.template;
+          break;
+        case "loadingicon":
+          this._loadingIconTemplate = item.template;
+          break;
+        case "clearicon":
+          this._clearIconTemplate = item.template;
+          break;
+        case "dropdownicon":
+          this._dropdownIconTemplate = item.template;
+          break;
+        default:
+          this._itemTemplate = item.template;
+          break;
+      }
+    });
+  }
+  ngAfterViewChecked() {
+    if (this.suggestionsUpdated && this.overlayViewChild) {
+      this.zone.runOutsideAngular(() => {
+        setTimeout(() => {
+          if (this.overlayViewChild) {
+            this.overlayViewChild.alignOverlay();
+          }
+        }, 1);
+        this.suggestionsUpdated = false;
+      });
+    }
+  }
+  handleSuggestionsChange() {
+    if (this.loading) {
+      this._suggestions()?.length > 0 || this.showEmptyMessage || !!this.emptyTemplate ? this.show() : this.hide();
+      const focusedOptionIndex = this.overlayVisible && this.autoOptionFocus ? this.findFirstFocusedOptionIndex() : -1;
+      this.focusedOptionIndex.set(focusedOptionIndex);
+      this.suggestionsUpdated = true;
+      this.loading = false;
+      this.cd.markForCheck();
+    }
+  }
+  flatOptions(options) {
+    return (options || []).reduce((result, option, index) => {
+      result.push({
+        optionGroup: option,
+        group: true,
+        index
+      });
+      const optionGroupChildren = this.getOptionGroupChildren(option);
+      optionGroupChildren && optionGroupChildren.forEach((o2) => result.push(o2));
+      return result;
+    }, []);
+  }
+  isOptionGroup(option) {
+    return this.optionGroupLabel && option.optionGroup && option.group;
+  }
+  findFirstOptionIndex() {
+    return this.visibleOptions().findIndex((option) => this.isValidOption(option));
+  }
+  findLastOptionIndex() {
+    return findLastIndex(this.visibleOptions(), (option) => this.isValidOption(option));
+  }
+  findFirstFocusedOptionIndex() {
+    const selectedIndex = this.findSelectedOptionIndex();
+    return selectedIndex < 0 ? this.findFirstOptionIndex() : selectedIndex;
+  }
+  findLastFocusedOptionIndex() {
+    const selectedIndex = this.findSelectedOptionIndex();
+    return selectedIndex < 0 ? this.findLastOptionIndex() : selectedIndex;
+  }
+  findSelectedOptionIndex() {
+    return this.hasSelectedOption() ? this.visibleOptions().findIndex((option) => this.isValidSelectedOption(option)) : -1;
+  }
+  findNextOptionIndex(index) {
+    const matchedOptionIndex = index < this.visibleOptions().length - 1 ? this.visibleOptions().slice(index + 1).findIndex((option) => this.isValidOption(option)) : -1;
+    return matchedOptionIndex > -1 ? matchedOptionIndex + index + 1 : index;
+  }
+  findPrevOptionIndex(index) {
+    const matchedOptionIndex = index > 0 ? findLastIndex(this.visibleOptions().slice(0, index), (option) => this.isValidOption(option)) : -1;
+    return matchedOptionIndex > -1 ? matchedOptionIndex : index;
+  }
+  isValidSelectedOption(option) {
+    return this.isValidOption(option) && this.isSelected(option);
+  }
+  isValidOption(option) {
+    return option && !(this.isOptionDisabled(option) || this.isOptionGroup(option));
+  }
+  isOptionDisabled(option) {
+    return this.optionDisabled ? resolveFieldData(option, this.optionDisabled) : false;
+  }
+  isSelected(option) {
+    if (this.multiple) {
+      return this.unique ? this.modelValue()?.find((model2) => equals(model2, this.getOptionValue(option), this.equalityKey())) : false;
+    }
+    return equals(this.modelValue(), this.getOptionValue(option), this.equalityKey());
+  }
+  isOptionMatched(option, value) {
+    return this.isValidOption(option) && this.getOptionLabel(option).toLocaleLowerCase(this.searchLocale) === value.toLocaleLowerCase(this.searchLocale);
+  }
+  isInputClicked(event) {
+    return event.target === this.inputEL.nativeElement;
+  }
+  isDropdownClicked(event) {
+    return this.dropdownButton?.nativeElement ? event.target === this.dropdownButton.nativeElement || this.dropdownButton.nativeElement.contains(event.target) : false;
+  }
+  equalityKey() {
+    return this.dataKey;
+  }
+  onContainerClick(event) {
+    if (this.disabled || this.loading || this.isInputClicked(event) || this.isDropdownClicked(event)) {
+      return;
+    }
+    if (!this.overlayViewChild || !this.overlayViewChild.overlayViewChild?.nativeElement.contains(event.target)) {
+      focus(this.inputEL.nativeElement);
+    }
+  }
+  handleDropdownClick(event) {
+    let query = void 0;
+    if (this.overlayVisible) {
+      this.hide(true);
+    } else {
+      focus(this.inputEL.nativeElement);
+      query = this.inputEL.nativeElement.value;
+      if (this.dropdownMode === "blank") this.search(event, "", "dropdown");
+      else if (this.dropdownMode === "current") this.search(event, query, "dropdown");
+    }
+    this.onDropdownClick.emit({
+      originalEvent: event,
+      query
+    });
+  }
+  onInput(event) {
+    if (this.typeahead) {
+      if (this.searchTimeout) {
+        clearTimeout(this.searchTimeout);
+      }
+      let query = event.target.value;
+      if (this.maxlength !== null) {
+        query = query.split("").slice(0, this.maxlength).join("");
+      }
+      if (!this.multiple && !this.forceSelection) {
+        this.updateModel(query);
+      }
+      if (query.length === 0 && !this.multiple) {
+        this.onClear.emit();
+        setTimeout(() => {
+          this.hide();
+        }, this.delay / 2);
+      } else {
+        if (query.length >= this.minLength) {
+          this.focusedOptionIndex.set(-1);
+          this.searchTimeout = setTimeout(() => {
+            this.search(event, query, "input");
+          }, this.delay);
+        } else {
+          this.hide();
+        }
+      }
+    }
+  }
+  onInputChange(event) {
+    if (this.forceSelection) {
+      let valid = false;
+      if (this.visibleOptions()) {
+        const matchedValue = this.visibleOptions().find((option) => this.isOptionMatched(option, this.inputEL.nativeElement.value || ""));
+        if (matchedValue !== void 0) {
+          valid = true;
+          !this.isSelected(matchedValue) && this.onOptionSelect(event, matchedValue);
+        }
+      }
+      if (!valid) {
+        this.inputEL.nativeElement.value = "";
+        !this.multiple && this.updateModel(null);
+      }
+    }
+  }
+  onInputFocus(event) {
+    if (this.disabled) {
+      return;
+    }
+    if (!this.dirty && this.completeOnFocus) {
+      this.search(event, event.target.value, "focus");
+    }
+    this.dirty = true;
+    this.focused = true;
+    const focusedOptionIndex = this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.overlayVisible && this.autoOptionFocus ? this.findFirstFocusedOptionIndex() : -1;
+    this.focusedOptionIndex.set(focusedOptionIndex);
+    this.overlayVisible && this.scrollInView(this.focusedOptionIndex());
+    this.onFocus.emit(event);
+  }
+  onMultipleContainerFocus(event) {
+    if (this.disabled) {
+      return;
+    }
+    this.focused = true;
+  }
+  onMultipleContainerBlur(event) {
+    this.focusedMultipleOptionIndex.set(-1);
+    this.focused = false;
+  }
+  onMultipleContainerKeyDown(event) {
+    if (this.disabled) {
+      event.preventDefault();
+      return;
+    }
+    switch (event.code) {
+      case "ArrowLeft":
+        this.onArrowLeftKeyOnMultiple(event);
+        break;
+      case "ArrowRight":
+        this.onArrowRightKeyOnMultiple(event);
+        break;
+      case "Backspace":
+        this.onBackspaceKeyOnMultiple(event);
+        break;
+      default:
+        break;
+    }
+  }
+  onInputBlur(event) {
+    this.dirty = false;
+    this.focused = false;
+    this.focusedOptionIndex.set(-1);
+    this.onModelTouched();
+    this.onBlur.emit(event);
+  }
+  onInputPaste(event) {
+    this.onKeyDown(event);
+  }
+  onInputKeyUp(event) {
+    this.onKeyUp.emit(event);
+  }
+  onKeyDown(event) {
+    if (this.disabled) {
+      event.preventDefault();
+      return;
+    }
+    switch (event.code) {
+      case "ArrowDown":
+        this.onArrowDownKey(event);
+        break;
+      case "ArrowUp":
+        this.onArrowUpKey(event);
+        break;
+      case "ArrowLeft":
+        this.onArrowLeftKey(event);
+        break;
+      case "ArrowRight":
+        this.onArrowRightKey(event);
+        break;
+      case "Home":
+        this.onHomeKey(event);
+        break;
+      case "End":
+        this.onEndKey(event);
+        break;
+      case "PageDown":
+        this.onPageDownKey(event);
+        break;
+      case "PageUp":
+        this.onPageUpKey(event);
+        break;
+      case "Enter":
+      case "NumpadEnter":
+        this.onEnterKey(event);
+        break;
+      case "Escape":
+        this.onEscapeKey(event);
+        break;
+      case "Tab":
+        this.onTabKey(event);
+        break;
+      case "Backspace":
+        this.onBackspaceKey(event);
+        break;
+      case "ShiftLeft":
+      case "ShiftRight":
+        break;
+      default:
+        break;
+    }
+  }
+  onArrowDownKey(event) {
+    if (!this.overlayVisible) {
+      return;
+    }
+    const optionIndex = this.focusedOptionIndex() !== -1 ? this.findNextOptionIndex(this.focusedOptionIndex()) : this.findFirstFocusedOptionIndex();
+    this.changeFocusedOptionIndex(event, optionIndex);
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  onArrowUpKey(event) {
+    if (!this.overlayVisible) {
+      return;
+    }
+    if (event.altKey) {
+      if (this.focusedOptionIndex() !== -1) {
+        this.onOptionSelect(event, this.visibleOptions()[this.focusedOptionIndex()]);
+      }
+      this.overlayVisible && this.hide();
+      event.preventDefault();
+    } else {
+      const optionIndex = this.focusedOptionIndex() !== -1 ? this.findPrevOptionIndex(this.focusedOptionIndex()) : this.findLastFocusedOptionIndex();
+      this.changeFocusedOptionIndex(event, optionIndex);
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+  get hasFluid() {
+    const nativeElement = this.el.nativeElement;
+    const fluidComponent = nativeElement.closest("p-fluid");
+    return this.fluid || !!fluidComponent;
+  }
+  onArrowLeftKey(event) {
+    const target = event.currentTarget;
+    this.focusedOptionIndex.set(-1);
+    if (this.multiple) {
+      if (isEmpty(target.value) && this.hasSelectedOption()) {
+        focus(this.multiContainerEL.nativeElement);
+        this.focusedMultipleOptionIndex.set(this.modelValue().length);
+      } else {
+        event.stopPropagation();
+      }
+    }
+  }
+  onArrowRightKey(event) {
+    this.focusedOptionIndex.set(-1);
+    this.multiple && event.stopPropagation();
+  }
+  onHomeKey(event) {
+    const {
+      currentTarget
+    } = event;
+    const len = currentTarget.value.length;
+    currentTarget.setSelectionRange(0, event.shiftKey ? len : 0);
+    this.focusedOptionIndex.set(-1);
+    event.preventDefault();
+  }
+  onEndKey(event) {
+    const {
+      currentTarget
+    } = event;
+    const len = currentTarget.value.length;
+    currentTarget.setSelectionRange(event.shiftKey ? 0 : len, len);
+    this.focusedOptionIndex.set(-1);
+    event.preventDefault();
+  }
+  onPageDownKey(event) {
+    this.scrollInView(this.visibleOptions().length - 1);
+    event.preventDefault();
+  }
+  onPageUpKey(event) {
+    this.scrollInView(0);
+    event.preventDefault();
+  }
+  onEnterKey(event) {
+    if (!this.typeahead) {
+      if (this.multiple) {
+        this.updateModel([...this.modelValue() || [], event.target.value]);
+        this.inputEL.nativeElement.value = "";
+      }
+    }
+    if (!this.overlayVisible) {
+      this.onArrowDownKey(event);
+    } else {
+      if (this.focusedOptionIndex() !== -1) {
+        this.onOptionSelect(event, this.visibleOptions()[this.focusedOptionIndex()]);
+      }
+      this.hide();
+    }
+    event.preventDefault();
+  }
+  onEscapeKey(event) {
+    this.overlayVisible && this.hide(true);
+    event.preventDefault();
+  }
+  onTabKey(event) {
+    if (this.focusedOptionIndex() !== -1) {
+      this.onOptionSelect(event, this.visibleOptions()[this.focusedOptionIndex()]);
+    }
+    this.overlayVisible && this.hide();
+  }
+  onBackspaceKey(event) {
+    if (this.multiple) {
+      if (isNotEmpty(this.modelValue()) && !this.inputEL.nativeElement.value) {
+        const removedValue = this.modelValue()[this.modelValue().length - 1];
+        const newValue = this.modelValue().slice(0, -1);
+        this.updateModel(newValue);
+        this.onUnselect.emit({
+          originalEvent: event,
+          value: removedValue
+        });
+      }
+      event.stopPropagation();
+    }
+    if (!this.multiple && this.showClear && this.findSelectedOptionIndex() != -1) {
+      this.clear();
+    }
+  }
+  onArrowLeftKeyOnMultiple(event) {
+    const optionIndex = this.focusedMultipleOptionIndex() < 1 ? 0 : this.focusedMultipleOptionIndex() - 1;
+    this.focusedMultipleOptionIndex.set(optionIndex);
+  }
+  onArrowRightKeyOnMultiple(event) {
+    let optionIndex = this.focusedMultipleOptionIndex();
+    optionIndex++;
+    this.focusedMultipleOptionIndex.set(optionIndex);
+    if (optionIndex > this.modelValue().length - 1) {
+      this.focusedMultipleOptionIndex.set(-1);
+      focus(this.inputEL.nativeElement);
+    }
+  }
+  onBackspaceKeyOnMultiple(event) {
+    if (this.focusedMultipleOptionIndex() !== -1) {
+      this.removeOption(event, this.focusedMultipleOptionIndex());
+    }
+  }
+  onOptionSelect(event, option, isHide = true) {
+    const value = this.getOptionValue(option);
+    if (this.multiple) {
+      this.inputEL.nativeElement.value = "";
+      if (!this.isSelected(option)) {
+        this.updateModel([...this.modelValue() || [], value]);
+      }
+    } else {
+      this.updateModel(value);
+    }
+    this.onSelect.emit({
+      originalEvent: event,
+      value: option
+    });
+    isHide && this.hide(true);
+  }
+  onOptionMouseEnter(event, index) {
+    if (this.focusOnHover) {
+      this.changeFocusedOptionIndex(event, index);
+    }
+  }
+  search(event, query, source) {
+    if (query === void 0 || query === null) {
+      return;
+    }
+    if (source === "input" && query.trim().length === 0) {
+      return;
+    }
+    this.loading = true;
+    this.completeMethod.emit({
+      originalEvent: event,
+      query
+    });
+  }
+  removeOption(event, index) {
+    event.stopPropagation();
+    const removedOption = this.modelValue()[index];
+    const value = this.modelValue().filter((_, i) => i !== index);
+    this.updateModel(value);
+    this.onUnselect.emit({
+      originalEvent: event,
+      value: removedOption
+    });
+    focus(this.inputEL.nativeElement);
+  }
+  updateModel(value) {
+    this.value = value;
+    this.modelValue.set(value);
+    this.onModelChange(value);
+    this.updateInputValue();
+    this.cd.markForCheck();
+  }
+  updateInputValue() {
+    if (this.inputEL && this.inputEL.nativeElement) {
+      if (!this.multiple) {
+        this.inputEL.nativeElement.value = this.inputValue();
+      } else {
+        this.inputEL.nativeElement.value = "";
+      }
+    }
+  }
+  autoUpdateModel() {
+    if ((this.selectOnFocus || this.autoHighlight) && this.autoOptionFocus && !this.hasSelectedOption()) {
+      const focusedOptionIndex = this.findFirstFocusedOptionIndex();
+      this.focusedOptionIndex.set(focusedOptionIndex);
+      this.onOptionSelect(null, this.visibleOptions()[this.focusedOptionIndex()], false);
+    }
+  }
+  scrollInView(index = -1) {
+    const id = index !== -1 ? `${this.id}_${index}` : this.focusedOptionId;
+    if (this.itemsViewChild && this.itemsViewChild.nativeElement) {
+      const element = findSingle(this.itemsViewChild.nativeElement, `li[id="${id}"]`);
+      if (element) {
+        element.scrollIntoView && element.scrollIntoView({
+          block: "nearest",
+          inline: "nearest"
+        });
+      } else if (!this.virtualScrollerDisabled) {
+        setTimeout(() => {
+          this.virtualScroll && this.scroller?.scrollToIndex(index !== -1 ? index : this.focusedOptionIndex());
+        }, 0);
+      }
+    }
+  }
+  changeFocusedOptionIndex(event, index) {
+    if (this.focusedOptionIndex() !== index) {
+      this.focusedOptionIndex.set(index);
+      this.scrollInView();
+      if (this.selectOnFocus) {
+        this.onOptionSelect(event, this.visibleOptions()[index], false);
+      }
+    }
+  }
+  show(isFocus = false) {
+    this.dirty = true;
+    this.overlayVisible = true;
+    const focusedOptionIndex = this.focusedOptionIndex() !== -1 ? this.focusedOptionIndex() : this.autoOptionFocus ? this.findFirstFocusedOptionIndex() : -1;
+    this.focusedOptionIndex.set(focusedOptionIndex);
+    isFocus && focus(this.inputEL.nativeElement);
+    if (isFocus) {
+      focus(this.inputEL.nativeElement);
+    }
+    this.onShow.emit();
+    this.cd.markForCheck();
+  }
+  hide(isFocus = false) {
+    const _hide = () => {
+      this.dirty = isFocus;
+      this.overlayVisible = false;
+      this.focusedOptionIndex.set(-1);
+      isFocus && focus(this.inputEL.nativeElement);
+      this.onHide.emit();
+      this.cd.markForCheck();
+    };
+    setTimeout(() => {
+      _hide();
+    }, 0);
+  }
+  clear() {
+    this.updateModel(null);
+    this.inputEL.nativeElement.value = "";
+    this.onClear.emit();
+  }
+  writeValue(value) {
+    this.value = value;
+    this.modelValue.set(value);
+    this.updateInputValue();
+    this.cd.markForCheck();
+  }
+  hasSelectedOption() {
+    return isNotEmpty(this.modelValue());
+  }
+  getAriaPosInset(index) {
+    return (this.optionGroupLabel ? index - this.visibleOptions().slice(0, index).filter((option) => this.isOptionGroup(option)).length : index) + 1;
+  }
+  getOptionLabel(option) {
+    return this.field || this.optionLabel ? resolveFieldData(option, this.field || this.optionLabel) : option && option.label != void 0 ? option.label : option;
+  }
+  getOptionValue(option) {
+    return this.optionValue ? resolveFieldData(option, this.optionValue) : option && option.value != void 0 ? option.value : option;
+  }
+  getOptionIndex(index, scrollerOptions) {
+    return this.virtualScrollerDisabled ? index : scrollerOptions && scrollerOptions.getItemOptions(index)["index"];
+  }
+  getOptionGroupLabel(optionGroup) {
+    return this.optionGroupLabel ? resolveFieldData(optionGroup, this.optionGroupLabel) : optionGroup && optionGroup.label != void 0 ? optionGroup.label : optionGroup;
+  }
+  getOptionGroupChildren(optionGroup) {
+    return this.optionGroupChildren ? resolveFieldData(optionGroup, this.optionGroupChildren) : optionGroup.items;
+  }
+  registerOnChange(fn) {
+    this.onModelChange = fn;
+  }
+  registerOnTouched(fn) {
+    this.onModelTouched = fn;
+  }
+  setDisabledState(val) {
+    this.disabled = val;
+    this.cd.markForCheck();
+  }
+  onOverlayAnimationStart(event) {
+    if (event.toState === "visible") {
+      this.itemsWrapper = findSingle(this.overlayViewChild.overlayViewChild?.nativeElement, this.virtualScroll ? ".p-scroller" : ".p-autocomplete-panel");
+      if (this.virtualScroll) {
+        this.scroller?.setContentEl(this.itemsViewChild?.nativeElement);
+        this.scroller.viewInit();
+      }
+      if (this.visibleOptions() && this.visibleOptions().length) {
+        if (this.virtualScroll) {
+          const selectedIndex = this.modelValue() ? this.focusedOptionIndex() : -1;
+          if (selectedIndex !== -1) {
+            this.scroller?.scrollToIndex(selectedIndex);
+          }
+        } else {
+          let selectedListItem = findSingle(this.itemsWrapper, ".p-autocomplete-item.p-highlight");
+          if (selectedListItem) {
+            selectedListItem.scrollIntoView({
+              block: "nearest",
+              inline: "center"
+            });
+          }
+        }
+      }
+    }
+  }
+  ngOnDestroy() {
+    if (this.scrollHandler) {
+      this.scrollHandler.destroy();
+      this.scrollHandler = null;
+    }
+    super.ngOnDestroy();
+  }
+  static \u0275fac = function AutoComplete_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _AutoComplete)(\u0275\u0275directiveInject(OverlayService), \u0275\u0275directiveInject(NgZone));
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _AutoComplete,
+    selectors: [["p-autoComplete"], ["p-autocomplete"], ["p-auto-complete"]],
+    contentQueries: function AutoComplete_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c015, 5);
+        \u0275\u0275contentQuery(dirIndex, _c116, 5);
+        \u0275\u0275contentQuery(dirIndex, _c27, 5);
+        \u0275\u0275contentQuery(dirIndex, _c35, 5);
+        \u0275\u0275contentQuery(dirIndex, _c45, 5);
+        \u0275\u0275contentQuery(dirIndex, _c55, 5);
+        \u0275\u0275contentQuery(dirIndex, _c64, 5);
+        \u0275\u0275contentQuery(dirIndex, _c73, 5);
+        \u0275\u0275contentQuery(dirIndex, _c83, 5);
+        \u0275\u0275contentQuery(dirIndex, _c93, 5);
+        \u0275\u0275contentQuery(dirIndex, _c103, 5);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.itemTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.emptyTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.footerTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.selectedItemTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.groupTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.loaderTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.removeIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.loadingIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.clearIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.dropdownIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    viewQuery: function AutoComplete_Query(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275viewQuery(_c117, 5);
+        \u0275\u0275viewQuery(_c123, 5);
+        \u0275\u0275viewQuery(_c133, 5);
+        \u0275\u0275viewQuery(_c143, 5);
+        \u0275\u0275viewQuery(_c152, 5);
+        \u0275\u0275viewQuery(_c162, 5);
+        \u0275\u0275viewQuery(_c172, 5);
+        \u0275\u0275viewQuery(_c182, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.containerEL = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.inputEL = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.multiInputEl = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.multiContainerEL = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.dropdownButton = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.itemsViewChild = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.scroller = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.overlayViewChild = _t.first);
+      }
+    },
+    inputs: {
+      minLength: [2, "minLength", "minLength", numberAttribute],
+      delay: [2, "delay", "delay", numberAttribute],
+      style: "style",
+      panelStyle: "panelStyle",
+      styleClass: "styleClass",
+      panelStyleClass: "panelStyleClass",
+      inputStyle: "inputStyle",
+      inputId: "inputId",
+      inputStyleClass: "inputStyleClass",
+      placeholder: "placeholder",
+      readonly: [2, "readonly", "readonly", booleanAttribute],
+      disabled: [2, "disabled", "disabled", booleanAttribute],
+      scrollHeight: "scrollHeight",
+      lazy: [2, "lazy", "lazy", booleanAttribute],
+      virtualScroll: [2, "virtualScroll", "virtualScroll", booleanAttribute],
+      virtualScrollItemSize: [2, "virtualScrollItemSize", "virtualScrollItemSize", numberAttribute],
+      virtualScrollOptions: "virtualScrollOptions",
+      maxlength: [2, "maxlength", "maxlength", (value) => numberAttribute(value, null)],
+      name: "name",
+      required: [2, "required", "required", booleanAttribute],
+      size: "size",
+      appendTo: "appendTo",
+      autoHighlight: [2, "autoHighlight", "autoHighlight", booleanAttribute],
+      forceSelection: [2, "forceSelection", "forceSelection", booleanAttribute],
+      type: "type",
+      autoZIndex: [2, "autoZIndex", "autoZIndex", booleanAttribute],
+      baseZIndex: [2, "baseZIndex", "baseZIndex", numberAttribute],
+      ariaLabel: "ariaLabel",
+      dropdownAriaLabel: "dropdownAriaLabel",
+      ariaLabelledBy: "ariaLabelledBy",
+      dropdownIcon: "dropdownIcon",
+      unique: [2, "unique", "unique", booleanAttribute],
+      group: [2, "group", "group", booleanAttribute],
+      completeOnFocus: [2, "completeOnFocus", "completeOnFocus", booleanAttribute],
+      showClear: [2, "showClear", "showClear", booleanAttribute],
+      field: "field",
+      dropdown: [2, "dropdown", "dropdown", booleanAttribute],
+      showEmptyMessage: [2, "showEmptyMessage", "showEmptyMessage", booleanAttribute],
+      dropdownMode: "dropdownMode",
+      multiple: [2, "multiple", "multiple", booleanAttribute],
+      tabindex: [2, "tabindex", "tabindex", numberAttribute],
+      dataKey: "dataKey",
+      emptyMessage: "emptyMessage",
+      showTransitionOptions: "showTransitionOptions",
+      hideTransitionOptions: "hideTransitionOptions",
+      autofocus: [2, "autofocus", "autofocus", booleanAttribute],
+      autocomplete: "autocomplete",
+      optionGroupChildren: "optionGroupChildren",
+      optionGroupLabel: "optionGroupLabel",
+      overlayOptions: "overlayOptions",
+      suggestions: "suggestions",
+      itemSize: "itemSize",
+      optionLabel: "optionLabel",
+      optionValue: "optionValue",
+      id: "id",
+      searchMessage: "searchMessage",
+      emptySelectionMessage: "emptySelectionMessage",
+      selectionMessage: "selectionMessage",
+      autoOptionFocus: [2, "autoOptionFocus", "autoOptionFocus", booleanAttribute],
+      selectOnFocus: [2, "selectOnFocus", "selectOnFocus", booleanAttribute],
+      searchLocale: [2, "searchLocale", "searchLocale", booleanAttribute],
+      optionDisabled: "optionDisabled",
+      focusOnHover: [2, "focusOnHover", "focusOnHover", booleanAttribute],
+      typeahead: [2, "typeahead", "typeahead", booleanAttribute],
+      variant: "variant",
+      fluid: [2, "fluid", "fluid", booleanAttribute]
+    },
+    outputs: {
+      completeMethod: "completeMethod",
+      onSelect: "onSelect",
+      onUnselect: "onUnselect",
+      onFocus: "onFocus",
+      onBlur: "onBlur",
+      onDropdownClick: "onDropdownClick",
+      onClear: "onClear",
+      onKeyUp: "onKeyUp",
+      onShow: "onShow",
+      onHide: "onHide",
+      onLazyLoad: "onLazyLoad"
+    },
+    features: [\u0275\u0275ProvidersFeature([AUTOCOMPLETE_VALUE_ACCESSOR, AutoCompleteStyle]), \u0275\u0275InheritDefinitionFeature],
+    decls: 11,
+    vars: 15,
+    consts: [["container", ""], ["overlay", ""], ["content", ""], ["focusInput", ""], ["multiContainer", ""], ["token", ""], ["removeicon", ""], ["ddBtn", ""], ["buildInItems", ""], ["scroller", ""], ["loader", ""], ["items", ""], ["empty", ""], [2, "position", "relative", 3, "click", "ngClass", "ngStyle"], ["pInputText", "", "aria-autocomplete", "list", "role", "combobox", 3, "pAutoFocus", "ngClass", "ngStyle", "class", "type", "variant", "autocomplete", "required", "name", "pSize", "tabindex", "readonly", "disabled", "fluid", "input", "keydown", "change", "focus", "blur", "paste", "keyup", 4, "ngIf"], [4, "ngIf"], ["role", "listbox", 3, "ngClass", "tabindex", "focus", "blur", "keydown", 4, "ngIf"], ["type", "button", "class", "p-autocomplete-dropdown", "pRipple", "", 3, "disabled", "click", 4, "ngIf"], [3, "visibleChange", "onAnimationStart", "onHide", "visible", "options", "target", "appendTo", "showTransitionOptions", "hideTransitionOptions"], ["pInputText", "", "aria-autocomplete", "list", "role", "combobox", 3, "input", "keydown", "change", "focus", "blur", "paste", "keyup", "pAutoFocus", "ngClass", "ngStyle", "type", "variant", "autocomplete", "required", "name", "pSize", "tabindex", "readonly", "disabled", "fluid"], [3, "styleClass", "click", 4, "ngIf"], ["class", "p-autocomplete-clear-icon", 3, "click", 4, "ngIf"], [3, "click", "styleClass"], [1, "p-autocomplete-clear-icon", 3, "click"], [4, "ngTemplateOutlet"], ["role", "listbox", 3, "focus", "blur", "keydown", "ngClass", "tabindex"], ["role", "option", 3, "ngClass", 4, "ngFor", "ngForOf"], ["role", "option", 1, "p-autocomplete-input-chip"], ["role", "combobox", "aria-autocomplete", "list", 3, "input", "keydown", "change", "focus", "blur", "paste", "keyup", "pAutoFocus", "ngClass", "ngStyle", "autocomplete", "required", "tabindex", "readonly", "disabled"], ["role", "option", 3, "ngClass"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["styleClass", "p-autocomplete-chip", 3, "label", "removable", "onRemove", 4, "ngIf"], ["styleClass", "p-autocomplete-chip", 3, "onRemove", "label", "removable"], [1, "p-autocomplete-chip-icon", 3, "click"], [3, "styleClass"], [3, "styleClass", "spin", 4, "ngIf"], ["class", "p-autocomplete-loader pi-spin ", 4, "ngIf"], [3, "styleClass", "spin"], [1, "p-autocomplete-loader", "pi-spin"], ["type", "button", "pRipple", "", 1, "p-autocomplete-dropdown", 3, "click", "disabled"], [3, "ngClass", 4, "ngIf"], [3, "ngClass"], [3, "ngClass", "ngStyle"], [1, "p-autocomplete-list-container"], [3, "items", "style", "itemSize", "autoSize", "lazy", "options", "onLazyLoad", 4, "ngIf"], ["role", "status", "aria-live", "polite", 1, "p-hidden-accessible"], [3, "onLazyLoad", "items", "itemSize", "autoSize", "lazy", "options"], ["role", "listbox", 1, "p-autocomplete-list", 3, "ngClass"], ["ngFor", "", 3, "ngForOf"], ["class", "p-autocomplete-empty-message", "role", "option", 3, "ngStyle", 4, "ngIf"], ["role", "option", 1, "p-autocomplete-option-group", 3, "ngStyle"], ["pRipple", "", "role", "option", 3, "click", "mouseenter", "ngStyle", "ngClass"], ["role", "option", 1, "p-autocomplete-empty-message", 3, "ngStyle"], [4, "ngIf", "ngIfElse"]],
+    template: function AutoComplete_Template(rf, ctx) {
+      if (rf & 1) {
+        const _r1 = \u0275\u0275getCurrentView();
+        \u0275\u0275elementStart(0, "div", 13, 0);
+        \u0275\u0275listener("click", function AutoComplete_Template_div_click_0_listener($event) {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onContainerClick($event));
+        });
+        \u0275\u0275template(2, AutoComplete_input_2_Template, 2, 25, "input", 14)(3, AutoComplete_ng_container_3_Template, 3, 2, "ng-container", 15)(4, AutoComplete_ul_4_Template, 6, 26, "ul", 16)(5, AutoComplete_ng_container_5_Template, 3, 2, "ng-container", 15)(6, AutoComplete_button_6_Template, 4, 5, "button", 17);
+        \u0275\u0275elementStart(7, "p-overlay", 18, 1);
+        \u0275\u0275twoWayListener("visibleChange", function AutoComplete_Template_p_overlay_visibleChange_7_listener($event) {
+          \u0275\u0275restoreView(_r1);
+          \u0275\u0275twoWayBindingSet(ctx.overlayVisible, $event) || (ctx.overlayVisible = $event);
+          return \u0275\u0275resetView($event);
+        });
+        \u0275\u0275listener("onAnimationStart", function AutoComplete_Template_p_overlay_onAnimationStart_7_listener($event) {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onOverlayAnimationStart($event));
+        })("onHide", function AutoComplete_Template_p_overlay_onHide_7_listener() {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.hide());
+        });
+        \u0275\u0275template(9, AutoComplete_ng_template_9_Template, 10, 11, "ng-template", null, 2, \u0275\u0275templateRefExtractor);
+        \u0275\u0275elementEnd()();
+      }
+      if (rf & 2) {
+        \u0275\u0275classMap(ctx.styleClass);
+        \u0275\u0275property("ngClass", ctx.rootClass)("ngStyle", ctx.style);
+        \u0275\u0275advance(2);
+        \u0275\u0275property("ngIf", !ctx.multiple);
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.filled && !ctx.disabled && ctx.showClear && !ctx.loading);
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.multiple);
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.loading);
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.dropdown);
+        \u0275\u0275advance();
+        \u0275\u0275twoWayProperty("visible", ctx.overlayVisible);
+        \u0275\u0275property("options", ctx.overlayOptions)("target", "@parent")("appendTo", ctx.appendTo)("showTransitionOptions", ctx.showTransitionOptions)("hideTransitionOptions", ctx.hideTransitionOptions);
+      }
+    },
+    dependencies: [CommonModule, NgClass, NgForOf, NgIf, NgTemplateOutlet, NgStyle, Overlay, InputText, Ripple, Scroller, AutoFocus, TimesCircleIcon, SpinnerIcon, TimesIcon, ChevronDownIcon, Chip, SharedModule],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AutoComplete, [{
+    type: Component,
+    args: [{
+      selector: "p-autoComplete, p-autocomplete, p-auto-complete",
+      standalone: true,
+      imports: [CommonModule, Overlay, InputText, Ripple, Scroller, AutoFocus, TimesCircleIcon, SpinnerIcon, TimesIcon, ChevronDownIcon, Chip, SharedModule],
+      template: `
+        <div #container [ngClass]="rootClass" [ngStyle]="style" style="position: relative;" [class]="styleClass" (click)="onContainerClick($event)">
+            <input
+                *ngIf="!multiple"
+                #focusInput
+                [pAutoFocus]="autofocus"
+                pInputText
+                [ngClass]="'p-autocomplete-input'"
+                [ngStyle]="inputStyle"
+                [class]="inputStyleClass"
+                [type]="type"
+                [attr.value]="inputValue()"
+                [variant]="variant"
+                [attr.id]="inputId"
+                [autocomplete]="autocomplete"
+                [required]="required"
+                [name]="name"
+                aria-autocomplete="list"
+                role="combobox"
+                [attr.placeholder]="placeholder"
+                [pSize]="size"
+                [attr.maxlength]="maxlength"
+                [tabindex]="!disabled ? tabindex : -1"
+                [readonly]="readonly"
+                [disabled]="disabled"
+                [attr.aria-label]="ariaLabel"
+                [attr.aria-labelledby]="ariaLabelledBy"
+                [attr.aria-required]="required"
+                [attr.aria-expanded]="overlayVisible ?? false"
+                [attr.aria-controls]="overlayVisible ? id + '_list' : null"
+                [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
+                (input)="onInput($event)"
+                (keydown)="onKeyDown($event)"
+                (change)="onInputChange($event)"
+                (focus)="onInputFocus($event)"
+                (blur)="onInputBlur($event)"
+                (paste)="onInputPaste($event)"
+                (keyup)="onInputKeyUp($event)"
+                [fluid]="hasFluid"
+            />
+            <ng-container *ngIf="filled && !disabled && showClear && !loading">
+                <TimesIcon *ngIf="!clearIconTemplate && !_clearIconTemplate" [styleClass]="'p-autocomplete-clear-icon'" (click)="clear()" [attr.aria-hidden]="true" />
+                <span *ngIf="clearIconTemplate || _clearIconTemplate" class="p-autocomplete-clear-icon" (click)="clear()" [attr.aria-hidden]="true">
+                    <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
+                </span>
+            </ng-container>
+
+            <ul
+                *ngIf="multiple"
+                #multiContainer
+                [ngClass]="inputMultipleClass"
+                [tabindex]="-1"
+                role="listbox"
+                [attr.aria-orientation]="'horizontal'"
+                [attr.aria-activedescendant]="focused ? focusedMultipleOptionId : undefined"
+                (focus)="onMultipleContainerFocus($event)"
+                (blur)="onMultipleContainerBlur($event)"
+                (keydown)="onMultipleContainerKeyDown($event)"
+            >
+                <li
+                    #token
+                    *ngFor="let option of modelValue(); let i = index"
+                    [ngClass]="{ 'p-autocomplete-chip-item': true, 'p-focus': focusedMultipleOptionIndex() === i }"
+                    [attr.id]="id + '_multiple_option_' + i"
+                    role="option"
+                    [attr.aria-label]="getOptionLabel(option)"
+                    [attr.aria-setsize]="modelValue().length"
+                    [attr.aria-posinset]="i + 1"
+                    [attr.aria-selected]="true"
+                >
+                    <ng-container *ngTemplateOutlet="selectedItemTemplate || _selectedItemTemplate; context: { $implicit: option }"></ng-container>
+                    <p-chip styleClass="p-autocomplete-chip" *ngIf="!selectedItemTemplate && !_selectedItemTemplate" [label]="getOptionLabel(option)" [removable]="true" (onRemove)="!readonly ? removeOption($event, i) : ''">
+                        <ng-container *ngIf="!removeIconTemplate && !_removeIconTemplate">
+                            <ng-template #removeicon>
+                                <span class="p-autocomplete-chip-icon" (click)="!readonly ? removeOption($event, i) : ''">
+                                    <TimesCircleIcon [styleClass]="'p-autocomplete-chip-icon'" [attr.aria-hidden]="true" />
+                                </span>
+                            </ng-template>
+                        </ng-container>
+                    </p-chip>
+                    <span *ngIf="removeIconTemplate || _removeIconTemplate">
+                        <ng-template *ngTemplateOutlet="removeIconTemplate || _removeIconTemplate; context: { class: 'p-autocomplete-chip-icon', removeCallback: removeOption.bind(this), index: i }"></ng-template>
+                    </span>
+                </li>
+                <li class="p-autocomplete-input-chip" role="option">
+                    <input
+                        #focusInput
+                        [pAutoFocus]="autofocus"
+                        [ngClass]="inputClass"
+                        [ngStyle]="inputStyle"
+                        [class]="inputStyleClass"
+                        [attr.type]="type"
+                        [attr.id]="inputId"
+                        [autocomplete]="autocomplete"
+                        [required]="required"
+                        [attr.name]="name"
+                        role="combobox"
+                        [attr.placeholder]="!filled ? placeholder : null"
+                        aria-autocomplete="list"
+                        [attr.maxlength]="maxlength"
+                        [tabindex]="!disabled ? tabindex : -1"
+                        [readonly]="readonly"
+                        [disabled]="disabled"
+                        [attr.aria-label]="ariaLabel"
+                        [attr.aria-labelledby]="ariaLabelledBy"
+                        [attr.aria-required]="required"
+                        [attr.aria-expanded]="overlayVisible ?? false"
+                        [attr.aria-controls]="overlayVisible ? id + '_list' : null"
+                        [attr.aria-activedescendant]="focused ? focusedOptionId : undefined"
+                        (input)="onInput($event)"
+                        (keydown)="onKeyDown($event)"
+                        (change)="onInputChange($event)"
+                        (focus)="onInputFocus($event)"
+                        (blur)="onInputBlur($event)"
+                        (paste)="onInputPaste($event)"
+                        (keyup)="onInputKeyUp($event)"
+                    />
+                </li>
+            </ul>
+            <ng-container *ngIf="loading">
+                <SpinnerIcon *ngIf="!loadingIconTemplate && !_loadingIconTemplate" [styleClass]="'p-autocomplete-loader'" [spin]="true" [attr.aria-hidden]="true" />
+                <span *ngIf="loadingIconTemplate || _loadingIconTemplate" class="p-autocomplete-loader pi-spin " [attr.aria-hidden]="true">
+                    <ng-template *ngTemplateOutlet="loadingIconTemplate || _loadingIconTemplate"></ng-template>
+                </span>
+            </ng-container>
+            <button #ddBtn type="button" [attr.aria-label]="dropdownAriaLabel" class="p-autocomplete-dropdown" [disabled]="disabled" pRipple (click)="handleDropdownClick($event)" *ngIf="dropdown" [attr.tabindex]="tabindex">
+                <span *ngIf="dropdownIcon" [ngClass]="dropdownIcon" [attr.aria-hidden]="true"></span>
+                <ng-container *ngIf="!dropdownIcon">
+                    <ChevronDownIcon *ngIf="!dropdownIconTemplate && !_dropdownIconTemplate" />
+                    <ng-template *ngTemplateOutlet="dropdownIconTemplate || _dropdownIconTemplate"></ng-template>
+                </ng-container>
+            </button>
+            <p-overlay
+                #overlay
+                [(visible)]="overlayVisible"
+                [options]="overlayOptions"
+                [target]="'@parent'"
+                [appendTo]="appendTo"
+                [showTransitionOptions]="showTransitionOptions"
+                [hideTransitionOptions]="hideTransitionOptions"
+                (onAnimationStart)="onOverlayAnimationStart($event)"
+                (onHide)="hide()"
+            >
+                <ng-template #content>
+                    <div [ngClass]="panelClass" [ngStyle]="panelStyle" [class]="panelStyleClass">
+                        <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+                        <div class="p-autocomplete-list-container" [style.max-height]="virtualScroll ? 'auto' : scrollHeight">
+                            <p-scroller
+                                *ngIf="virtualScroll"
+                                #scroller
+                                [items]="visibleOptions()"
+                                [style]="{ height: scrollHeight }"
+                                [itemSize]="virtualScrollItemSize || _itemSize"
+                                [autoSize]="true"
+                                [lazy]="lazy"
+                                (onLazyLoad)="onLazyLoad.emit($event)"
+                                [options]="virtualScrollOptions"
+                            >
+                                <ng-template #content let-items let-scrollerOptions="options">
+                                    <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: items, options: scrollerOptions }"></ng-container>
+                                </ng-template>
+                                <ng-container *ngIf="loaderTemplate || _loaderTemplate">
+                                    <ng-template #loader let-scrollerOptions="options">
+                                        <ng-container *ngTemplateOutlet="loaderTemplate || _loaderTemplate; context: { options: scrollerOptions }"></ng-container>
+                                    </ng-template>
+                                </ng-container>
+                            </p-scroller>
+                            <ng-container *ngIf="!virtualScroll">
+                                <ng-container *ngTemplateOutlet="buildInItems; context: { $implicit: visibleOptions(), options: {} }"></ng-container>
+                            </ng-container>
+                        </div>
+
+                        <ng-template #buildInItems let-items let-scrollerOptions="options">
+                            <ul #items class="p-autocomplete-list" [ngClass]="scrollerOptions.contentStyleClass" [style]="scrollerOptions.contentStyle" role="listbox" [attr.id]="id + '_list'" [attr.aria-label]="listLabel">
+                                <ng-template ngFor let-option [ngForOf]="items" let-i="index">
+                                    <ng-container *ngIf="isOptionGroup(option)">
+                                        <li [attr.id]="id + '_' + getOptionIndex(i, scrollerOptions)" class="p-autocomplete-option-group" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
+                                            <span *ngIf="!groupTemplate">{{ getOptionGroupLabel(option.optionGroup) }}</span>
+                                            <ng-container *ngTemplateOutlet="groupTemplate; context: { $implicit: option.optionGroup }"></ng-container>
+                                        </li>
+                                    </ng-container>
+                                    <ng-container *ngIf="!isOptionGroup(option)">
+                                        <li
+                                            pRipple
+                                            [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }"
+                                            [ngClass]="optionClass(option, i, scrollerOptions)"
+                                            [attr.id]="id + '_' + getOptionIndex(i, scrollerOptions)"
+                                            role="option"
+                                            [attr.aria-label]="getOptionLabel(option)"
+                                            [attr.aria-selected]="isSelected(option)"
+                                            [attr.aria-disabled]="isOptionDisabled(option)"
+                                            [attr.data-p-focused]="focusedOptionIndex() === getOptionIndex(i, scrollerOptions)"
+                                            [attr.aria-setsize]="ariaSetSize"
+                                            [attr.aria-posinset]="getAriaPosInset(getOptionIndex(i, scrollerOptions))"
+                                            (click)="onOptionSelect($event, option)"
+                                            (mouseenter)="onOptionMouseEnter($event, getOptionIndex(i, scrollerOptions))"
+                                        >
+                                            <span *ngIf="!itemTemplate && !_itemTemplate">{{ getOptionLabel(option) }}</span>
+                                            <ng-container
+                                                *ngTemplateOutlet="
+                                                    itemTemplate || _itemTemplate;
+                                                    context: {
+                                                        $implicit: option,
+                                                        index: scrollerOptions.getOptions ? scrollerOptions.getOptions(i) : i
+                                                    }
+                                                "
+                                            ></ng-container>
+                                        </li>
+                                    </ng-container>
+                                </ng-template>
+                                <li *ngIf="!items || (items && items.length === 0 && showEmptyMessage)" class="p-autocomplete-empty-message" [ngStyle]="{ height: scrollerOptions.itemSize + 'px' }" role="option">
+                                    <ng-container *ngIf="!emptyTemplate && !_emptyTemplate; else empty">
+                                        {{ searchResultMessageText }}
+                                    </ng-container>
+                                    <ng-container #empty *ngTemplateOutlet="emptyTemplate || _emptyTemplate"></ng-container>
+                                </li>
+                            </ul>
+                        </ng-template>
+                        <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+                    </div>
+                    <span role="status" aria-live="polite" class="p-hidden-accessible">
+                        {{ selectedMessageText }}
+                    </span>
+                </ng-template>
+            </p-overlay>
+        </div>
+    `,
+      providers: [AUTOCOMPLETE_VALUE_ACCESSOR, AutoCompleteStyle],
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None
+    }]
+  }], () => [{
+    type: OverlayService
+  }, {
+    type: NgZone
+  }], {
+    minLength: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    delay: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    style: [{
+      type: Input
+    }],
+    panelStyle: [{
+      type: Input
+    }],
+    styleClass: [{
+      type: Input
+    }],
+    panelStyleClass: [{
+      type: Input
+    }],
+    inputStyle: [{
+      type: Input
+    }],
+    inputId: [{
+      type: Input
+    }],
+    inputStyleClass: [{
+      type: Input
+    }],
+    placeholder: [{
+      type: Input
+    }],
+    readonly: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    disabled: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    scrollHeight: [{
+      type: Input
+    }],
+    lazy: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    virtualScroll: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    virtualScrollItemSize: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    virtualScrollOptions: [{
+      type: Input
+    }],
+    maxlength: [{
+      type: Input,
+      args: [{
+        transform: (value) => numberAttribute(value, null)
+      }]
+    }],
+    name: [{
+      type: Input
+    }],
+    required: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    size: [{
+      type: Input
+    }],
+    appendTo: [{
+      type: Input
+    }],
+    autoHighlight: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    forceSelection: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    type: [{
+      type: Input
+    }],
+    autoZIndex: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    baseZIndex: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    ariaLabel: [{
+      type: Input
+    }],
+    dropdownAriaLabel: [{
+      type: Input
+    }],
+    ariaLabelledBy: [{
+      type: Input
+    }],
+    dropdownIcon: [{
+      type: Input
+    }],
+    unique: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    group: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    completeOnFocus: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    showClear: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    field: [{
+      type: Input
+    }],
+    dropdown: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    showEmptyMessage: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    dropdownMode: [{
+      type: Input
+    }],
+    multiple: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    tabindex: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    dataKey: [{
+      type: Input
+    }],
+    emptyMessage: [{
+      type: Input
+    }],
+    showTransitionOptions: [{
+      type: Input
+    }],
+    hideTransitionOptions: [{
+      type: Input
+    }],
+    autofocus: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    autocomplete: [{
+      type: Input
+    }],
+    optionGroupChildren: [{
+      type: Input
+    }],
+    optionGroupLabel: [{
+      type: Input
+    }],
+    overlayOptions: [{
+      type: Input
+    }],
+    suggestions: [{
+      type: Input
+    }],
+    itemSize: [{
+      type: Input
+    }],
+    optionLabel: [{
+      type: Input
+    }],
+    optionValue: [{
+      type: Input
+    }],
+    id: [{
+      type: Input
+    }],
+    searchMessage: [{
+      type: Input
+    }],
+    emptySelectionMessage: [{
+      type: Input
+    }],
+    selectionMessage: [{
+      type: Input
+    }],
+    autoOptionFocus: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    selectOnFocus: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    searchLocale: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    optionDisabled: [{
+      type: Input
+    }],
+    focusOnHover: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    typeahead: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    variant: [{
+      type: Input
+    }],
+    fluid: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    completeMethod: [{
+      type: Output
+    }],
+    onSelect: [{
+      type: Output
+    }],
+    onUnselect: [{
+      type: Output
+    }],
+    onFocus: [{
+      type: Output
+    }],
+    onBlur: [{
+      type: Output
+    }],
+    onDropdownClick: [{
+      type: Output
+    }],
+    onClear: [{
+      type: Output
+    }],
+    onKeyUp: [{
+      type: Output
+    }],
+    onShow: [{
+      type: Output
+    }],
+    onHide: [{
+      type: Output
+    }],
+    onLazyLoad: [{
+      type: Output
+    }],
+    containerEL: [{
+      type: ViewChild,
+      args: ["container"]
+    }],
+    inputEL: [{
+      type: ViewChild,
+      args: ["focusInput"]
+    }],
+    multiInputEl: [{
+      type: ViewChild,
+      args: ["multiIn"]
+    }],
+    multiContainerEL: [{
+      type: ViewChild,
+      args: ["multiContainer"]
+    }],
+    dropdownButton: [{
+      type: ViewChild,
+      args: ["ddBtn"]
+    }],
+    itemsViewChild: [{
+      type: ViewChild,
+      args: ["items"]
+    }],
+    scroller: [{
+      type: ViewChild,
+      args: ["scroller"]
+    }],
+    overlayViewChild: [{
+      type: ViewChild,
+      args: ["overlay"]
+    }],
+    itemTemplate: [{
+      type: ContentChild,
+      args: ["item"]
+    }],
+    emptyTemplate: [{
+      type: ContentChild,
+      args: ["empty"]
+    }],
+    headerTemplate: [{
+      type: ContentChild,
+      args: ["header"]
+    }],
+    footerTemplate: [{
+      type: ContentChild,
+      args: ["footer"]
+    }],
+    selectedItemTemplate: [{
+      type: ContentChild,
+      args: ["selecteditem"]
+    }],
+    groupTemplate: [{
+      type: ContentChild,
+      args: ["group"]
+    }],
+    loaderTemplate: [{
+      type: ContentChild,
+      args: ["loader"]
+    }],
+    removeIconTemplate: [{
+      type: ContentChild,
+      args: ["removeicon"]
+    }],
+    loadingIconTemplate: [{
+      type: ContentChild,
+      args: ["loadingicon"]
+    }],
+    clearIconTemplate: [{
+      type: ContentChild,
+      args: ["clearicon"]
+    }],
+    dropdownIconTemplate: [{
+      type: ContentChild,
+      args: ["dropdownicon"]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }]
+  });
+})();
+var AutoCompleteModule = class _AutoCompleteModule {
+  static \u0275fac = function AutoCompleteModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _AutoCompleteModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _AutoCompleteModule,
+    imports: [AutoComplete],
+    exports: [AutoComplete, SharedModule]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [AutoComplete, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(AutoCompleteModule, [{
+    type: NgModule,
+    args: [{
+      imports: [AutoComplete],
+      exports: [AutoComplete, SharedModule]
+    }]
+  }], null, null);
+})();
+
+// node_modules/primeng/fesm2022/primeng-password.mjs
+var _c016 = ["content"];
+var _c118 = ["footer"];
+var _c28 = ["header"];
+var _c36 = ["clearicon"];
+var _c46 = ["hideicon"];
+var _c56 = ["showicon"];
+var _c65 = ["input"];
+var _c74 = () => ({
+  class: "p-password-toggle-mask-icon p-password-mask-icon"
+});
+var _c84 = (a0, a1) => ({
+  showTransitionParams: a0,
+  hideTransitionParams: a1
+});
+var _c94 = (a0) => ({
+  value: "visible",
+  params: a0
+});
+var _c104 = (a0) => ({
+  width: a0
+});
+function Password_ng_container_5_TimesIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "TimesIcon", 8);
+    \u0275\u0275listener("click", function Password_ng_container_5_TimesIcon_1_Template_TimesIcon_click_0_listener() {
+      \u0275\u0275restoreView(_r3);
+      const ctx_r3 = \u0275\u0275nextContext(2);
+      return \u0275\u0275resetView(ctx_r3.clear());
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275attribute("data-pc-section", "clearIcon");
+  }
+}
+function Password_ng_container_5_3_ng_template_0_Template(rf, ctx) {
+}
+function Password_ng_container_5_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Password_ng_container_5_3_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function Password_ng_container_5_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Password_ng_container_5_TimesIcon_1_Template, 1, 1, "TimesIcon", 7);
+    \u0275\u0275elementStart(2, "span", 8);
+    \u0275\u0275listener("click", function Password_ng_container_5_Template_span_click_2_listener() {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r3 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r3.clear());
+    });
+    \u0275\u0275template(3, Password_ng_container_5_3_Template, 1, 0, null, 9);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r3.clearIconTemplate && !ctx_r3._clearIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275attribute("data-pc-section", "clearIcon");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r3.clearIconTemplate || ctx_r3._clearIconTemplate);
+  }
+}
+function Password_ng_container_6_ng_container_1_EyeSlashIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "EyeSlashIcon", 12);
+    \u0275\u0275listener("click", function Password_ng_container_6_ng_container_1_EyeSlashIcon_1_Template_EyeSlashIcon_click_0_listener() {
+      \u0275\u0275restoreView(_r5);
+      const ctx_r3 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r3.onMaskToggle());
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275attribute("data-pc-section", "hideIcon");
+  }
+}
+function Password_ng_container_6_ng_container_1_span_2_1_ng_template_0_Template(rf, ctx) {
+}
+function Password_ng_container_6_ng_container_1_span_2_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Password_ng_container_6_ng_container_1_span_2_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function Password_ng_container_6_ng_container_1_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r6 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "span", 13);
+    \u0275\u0275listener("click", function Password_ng_container_6_ng_container_1_span_2_Template_span_click_0_listener() {
+      \u0275\u0275restoreView(_r6);
+      const ctx_r3 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r3.onMaskToggle());
+    });
+    \u0275\u0275template(1, Password_ng_container_6_ng_container_1_span_2_1_Template, 1, 0, null, 14);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r3.hideIconTemplate || ctx_r3._hideIconTemplate)("ngTemplateOutletContext", \u0275\u0275pureFunction0(2, _c74));
+  }
+}
+function Password_ng_container_6_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Password_ng_container_6_ng_container_1_EyeSlashIcon_1_Template, 1, 1, "EyeSlashIcon", 10)(2, Password_ng_container_6_ng_container_1_span_2_Template, 2, 3, "span", 11);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r3.hideIconTemplate && !ctx_r3._hideIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r3.hideIconTemplate || ctx_r3._hideIconTemplate);
+  }
+}
+function Password_ng_container_6_ng_container_2_EyeIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r7 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "EyeIcon", 12);
+    \u0275\u0275listener("click", function Password_ng_container_6_ng_container_2_EyeIcon_1_Template_EyeIcon_click_0_listener() {
+      \u0275\u0275restoreView(_r7);
+      const ctx_r3 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r3.onMaskToggle());
+    });
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    \u0275\u0275attribute("data-pc-section", "showIcon");
+  }
+}
+function Password_ng_container_6_ng_container_2_span_2_1_ng_template_0_Template(rf, ctx) {
+}
+function Password_ng_container_6_ng_container_2_span_2_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275template(0, Password_ng_container_6_ng_container_2_span_2_1_ng_template_0_Template, 0, 0, "ng-template");
+  }
+}
+function Password_ng_container_6_ng_container_2_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r8 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "span", 13);
+    \u0275\u0275listener("click", function Password_ng_container_6_ng_container_2_span_2_Template_span_click_0_listener() {
+      \u0275\u0275restoreView(_r8);
+      const ctx_r3 = \u0275\u0275nextContext(3);
+      return \u0275\u0275resetView(ctx_r3.onMaskToggle());
+    });
+    \u0275\u0275template(1, Password_ng_container_6_ng_container_2_span_2_1_Template, 1, 0, null, 9);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext(3);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r3.showIconTemplate || ctx_r3._showIconTemplate);
+  }
+}
+function Password_ng_container_6_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Password_ng_container_6_ng_container_2_EyeIcon_1_Template, 1, 1, "EyeIcon", 10)(2, Password_ng_container_6_ng_container_2_span_2_Template, 2, 1, "span", 11);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r3.showIconTemplate && !ctx_r3._showIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r3.showIconTemplate || ctx_r3._showIconTemplate);
+  }
+}
+function Password_ng_container_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Password_ng_container_6_ng_container_1_Template, 3, 2, "ng-container", 5)(2, Password_ng_container_6_ng_container_2_Template, 3, 2, "ng-container", 5);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r3.unmasked);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r3.unmasked);
+  }
+}
+function Password_div_7_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Password_div_7_ng_container_3_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Password_div_7_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Password_div_7_ng_container_3_ng_container_1_Template, 1, 0, "ng-container", 9);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r3.contentTemplate || ctx_r3._contentTemplate);
+  }
+}
+function Password_div_7_ng_template_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 17)(1, "div", 18);
+    \u0275\u0275element(2, "div", 3);
+    \u0275\u0275pipe(3, "mapper");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(4, "div", 19);
+    \u0275\u0275text(5);
+    \u0275\u0275elementEnd()();
+  }
+  if (rf & 2) {
+    const ctx_r3 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275attribute("data-pc-section", "meter");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngClass", \u0275\u0275pipeBind2(3, 6, ctx_r3.meter, ctx_r3.strengthClass))("ngStyle", \u0275\u0275pureFunction1(9, _c104, ctx_r3.meter ? ctx_r3.meter.width : ""));
+    \u0275\u0275attribute("data-pc-section", "meterLabel");
+    \u0275\u0275advance(2);
+    \u0275\u0275attribute("data-pc-section", "info");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r3.infoText);
+  }
+}
+function Password_div_7_ng_container_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Password_div_7_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r9 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementStart(0, "div", 15, 1);
+    \u0275\u0275listener("click", function Password_div_7_Template_div_click_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r3 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r3.onOverlayClick($event));
+    })("@overlayAnimation.start", function Password_div_7_Template_div_animation_overlayAnimation_start_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r3 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r3.onAnimationStart($event));
+    })("@overlayAnimation.done", function Password_div_7_Template_div_animation_overlayAnimation_done_0_listener($event) {
+      \u0275\u0275restoreView(_r9);
+      const ctx_r3 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r3.onAnimationEnd($event));
+    });
+    \u0275\u0275template(2, Password_div_7_ng_container_2_Template, 1, 0, "ng-container", 9)(3, Password_div_7_ng_container_3_Template, 2, 1, "ng-container", 16)(4, Password_div_7_ng_template_4_Template, 6, 11, "ng-template", null, 2, \u0275\u0275templateRefExtractor)(6, Password_div_7_ng_container_6_Template, 1, 0, "ng-container", 9);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const content_r10 = \u0275\u0275reference(5);
+    const ctx_r3 = \u0275\u0275nextContext();
+    \u0275\u0275property("@overlayAnimation", \u0275\u0275pureFunction1(9, _c94, \u0275\u0275pureFunction2(6, _c84, ctx_r3.showTransitionOptions, ctx_r3.hideTransitionOptions)));
+    \u0275\u0275attribute("data-pc-section", "panel");
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r3.headerTemplate || ctx_r3._headerTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r3.contentTemplate || ctx_r3._contentTemplate)("ngIfElse", content_r10);
+    \u0275\u0275advance(3);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r3.footerTemplate || ctx_r3._footerTemplate);
+  }
+}
+var theme12 = ({
+  dt
+}) => `
+.p-password {
+    display: inline-flex;
+    position: relative;
+}
+
+.p-password .p-password-overlay {
+    min-width: 100%;
+}
+
+.p-password-meter {
+    height: ${dt("password.meter.height")};
+    background: ${dt("password.meter.background")};
+    border-radius: ${dt("password.meter.border.radius")};
+}
+
+.p-password-meter-label {
+    height: 100%;
+    width: 0;
+    transition: width 1s ease-in-out;
+    border-radius: ${dt("password.meter.border.radius")};
+}
+
+.p-password-meter-weak {
+    background: ${dt("password.strength.weak.background")};
+}
+
+.p-password-meter-medium {
+    background: ${dt("password.strength.medium.background")};
+}
+
+.p-password-meter-strong {
+    background: ${dt("password.strength.strong.background")};
+}
+
+.p-password-fluid {
+    display: flex;
+}
+
+.p-password-fluid .p-password-input {
+    width: 100%;
+}
+
+.p-password-input::-ms-reveal,
+.p-password-input::-ms-clear {
+    display: none;
+}
+
+.p-password-overlay {
+    position: absolute;
+    padding: ${dt("password.overlay.padding")};
+    background: ${dt("password.overlay.background")};
+    color: ${dt("password.overlay.color")};
+    border: 1px solid ${dt("password.overlay.border.color")};
+    box-shadow: ${dt("password.overlay.shadow")};
+    border-radius: ${dt("password.overlay.border.radius")};
+}
+
+.p-password-content {
+    display: flex;
+    flex-direction: column;
+    gap: ${dt("password.content.gap")};
+}
+
+.p-password-toggle-mask-icon {
+    inset-inline-end: ${dt("form.field.padding.x")};
+    color: ${dt("password.icon.color")};
+    position: absolute;
+    top: 50%;
+    margin-top: calc(-1 * calc(${dt("icon.size")} / 2));
+    width: ${dt("icon.size")};
+    height: ${dt("icon.size")};
+}
+
+.p-password:has(.p-password-toggle-mask-icon) .p-password-clear-icon,
+.p-password:has(.p-password-toggle-mask-icon) .p-password-input {
+    padding-inline-end: calc((${dt("form.field.padding.x")} * 2) + ${dt("icon.size")});
+}
+
+/* For PrimeNG */
+p-password.ng-invalid.ng-dirty .p-inputtext {
+    border-color: ${dt("inputtext.invalid.border.color")};
+}
+
+p-password.ng-invalid.ng-dirty .p-inputtext:enabled:focus {
+    border-color: ${dt("inputtext.focus.border.color")};
+}
+
+p-password.ng-invalid.ng-dirty .p-inputtext::placeholder {
+    color: ${dt("inputtext.invalid.placeholder.color")};
+}
+
+.p-password-clear-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5rem;
+    cursor: pointer;
+    inset-inline-end: ${dt("form.field.padding.x")};
+    color: ${dt("form.field.icon.color")};
+}
+
+.p-password-fluid-directive {
+    width:100%
+}
+`;
+var inlineStyles4 = {
+  root: ({
+    instance
+  }) => ({
+    position: instance.appendTo === "self" ? "relative" : void 0
+  })
+};
+var classes12 = {
+  root: ({
+    instance
+  }) => ({
+    "p-password p-component p-inputwrapper": true,
+    "p-inputwrapper-filled": instance.filled(),
+    "p-variant-filled": 'instance.variant === "filled" || instance.config.inputVariant() === "filled" || instance.config.inputStyle() === "filled"',
+    "p-inputwrapper-focus": instance.focused,
+    "p-password-fluid": instance.hasFluid
+  }),
+  pcInput: "p-password-input",
+  maskIcon: "p-password-toggle-mask-icon p-password-mask-icon",
+  unmaskIcon: "p-password-toggle-mask-icon p-password-unmask-icon",
+  overlay: "p-password-overlay p-component",
+  content: "p-password-content",
+  meter: "p-password-meter",
+  meterLabel: ({
+    instance
+  }) => `p-password-meter-label ${instance.meter ? "p-password-meter-" + instance.meter.strength : ""}`,
+  meterText: "p-password-meter-text"
+};
+var PasswordStyle = class _PasswordStyle extends BaseStyle {
+  name = "password";
+  theme = theme12;
+  classes = classes12;
+  inlineStyles = inlineStyles4;
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275PasswordStyle_BaseFactory;
+    return function PasswordStyle_Factory(__ngFactoryType__) {
+      return (\u0275PasswordStyle_BaseFactory || (\u0275PasswordStyle_BaseFactory = \u0275\u0275getInheritedFactory(_PasswordStyle)))(__ngFactoryType__ || _PasswordStyle);
+    };
+  })();
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+    token: _PasswordStyle,
+    factory: _PasswordStyle.\u0275fac
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PasswordStyle, [{
+    type: Injectable
+  }], null, null);
+})();
+var PasswordClasses;
+(function(PasswordClasses2) {
+  PasswordClasses2["root"] = "p-password";
+  PasswordClasses2["pcInput"] = "p-password-input";
+  PasswordClasses2["maskIcon"] = "p-password-mask-icon";
+  PasswordClasses2["unmaskIcon"] = "p-password-unmask-icon";
+  PasswordClasses2["overlay"] = "p-password-overlay";
+  PasswordClasses2["meter"] = "p-password-meter";
+  PasswordClasses2["meterLabel"] = "p-password-meter-label";
+  PasswordClasses2["meterText"] = "p-password-meter-text";
+})(PasswordClasses || (PasswordClasses = {}));
+var PasswordDirective = class _PasswordDirective extends BaseComponent {
+  zone;
+  /**
+   * Text to prompt password entry. Defaults to PrimeNG I18N API configuration.
+   * @group Props
+   */
+  promptLabel = "Enter a password";
+  /**
+   * Text for a weak password. Defaults to PrimeNG I18N API configuration.
+   * @group Props
+   */
+  weakLabel = "Weak";
+  /**
+   * Text for a medium password. Defaults to PrimeNG I18N API configuration.
+   * @group Props
+   */
+  mediumLabel = "Medium";
+  /**
+   * Text for a strong password. Defaults to PrimeNG I18N API configuration.
+   * @group Props
+   */
+  strongLabel = "Strong";
+  /**
+   * Whether to show the strength indicator or not.
+   * @group Props
+   */
+  feedback = true;
+  /**
+   * Sets the visibility of the password field.
+   * @group Props
+   */
+  set showPassword(show) {
+    this.el.nativeElement.type = show ? "text" : "password";
+  }
+  /**
+   * Specifies the input variant of the component.
+   * @group Props
+   */
+  variant;
+  /**
+   * Spans 100% width of the container when enabled.
+   * @group Props
+   */
+  fluid = false;
+  panel;
+  meter;
+  info;
+  filled;
+  content;
+  label;
+  scrollHandler;
+  documentResizeListener;
+  _componentStyle = inject(PasswordStyle);
+  get hasFluid() {
+    const nativeElement = this.el.nativeElement;
+    const fluidComponent = nativeElement.closest("p-fluid");
+    return this.fluid || !!fluidComponent;
+  }
+  constructor(zone) {
+    super();
+    this.zone = zone;
+  }
+  ngDoCheck() {
+    this.updateFilledState();
+  }
+  onInput(e) {
+    this.updateFilledState();
+  }
+  updateFilledState() {
+    this.filled = this.el.nativeElement.value && this.el.nativeElement.value.length;
+  }
+  createPanel() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.panel = this.renderer.createElement("div");
+      this.renderer.addClass(this.panel, "p-password-overlay");
+      this.renderer.addClass(this.panel, "p-component");
+      this.content = this.renderer.createElement("div");
+      this.renderer.addClass(this.content, "p-password-content");
+      this.renderer.appendChild(this.panel, this.content);
+      this.meter = this.renderer.createElement("div");
+      this.renderer.addClass(this.meter, "p-password-meter");
+      this.renderer.appendChild(this.content, this.meter);
+      this.label = this.renderer.createElement("div");
+      this.renderer.addClass(this.label, "p-password-meter-label");
+      this.renderer.appendChild(this.meter, this.label);
+      this.info = this.renderer.createElement("div");
+      this.renderer.addClass(this.info, "p-password-meter-text");
+      this.renderer.setProperty(this.info, "textContent", this.promptLabel);
+      this.renderer.appendChild(this.content, this.info);
+      this.renderer.setStyle(this.panel, "minWidth", `${this.el.nativeElement.offsetWidth}px`);
+      this.renderer.appendChild(document.body, this.panel);
+      this.updateMeter();
+    }
+  }
+  showOverlay() {
+    if (this.feedback) {
+      if (!this.panel) {
+        this.createPanel();
+      }
+      this.renderer.setStyle(this.panel, "zIndex", String(++DomHandler.zindex));
+      this.renderer.setStyle(this.panel, "display", "block");
+      this.zone.runOutsideAngular(() => {
+        setTimeout(() => {
+          addClass(this.panel, "p-connected-overlay-visible");
+          this.bindScrollListener();
+          this.bindDocumentResizeListener();
+        }, 1);
+      });
+      absolutePosition(this.panel, this.el.nativeElement);
+    }
+  }
+  hideOverlay() {
+    if (this.feedback && this.panel) {
+      addClass(this.panel, "p-connected-overlay-hidden");
+      removeClass(this.panel, "p-connected-overlay-visible");
+      this.unbindScrollListener();
+      this.unbindDocumentResizeListener();
+      this.zone.runOutsideAngular(() => {
+        setTimeout(() => {
+          this.ngOnDestroy();
+        }, 150);
+      });
+    }
+  }
+  onFocus() {
+    this.showOverlay();
+  }
+  onBlur() {
+    this.hideOverlay();
+  }
+  labelSignal = signal("");
+  onKeyup(e) {
+    if (this.feedback) {
+      let value = e.target.value, label = null, meterPos = null;
+      if (value.length === 0) {
+        label = this.promptLabel;
+        meterPos = "0px 0px";
+      } else {
+        var score = this.testStrength(value);
+        if (score < 30) {
+          label = this.weakLabel;
+          meterPos = "0px -10px";
+        } else if (score >= 30 && score < 80) {
+          label = this.mediumLabel;
+          meterPos = "0px -20px";
+        } else if (score >= 80) {
+          label = this.strongLabel;
+          meterPos = "0px -30px";
+        }
+        this.labelSignal.set(label);
+        this.updateMeter();
+      }
+      if (!this.panel || !hasClass(this.panel, "p-connected-overlay-visible")) {
+        this.showOverlay();
+      }
+      this.renderer.setStyle(this.meter, "backgroundPosition", meterPos);
+      this.info.textContent = label;
+    }
+  }
+  updateMeter() {
+    if (this.labelSignal()) {
+      const label = this.labelSignal();
+      const strengthClass = this.strengthClass(label.toLowerCase());
+      const width = this.getWidth(label.toLowerCase());
+      this.renderer.addClass(this.meter, strengthClass);
+      this.renderer.setStyle(this.meter, "width", width);
+      this.info.textContent = label;
+    }
+  }
+  getWidth(label) {
+    return label === "weak" ? "33.33%" : label === "medium" ? "66.66%" : label === "strong" ? "100%" : "";
+  }
+  strengthClass(label) {
+    return `p-password-meter${label ? `-${label}` : ""}`;
+  }
+  testStrength(str) {
+    let grade = 0;
+    let val;
+    val = str.match("[0-9]");
+    grade += this.normalize(val ? val.length : 1 / 4, 1) * 25;
+    val = str.match("[a-zA-Z]");
+    grade += this.normalize(val ? val.length : 1 / 2, 3) * 10;
+    val = str.match("[!@#$%^&*?_~.,;=]");
+    grade += this.normalize(val ? val.length : 1 / 6, 1) * 35;
+    val = str.match("[A-Z]");
+    grade += this.normalize(val ? val.length : 1 / 6, 1) * 30;
+    grade *= str.length / 8;
+    return grade > 100 ? 100 : grade;
+  }
+  normalize(x2, y) {
+    let diff = x2 - y;
+    if (diff <= 0) return x2 / y;
+    else return 1 + 0.5 * (x2 / (x2 + y / 4));
+  }
+  get disabled() {
+    return this.el.nativeElement.disabled;
+  }
+  bindScrollListener() {
+    if (!this.scrollHandler) {
+      this.scrollHandler = new ConnectedOverlayScrollHandler(this.el.nativeElement, () => {
+        if (hasClass(this.panel, "p-connected-overlay-visible")) {
+          this.hideOverlay();
+        }
+      });
+    }
+    this.scrollHandler.bindScrollListener();
+  }
+  unbindScrollListener() {
+    if (this.scrollHandler) {
+      this.scrollHandler.unbindScrollListener();
+    }
+  }
+  bindDocumentResizeListener() {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.documentResizeListener) {
+        const window2 = this.document.defaultView;
+        this.documentResizeListener = this.renderer.listen(window2, "resize", this.onWindowResize.bind(this));
+      }
+    }
+  }
+  unbindDocumentResizeListener() {
+    if (this.documentResizeListener) {
+      this.documentResizeListener();
+      this.documentResizeListener = null;
+    }
+  }
+  onWindowResize() {
+    if (!isTouchDevice()) {
+      this.hideOverlay();
+    }
+  }
+  ngOnDestroy() {
+    if (this.panel) {
+      if (this.scrollHandler) {
+        this.scrollHandler.destroy();
+        this.scrollHandler = null;
+      }
+      this.unbindDocumentResizeListener();
+      this.renderer.removeChild(this.document.body, this.panel);
+      this.panel = null;
+      this.meter = null;
+      this.info = null;
+    }
+    super.ngOnDestroy();
+  }
+  static \u0275fac = function PasswordDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _PasswordDirective)(\u0275\u0275directiveInject(NgZone));
+  };
+  static \u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+    type: _PasswordDirective,
+    selectors: [["", "pPassword", ""]],
+    hostAttrs: [1, "p-password", "p-inputtext", "p-component", "p-inputwrapper"],
+    hostVars: 6,
+    hostBindings: function PasswordDirective_HostBindings(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275listener("input", function PasswordDirective_input_HostBindingHandler($event) {
+          return ctx.onInput($event);
+        })("focus", function PasswordDirective_focus_HostBindingHandler() {
+          return ctx.onFocus();
+        })("blur", function PasswordDirective_blur_HostBindingHandler() {
+          return ctx.onBlur();
+        })("keyup", function PasswordDirective_keyup_HostBindingHandler($event) {
+          return ctx.onKeyup($event);
+        });
+      }
+      if (rf & 2) {
+        \u0275\u0275classProp("p-inputwrapper-filled", ctx.filled)("p-variant-filled", ctx.variant === "filled" || ctx.config.inputStyle() === "filled" || ctx.config.inputVariant() === "filled")("p-password-fluid-directive", ctx.hasFluid);
+      }
+    },
+    inputs: {
+      promptLabel: "promptLabel",
+      weakLabel: "weakLabel",
+      mediumLabel: "mediumLabel",
+      strongLabel: "strongLabel",
+      feedback: [2, "feedback", "feedback", booleanAttribute],
+      showPassword: "showPassword",
+      variant: "variant",
+      fluid: [2, "fluid", "fluid", booleanAttribute]
+    },
+    features: [\u0275\u0275ProvidersFeature([PasswordStyle]), \u0275\u0275InheritDefinitionFeature]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PasswordDirective, [{
+    type: Directive,
+    args: [{
+      selector: "[pPassword]",
+      standalone: true,
+      host: {
+        class: "p-password p-inputtext p-component p-inputwrapper",
+        "[class.p-inputwrapper-filled]": "filled",
+        "[class.p-variant-filled]": 'variant === "filled" || config.inputStyle() === "filled" || config.inputVariant() === "filled"',
+        "[class.p-password-fluid-directive]": "hasFluid"
+      },
+      providers: [PasswordStyle]
+    }]
+  }], () => [{
+    type: NgZone
+  }], {
+    promptLabel: [{
+      type: Input
+    }],
+    weakLabel: [{
+      type: Input
+    }],
+    mediumLabel: [{
+      type: Input
+    }],
+    strongLabel: [{
+      type: Input
+    }],
+    feedback: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    showPassword: [{
+      type: Input
+    }],
+    variant: [{
+      type: Input
+    }],
+    fluid: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    onInput: [{
+      type: HostListener,
+      args: ["input", ["$event"]]
+    }],
+    onFocus: [{
+      type: HostListener,
+      args: ["focus"]
+    }],
+    onBlur: [{
+      type: HostListener,
+      args: ["blur"]
+    }],
+    onKeyup: [{
+      type: HostListener,
+      args: ["keyup", ["$event"]]
+    }]
+  });
+})();
+var MapperPipe = class _MapperPipe {
+  transform(value, mapper, ...args) {
+    return mapper(value, ...args);
+  }
+  static \u0275fac = function MapperPipe_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _MapperPipe)();
+  };
+  static \u0275pipe = /* @__PURE__ */ \u0275\u0275definePipe({
+    name: "mapper",
+    type: _MapperPipe,
+    pure: true
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MapperPipe, [{
+    type: Pipe,
+    args: [{
+      name: "mapper",
+      pure: true,
+      standalone: true
+    }]
+  }], null, null);
+})();
+var Password_VALUE_ACCESSOR = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => Password),
+  multi: true
+};
+var Password = class _Password extends BaseComponent {
+  /**
+   * Defines a string that labels the input for accessibility.
+   * @group Props
+   */
+  ariaLabel;
+  /**
+   * Whether the component should span the full width of its parent.
+   * @group Props
+   */
+  fluid;
+  /**
+   * Specifies one or more IDs in the DOM that labels the input field.
+   * @group Props
+   */
+  ariaLabelledBy;
+  /**
+   * Label of the input for accessibility.
+   * @group Props
+   */
+  label;
+  /**
+   * Indicates whether the component is disabled or not.
+   * @group Props
+   */
+  disabled;
+  /**
+   * Text to prompt password entry. Defaults to PrimeNG I18N API configuration.
+   * @group Props
+   */
+  promptLabel;
+  /**
+   * Regex value for medium regex.
+   * @group Props
+   */
+  mediumRegex = "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})";
+  /**
+   * Regex value for strong regex.
+   * @group Props
+   */
+  strongRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})";
+  /**
+   * Text for a weak password. Defaults to PrimeNG I18N API configuration.
+   * @group Props
+   */
+  weakLabel;
+  /**
+   * Text for a medium password. Defaults to PrimeNG I18N API configuration.
+   * @group Props
+   */
+  mediumLabel;
+  /**
+   * specifies the maximum number of characters allowed in the input element.
+   * @group Props
+   */
+  maxLength;
+  /**
+   * Text for a strong password. Defaults to PrimeNG I18N API configuration.
+   * @group Props
+   */
+  strongLabel;
+  /**
+   * Identifier of the accessible input element.
+   * @group Props
+   */
+  inputId;
+  /**
+   * Whether to show the strength indicator or not.
+   * @group Props
+   */
+  feedback = true;
+  /**
+   * Id of the element or "body" for document where the overlay should be appended to.
+   * @group Props
+   */
+  appendTo;
+  /**
+   * Whether to show an icon to display the password as plain text.
+   * @group Props
+   */
+  toggleMask;
+  /**
+   * Defines the size of the component.
+   * @group Props
+   */
+  size;
+  /**
+   * Style class of the input field.
+   * @group Props
+   */
+  inputStyleClass;
+  /**
+   * Style class of the element.
+   * @group Props
+   */
+  styleClass;
+  /**
+   * Inline style of the component.
+   * @group Props
+   */
+  style;
+  /**
+   * Inline style of the input field.
+   * @group Props
+   */
+  inputStyle;
+  /**
+   * Transition options of the show animation.
+   * @group Props
+   */
+  showTransitionOptions = ".12s cubic-bezier(0, 0, 0.2, 1)";
+  /**
+   * Transition options of the hide animation.
+   * @group Props
+   */
+  hideTransitionOptions = ".1s linear";
+  /**
+   * Specify automated assistance in filling out password by browser.
+   * @group Props
+   */
+  autocomplete;
+  /**
+   * Advisory information to display on input.
+   * @group Props
+   */
+  placeholder;
+  /**
+   * When enabled, a clear icon is displayed to clear the value.
+   * @group Props
+   */
+  showClear = false;
+  /**
+   * When present, it specifies that the component should automatically get focus on load.
+   * @group Props
+   */
+  autofocus;
+  /**
+   * Specifies the input variant of the component.
+   * @group Props
+   */
+  variant;
+  /**
+   * Index of the element in tabbing order.
+   * @group Props
+   */
+  tabindex;
+  /**
+   * Callback to invoke when the component receives focus.
+   * @param {Event} event - Browser event.
+   * @group Emits
+   */
+  onFocus = new EventEmitter();
+  /**
+   * Callback to invoke when the component loses focus.
+   * @param {Event} event - Browser event.
+   * @group Emits
+   */
+  onBlur = new EventEmitter();
+  /**
+   * Callback to invoke when clear button is clicked.
+   * @group Emits
+   */
+  onClear = new EventEmitter();
+  input;
+  contentTemplate;
+  footerTemplate;
+  headerTemplate;
+  clearIconTemplate;
+  hideIconTemplate;
+  showIconTemplate;
+  templates;
+  _contentTemplate;
+  _footerTemplate;
+  _headerTemplate;
+  _clearIconTemplate;
+  _hideIconTemplate;
+  _showIconTemplate;
+  overlayVisible = false;
+  meter;
+  infoText;
+  focused = false;
+  unmasked = false;
+  mediumCheckRegExp;
+  strongCheckRegExp;
+  resizeListener;
+  scrollHandler;
+  overlay;
+  value = null;
+  onModelChange = () => {
+  };
+  onModelTouched = () => {
+  };
+  translationSubscription;
+  _componentStyle = inject(PasswordStyle);
+  get hasFluid() {
+    const nativeElement = this.el.nativeElement;
+    const fluidComponent = nativeElement.closest("p-fluid");
+    return this.fluid || !!fluidComponent;
+  }
+  overlayService = inject(OverlayService);
+  ngOnInit() {
+    super.ngOnInit();
+    this.infoText = this.promptText();
+    this.mediumCheckRegExp = new RegExp(this.mediumRegex);
+    this.strongCheckRegExp = new RegExp(this.strongRegex);
+    this.translationSubscription = this.config.translationObserver.subscribe(() => {
+      this.updateUI(this.value || "");
+    });
+  }
+  ngAfterContentInit() {
+    this.templates.forEach((item) => {
+      switch (item.getType()) {
+        case "content":
+          this._contentTemplate = item.template;
+          break;
+        case "header":
+          this._headerTemplate = item.template;
+          break;
+        case "footer":
+          this._footerTemplate = item.template;
+          break;
+        case "clearicon":
+          this._clearIconTemplate = item.template;
+          break;
+        case "hideicon":
+          this._hideIconTemplate = item.template;
+          break;
+        case "showicon":
+          this._showIconTemplate = item.template;
+          break;
+        default:
+          this._contentTemplate = item.template;
+          break;
+      }
+    });
+  }
+  onAnimationStart(event) {
+    switch (event.toState) {
+      case "visible":
+        this.overlay = event.element;
+        zindexutils.set("overlay", this.overlay, this.config.zIndex.overlay);
+        this.appendContainer();
+        this.alignOverlay();
+        this.bindScrollListener();
+        this.bindResizeListener();
+        break;
+      case "void":
+        this.unbindScrollListener();
+        this.unbindResizeListener();
+        this.overlay = null;
+        break;
+    }
+  }
+  onAnimationEnd(event) {
+    switch (event.toState) {
+      case "void":
+        zindexutils.clear(event.element);
+        break;
+    }
+  }
+  appendContainer() {
+    if (this.appendTo) {
+      if (this.appendTo === "body") this.renderer.appendChild(this.document.body, this.overlay);
+      else this.document.getElementById(this.appendTo).appendChild(this.overlay);
+    }
+  }
+  alignOverlay() {
+    if (this.appendTo) {
+      this.overlay.style.minWidth = getOuterWidth(this.input.nativeElement) + "px";
+      absolutePosition(this.overlay, this.input.nativeElement);
+    } else {
+      relativePosition(this.overlay, this.input.nativeElement);
+    }
+  }
+  onInput(event) {
+    this.value = event.target.value;
+    this.onModelChange(this.value);
+  }
+  onInputFocus(event) {
+    this.focused = true;
+    if (this.feedback) {
+      this.overlayVisible = true;
+    }
+    this.onFocus.emit(event);
+  }
+  onInputBlur(event) {
+    this.focused = false;
+    if (this.feedback) {
+      this.overlayVisible = false;
+    }
+    this.onModelTouched();
+    this.onBlur.emit(event);
+  }
+  onKeyUp(event) {
+    if (this.feedback) {
+      let value = event.target.value;
+      this.updateUI(value);
+      if (event.code === "Escape") {
+        this.overlayVisible && (this.overlayVisible = false);
+        return;
+      }
+      if (!this.overlayVisible) {
+        this.overlayVisible = true;
+      }
+    }
+  }
+  updateUI(value) {
+    let label = null;
+    let meter = null;
+    switch (this.testStrength(value)) {
+      case 1:
+        label = this.weakText();
+        meter = {
+          strength: "weak",
+          width: "33.33%"
+        };
+        break;
+      case 2:
+        label = this.mediumText();
+        meter = {
+          strength: "medium",
+          width: "66.66%"
+        };
+        break;
+      case 3:
+        label = this.strongText();
+        meter = {
+          strength: "strong",
+          width: "100%"
+        };
+        break;
+      default:
+        label = this.promptText();
+        meter = null;
+        break;
+    }
+    this.meter = meter;
+    this.infoText = label;
+  }
+  onMaskToggle() {
+    this.unmasked = !this.unmasked;
+  }
+  onOverlayClick(event) {
+    this.overlayService.add({
+      originalEvent: event,
+      target: this.el.nativeElement
+    });
+  }
+  testStrength(str) {
+    let level = 0;
+    if (this.strongCheckRegExp.test(str)) level = 3;
+    else if (this.mediumCheckRegExp.test(str)) level = 2;
+    else if (str.length) level = 1;
+    return level;
+  }
+  writeValue(value) {
+    if (value === void 0) this.value = null;
+    else this.value = value;
+    if (this.feedback) this.updateUI(this.value || "");
+    this.cd.markForCheck();
+  }
+  registerOnChange(fn) {
+    this.onModelChange = fn;
+  }
+  registerOnTouched(fn) {
+    this.onModelTouched = fn;
+  }
+  setDisabledState(val) {
+    this.disabled = val;
+    this.cd.markForCheck();
+  }
+  bindScrollListener() {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.scrollHandler) {
+        this.scrollHandler = new ConnectedOverlayScrollHandler(this.input.nativeElement, () => {
+          if (this.overlayVisible) {
+            this.overlayVisible = false;
+          }
+        });
+      }
+      this.scrollHandler.bindScrollListener();
+    }
+  }
+  bindResizeListener() {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this.resizeListener) {
+        const window2 = this.document.defaultView;
+        this.resizeListener = this.renderer.listen(window2, "resize", () => {
+          if (this.overlayVisible && !isTouchDevice()) {
+            this.overlayVisible = false;
+          }
+        });
+      }
+    }
+  }
+  unbindScrollListener() {
+    if (this.scrollHandler) {
+      this.scrollHandler.unbindScrollListener();
+    }
+  }
+  unbindResizeListener() {
+    if (this.resizeListener) {
+      this.resizeListener();
+      this.resizeListener = null;
+    }
+  }
+  containerClass(toggleMask) {
+    return {
+      "p-password p-component p-inputwrapper": true,
+      "p-input-icon-right": toggleMask
+    };
+  }
+  get rootClass() {
+    return this._componentStyle.classes.root({
+      instance: this
+    });
+  }
+  inputFieldClass(disabled2) {
+    return {
+      "p-password-input": true,
+      "p-disabled": disabled2
+    };
+  }
+  strengthClass(meter) {
+    return `p-password-meter-label p-password-meter${meter?.strength ? `-${meter.strength}` : ""}`;
+  }
+  filled() {
+    return this.value != null && this.value.toString().length > 0;
+  }
+  promptText() {
+    return this.promptLabel || this.getTranslation(TranslationKeys.PASSWORD_PROMPT);
+  }
+  weakText() {
+    return this.weakLabel || this.getTranslation(TranslationKeys.WEAK);
+  }
+  mediumText() {
+    return this.mediumLabel || this.getTranslation(TranslationKeys.MEDIUM);
+  }
+  strongText() {
+    return this.strongLabel || this.getTranslation(TranslationKeys.STRONG);
+  }
+  restoreAppend() {
+    if (this.overlay && this.appendTo) {
+      if (this.appendTo === "body") this.renderer.removeChild(this.document.body, this.overlay);
+      else this.document.getElementById(this.appendTo).removeChild(this.overlay);
+    }
+  }
+  inputType(unmasked) {
+    return unmasked ? "text" : "password";
+  }
+  getTranslation(option) {
+    return this.config.getTranslation(option);
+  }
+  clear() {
+    this.value = null;
+    this.onModelChange(this.value);
+    this.writeValue(this.value);
+    this.onClear.emit();
+  }
+  ngOnDestroy() {
+    if (this.overlay) {
+      zindexutils.clear(this.overlay);
+      this.overlay = null;
+    }
+    this.restoreAppend();
+    this.unbindResizeListener();
+    if (this.scrollHandler) {
+      this.scrollHandler.destroy();
+      this.scrollHandler = null;
+    }
+    if (this.translationSubscription) {
+      this.translationSubscription.unsubscribe();
+    }
+    super.ngOnDestroy();
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275Password_BaseFactory;
+    return function Password_Factory(__ngFactoryType__) {
+      return (\u0275Password_BaseFactory || (\u0275Password_BaseFactory = \u0275\u0275getInheritedFactory(_Password)))(__ngFactoryType__ || _Password);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _Password,
+    selectors: [["p-password"]],
+    contentQueries: function Password_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c016, 4);
+        \u0275\u0275contentQuery(dirIndex, _c118, 4);
+        \u0275\u0275contentQuery(dirIndex, _c28, 4);
+        \u0275\u0275contentQuery(dirIndex, _c36, 4);
+        \u0275\u0275contentQuery(dirIndex, _c46, 4);
+        \u0275\u0275contentQuery(dirIndex, _c56, 4);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.footerTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.clearIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.hideIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.showIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    viewQuery: function Password_Query(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275viewQuery(_c65, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.input = _t.first);
+      }
+    },
+    inputs: {
+      ariaLabel: "ariaLabel",
+      fluid: [2, "fluid", "fluid", booleanAttribute],
+      ariaLabelledBy: "ariaLabelledBy",
+      label: "label",
+      disabled: [2, "disabled", "disabled", booleanAttribute],
+      promptLabel: "promptLabel",
+      mediumRegex: "mediumRegex",
+      strongRegex: "strongRegex",
+      weakLabel: "weakLabel",
+      mediumLabel: "mediumLabel",
+      maxLength: [2, "maxLength", "maxLength", numberAttribute],
+      strongLabel: "strongLabel",
+      inputId: "inputId",
+      feedback: [2, "feedback", "feedback", booleanAttribute],
+      appendTo: "appendTo",
+      toggleMask: [2, "toggleMask", "toggleMask", booleanAttribute],
+      size: "size",
+      inputStyleClass: "inputStyleClass",
+      styleClass: "styleClass",
+      style: "style",
+      inputStyle: "inputStyle",
+      showTransitionOptions: "showTransitionOptions",
+      hideTransitionOptions: "hideTransitionOptions",
+      autocomplete: "autocomplete",
+      placeholder: "placeholder",
+      showClear: [2, "showClear", "showClear", booleanAttribute],
+      autofocus: [2, "autofocus", "autofocus", booleanAttribute],
+      variant: "variant",
+      tabindex: [2, "tabindex", "tabindex", numberAttribute]
+    },
+    outputs: {
+      onFocus: "onFocus",
+      onBlur: "onBlur",
+      onClear: "onClear"
+    },
+    features: [\u0275\u0275ProvidersFeature([Password_VALUE_ACCESSOR, PasswordStyle]), \u0275\u0275InheritDefinitionFeature],
+    decls: 8,
+    vars: 34,
+    consts: [["input", ""], ["overlay", ""], ["content", ""], [3, "ngClass", "ngStyle"], ["pInputText", "", 3, "input", "focus", "blur", "keyup", "disabled", "pSize", "ngClass", "ngStyle", "value", "variant", "pAutoFocus"], [4, "ngIf"], ["class", "p-password-overlay p-component", 3, "click", 4, "ngIf"], ["class", "p-password-clear-icon", 3, "click", 4, "ngIf"], [1, "p-password-clear-icon", 3, "click"], [4, "ngTemplateOutlet"], ["class", "p-password-toggle-mask-icon p-password-mask-icon", 3, "click", 4, "ngIf"], [3, "click", 4, "ngIf"], [1, "p-password-toggle-mask-icon", "p-password-mask-icon", 3, "click"], [3, "click"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [1, "p-password-overlay", "p-component", 3, "click"], [4, "ngIf", "ngIfElse"], [1, "p-password-content"], [1, "p-password-meter"], [1, "p-password-meter-text"]],
+    template: function Password_Template(rf, ctx) {
+      if (rf & 1) {
+        const _r1 = \u0275\u0275getCurrentView();
+        \u0275\u0275elementStart(0, "div", 3)(1, "input", 4, 0);
+        \u0275\u0275pipe(3, "mapper");
+        \u0275\u0275pipe(4, "mapper");
+        \u0275\u0275listener("input", function Password_Template_input_input_1_listener($event) {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onInput($event));
+        })("focus", function Password_Template_input_focus_1_listener($event) {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onInputFocus($event));
+        })("blur", function Password_Template_input_blur_1_listener($event) {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onInputBlur($event));
+        })("keyup", function Password_Template_input_keyup_1_listener($event) {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onKeyUp($event));
+        });
+        \u0275\u0275elementEnd();
+        \u0275\u0275template(5, Password_ng_container_5_Template, 4, 3, "ng-container", 5)(6, Password_ng_container_6_Template, 3, 2, "ng-container", 5)(7, Password_div_7_Template, 7, 11, "div", 6);
+        \u0275\u0275elementEnd();
+      }
+      if (rf & 2) {
+        \u0275\u0275classMap(ctx.styleClass);
+        \u0275\u0275property("ngClass", ctx.rootClass)("ngStyle", ctx.style);
+        \u0275\u0275attribute("data-pc-name", "password")("data-pc-section", "root");
+        \u0275\u0275advance();
+        \u0275\u0275classMap(ctx.inputStyleClass);
+        \u0275\u0275property("disabled", ctx.disabled)("pSize", ctx.size)("ngClass", \u0275\u0275pipeBind2(3, 28, ctx.disabled, ctx.inputFieldClass))("ngStyle", ctx.inputStyle)("value", ctx.value)("variant", ctx.variant)("pAutoFocus", ctx.autofocus);
+        \u0275\u0275attribute("label", ctx.label)("aria-label", ctx.ariaLabel)("aria-labelledBy", ctx.ariaLabelledBy)("id", ctx.inputId)("tabindex", ctx.tabindex)("type", \u0275\u0275pipeBind2(4, 31, ctx.unmasked, ctx.inputType))("placeholder", ctx.placeholder)("autocomplete", ctx.autocomplete)("maxlength", ctx.maxLength)("data-pc-section", "input");
+        \u0275\u0275advance(4);
+        \u0275\u0275property("ngIf", ctx.showClear && ctx.value != null);
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.toggleMask);
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.overlayVisible);
+      }
+    },
+    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, InputText, AutoFocus, TimesIcon, EyeSlashIcon, EyeIcon, MapperPipe, SharedModule],
+    encapsulation: 2,
+    data: {
+      animation: [trigger("overlayAnimation", [transition(":enter", [style({
+        opacity: 0,
+        transform: "scaleY(0.8)"
+      }), animate("{{showTransitionParams}}")]), transition(":leave", [animate("{{hideTransitionParams}}", style({
+        opacity: 0
+      }))])])]
+    },
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Password, [{
+    type: Component,
+    args: [{
+      selector: "p-password",
+      standalone: true,
+      imports: [CommonModule, InputText, AutoFocus, TimesIcon, EyeSlashIcon, EyeIcon, MapperPipe, SharedModule],
+      template: `
+        <div [ngClass]="rootClass" [ngStyle]="style" [class]="styleClass" [attr.data-pc-name]="'password'" [attr.data-pc-section]="'root'">
+            <input
+                #input
+                [attr.label]="label"
+                [attr.aria-label]="ariaLabel"
+                [attr.aria-labelledBy]="ariaLabelledBy"
+                [attr.id]="inputId"
+                [attr.tabindex]="tabindex"
+                pInputText
+                [disabled]="disabled"
+                [pSize]="size"
+                [ngClass]="disabled | mapper: inputFieldClass"
+                [ngStyle]="inputStyle"
+                [class]="inputStyleClass"
+                [attr.type]="unmasked | mapper: inputType"
+                [attr.placeholder]="placeholder"
+                [attr.autocomplete]="autocomplete"
+                [value]="value"
+                [variant]="variant"
+                (input)="onInput($event)"
+                (focus)="onInputFocus($event)"
+                (blur)="onInputBlur($event)"
+                (keyup)="onKeyUp($event)"
+                [attr.maxlength]="maxLength"
+                [attr.data-pc-section]="'input'"
+                [pAutoFocus]="autofocus"
+            />
+            <ng-container *ngIf="showClear && value != null">
+                <TimesIcon *ngIf="!clearIconTemplate && !_clearIconTemplate" class="p-password-clear-icon" (click)="clear()" [attr.data-pc-section]="'clearIcon'" />
+                <span (click)="clear()" class="p-password-clear-icon" [attr.data-pc-section]="'clearIcon'">
+                    <ng-template *ngTemplateOutlet="clearIconTemplate || _clearIconTemplate"></ng-template>
+                </span>
+            </ng-container>
+
+            <ng-container *ngIf="toggleMask">
+                <ng-container *ngIf="unmasked">
+                    <EyeSlashIcon class="p-password-toggle-mask-icon p-password-mask-icon" *ngIf="!hideIconTemplate && !_hideIconTemplate" (click)="onMaskToggle()" [attr.data-pc-section]="'hideIcon'" />
+                    <span *ngIf="hideIconTemplate || _hideIconTemplate" (click)="onMaskToggle()">
+                        <ng-template *ngTemplateOutlet="hideIconTemplate || _hideIconTemplate; context: { class: 'p-password-toggle-mask-icon p-password-mask-icon' }"></ng-template>
+                    </span>
+                </ng-container>
+                <ng-container *ngIf="!unmasked">
+                    <EyeIcon *ngIf="!showIconTemplate && !_showIconTemplate" class="p-password-toggle-mask-icon p-password-mask-icon" (click)="onMaskToggle()" [attr.data-pc-section]="'showIcon'" />
+                    <span *ngIf="showIconTemplate || _showIconTemplate" (click)="onMaskToggle()">
+                        <ng-template *ngTemplateOutlet="showIconTemplate || _showIconTemplate"></ng-template>
+                    </span>
+                </ng-container>
+            </ng-container>
+
+            <div
+                #overlay
+                *ngIf="overlayVisible"
+                class="p-password-overlay p-component"
+                (click)="onOverlayClick($event)"
+                [@overlayAnimation]="{
+                    value: 'visible',
+                    params: { showTransitionParams: showTransitionOptions, hideTransitionParams: hideTransitionOptions }
+                }"
+                (@overlayAnimation.start)="onAnimationStart($event)"
+                (@overlayAnimation.done)="onAnimationEnd($event)"
+                [attr.data-pc-section]="'panel'"
+            >
+                <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+                <ng-container *ngIf="contentTemplate || _contentTemplate; else content">
+                    <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
+                </ng-container>
+                <ng-template #content>
+                    <div class="p-password-content">
+                        <div class="p-password-meter" [attr.data-pc-section]="'meter'">
+                            <div [ngClass]="meter | mapper: strengthClass" [ngStyle]="{ width: meter ? meter.width : '' }" [attr.data-pc-section]="'meterLabel'"></div>
+                        </div>
+                        <div class="p-password-meter-text" [attr.data-pc-section]="'info'">{{ infoText }}</div>
+                    </div>
+                </ng-template>
+                <ng-container *ngTemplateOutlet="footerTemplate || _footerTemplate"></ng-container>
+            </div>
+        </div>
+    `,
+      animations: [trigger("overlayAnimation", [transition(":enter", [style({
+        opacity: 0,
+        transform: "scaleY(0.8)"
+      }), animate("{{showTransitionParams}}")]), transition(":leave", [animate("{{hideTransitionParams}}", style({
+        opacity: 0
+      }))])])],
+      providers: [Password_VALUE_ACCESSOR, PasswordStyle],
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None
+    }]
+  }], null, {
+    ariaLabel: [{
+      type: Input
+    }],
+    fluid: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    ariaLabelledBy: [{
+      type: Input
+    }],
+    label: [{
+      type: Input
+    }],
+    disabled: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    promptLabel: [{
+      type: Input
+    }],
+    mediumRegex: [{
+      type: Input
+    }],
+    strongRegex: [{
+      type: Input
+    }],
+    weakLabel: [{
+      type: Input
+    }],
+    mediumLabel: [{
+      type: Input
+    }],
+    maxLength: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    strongLabel: [{
+      type: Input
+    }],
+    inputId: [{
+      type: Input
+    }],
+    feedback: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    appendTo: [{
+      type: Input
+    }],
+    toggleMask: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    size: [{
+      type: Input
+    }],
+    inputStyleClass: [{
+      type: Input
+    }],
+    styleClass: [{
+      type: Input
+    }],
+    style: [{
+      type: Input
+    }],
+    inputStyle: [{
+      type: Input
+    }],
+    showTransitionOptions: [{
+      type: Input
+    }],
+    hideTransitionOptions: [{
+      type: Input
+    }],
+    autocomplete: [{
+      type: Input
+    }],
+    placeholder: [{
+      type: Input
+    }],
+    showClear: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    autofocus: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    variant: [{
+      type: Input
+    }],
+    tabindex: [{
+      type: Input,
+      args: [{
+        transform: numberAttribute
+      }]
+    }],
+    onFocus: [{
+      type: Output
+    }],
+    onBlur: [{
+      type: Output
+    }],
+    onClear: [{
+      type: Output
+    }],
+    input: [{
+      type: ViewChild,
+      args: ["input"]
+    }],
+    contentTemplate: [{
+      type: ContentChild,
+      args: ["content", {
+        descendants: false
+      }]
+    }],
+    footerTemplate: [{
+      type: ContentChild,
+      args: ["footer", {
+        descendants: false
+      }]
+    }],
+    headerTemplate: [{
+      type: ContentChild,
+      args: ["header", {
+        descendants: false
+      }]
+    }],
+    clearIconTemplate: [{
+      type: ContentChild,
+      args: ["clearicon", {
+        descendants: false
+      }]
+    }],
+    hideIconTemplate: [{
+      type: ContentChild,
+      args: ["hideicon", {
+        descendants: false
+      }]
+    }],
+    showIconTemplate: [{
+      type: ContentChild,
+      args: ["showicon", {
+        descendants: false
+      }]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }]
+  });
+})();
+var PasswordModule = class _PasswordModule {
+  static \u0275fac = function PasswordModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _PasswordModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _PasswordModule,
+    imports: [Password, PasswordDirective, SharedModule],
+    exports: [PasswordDirective, Password, SharedModule]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [Password, SharedModule, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(PasswordModule, [{
+    type: NgModule,
+    args: [{
+      imports: [Password, PasswordDirective, SharedModule],
+      exports: [PasswordDirective, Password, SharedModule]
+    }]
+  }], null, null);
+})();
+
+// node_modules/primeng/fesm2022/primeng-keyfilter.mjs
+var KEYFILTER_VALIDATOR = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(() => KeyFilter),
+  multi: true
+};
+var DEFAULT_MASKS = {
+  pint: /^[\d]*$/,
+  int: /^[-]?[\d]*$/,
+  pnum: /^[\d\.]*$/,
+  money: /^[\d\.\s,]*$/,
+  num: /^[-]?[\d\.]*$/,
+  hex: /^[0-9a-f]*$/i,
+  email: /^[a-z0-9_\.\-@]*$/i,
+  alpha: /^[a-z_]*$/i,
+  alphanum: /^[a-z0-9_]*$/i
+};
+var KEYS = {
+  TAB: 9,
+  RETURN: 13,
+  ESC: 27,
+  BACKSPACE: 8,
+  DELETE: 46
+};
+var SAFARI_KEYS = {
+  63234: 37,
+  // left
+  63235: 39,
+  // right
+  63232: 38,
+  // up
+  63233: 40,
+  // down
+  63276: 33,
+  // page up
+  63277: 34,
+  // page down
+  63272: 46,
+  // delete
+  63273: 36,
+  // home
+  63275: 35
+  // end
+};
+var KeyFilter = class _KeyFilter {
+  document;
+  platformId;
+  el;
+  /**
+   * When enabled, instead of blocking keys, input is validated internally to test against the regular expression.
+   * @group Props
+   */
+  pValidateOnly;
+  /**
+   * Sets the pattern for key filtering.
+   * @group Props
+   */
+  set pattern(_pattern) {
+    this._pattern = _pattern;
+    if (_pattern instanceof RegExp) {
+      this.regex = _pattern;
+    } else if (_pattern in DEFAULT_MASKS) {
+      this.regex = DEFAULT_MASKS[_pattern];
+    } else {
+      this.regex = /./;
+    }
+  }
+  get pattern() {
+    return this._pattern;
+  }
+  /**
+   * Emits a value whenever the ngModel of the component changes.
+   * @param {(string | number)} modelValue - Custom model change event.
+   * @group Emits
+   */
+  ngModelChange = new EventEmitter();
+  regex = /./;
+  _pattern;
+  isAndroid;
+  lastValue;
+  constructor(document2, platformId, el) {
+    this.document = document2;
+    this.platformId = platformId;
+    this.el = el;
+    if (isPlatformBrowser(this.platformId)) {
+      this.isAndroid = isAndroid();
+    } else {
+      this.isAndroid = false;
+    }
+  }
+  isNavKeyPress(e) {
+    let k = e.keyCode;
+    k = getBrowser().safari ? SAFARI_KEYS[k] || k : k;
+    return k >= 33 && k <= 40 || k == KEYS.RETURN || k == KEYS.TAB || k == KEYS.ESC;
+  }
+  isSpecialKey(e) {
+    let k = e.keyCode || e.charCode;
+    return k == 9 || k == 13 || k == 27 || k == 16 || k == 17 || k >= 18 && k <= 20 || getBrowser().opera && !e.shiftKey && (k == 8 || k >= 33 && k <= 35 || k >= 36 && k <= 39 || k >= 44 && k <= 45);
+  }
+  getKey(e) {
+    let k = e.keyCode || e.charCode;
+    return getBrowser().safari ? SAFARI_KEYS[k] || k : k;
+  }
+  getCharCode(e) {
+    return e.charCode || e.keyCode || e.which;
+  }
+  findDelta(value, prevValue) {
+    let delta = "";
+    for (let i = 0; i < value.length; i++) {
+      let str = value.substr(0, i) + value.substr(i + value.length - prevValue.length);
+      if (str === prevValue) delta = value.substr(i, value.length - prevValue.length);
+    }
+    return delta;
+  }
+  isValidChar(c) {
+    return this.regex.test(c);
+  }
+  isValidString(str) {
+    for (let i = 0; i < str.length; i++) {
+      if (!this.isValidChar(str.substr(i, 1))) {
+        return false;
+      }
+    }
+    return true;
+  }
+  onInput(e) {
+    if (this.isAndroid && !this.pValidateOnly) {
+      let val = this.el.nativeElement.value;
+      let lastVal = this.lastValue || "";
+      let inserted = this.findDelta(val, lastVal);
+      let removed = this.findDelta(lastVal, val);
+      let pasted = inserted.length > 1 || !inserted && !removed;
+      if (pasted) {
+        if (!this.isValidString(val)) {
+          this.el.nativeElement.value = lastVal;
+          this.ngModelChange.emit(lastVal);
+        }
+      } else if (!removed) {
+        if (!this.isValidChar(inserted)) {
+          this.el.nativeElement.value = lastVal;
+          this.ngModelChange.emit(lastVal);
+        }
+      }
+      val = this.el.nativeElement.value;
+      if (this.isValidString(val)) {
+        this.lastValue = val;
+      }
+    }
+  }
+  onKeyPress(e) {
+    if (this.isAndroid || this.pValidateOnly) {
+      return;
+    }
+    let browser = getBrowser();
+    let k = this.getKey(e);
+    if (browser.mozilla && (e.ctrlKey || e.altKey)) {
+      return;
+    } else if (k == 17 || k == 18) {
+      return;
+    }
+    if (k == 13) {
+      return;
+    }
+    let c = this.getCharCode(e);
+    let cc = String.fromCharCode(c);
+    let ok = true;
+    if (!browser.mozilla && (this.isSpecialKey(e) || !cc)) {
+      return;
+    }
+    let existingValue = this.el.nativeElement.value || "";
+    let combinedValue = existingValue + cc;
+    ok = this.regex.test(combinedValue);
+    if (!ok) {
+      e.preventDefault();
+    }
+  }
+  onPaste(e) {
+    const clipboardData = e.clipboardData || this.document.defaultView.clipboardData.getData("text");
+    if (clipboardData) {
+      let pattern = /\{[0-9]+\}/;
+      const pastedText = clipboardData.getData("text");
+      if (pattern.test(this.regex.toString())) {
+        if (!this.regex.test(pastedText)) {
+          e.preventDefault();
+          return;
+        }
+      } else {
+        for (let char of pastedText.toString()) {
+          if (!this.regex.test(char)) {
+            e.preventDefault();
+            return;
+          }
+        }
+      }
+    }
+  }
+  validate(c) {
+    if (this.pValidateOnly) {
+      let value = this.el.nativeElement.value;
+      if (value && !this.regex.test(value)) {
+        return {
+          validatePattern: false
+        };
+      }
+    }
+  }
+  static \u0275fac = function KeyFilter_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _KeyFilter)(\u0275\u0275directiveInject(DOCUMENT), \u0275\u0275directiveInject(PLATFORM_ID), \u0275\u0275directiveInject(ElementRef));
+  };
+  static \u0275dir = /* @__PURE__ */ \u0275\u0275defineDirective({
+    type: _KeyFilter,
+    selectors: [["", "pKeyFilter", ""]],
+    hostBindings: function KeyFilter_HostBindings(rf, ctx) {
+      if (rf & 1) {
+        \u0275\u0275listener("input", function KeyFilter_input_HostBindingHandler($event) {
+          return ctx.onInput($event);
+        })("keypress", function KeyFilter_keypress_HostBindingHandler($event) {
+          return ctx.onKeyPress($event);
+        })("paste", function KeyFilter_paste_HostBindingHandler($event) {
+          return ctx.onPaste($event);
+        });
+      }
+    },
+    inputs: {
+      pValidateOnly: [2, "pValidateOnly", "pValidateOnly", booleanAttribute],
+      pattern: [0, "pKeyFilter", "pattern"]
+    },
+    outputs: {
+      ngModelChange: "ngModelChange"
+    },
+    features: [\u0275\u0275ProvidersFeature([KEYFILTER_VALIDATOR])]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(KeyFilter, [{
+    type: Directive,
+    args: [{
+      selector: "[pKeyFilter]",
+      standalone: true,
+      providers: [KEYFILTER_VALIDATOR]
+    }]
+  }], () => [{
+    type: Document,
+    decorators: [{
+      type: Inject,
+      args: [DOCUMENT]
+    }]
+  }, {
+    type: void 0,
+    decorators: [{
+      type: Inject,
+      args: [PLATFORM_ID]
+    }]
+  }, {
+    type: ElementRef
+  }], {
+    pValidateOnly: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    pattern: [{
+      type: Input,
+      args: ["pKeyFilter"]
+    }],
+    ngModelChange: [{
+      type: Output
+    }],
+    onInput: [{
+      type: HostListener,
+      args: ["input", ["$event"]]
+    }],
+    onKeyPress: [{
+      type: HostListener,
+      args: ["keypress", ["$event"]]
+    }],
+    onPaste: [{
+      type: HostListener,
+      args: ["paste", ["$event"]]
+    }]
+  });
+})();
+var KeyFilterModule = class _KeyFilterModule {
+  static \u0275fac = function KeyFilterModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _KeyFilterModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _KeyFilterModule,
+    imports: [KeyFilter],
+    exports: [KeyFilter]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({});
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(KeyFilterModule, [{
+    type: NgModule,
+    args: [{
+      imports: [KeyFilter],
+      exports: [KeyFilter]
+    }]
+  }], null, null);
+})();
+
+// node_modules/primeng/fesm2022/primeng-fieldset.mjs
+var _c017 = ["header"];
+var _c119 = ["expandicon"];
+var _c29 = ["collapseicon"];
+var _c37 = ["content"];
+var _c47 = ["*", [["p-header"]]];
+var _c57 = ["*", "p-header"];
+var _c66 = (a0, a1) => ({
+  "p-fieldset p-component": true,
+  "p-fieldset-toggleable": a0,
+  "p-fieldset-expanded": a1
+});
+var _c75 = (a0) => ({
+  transitionParams: a0,
+  height: "0"
+});
+var _c85 = (a0) => ({
+  value: "hidden",
+  params: a0
+});
+var _c95 = (a0) => ({
+  transitionParams: a0,
+  height: "*"
+});
+var _c105 = (a0) => ({
+  value: "visible",
+  params: a0
+});
+function Fieldset_ng_container_2_ng_container_2_PlusIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "PlusIcon", 11);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("styleClass", "p-fieldset-toggler");
+    \u0275\u0275attribute("data-pc-section", "togglericon");
+  }
+}
+function Fieldset_ng_container_2_ng_container_2_span_2_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Fieldset_ng_container_2_ng_container_2_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 12);
+    \u0275\u0275template(1, Fieldset_ng_container_2_ng_container_2_span_2_ng_container_1_Template, 1, 0, "ng-container", 6);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275attribute("data-pc-section", "togglericon");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.expandIconTemplate || ctx_r2._expandIconTemplate);
+  }
+}
+function Fieldset_ng_container_2_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Fieldset_ng_container_2_ng_container_2_PlusIcon_1_Template, 1, 2, "PlusIcon", 9)(2, Fieldset_ng_container_2_ng_container_2_span_2_Template, 2, 2, "span", 10);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.expandIconTemplate && !ctx_r2._expandIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.expandIconTemplate || ctx_r2._expandIconTemplate);
+  }
+}
+function Fieldset_ng_container_2_ng_container_3_MinusIcon_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "MinusIcon", 11);
+  }
+  if (rf & 2) {
+    \u0275\u0275property("styleClass", "p-fieldset-toggler");
+    \u0275\u0275attribute("aria-hidden", true)("data-pc-section", "togglericon");
+  }
+}
+function Fieldset_ng_container_2_ng_container_3_span_2_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Fieldset_ng_container_2_ng_container_3_span_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 12);
+    \u0275\u0275template(1, Fieldset_ng_container_2_ng_container_3_span_2_ng_container_1_Template, 1, 0, "ng-container", 6);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(3);
+    \u0275\u0275attribute("data-pc-section", "togglericon");
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.collapseIconTemplate || ctx_r2._collapseIconTemplate);
+  }
+}
+function Fieldset_ng_container_2_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275template(1, Fieldset_ng_container_2_ng_container_3_MinusIcon_1_Template, 1, 3, "MinusIcon", 9)(2, Fieldset_ng_container_2_ng_container_3_span_2_Template, 2, 2, "span", 10);
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.collapseIconTemplate && !ctx_r2._collapseIconTemplate);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.collapseIconTemplate || ctx_r2._collapseIconTemplate);
+  }
+}
+function Fieldset_ng_container_2_ng_container_4_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Fieldset_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = \u0275\u0275getCurrentView();
+    \u0275\u0275elementContainerStart(0);
+    \u0275\u0275elementStart(1, "button", 7);
+    \u0275\u0275listener("click", function Fieldset_ng_container_2_Template_button_click_1_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.toggle($event));
+    })("keydown", function Fieldset_ng_container_2_Template_button_keydown_1_listener($event) {
+      \u0275\u0275restoreView(_r2);
+      const ctx_r2 = \u0275\u0275nextContext();
+      return \u0275\u0275resetView(ctx_r2.onKeyDown($event));
+    });
+    \u0275\u0275template(2, Fieldset_ng_container_2_ng_container_2_Template, 3, 2, "ng-container", 8)(3, Fieldset_ng_container_2_ng_container_3_Template, 3, 2, "ng-container", 8)(4, Fieldset_ng_container_2_ng_container_4_Template, 1, 0, "ng-container", 6);
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementContainerEnd();
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    const legendContent_r4 = \u0275\u0275reference(4);
+    \u0275\u0275advance();
+    \u0275\u0275attribute("id", ctx_r2.id + "_header")("aria-controls", ctx_r2.id + "_content")("aria-expanded", !ctx_r2.collapsed)("aria-label", ctx_r2.buttonAriaLabel);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r2.collapsed);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r2.collapsed);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngTemplateOutlet", legendContent_r4);
+  }
+}
+function Fieldset_ng_template_3_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+function Fieldset_ng_template_3_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "span", 13);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+    \u0275\u0275projection(2, 1);
+    \u0275\u0275template(3, Fieldset_ng_template_3_ng_container_3_Template, 1, 0, "ng-container", 6);
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext();
+    \u0275\u0275attribute("data-pc-section", "legendtitle");
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r2.legend);
+    \u0275\u0275advance(2);
+    \u0275\u0275property("ngTemplateOutlet", ctx_r2.headerTemplate || ctx_r2._headerTemplate);
+  }
+}
+function Fieldset_ng_container_8_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementContainer(0);
+  }
+}
+var theme13 = ({
+  dt
+}) => `
+.p-fieldset {
+    background: ${dt("fieldset.background")};
+    border: 1px solid ${dt("fieldset.border.color")};
+    border-radius: ${dt("fieldset.border.radius")};
+    color: ${dt("fieldset.color")};
+    padding:  ${dt("fieldset.padding")};
+    margin: 0;
+}
+
+.p-fieldset-legend {
+    background: ${dt("fieldset.legend.background")};
+    border-radius: ${dt("fieldset.legend.border.radius")};
+    border-width: ${dt("fieldset.legend.border.width")};
+    border-style: solid;
+    border-color: ${dt("fieldset.legend.border.color")};
+    color: ${dt("fieldset.legend.color")};
+    padding: ${dt("fieldset.legend.padding")};
+    transition: background ${dt("fieldset.transition.duration")}, color ${dt("fieldset.transition.duration")}, outline-color ${dt("fieldset.transition.duration")}, box-shadow ${dt("fieldset.transition.duration")};
+}
+
+.p-fieldset-toggleable > .p-fieldset-legend {
+    padding: 0;
+}
+
+.p-fieldset-toggle-button {
+    cursor: pointer;
+    user-select: none;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    display: flex;
+    gap: ${dt("fieldset.legend.gap")};
+    align-items: center;
+    justify-content: center;
+    padding: ${dt("fieldset.legend.padding")};
+    background: transparent;
+    border: 0 none;
+    border-radius: ${dt("fieldset.legend.border.radius")};
+    transition: background ${dt("fieldset.transition.duration")}, color ${dt("fieldset.transition.duration")}, outline-color ${dt("fieldset.transition.duration")}, box-shadow ${dt("fieldset.transition.duration")};
+    outline-color: transparent;
+}
+
+.p-fieldset-legend-label {
+    font-weight: ${dt("fieldset.legend.font.weight")};
+}
+
+.p-fieldset-toggle-button:focus-visible {
+    box-shadow: ${dt("fieldset.legend.focus.ring.shadow")};
+    outline: ${dt("fieldset.legend.focus.ring.width")} ${dt("fieldset.legend.focus.ring.style")} ${dt("fieldset.legend.focus.ring.color")};
+    outline-offset: ${dt("fieldset.legend.focus.ring.offset")};
+}
+
+.p-fieldset-toggleable > .p-fieldset-legend:hover {
+    color: ${dt("fieldset.legend.hover.color")};
+    background: ${dt("fieldset.legend.hover.background")};
+}
+
+.p-fieldset-toggle-icon {
+    color: ${dt("fieldset.toggle.icon.color")};
+    transition: color ${dt("fieldset.transition.duration")};
+}
+
+.p-fieldset-toggleable > .p-fieldset-legend:hover .p-fieldset-toggle-icon {
+    color: ${dt("fieldset.toggle.icon.hover.color")};
+}
+
+.p-fieldset .p-fieldset-content {
+    padding: ${dt("fieldset.content.padding")};
+}
+
+/* For PrimeNG */
+.p-fieldset-toggleable.p-fieldset-expanded > .p-fieldset-content-container:not(.ng-animating) {
+    overflow: visible
+}
+
+.p-fieldset-toggleable .p-fieldset-content-container {
+    overflow: hidden;
+}
+`;
+var classes13 = {
+  root: ({
+    props
+  }) => ["p-fieldset p-component", {
+    "p-fieldset-toggleable": props.toggleable
+  }],
+  legend: "p-fieldset-legend",
+  legendLabel: "p-fieldset-legend-label",
+  toggleButton: "p-fieldset-toggle-button",
+  toggleIcon: "p-fieldset-toggle-icon",
+  contentContainer: "p-fieldset-content-container",
+  content: "p-fieldset-content"
+};
+var FieldsetStyle = class _FieldsetStyle extends BaseStyle {
+  name = "fieldset";
+  theme = theme13;
+  classes = classes13;
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275FieldsetStyle_BaseFactory;
+    return function FieldsetStyle_Factory(__ngFactoryType__) {
+      return (\u0275FieldsetStyle_BaseFactory || (\u0275FieldsetStyle_BaseFactory = \u0275\u0275getInheritedFactory(_FieldsetStyle)))(__ngFactoryType__ || _FieldsetStyle);
+    };
+  })();
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({
+    token: _FieldsetStyle,
+    factory: _FieldsetStyle.\u0275fac
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FieldsetStyle, [{
+    type: Injectable
+  }], null, null);
+})();
+var FieldsetClasses;
+(function(FieldsetClasses2) {
+  FieldsetClasses2["root"] = "p-fieldset";
+  FieldsetClasses2["legend"] = "p-fieldset-legend";
+  FieldsetClasses2["legendLabel"] = "p-fieldset-legend-label";
+  FieldsetClasses2["toggleIcon"] = "p-fieldset-toggle-icon";
+  FieldsetClasses2["contentContainer"] = "p-fieldset-content-container";
+  FieldsetClasses2["content"] = "p-fieldset-content";
+})(FieldsetClasses || (FieldsetClasses = {}));
+var Fieldset = class _Fieldset extends BaseComponent {
+  /**
+   * Header text of the fieldset.
+   * @group Props
+   */
+  legend;
+  /**
+   * When specified, content can toggled by clicking the legend.
+   * @group Props
+   * @defaultValue false
+   */
+  toggleable;
+  /**
+   * Defines the default visibility state of the content.
+   * * @group Props
+   */
+  collapsed = false;
+  /**
+   * Inline style of the component.
+   * @group Props
+   */
+  style;
+  /**
+   * Style class of the component.
+   * @group Props
+   */
+  styleClass;
+  /**
+   * Transition options of the panel animation.
+   * @group Props
+   */
+  transitionOptions = "400ms cubic-bezier(0.86, 0, 0.07, 1)";
+  /**
+   * Emits when the collapsed state changes.
+   * @param {boolean} value - New value.
+   * @group Emits
+   */
+  collapsedChange = new EventEmitter();
+  /**
+   * Callback to invoke before panel toggle.
+   * @param {PanelBeforeToggleEvent} event - Custom toggle event
+   * @group Emits
+   */
+  onBeforeToggle = new EventEmitter();
+  /**
+   * Callback to invoke after panel toggle.
+   * @param {PanelAfterToggleEvent} event - Custom toggle event
+   * @group Emits
+   */
+  onAfterToggle = new EventEmitter();
+  get id() {
+    return uuid("pn_id_");
+  }
+  get buttonAriaLabel() {
+    return this.legend;
+  }
+  animating;
+  _componentStyle = inject(FieldsetStyle);
+  /**
+   * Defines the header template.
+   * @group Templates
+   */
+  headerTemplate;
+  /**
+   * Defines the expandicon template.
+   * @group Templates
+   */
+  expandIconTemplate;
+  /**
+   * Defines the collapseicon template.
+   * @group Templates
+   */
+  collapseIconTemplate;
+  /**
+   * Defines the content template.
+   * @group Templates
+   */
+  contentTemplate;
+  toggle(event) {
+    if (this.animating) {
+      return false;
+    }
+    this.animating = true;
+    this.onBeforeToggle.emit({
+      originalEvent: event,
+      collapsed: this.collapsed
+    });
+    if (this.collapsed) this.expand();
+    else this.collapse();
+    this.onAfterToggle.emit({
+      originalEvent: event,
+      collapsed: this.collapsed
+    });
+    event.preventDefault();
+  }
+  onKeyDown(event) {
+    if (event.code === "Enter" || event.code === "Space") {
+      this.toggle(event);
+      event.preventDefault();
+    }
+  }
+  expand() {
+    this.collapsed = false;
+    this.collapsedChange.emit(this.collapsed);
+  }
+  collapse() {
+    this.collapsed = true;
+    this.collapsedChange.emit(this.collapsed);
+  }
+  getBlockableElement() {
+    return this.el.nativeElement.children[0];
+  }
+  onToggleDone() {
+    this.animating = false;
+  }
+  _headerTemplate;
+  _expandIconTemplate;
+  _collapseIconTemplate;
+  _contentTemplate;
+  templates;
+  ngAfterContentInit() {
+    this.templates.forEach((item) => {
+      switch (item.getType()) {
+        case "header":
+          this._headerTemplate = item.template;
+          break;
+        case "expandicon":
+          this._expandIconTemplate = item.template;
+          break;
+        case "collapseicon":
+          this._collapseIconTemplate = item.template;
+          break;
+        case "content":
+          this._contentTemplate = item.template;
+          break;
+      }
+    });
+  }
+  static \u0275fac = /* @__PURE__ */ (() => {
+    let \u0275Fieldset_BaseFactory;
+    return function Fieldset_Factory(__ngFactoryType__) {
+      return (\u0275Fieldset_BaseFactory || (\u0275Fieldset_BaseFactory = \u0275\u0275getInheritedFactory(_Fieldset)))(__ngFactoryType__ || _Fieldset);
+    };
+  })();
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({
+    type: _Fieldset,
+    selectors: [["p-fieldset"]],
+    contentQueries: function Fieldset_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        \u0275\u0275contentQuery(dirIndex, _c017, 4);
+        \u0275\u0275contentQuery(dirIndex, _c119, 4);
+        \u0275\u0275contentQuery(dirIndex, _c29, 4);
+        \u0275\u0275contentQuery(dirIndex, _c37, 4);
+        \u0275\u0275contentQuery(dirIndex, PrimeTemplate, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.headerTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.expandIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.collapseIconTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.contentTemplate = _t.first);
+        \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.templates = _t);
+      }
+    },
+    inputs: {
+      legend: "legend",
+      toggleable: [2, "toggleable", "toggleable", booleanAttribute],
+      collapsed: [2, "collapsed", "collapsed", booleanAttribute],
+      style: "style",
+      styleClass: "styleClass",
+      transitionOptions: "transitionOptions"
+    },
+    outputs: {
+      collapsedChange: "collapsedChange",
+      onBeforeToggle: "onBeforeToggle",
+      onAfterToggle: "onAfterToggle"
+    },
+    features: [\u0275\u0275ProvidersFeature([FieldsetStyle]), \u0275\u0275InheritDefinitionFeature],
+    ngContentSelectors: _c57,
+    decls: 9,
+    vars: 28,
+    consts: [["legendContent", ""], [3, "ngClass", "ngStyle"], [1, "p-fieldset-legend"], [4, "ngIf", "ngIfElse"], ["role", "region", 1, "p-fieldset-content-container"], [1, "p-fieldset-content"], [4, "ngTemplateOutlet"], ["tabindex", "0", "role", "button", 1, "p-fieldset-toggle-button", 3, "click", "keydown"], [4, "ngIf"], [3, "styleClass", 4, "ngIf"], ["class", "p-fieldset-toggler", 4, "ngIf"], [3, "styleClass"], [1, "p-fieldset-toggler"], [1, "p-fieldset-legend-label"]],
+    template: function Fieldset_Template(rf, ctx) {
+      if (rf & 1) {
+        const _r1 = \u0275\u0275getCurrentView();
+        \u0275\u0275projectionDef(_c47);
+        \u0275\u0275elementStart(0, "fieldset", 1)(1, "legend", 2);
+        \u0275\u0275template(2, Fieldset_ng_container_2_Template, 5, 7, "ng-container", 3)(3, Fieldset_ng_template_3_Template, 4, 3, "ng-template", null, 0, \u0275\u0275templateRefExtractor);
+        \u0275\u0275elementEnd();
+        \u0275\u0275elementStart(5, "div", 4);
+        \u0275\u0275listener("@fieldsetContent.done", function Fieldset_Template_div_animation_fieldsetContent_done_5_listener() {
+          \u0275\u0275restoreView(_r1);
+          return \u0275\u0275resetView(ctx.onToggleDone());
+        });
+        \u0275\u0275elementStart(6, "div", 5);
+        \u0275\u0275projection(7);
+        \u0275\u0275template(8, Fieldset_ng_container_8_Template, 1, 0, "ng-container", 6);
+        \u0275\u0275elementEnd()()();
+      }
+      if (rf & 2) {
+        const legendContent_r4 = \u0275\u0275reference(4);
+        \u0275\u0275classMap(ctx.styleClass);
+        \u0275\u0275property("ngClass", \u0275\u0275pureFunction2(17, _c66, ctx.toggleable, !ctx.collapsed && ctx.toggleable))("ngStyle", ctx.style);
+        \u0275\u0275attribute("id", ctx.id)("data-pc-name", "fieldset")("data-pc-section", "root");
+        \u0275\u0275advance();
+        \u0275\u0275attribute("data-pc-section", "legend");
+        \u0275\u0275advance();
+        \u0275\u0275property("ngIf", ctx.toggleable)("ngIfElse", legendContent_r4);
+        \u0275\u0275advance(3);
+        \u0275\u0275property("@fieldsetContent", ctx.collapsed ? \u0275\u0275pureFunction1(22, _c85, \u0275\u0275pureFunction1(20, _c75, ctx.transitionOptions)) : \u0275\u0275pureFunction1(26, _c105, \u0275\u0275pureFunction1(24, _c95, ctx.animating ? ctx.transitionOptions : "0ms")));
+        \u0275\u0275attribute("id", ctx.id + "_content")("aria-labelledby", ctx.id + "_header")("aria-hidden", ctx.collapsed)("data-pc-section", "toggleablecontent");
+        \u0275\u0275advance();
+        \u0275\u0275attribute("data-pc-section", "content");
+        \u0275\u0275advance(2);
+        \u0275\u0275property("ngTemplateOutlet", ctx.contentTemplate || ctx._contentTemplate);
+      }
+    },
+    dependencies: [CommonModule, NgClass, NgIf, NgTemplateOutlet, NgStyle, ButtonModule, MinusIcon, PlusIcon, SharedModule],
+    encapsulation: 2,
+    data: {
+      animation: [trigger("fieldsetContent", [state("hidden", style({
+        height: "0"
+      })), state("visible", style({
+        height: "*"
+      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])]
+    },
+    changeDetection: 0
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Fieldset, [{
+    type: Component,
+    args: [{
+      selector: "p-fieldset",
+      standalone: true,
+      imports: [CommonModule, ButtonModule, MinusIcon, PlusIcon, SharedModule],
+      template: `
+        <fieldset
+            [attr.id]="id"
+            [ngClass]="{
+                'p-fieldset p-component': true,
+                'p-fieldset-toggleable': toggleable,
+                'p-fieldset-expanded': !collapsed && toggleable
+            }"
+            [ngStyle]="style"
+            [class]="styleClass"
+            [attr.data-pc-name]="'fieldset'"
+            [attr.data-pc-section]="'root'"
+        >
+            <legend class="p-fieldset-legend" [attr.data-pc-section]="'legend'">
+                <ng-container *ngIf="toggleable; else legendContent">
+                    <button
+                        [attr.id]="id + '_header'"
+                        tabindex="0"
+                        role="button"
+                        [attr.aria-controls]="id + '_content'"
+                        [attr.aria-expanded]="!collapsed"
+                        [attr.aria-label]="buttonAriaLabel"
+                        (click)="toggle($event)"
+                        (keydown)="onKeyDown($event)"
+                        class="p-fieldset-toggle-button"
+                    >
+                        <ng-container *ngIf="collapsed">
+                            <PlusIcon *ngIf="!expandIconTemplate && !_expandIconTemplate" [styleClass]="'p-fieldset-toggler'" [attr.data-pc-section]="'togglericon'" />
+                            <span *ngIf="expandIconTemplate || _expandIconTemplate" class="p-fieldset-toggler" [attr.data-pc-section]="'togglericon'">
+                                <ng-container *ngTemplateOutlet="expandIconTemplate || _expandIconTemplate"></ng-container>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngIf="!collapsed">
+                            <MinusIcon *ngIf="!collapseIconTemplate && !_collapseIconTemplate" [styleClass]="'p-fieldset-toggler'" [attr.aria-hidden]="true" [attr.data-pc-section]="'togglericon'" />
+                            <span *ngIf="collapseIconTemplate || _collapseIconTemplate" class="p-fieldset-toggler" [attr.data-pc-section]="'togglericon'">
+                                <ng-container *ngTemplateOutlet="collapseIconTemplate || _collapseIconTemplate"></ng-container>
+                            </span>
+                        </ng-container>
+                        <ng-container *ngTemplateOutlet="legendContent"></ng-container>
+                    </button>
+                </ng-container>
+                <ng-template #legendContent>
+                    <span class="p-fieldset-legend-label" [attr.data-pc-section]="'legendtitle'">{{ legend }}</span>
+                    <ng-content select="p-header"></ng-content>
+                    <ng-container *ngTemplateOutlet="headerTemplate || _headerTemplate"></ng-container>
+                </ng-template>
+            </legend>
+            <div
+                [attr.id]="id + '_content'"
+                role="region"
+                class="p-fieldset-content-container"
+                [@fieldsetContent]="collapsed ? { value: 'hidden', params: { transitionParams: transitionOptions, height: '0' } } : { value: 'visible', params: { transitionParams: animating ? transitionOptions : '0ms', height: '*' } }"
+                [attr.aria-labelledby]="id + '_header'"
+                [attr.aria-hidden]="collapsed"
+                [attr.data-pc-section]="'toggleablecontent'"
+                (@fieldsetContent.done)="onToggleDone()"
+            >
+                <div class="p-fieldset-content" [attr.data-pc-section]="'content'">
+                    <ng-content></ng-content>
+                    <ng-container *ngTemplateOutlet="contentTemplate || _contentTemplate"></ng-container>
+                </div>
+            </div>
+        </fieldset>
+    `,
+      animations: [trigger("fieldsetContent", [state("hidden", style({
+        height: "0"
+      })), state("visible", style({
+        height: "*"
+      })), transition("visible <=> hidden", [animate("{{transitionParams}}")]), transition("void => *", animate(0))])],
+      changeDetection: ChangeDetectionStrategy.OnPush,
+      encapsulation: ViewEncapsulation.None,
+      providers: [FieldsetStyle]
+    }]
+  }], null, {
+    legend: [{
+      type: Input
+    }],
+    toggleable: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    collapsed: [{
+      type: Input,
+      args: [{
+        transform: booleanAttribute
+      }]
+    }],
+    style: [{
+      type: Input
+    }],
+    styleClass: [{
+      type: Input
+    }],
+    transitionOptions: [{
+      type: Input
+    }],
+    collapsedChange: [{
+      type: Output
+    }],
+    onBeforeToggle: [{
+      type: Output
+    }],
+    onAfterToggle: [{
+      type: Output
+    }],
+    headerTemplate: [{
+      type: ContentChild,
+      args: ["header", {
+        descendants: false
+      }]
+    }],
+    expandIconTemplate: [{
+      type: ContentChild,
+      args: ["expandicon", {
+        descendants: false
+      }]
+    }],
+    collapseIconTemplate: [{
+      type: ContentChild,
+      args: ["collapseicon", {
+        descendants: false
+      }]
+    }],
+    contentTemplate: [{
+      type: ContentChild,
+      args: ["content", {
+        descendants: false
+      }]
+    }],
+    templates: [{
+      type: ContentChildren,
+      args: [PrimeTemplate]
+    }]
+  });
+})();
+var FieldsetModule = class _FieldsetModule {
+  static \u0275fac = function FieldsetModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _FieldsetModule)();
+  };
+  static \u0275mod = /* @__PURE__ */ \u0275\u0275defineNgModule({
+    type: _FieldsetModule,
+    imports: [Fieldset, SharedModule],
+    exports: [Fieldset, SharedModule]
+  });
+  static \u0275inj = /* @__PURE__ */ \u0275\u0275defineInjector({
+    imports: [Fieldset, SharedModule, SharedModule]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(FieldsetModule, [{
+    type: NgModule,
+    args: [{
+      imports: [Fieldset, SharedModule],
+      exports: [Fieldset, SharedModule]
+    }]
+  }], null, null);
+})();
+
+// src/app/views/ia-assistant/services/export-github.service.ts
+var ExportGitHubService = class _ExportGitHubService {
+  fetchService = inject(FetchService);
+  formatHtmlWithPrettier(html) {
+    return __async(this, null, function* () {
+      if (!navigator.languages) {
+        navigator.languages = ["en"];
+      }
+      try {
+        const [{ default: prettier }, parserHtml] = yield Promise.all([
+          import("./chunk-UKCQ235J.js"),
+          import("./chunk-2UKPKC67.js")
+        ]);
+        return prettier.format(html, {
+          parser: "html",
+          plugins: [parserHtml],
+          printWidth: Infinity,
+          tabWidth: 4,
+          useTabs: false,
+          htmlWhitespaceSensitivity: "css",
+          arrowParens: "always",
+          bracketSameLine: false,
+          bracketSpacing: false,
+          embeddedLanguageFormatting: "auto",
+          endOfLine: "crlf",
+          jsxSingleQuote: false,
+          objectWrap: "collapse",
+          ProseWrap: "never",
+          quoteProps: "consistent",
+          singleAttributePerLine: false,
+          singleQuote: false,
+          trailingComma: "none",
+          vueIndentScriptAndStyle: true
+        });
+      } catch (error) {
+        console.error("Prettier formatting error:", error);
+        return html;
+      }
+    });
+  }
+  formatDocumentAsJekyll(doc, url, owner, repo) {
+    return __async(this, null, function* () {
+      let layout = "default";
+      const title = doc.querySelector('meta[name="dcterms.title"]')?.content.trim() || doc.title.trim() || "";
+      const description = doc.querySelector('meta[name="description"]')?.content.trim() || "";
+      const subject = doc.querySelector('meta[name="dcterms.subject"]')?.content.trim() || "";
+      const keywords = doc.querySelector('meta[name="keywords"]')?.content.trim() || "";
+      const lang = doc.querySelector('meta[name="dcterms.language"]')?.content?.slice(0, 2) || "en";
+      const issued = doc.querySelector('meta[name="dcterms.issued"]')?.content || "";
+      const modified = doc.querySelector('meta[name="dcterms.modified"]')?.content || "";
+      const altLangPage = Array.from(doc.querySelectorAll('link[rel="alternate"]')).find((link) => link.getAttribute("hreflang") !== lang)?.href || "";
+      const crumbs = Array.from(doc.querySelectorAll("ol.breadcrumb li")).slice(1).map((li) => {
+        const a = li.querySelector("a");
+        if (!a)
+          return null;
+        const rawHref = a.getAttribute("href") || "";
+        return {
+          title: a.textContent?.trim() || "",
+          link: rawHref.startsWith("http") ? a.href : `https://www.canada.ca${a.getAttribute("href")}`
+        };
+      }).filter(Boolean);
+      const crumbsYaml = crumbs.map((crumb) => `  - title: "${crumb.title}"\r
+    link: "${crumb.link}"`).join("\r\n");
+      const auth = lang === "en" ? `auth:\r
+  type: "contextual"\r
+  label: "Sign in"\r
+  labelExtended: "CRA sign in"\r
+  link: "https://www.canada.ca/en/revenue-agency/services/e-services/cra-login-services.html"` : `auth:\r
+  type: "contextual"\r
+  label: "Se connecter"\r
+  labelExtended: "Se connecter \xE0 l'ARC"\r
+  link: "https://www.canada.ca/fr/agence-revenu/services/services-electroniques/services-ouverture-session-arc.html"`;
+      const mainEl = doc.querySelector("main");
+      let pageContent = "";
+      if (mainEl) {
+        mainEl.querySelectorAll("section.pagedetails").forEach((s2) => s2.remove());
+        mainEl.querySelectorAll("div.pagedetails").forEach((d) => d.remove());
+        mainEl.querySelectorAll('div[class^="mws"]').forEach((div) => {
+          while (div.firstChild) {
+            div.parentNode?.insertBefore(div.firstChild, div);
+          }
+          div.remove();
+        });
+        mainEl.querySelectorAll("*").forEach((el) => {
+          for (let attr of Array.from(el.attributes)) {
+            if (attr.value && attr.value.includes('"/')) {
+              attr.value = attr.value.replace(/"\//g, '"https://www.canada.ca/');
+            }
+            if (attr.value && attr.value.startsWith("/")) {
+              attr.value = `https://www.canada.ca${attr.value}`;
+            }
+          }
+        });
+        const h1s = doc.querySelectorAll("h1");
+        const hasSubway = doc.querySelector(".gc-subway");
+        const hasLeadAboveH1 = h1s[0]?.previousElementSibling?.matches("p.lead") || !!h1s[0]?.previousElementSibling?.querySelector?.("p.lead");
+        const hasHgroup = doc.querySelector("hgroup");
+        if (hasSubway || h1s.length > 1 || h1s[0] && h1s[0].textContent?.trim().replace("&nbsp;", " ") !== title || h1s[0]?.closest(".well") || hasLeadAboveH1 || hasHgroup) {
+          layout = "without-h1";
+        } else if (!mainEl.classList.contains("container")) {
+          layout = "no-container";
+        } else {
+          h1s[0]?.remove();
+        }
+        pageContent = mainEl.innerHTML.replace(/[ \t]+$/gm, "").replace(/\n{2,}/g, "\n").split("\n").map((line) => line.replace(/(\S)( {2,})/g, (m, first) => first + " ")).join("\n");
+      }
+      pageContent = yield this.formatHtmlWithPrettier(pageContent);
+      const frontMatter = `---\r
+layout: ${layout}\r
+title: "${title}"\r
+description: "${description}"\r
+subject: "${subject}"\r
+keywords: "${keywords}"\r
+${auth}\r
+altLangPage: "${altLangPage}"\r
+dateModified: ${modified}\r
+dateIssued: ${issued}\r
+breadcrumbs: # By default the Canada.ca crumbs is already set\r
+${crumbsYaml || "  []"}\r
+feedbackData:\r
+  section: "${title}"\r
+notedlinks:\r
+  - title: "${title}"\r
+    link: "${url}"\r
+  - title: "Repository sitemap"\r
+    link: "https://${owner}.github.io/${repo}/index.html"\r
+---\r
+\r
+${pageContent}`;
+      return frontMatter;
+    });
+  }
+  createConfigYaml(owner, repo, branch, token, existingFiles) {
+    return __async(this, null, function* () {
+      const content = `---
+# standard jekyll configuration
+content_editable: true
+baseurl: /${repo}
+url: https://${owner}.github.io
+repository: ${owner}/${repo}
+website: https://www.canada.ca/en.html
+
+# Remote theme, use the latest version
+remote_theme: wet-boew/gcweb-jekyll
+
+# Files excluded from Jekyll builds
+exclude:
+ - README.md
+ - Gemfile
+ - Gemfile.lock
+ - gcweb-jekyll.gemspec
+
+# Site settings
+assets: https://wet-boew.github.io/themes-dist
+creator:
+  en: "Canada Revenue Agency"
+  fr: "Agence du revenu du Canada"
+
+# Custom settings
+developerOptions: false
+devOptionsLocStore: "gitCRATemplateDevOptions"
+exitByURL: true
+exitPage:
+  en: "/${repo}/source/exit-intent-e.html"
+  fr: "/${repo}/source/exit-intent-f.html"
+externalOrigin: "https://www.canada.ca"
+modifiedLinkList: "/${repo}/source/data/exclude-redirect-links.json"
+relativeExternalLinks: false
+testBanner: true
+
+# Page front matter defaults
+defaults:
+  - scope:
+      path: "" # Ensure it's applied to all pages
+      type: pages
+    values:
+      layout: default
+      lang: en
+      share: true
+      sitemenu: true
+      sitesearch: true
+      feedback: true
+      feedbackData:
+        theme: "Taxes"
+      feedbackPath: https://www.canada.ca/etc/designs/canada/wet-boew/assets/feedback/page-feedback-en.html
+      privacyUrl: https://www.canada.ca/en/revenue-agency/corporate/privacy-notice.html
+      termsURL: https://www.canada.ca/en/transparency/terms.html
+      sitemenuPath: https://www.canada.ca/content/dam/canada/sitemenu/sitemenu-v2-en.html
+      contextualFooter:
+        title: "Canada Revenue Agency (CRA)"
+        links:
+          - text: "Contact the CRA"
+            url: "https://www.canada.ca/en/revenue-agency/corporate/contact-information.html"
+          - text: "Update your information"
+            url: "https://www.canada.ca/en/revenue-agency/services/update-information-cra.html"
+          - text: "About the CRA"
+            url: "https://www.canada.ca/en/revenue-agency/corporate/about-canada-revenue-agency-cra.html"
+      css:
+        - https://use.fontawesome.com/releases/v5.15.4/css/all.css
+        - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2025-12-mille-iles.css
+        - https://cra-design.github.io/core-prototype/source/css/testing-banner.css
+      script:
+        - https://wet-boew.github.io/themes-dist/GCWeb/GCWeb/m%C3%A9li-m%C3%A9lo/2025-12-mille-iles.js
+        - https://cra-design.github.io/core-prototype/source/scripts/external-link-detour.js
+        `;
+      try {
+        console.log(`Creating _config.yml for ${repo}`);
+        yield this.exportToGitHub(owner, repo, branch, "_config.yml", "_config.yml", content, token, existingFiles, false, false);
+      } catch (error) {
+        console.error(`Failed to create _config.yml for ${repo}:`, error);
+      }
+    });
+  }
+  createSitemap(owner, repo, branch, token, existingFiles) {
+    return __async(this, null, function* () {
+      const date = /* @__PURE__ */ new Date();
+      const today = date.toISOString().split("T")[0];
+      const content = `---
+testBanner: false
+title: "${repo} repository sitemap [GCWeb Jekyll pages]"
+dateModified: ${today}
+dateIssued: ${today}
+nositesearch: true
+nomenu: true
+breadcrumbs: false
+feedback: false
+share: false
+noFooterContextual: true
+noFooterCorporate: true
+noFooterMain: true
+---
+
+<div class="mrgn-tp-md brdr-bttm">
+    <div class="row">
+        <ul class="toc lst-spcd col-md-12">
+            <li class="col-md-4 col-sm-6"><a class="list-group-item active" data-exit="false" href="https://github.com/${owner}/${repo}/tree/main">GitHub repository</a></li>
+        </ul>
+    </div>
+</div>
+<ul>
+{% assign sitePages = site.pages | sort: "url" %}
+{% for p in sitePages %}
+    {% include sitemaplink.html url = p.url title = p.title %}
+    {% assign page_url = p.url | slice: 1, p.url.size %}
+    {% assign folder_path = page_url | split: "/" %}
+{% endfor %}
+</ul>`;
+      try {
+        console.log(`Creating sitemap for ${repo}`);
+        yield this.exportToGitHub(owner, repo, branch, "index.html", "index.html", content, token, existingFiles, false, false);
+      } catch (error) {
+        console.error(`Failed to create sitemap for ${repo}:`, error);
+      }
+    });
+  }
+  //Set up README.md <-- add mermaid chart to this
+  createInitialReadme(owner, repo, branch, token, existingFiles) {
+    return __async(this, null, function* () {
+      const filename = "README.md";
+      const date = /* @__PURE__ */ new Date();
+      const today = date.toISOString().split("T")[0];
+      date.setDate(date.getDate() - 14);
+      const startDate = date.toISOString().split("T")[0];
+      date.setDate(date.getDate() + 98);
+      const endDate = date.toISOString().split("T")[0];
+      const content = `# ${repo} COP
+
+*description of the COP*
+
+**COP timeframe** ${startDate} - ${endDate}
+
+## Overview
+
+This repository was created via the **Design Assistant**.  
+It contains the template files and in-scope pages needed to get started.
+
+GitHub Pages: [https://${owner}.github.io/${repo}](https://${owner}.github.io/${repo})
+
+---
+## Update procedures
+
+Add information on how to manage the repo here.
+
+---
+## Design phase roadmap:
+
+- [x] Initial content inventory and repo setup
+- [ ] Prototype: co-design navigation and content
+- [ ] SME review and accuracy check
+- [ ] Validation usability testing (including accessibility review)
+- [ ] Refine prototype (if required)
+- [ ] Spot check usability (if required)
+
+**Updated:**  ${today}
+`;
+      try {
+        console.log(`Creating initial README.md for ${repo}`);
+        yield this.exportToGitHub(owner, repo, branch, filename, filename, content, token, existingFiles, true, false);
+      } catch (error) {
+        console.error(`Failed to create README.md for ${repo}:`, error);
+      }
+    });
+  }
+  filesToCopy = [
+    "https://raw.githubusercontent.com/cra-design/core-prototype/main/_includes/header/header.html",
+    "https://raw.githubusercontent.com/cra-design/core-prototype/main/_includes/resources-inc/footer.html",
+    "https://raw.githubusercontent.com/cra-design/core-prototype/main/source/exit-intent-e.html",
+    "https://raw.githubusercontent.com/cra-design/core-prototype/main/404.html"
+  ];
+  copyCoreFiles(owner, repo, branch, token, existingFiles) {
+    return __async(this, null, function* () {
+      for (const file of this.filesToCopy) {
+        try {
+          const urlParts = new URL(file).pathname.split("/");
+          const destPath = urlParts.slice(4).join("/");
+          const response = yield this.fetchService.fetchWithRetry(file, "GET");
+          if (!response.ok)
+            throw new Error(`Failed to fetch: ${file}`);
+          const content = yield response.text();
+          yield this.exportToGitHub(owner, repo, branch, destPath, destPath.split("/").pop() || destPath, content, token, existingFiles, true, true);
+        } catch (error) {
+          console.error(`Error copying core file ${file}:`, error);
+        }
+      }
+    });
+  }
+  // Get list of public repos for an owner (user or org)
+  getRepoList(owner) {
+    return __async(this, null, function* () {
+      const type = yield this.getOwnerType(owner);
+      const url = type === "Organization" ? `https://api.github.com/orgs/${owner}/repos?per_page=100&type=public` : `https://api.github.com/users/${owner}/repos?per_page=100&type=public`;
+      const response = yield fetch(url, {
+        headers: {
+          "Accept": "application/vnd.github+json"
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to load repos: ${response.status}`);
+      }
+      return response.json();
+    });
+  }
+  // Determine if owner is a user or organization
+  getOwnerType(owner) {
+    return __async(this, null, function* () {
+      const response = yield fetch(`https://api.github.com/users/${owner}`, {
+        headers: { "Accept": "application/vnd.github+json" }
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch owner type for ${owner}: ${response.status}`);
+      }
+      const data = yield response.json();
+      return data.type;
+    });
+  }
+  //Check if repo exists
+  repoExists(owner, repo) {
+    return __async(this, null, function* () {
+      const response = yield fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+        headers: { "Accept": "application/vnd.github+json" }
+      });
+      return response.ok;
+    });
+  }
+  createRepo(owner, repo, branch, token) {
+    return __async(this, null, function* () {
+      console.log(`Repo ${owner}/${repo} not found. Creating...`);
+      const type = yield this.getOwnerType(owner);
+      const url = type === "Organization" ? `https://api.github.com/orgs/${owner}/repos` : `https://api.github.com/user/repos`;
+      const response = yield fetch(url, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github+json"
+        },
+        body: JSON.stringify({
+          name: repo,
+          private: false,
+          auto_init: true,
+          default_branch: branch,
+          description: "Repo created via design assistant",
+          homepage: `https://${owner}.github.io/${repo}/`
+        })
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to create repo: ${response.status}`);
+      }
+      console.log(`New repo "${repo}" created.`);
+      return response.json();
+    });
+  }
+  enablePages(owner, repo, branch, token) {
+    return __async(this, null, function* () {
+      const response = yield fetch(`https://api.github.com/repos/${owner}/${repo}/pages`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github+json"
+        },
+        body: JSON.stringify({
+          source: {
+            branch,
+            path: "/"
+          }
+        })
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to enable Pages: ${response.status}`);
+      }
+      console.log(`GitHub Pages enabled on ${branch} branch.`);
+      return response.json();
+    });
+  }
+  setupRepo(owner, repo, branch, token, existingFiles) {
+    return __async(this, null, function* () {
+      const exists = yield this.repoExists(owner, repo);
+      if (!exists) {
+        yield this.createRepo(owner, repo, branch, token);
+        yield this.enablePages(owner, repo, branch, token);
+        const existingFiles2 = yield this.getRepoTree(owner, repo, branch, token);
+        yield this.createInitialReadme(owner, repo, branch, token, existingFiles2);
+      } else {
+        console.log(`Repo ${owner}/${repo} already exists. Skipping creation.`);
+      }
+      yield this.copyCoreFiles(owner, repo, branch, token, existingFiles);
+      yield this.createConfigYaml(owner, repo, branch, token, existingFiles);
+    });
+  }
+  //Check for existing files in a repo
+  getRepoTree(owner, repo, branch, token) {
+    return __async(this, null, function* () {
+      const treeUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
+      const response = yield fetch(treeUrl, {
+        headers: { Authorization: `token ${token}` }
+      });
+      if (!response.ok) {
+        console.warn(`Failed to fetch repo tree: ${response.status}`);
+        return /* @__PURE__ */ new Map();
+      }
+      const data = yield response.json();
+      const fileMap = /* @__PURE__ */ new Map();
+      if (Array.isArray(data.tree)) {
+        for (const item of data.tree) {
+          if (item.type === "blob") {
+            fileMap.set(item.path, item.sha);
+          }
+        }
+      }
+      return fileMap;
+    });
+  }
+  b64EncodeUnicode(str) {
+    const utf8Bytes = new TextEncoder().encode(str);
+    let binary = "";
+    utf8Bytes.forEach((b) => binary += String.fromCharCode(b));
+    return btoa(binary);
+  }
+  exportToGitHub(owner, repo, branch, path, filename, content, token, existingFiles, overwrite = false, copyFromCore = false) {
+    return __async(this, null, function* () {
+      const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+      if (!overwrite && existingFiles?.has(path)) {
+        console.log(`Skipping ${path} (already exists, overwrite=false)`);
+        return { skipped: true, path, reason: "exists" };
+      }
+      let sha;
+      if (overwrite && existingFiles?.has(path)) {
+        sha = existingFiles.get(path);
+      }
+      const body = {
+        message: copyFromCore ? `Copy ${filename} from core-prototype (via Design Assistant)` : sha ? `Update ${filename} (via Design Assistant)` : `Add ${filename} (via Design Assistant)`,
+        content: this.b64EncodeUnicode(content),
+        branch
+      };
+      if (sha) {
+        body.sha = sha;
+      }
+      const response = yield fetch(url, {
+        method: "PUT",
+        headers: {
+          "Authorization": `token ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      });
+      if (!response.ok) {
+        const error = yield response.json().catch(() => ({}));
+        throw new Error(`GitHub API error: ${response.status} ${error.message || ""}`);
+      }
+      return response.json();
+    });
+  }
+  static \u0275fac = function ExportGitHubService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ExportGitHubService)();
+  };
+  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _ExportGitHubService, factory: _ExportGitHubService.\u0275fac, providedIn: "root" });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ExportGitHubService, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+
+// src/app/views/ia-assistant/components/export-github.component.ts
+var _c018 = (a0) => ({ "ng-invalid ng-dirty": a0 });
+function ExportGithubComponent_div_11_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div", 14)(1, "p");
+    \u0275\u0275text(2, "To push changes to a repository, you need a valid GitHub token. Your token works like a username and password, so keep it private and do not share it with anyone.");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(3, "p");
+    \u0275\u0275text(4, "Follow these steps to create a new GitHub token:");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(5, "ol")(6, "li");
+    \u0275\u0275text(7, "Go to your GitHub ");
+    \u0275\u0275elementStart(8, "strong");
+    \u0275\u0275text(9, "Settings");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(10, ".");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(11, "li");
+    \u0275\u0275text(12, "Select ");
+    \u0275\u0275elementStart(13, "strong");
+    \u0275\u0275text(14, "Developer settings");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(15, ".");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(16, "li");
+    \u0275\u0275text(17, "Click ");
+    \u0275\u0275elementStart(18, "strong");
+    \u0275\u0275text(19, "Personal Access Tokens");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(20, " > ");
+    \u0275\u0275elementStart(21, "strong");
+    \u0275\u0275text(22, "Fine-grained tokens");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(23, ".");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(24, "li");
+    \u0275\u0275text(25, "Click ");
+    \u0275\u0275elementStart(26, "strong");
+    \u0275\u0275text(27, "Generate new token");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(28, ".");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(29, "li");
+    \u0275\u0275text(30, "Give your token a ");
+    \u0275\u0275elementStart(31, "strong");
+    \u0275\u0275text(32, "unique name");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(33, " and a ");
+    \u0275\u0275elementStart(34, "strong");
+    \u0275\u0275text(35, "description");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(36, ".");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(37, "li");
+    \u0275\u0275text(38, "Under ");
+    \u0275\u0275elementStart(39, "strong");
+    \u0275\u0275text(40, "Resource owner");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(41, ", select either cra-design or your personal account.");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(42, "li");
+    \u0275\u0275text(43, "Under ");
+    \u0275\u0275elementStart(44, "strong");
+    \u0275\u0275text(45, "Repository access");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(46, ", select ");
+    \u0275\u0275elementStart(47, "strong");
+    \u0275\u0275text(48, "All repositories");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(49, ".");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(50, "li");
+    \u0275\u0275text(51, "Add the necessary ");
+    \u0275\u0275elementStart(52, "strong");
+    \u0275\u0275text(53, "permissions");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(54, " for pushing changes to repositories: ");
+    \u0275\u0275elementStart(55, "ul")(56, "li")(57, "strong");
+    \u0275\u0275text(58, "Administration");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(59, " (Access: Read and write)");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(60, "li")(61, "strong");
+    \u0275\u0275text(62, "Contents");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(63, " (Access: Read and write)");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(64, "li")(65, "strong");
+    \u0275\u0275text(66, "Metadata");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(67, " (Access: Read-only)");
+    \u0275\u0275elementEnd();
+    \u0275\u0275elementStart(68, "li")(69, "strong");
+    \u0275\u0275text(70, "Pages");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(71, " (Access: Read and write)");
+    \u0275\u0275elementEnd()()();
+    \u0275\u0275elementStart(72, "li");
+    \u0275\u0275text(73, "Copy the generated token and enter it into the GitHub token field whenever you push changes to GitHub.");
+    \u0275\u0275elementEnd()();
+    \u0275\u0275elementStart(74, "p")(75, "strong");
+    \u0275\u0275text(76, "Important:");
+    \u0275\u0275elementEnd();
+    \u0275\u0275text(77, " Keep this token secret. Treat it like a password.");
+    \u0275\u0275elementEnd()();
+  }
+}
+function ExportGithubComponent_p_message_19_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p-message", 15);
+    \u0275\u0275text(1);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275textInterpolate(ctx_r0.ownerError);
+  }
+}
+var ExportGithubComponent = class _ExportGithubComponent {
+  iaState = inject(IaStateService);
+  exportGitHubService = inject(ExportGitHubService);
+  fetchService = inject(FetchService);
+  translate = inject(TranslateService);
+  iaData = this.iaState.getIaData;
+  gitHubData = this.iaState.getGitHubData;
+  repos = [];
+  filteredRepos = [];
+  ownerError = "";
+  showHelp = false;
+  userToken = "";
+  ngOnInit() {
+    return __async(this, null, function* () {
+      this.iaState.loadFromLocalStorage();
+      yield this.updateRepoList();
+    });
+  }
+  updateRepoList() {
+    return __async(this, null, function* () {
+      this.ownerError = "";
+      this.repos = [];
+      try {
+        const repos = yield this.exportGitHubService.getRepoList(this.gitHubData().owner);
+        this.repos = repos.map((r2) => r2.name);
+      } catch (error) {
+        if (error.message?.includes("404")) {
+          this.ownerError = `GitHub owner "${this.gitHubData().owner}" not found.`;
+        } else {
+          this.ownerError = `Failed to load repositories for "${this.gitHubData().owner}".`;
+        }
+      }
+    });
+  }
+  filterRepos(event) {
+    const query = event.query?.trim().toLowerCase() || "";
+    const startsWith = this.repos.filter((r2) => r2.toLowerCase().startsWith(query));
+    const includes = this.repos.filter((r2) => r2.toLowerCase().includes(query) && !r2.toLowerCase().startsWith(query));
+    this.filteredRepos = Array.from(/* @__PURE__ */ new Set([...startsWith, ...includes]));
+  }
+  ownerFilter = /^[a-zA-Z0-9-]*$/;
+  repoFilter = /^[a-zA-Z0-9-._]*$/;
+  branchFilter = /^[a-zA-Z0-9./-]*$/;
+  updateOwner() {
+    this.gitHubData().owner = this.gitHubData().owner.trim().toLowerCase().replace(/^[-]+|[-]+$/g, "").replace(/[-]{2,}/g, "-");
+    if (!this.gitHubData().owner) {
+      this.gitHubData().owner = "cra-design";
+    }
+  }
+  updateRepo() {
+    this.gitHubData().repo = this.gitHubData().repo.trim().replace(/^[.-]+|[.-]+$/g, "").replace(/(\/|.)lock$/, "").replace(/[.]{2,}/g, ".").replace(/[-]{2,}/g, "-");
+  }
+  updateBranch() {
+    this.gitHubData().branch = this.gitHubData().branch.trim().replace(/^[./]+|[./]+$/g, "").replace(/(\/|.)lock$/, "").replace(/[.]{2,}/g, ".").replace(/\/{2,}/g, "/");
+    if (!this.gitHubData().branch) {
+      this.gitHubData().branch = "main";
+    }
+  }
+  //Get in-scope URLs and page content
+  getUrlandContent(node) {
+    return __async(this, null, function* () {
+      const pages = [];
+      if (node.data.isUserAdded && node.data.url) {
+        try {
+          const doc = yield this.fetchService.fetchContent(node.data.url, "prod");
+          const jekyllFormatted = yield this.exportGitHubService.formatDocumentAsJekyll(doc, node.data.url, this.gitHubData().owner, this.gitHubData().repo);
+          pages.push({ url: node.data.url, content: jekyllFormatted });
+        } catch (error) {
+          console.error(`Error fetching content for ${node.data.url}:`, error);
+        }
+      }
+      if (node.children) {
+        for (const child of node.children) {
+          const childPages = yield this.getUrlandContent(child);
+          pages.push(...childPages);
+        }
+      }
+      return pages;
+    });
+  }
+  exportProjectToGitHub(owner, repo, branch, token, overwrite = false) {
+    return __async(this, null, function* () {
+      this.iaState.setGitHubData({ owner, repo, branch });
+      this.iaState.saveToLocalStorage();
+      const nodes = this.iaState.getIaData().iaTree;
+      const pages = yield this.getUrlandContent(nodes[0]);
+      console.log("Exporting pages to GitHub:", pages);
+      function getCommonPrefix(urls2) {
+        const paths = urls2.map((url) => new URL(url).pathname.split("/").filter(Boolean));
+        const first = paths[0];
+        const prefix = [];
+        for (let i = 0; i < first.length; i++) {
+          const segment = first[i];
+          if (paths.every((p2) => p2[i] === segment)) {
+            prefix.push(segment);
+          } else {
+            break;
+          }
+        }
+        if (prefix.length) {
+          const last = prefix[prefix.length - 1];
+          if (/\.[a-z0-9]+$/i.test(last)) {
+            prefix.pop();
+          }
+        }
+        return "/" + prefix.join("/");
+      }
+      const urls = pages.map((page) => page.url);
+      const commonRoot = getCommonPrefix(urls);
+      console.log("Detected common root:", commonRoot);
+      const exportPages = pages.map((p2) => {
+        let path = new URL(p2.url).pathname;
+        if (path.startsWith(commonRoot)) {
+          path = path.slice(commonRoot.length);
+        }
+        path = path.replace(/^\/+/, "");
+        const lastSegment = path.split("/").pop() || "index.html";
+        return { url: p2.url, path, content: p2.content, filename: lastSegment };
+      });
+      console.log("Exporting pages to GitHub:", exportPages);
+      const existingFiles = yield this.exportGitHubService.getRepoTree(owner, repo, branch, token);
+      yield this.exportGitHubService.setupRepo(owner, repo, branch, token, existingFiles);
+      console.log("Repository setup complete.");
+      const redirects = [];
+      for (const page of exportPages) {
+        try {
+          const result = yield this.exportGitHubService.exportToGitHub(owner, repo, branch, page.path, page.filename, page.content, token, existingFiles, overwrite);
+          redirects.push({ origin: page.url, destination: `/${repo}/${page.path}` });
+        } catch (error) {
+          console.error(`Error exporting ${page.path}:`, error);
+        }
+      }
+      const redirectsJson = JSON.stringify(redirects, null, 2);
+      yield this.exportGitHubService.exportToGitHub(owner, repo, branch, "source/data/exclude-redirect-links.json", "exclude-redirect-links.json", redirectsJson, token, existingFiles, overwrite);
+      console.log("Page export complete.");
+    });
+  }
+  static \u0275fac = function ExportGithubComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ExportGithubComponent)();
+  };
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ExportGithubComponent, selectors: [["ca-export-github"]], decls: 33, vars: 17, consts: [["icon", "pi pi-question-circle", "styleClass", "-m-3 nohover", "iconPos", "right", "severity", "help", "label", "GitHub token", 3, "onClick", "rounded", "text"], ["class", "text-sm mt-2", 4, "ngIf"], ["legend", "Export settings"], [1, "flex", "flex-column", "gap-2"], [1, "flex", "flex-column", "gap-1"], ["type", "text", "id", "owner", "pInputText", "", "pSize", "small", "fluid", "", "maxlength", "39", 3, "ngModelChange", "blur", "ngModel", "pKeyFilter", "ngClass"], ["for", "repo"], ["severity", "error", "variant", "simple", "size", "small", 4, "ngIf"], ["id", "repo", "pSize", "small", "maxlength", "100", "fluid", "", 3, "ngModelChange", "input", "completeMethod", "ngModel", "suggestions", "dropdown", "pKeyFilter"], ["type", "text", "id", "branch", "pInputText", "", "pSize", "small", "fluid", "", 3, "ngModelChange", "blur", "ngModel", "pKeyFilter"], ["for", "branch"], ["feedback", "false", "id", "token", "pSize", "small", "fluid", "", 3, "ngModelChange", "ngModel"], ["for", "token"], ["icon", "pi pi-github", "label", "Export to GitHub", "severity", "primary", 3, "onClick", "disabled"], [1, "text-sm", "mt-2"], ["severity", "error", "variant", "simple", "size", "small"]], template: function ExportGithubComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      \u0275\u0275elementStart(0, "h2");
+      \u0275\u0275text(1, "Export to GitHub");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(2, "p");
+      \u0275\u0275text(3, "Export the current in-scope pages for your project to a GitHub repository. You can specify the owner, repository, branch, and provide a ");
+      \u0275\u0275elementStart(4, "p-button", 0);
+      \u0275\u0275listener("onClick", function ExportGithubComponent_Template_p_button_onClick_4_listener() {
+        return ctx.showHelp = !ctx.showHelp;
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275text(5, " for authentication.");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(6, "p");
+      \u0275\u0275text(7, "The pages will be exported in Jekyll format. Redirects for the included pages are automatically set up, so you don't need to update links in your repo manually. If you create new pages directly in GitHub, remember to list them in your ");
+      \u0275\u0275elementStart(8, "code");
+      \u0275\u0275text(9, "/source/data/exclude-redirect-links.json");
+      \u0275\u0275elementEnd();
+      \u0275\u0275text(10, " file.");
+      \u0275\u0275elementEnd();
+      \u0275\u0275template(11, ExportGithubComponent_div_11_Template, 78, 0, "div", 1);
+      \u0275\u0275elementStart(12, "p-fieldset", 2)(13, "div", 3)(14, "div", 4)(15, "p-iftalabel")(16, "input", 5);
+      \u0275\u0275twoWayListener("ngModelChange", function ExportGithubComponent_Template_input_ngModelChange_16_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.gitHubData().owner, $event) || (ctx.gitHubData().owner = $event);
+        return $event;
+      });
+      \u0275\u0275listener("blur", function ExportGithubComponent_Template_input_blur_16_listener() {
+        ctx.updateOwner();
+        return ctx.updateRepoList();
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(17, "label", 6);
+      \u0275\u0275text(18, "Owner");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275template(19, ExportGithubComponent_p_message_19_Template, 2, 1, "p-message", 7);
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(20, "p-iftalabel")(21, "p-autocomplete", 8);
+      \u0275\u0275twoWayListener("ngModelChange", function ExportGithubComponent_Template_p_autocomplete_ngModelChange_21_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.gitHubData().repo, $event) || (ctx.gitHubData().repo = $event);
+        return $event;
+      });
+      \u0275\u0275listener("input", function ExportGithubComponent_Template_p_autocomplete_input_21_listener() {
+        return ctx.updateRepo();
+      })("completeMethod", function ExportGithubComponent_Template_p_autocomplete_completeMethod_21_listener($event) {
+        return ctx.filterRepos($event);
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(22, "label", 6);
+      \u0275\u0275text(23, "Repository");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(24, "p-iftalabel")(25, "input", 9);
+      \u0275\u0275twoWayListener("ngModelChange", function ExportGithubComponent_Template_input_ngModelChange_25_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.gitHubData().branch, $event) || (ctx.gitHubData().branch = $event);
+        return $event;
+      });
+      \u0275\u0275listener("blur", function ExportGithubComponent_Template_input_blur_25_listener() {
+        return ctx.updateBranch();
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(26, "label", 10);
+      \u0275\u0275text(27, "Branch");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(28, "p-iftalabel")(29, "p-password", 11);
+      \u0275\u0275twoWayListener("ngModelChange", function ExportGithubComponent_Template_p_password_ngModelChange_29_listener($event) {
+        \u0275\u0275twoWayBindingSet(ctx.userToken, $event) || (ctx.userToken = $event);
+        return $event;
+      });
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(30, "label", 12);
+      \u0275\u0275text(31, "GitHub Token");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(32, "p-button", 13);
+      \u0275\u0275listener("onClick", function ExportGithubComponent_Template_p_button_onClick_32_listener() {
+        return ctx.exportProjectToGitHub(ctx.gitHubData().owner, ctx.gitHubData().repo, ctx.gitHubData().branch, ctx.userToken, true);
+      });
+      \u0275\u0275elementEnd()()();
+    }
+    if (rf & 2) {
+      \u0275\u0275advance(4);
+      \u0275\u0275property("rounded", true)("text", true);
+      \u0275\u0275advance(7);
+      \u0275\u0275property("ngIf", ctx.showHelp);
+      \u0275\u0275advance(5);
+      \u0275\u0275twoWayProperty("ngModel", ctx.gitHubData().owner);
+      \u0275\u0275property("pKeyFilter", ctx.ownerFilter)("ngClass", \u0275\u0275pureFunction1(15, _c018, ctx.ownerError));
+      \u0275\u0275advance(3);
+      \u0275\u0275property("ngIf", ctx.ownerError);
+      \u0275\u0275advance(2);
+      \u0275\u0275twoWayProperty("ngModel", ctx.gitHubData().repo);
+      \u0275\u0275property("suggestions", ctx.filteredRepos)("dropdown", true)("pKeyFilter", ctx.repoFilter);
+      \u0275\u0275advance(4);
+      \u0275\u0275twoWayProperty("ngModel", ctx.gitHubData().branch);
+      \u0275\u0275property("pKeyFilter", ctx.branchFilter);
+      \u0275\u0275advance(4);
+      \u0275\u0275twoWayProperty("ngModel", ctx.userToken);
+      \u0275\u0275advance(3);
+      \u0275\u0275property("disabled", ctx.iaData().iaTree.length === 0);
+    }
+  }, dependencies: [
+    CommonModule,
+    NgClass,
+    NgIf,
+    FormsModule,
+    DefaultValueAccessor,
+    NgControlStatus,
+    MaxLengthValidator,
+    NgModel,
+    TranslateModule,
+    TableModule,
+    IftaLabelModule,
+    IftaLabel,
+    InputTextModule,
+    InputText,
+    KeyFilterModule,
+    KeyFilter,
+    AutoCompleteModule,
+    AutoComplete,
+    PasswordModule,
+    Password,
+    ButtonModule,
+    Button,
+    MessageModule,
+    Message,
+    FieldsetModule,
+    Fieldset
+  ], encapsulation: 2 });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ExportGithubComponent, [{
+    type: Component,
+    args: [{ selector: "ca-export-github", imports: [
+      CommonModule,
+      FormsModule,
+      TranslateModule,
+      TableModule,
+      IftaLabelModule,
+      InputTextModule,
+      KeyFilterModule,
+      AutoCompleteModule,
+      PasswordModule,
+      ButtonModule,
+      MessageModule,
+      FieldsetModule
+    ], template: `<h2>Export to GitHub</h2>
+<p>Export the current in-scope pages for your project to a GitHub repository. You can specify the owner, repository, branch, and provide a <p-button icon="pi pi-question-circle" (onClick)="showHelp = !showHelp" [rounded]="true" [text]="true" styleClass="-m-3 nohover" iconPos="right" severity="help" label="GitHub token"></p-button> for authentication.</p>
+<p>The pages will be exported in Jekyll format. Redirects for the included pages are automatically set up, so you don't need to update links in your repo manually. If you create new pages directly in GitHub, remember to list them in your <code>/source/data/exclude-redirect-links.json</code> file.</p>
+
+
+<div *ngIf="showHelp" class="text-sm mt-2">
+    <p>To push changes to a repository, you need a valid GitHub token. Your token works like a username and password, so keep it private and do not share it with anyone.</p>
+
+    <p>Follow these steps to create a new GitHub token:</p>
+
+    <ol>
+        <li>Go to your GitHub <strong>Settings</strong>.</li>
+        <li>Select <strong>Developer settings</strong>.</li>
+        <li>Click <strong>Personal Access Tokens</strong> &gt; <strong>Fine-grained tokens</strong>.</li>
+        <li>Click <strong>Generate new token</strong>.</li>
+        <li>Give your token a <strong>unique name</strong> and a <strong>description</strong>.</li>
+        <li>Under <strong>Resource owner</strong>, select either cra-design or your personal account.</li>
+        <li>Under <strong>Repository access</strong>, select <strong>All repositories</strong>.</li>
+        <li>Add the necessary <strong>permissions</strong> for pushing changes to repositories:
+            <ul>
+                <li><strong>Administration</strong> (Access: Read and write)</li>
+                <li><strong>Contents</strong> (Access: Read and write)</li>
+                <li><strong>Metadata</strong> (Access: Read-only)</li>
+                <li><strong>Pages</strong> (Access: Read and write)</li>
+            </ul>
+        </li>
+        <li>Copy the generated token and enter it into the GitHub token field whenever you push changes to GitHub.</li>
+    </ol>
+
+    <p><strong>Important:</strong> Keep this token secret. Treat it like a password.</p>
+
+</div>
+
+<!--TODO: Generate link to repo and a bookmarklet for toggling between repo and Canada.ca-->
+<p-fieldset legend="Export settings">
+    <div class="flex flex-column gap-2">
+        <div class="flex flex-column gap-1">
+            <p-iftalabel>
+                <input type="text" id="owner" pInputText [(ngModel)]="gitHubData().owner" pSize="small" fluid (blur)="updateOwner();updateRepoList()" maxlength="39" [pKeyFilter]="ownerFilter" [ngClass]="{ 'ng-invalid ng-dirty': ownerError }" />
+                <label for="repo">Owner</label>
+            </p-iftalabel>
+            <p-message severity="error" variant="simple" size="small" *ngIf="ownerError">{{ownerError}}</p-message>
+        </div>
+        <p-iftalabel>
+            <p-autocomplete id="repo" [(ngModel)]="gitHubData().repo" [suggestions]="filteredRepos" (input)="updateRepo()" (completeMethod)="filterRepos($event)" [dropdown]=true pSize="small" maxlength="100" [pKeyFilter]="repoFilter" fluid />
+            <label for="repo">Repository</label>
+        </p-iftalabel>
+        <p-iftalabel>
+            <input type="text" id="branch" pInputText [(ngModel)]="gitHubData().branch" pSize="small" fluid (blur)="updateBranch()" [pKeyFilter]="branchFilter" />
+            <label for="branch">Branch</label>
+        </p-iftalabel>
+        <p-iftalabel>
+            <p-password feedback="false" id="token" [(ngModel)]="userToken" pSize="small" fluid />
+            <label for="token">GitHub Token</label>
+        </p-iftalabel>
+        <p-button icon="pi pi-github" label="Export to GitHub" severity="primary" (onClick)="exportProjectToGitHub(gitHubData().owner,gitHubData().repo,gitHubData().branch,userToken,true)" [disabled]="iaData().iaTree.length === 0" />
+    </div>
+</p-fieldset>` }]
+  }], null, null);
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ExportGithubComponent, { className: "ExportGithubComponent", filePath: "src/app/views/ia-assistant/components/export-github.component.ts", lineNumber: 35 });
 })();
 
 // src/app/app.routes.ts
@@ -23336,7 +38123,7 @@ var routes = [
       }
       return true;
     }],
-    loadComponent: () => import("./chunk-7XCWMMLX.js").then((m) => m.PageAssistantCompareComponent)
+    loadComponent: () => import("./chunk-NWVHKGIF.js").then((m) => m.PageAssistantCompareComponent)
   },
   {
     path: "page-assistant/share",
@@ -23347,6 +38134,16 @@ var routes = [
     path: "page-assistant",
     component: PageUploadComponent,
     title: "title.page"
+  },
+  {
+    path: "ia-assistant",
+    component: IaAssistantComponent,
+    title: "title.ia"
+  },
+  {
+    path: "ia-assistant/github",
+    component: ExportGithubComponent,
+    title: "title.ia"
   },
   {
     path: "image-assistant",
@@ -23372,6 +38169,11 @@ var routes = [
     path: "metadata-assistant",
     component: MetadataAssistantComponent,
     title: "title.metadata"
+  },
+  {
+    path: "llm-evaluation",
+    component: LlmEvaluationComponent,
+    title: "title.llmEvaluation"
   },
   {
     path: "about-us",
@@ -23428,14 +38230,11 @@ var appConfig = {
 
 // src/app/template/api-reset.component.ts
 var ApiResetComponent = class _ApiResetComponent {
-  localStore;
-  constructor(localStore) {
-    this.localStore = localStore;
-  }
+  localStore = inject(LocalStorageService);
   static \u0275fac = function ApiResetComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ApiResetComponent)(\u0275\u0275directiveInject(LocalStorageService));
+    return new (__ngFactoryType__ || _ApiResetComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ApiResetComponent, selectors: [["ca-api-reset"]], decls: 2, vars: 4, consts: [["icon", "pi pi-key", "outlined", "", "severity", "secondary", "id", "api-key-reset-btn", "styleClass", "surface-border", 1, "my-2", "api-button", 3, "click", "label", "rounded"]], template: function ApiResetComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ApiResetComponent, selectors: [["ca-api-reset"]], decls: 2, vars: 4, consts: [["icon", "pi pi-key", "outlined", "", "severity", "secondary", "id", "api-key-reset-btn", "styleClass", "surface-border api-button-size", 1, "my-2", "api-button", 3, "click", "label", "rounded"]], template: function ApiResetComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "p-button", 0);
       \u0275\u0275pipe(1, "translate");
@@ -23447,19 +38246,19 @@ var ApiResetComponent = class _ApiResetComponent {
     if (rf & 2) {
       \u0275\u0275property("label", \u0275\u0275pipeBind1(1, 2, "apiKey.change"))("rounded", true);
     }
-  }, dependencies: [TranslateModule, TranslatePipe, ButtonModule, Button], styles: ["\n\n@media (max-width: 768px) {\n    .api-button .p-button-label {\n    display: none;\n  }\n}\n  .api-button:hover .p-button-icon {\n  color: var(--p-primary-400) !important;\n}\n  html.dark-mode .api-button:hover .p-button-icon {\n  color: var(--p-primary-200) !important;\n}\n/*# sourceMappingURL=api-reset.component.css.map */"] });
+  }, dependencies: [TranslateModule, TranslatePipe, ButtonModule, Button], styles: ["\n\n  .api-button-size {\n  width: 13rem !important;\n}\n@media (max-width: 768px) {\n    .api-button-size {\n    width: auto !important;\n    padding: 10px !important;\n  }\n    .api-button .p-button-label {\n    display: none;\n  }\n}\n  .api-button:hover .p-button-icon {\n  color: var(--p-primary-400) !important;\n}\n  html.dark-mode .api-button:hover .p-button-icon {\n  color: var(--p-primary-200) !important;\n}\n/*# sourceMappingURL=api-reset.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ApiResetComponent, [{
     type: Component,
     args: [{ selector: "ca-api-reset", imports: [TranslateModule, ButtonModule], template: `
     <p-button icon="pi pi-key" [label]="'apiKey.change' | translate" [rounded]="true" outlined severity="secondary"
-    id="api-key-reset-btn" class="my-2 api-button" styleClass="surface-border" (click)="this.localStore.removeData('apiKey');" />
-  `, styles: ["/* angular:styles/component:css;bba23d67f0c44f7da3fe1807e61603e3ec278e3a7974ab93a3b3cfcf38d3671d;/home/naomi/content-assistant/src/app/template/api-reset.component.ts */\n@media (max-width: 768px) {\n  ::ng-deep .api-button .p-button-label {\n    display: none;\n  }\n}\n::ng-deep .api-button:hover .p-button-icon {\n  color: var(--p-primary-400) !important;\n}\n::ng-deep html.dark-mode .api-button:hover .p-button-icon {\n  color: var(--p-primary-200) !important;\n}\n/*# sourceMappingURL=api-reset.component.css.map */\n"] }]
-  }], () => [{ type: LocalStorageService }], null);
+    id="api-key-reset-btn" class="my-2 api-button" styleClass="surface-border api-button-size" (click)="this.localStore.removeData('apiKey');" />
+  `, styles: ["/* angular:styles/component:css;3a79632ccf9b2a1bf9b85450cd9ee1a91b4c6a930bfce5ba9d88905c12f7b962;/home/naomi/content-assistant/src/app/template/api-reset.component.ts */\n::ng-deep .api-button-size {\n  width: 13rem !important;\n}\n@media (max-width: 768px) {\n  ::ng-deep .api-button-size {\n    width: auto !important;\n    padding: 10px !important;\n  }\n  ::ng-deep .api-button .p-button-label {\n    display: none;\n  }\n}\n::ng-deep .api-button:hover .p-button-icon {\n  color: var(--p-primary-400) !important;\n}\n::ng-deep html.dark-mode .api-button:hover .p-button-icon {\n  color: var(--p-primary-200) !important;\n}\n/*# sourceMappingURL=api-reset.component.css.map */\n"] }]
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ApiResetComponent, { className: "ApiResetComponent", filePath: "src/app/template/api-reset.component.ts", lineNumber: 27 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ApiResetComponent, { className: "ApiResetComponent", filePath: "src/app/template/api-reset.component.ts", lineNumber: 34 });
 })();
 
 // src/app/template/header.component.ts
@@ -23469,25 +38268,22 @@ function HeaderComponent_ca_api_reset_6_Template(rf, ctx) {
   }
 }
 var HeaderComponent = class _HeaderComponent {
-  translate;
-  localStore;
-  theme;
+  translate = inject(TranslateService);
+  localStore = inject(LocalStorageService);
+  theme = inject(ThemeService);
   get logoSrc() {
     return this.theme.darkMode() ? "cra-logo-dark.png" : "cra-logo.png";
   }
   // constructor(public langToggle: LangToggleService){} //putting the code below into a service works but we aren't calling it anywhere else
-  constructor(translate, localStore, theme8) {
-    this.translate = translate;
-    this.localStore = localStore;
-    this.theme = theme8;
-    var curLang = this.localStore.getData("lang") || this.translate.getBrowserLang() || "en";
+  constructor() {
+    const curLang = this.localStore.getData("lang") || this.translate.getBrowserLang() || "en";
     console.log(this.translate.getBrowserLang());
     this.translate.addLangs(["en", "fr"]);
     this.translate.setDefaultLang("en");
     this.translate.use(curLang);
   }
   selectLanguage() {
-    var oppLang = "";
+    let oppLang = "";
     if (this.translate.currentLang == "en") {
       oppLang = "fr";
     } else {
@@ -23497,9 +38293,9 @@ var HeaderComponent = class _HeaderComponent {
     this.localStore.saveData("lang", oppLang);
   }
   static \u0275fac = function HeaderComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _HeaderComponent)(\u0275\u0275directiveInject(TranslateService), \u0275\u0275directiveInject(LocalStorageService), \u0275\u0275directiveInject(ThemeService));
+    return new (__ngFactoryType__ || _HeaderComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeaderComponent, selectors: [["ca-header"]], decls: 11, vars: 9, consts: [["id", "header", 1, "pb-2"], [1, "flex", "align-items-center", "hidden", "md:block"], ["id", "cra-logo", "priority", "true", 1, "img-fluid", "fip-colour", "w-28rem", 3, "src", "alt"], [1, "flex", "align-items-center", "gap-3"], [4, "ngIf"], ["offIcon", "pi pi-moon", "offLabel", "", "onIcon", "pi pi-sun", "onLabel", "", "ariaLabel", "Toggle between dark and light mode", 1, "p-button-rounded", "p-button-secondary", "p-button-outlined", "p-button-sm", "surface-border", "pr-0", "darkmode-toggle", 3, "click", "ngModel"], ["tabindex", "0", 1, "cursor-pointer", "underline", "font-medium", "text-blue-600", "hover:text-blue-700", 3, "click"]], template: function HeaderComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _HeaderComponent, selectors: [["ca-header"]], decls: 11, vars: 14, consts: [["id", "header", 1, "pb-2"], [1, "flex", "align-items-center", "hidden", "md:block"], ["id", "cra-logo", "priority", "true", 1, "img-fluid", "fip-colour", "w-28rem", 3, "src", "alt"], [1, "flex", "align-items-center", "gap-3"], [4, "ngIf"], ["offIcon", "pi pi-moon", "offLabel", "", "onIcon", "pi pi-sun", "onLabel", "", "ariaLabel", "Toggle between dark and light mode", 1, "p-button-rounded", "p-button-secondary", "p-button-outlined", "p-button-sm", "surface-border", "pr-0", "darkmode-toggle", 3, "click", "ngModel"], ["styleClass", "underline text-blue-600 hover:text-blue-700 nohover w-5rem", "severity", "secondary", 3, "onClick", "rounded", "text", "label", "ariaLabel"]], template: function HeaderComponent_Template(rf, ctx) {
     if (rf & 1) {
       \u0275\u0275elementStart(0, "header", 0)(1, "p-toolbar")(2, "div", 1);
       \u0275\u0275element(3, "img", 2);
@@ -23512,25 +38308,25 @@ var HeaderComponent = class _HeaderComponent {
         return ctx.theme.toggle();
       });
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(8, "a", 6);
-      \u0275\u0275listener("click", function HeaderComponent_Template_a_click_8_listener() {
+      \u0275\u0275elementStart(8, "p-button", 6);
+      \u0275\u0275pipe(9, "translate");
+      \u0275\u0275pipe(10, "translate");
+      \u0275\u0275listener("onClick", function HeaderComponent_Template_p_button_onClick_8_listener() {
         return ctx.selectLanguage();
       });
-      \u0275\u0275text(9);
-      \u0275\u0275pipe(10, "translate");
       \u0275\u0275elementEnd()()()();
     }
     if (rf & 2) {
       \u0275\u0275advance(3);
-      \u0275\u0275property("src", ctx.logoSrc, \u0275\u0275sanitizeUrl)("alt", \u0275\u0275pipeBind1(4, 5, "CRA"));
+      \u0275\u0275property("src", ctx.logoSrc, \u0275\u0275sanitizeUrl)("alt", \u0275\u0275pipeBind1(4, 8, "CRA"));
       \u0275\u0275advance(3);
-      \u0275\u0275property("ngIf", ctx.localStore.getData("apiKey") != null);
+      \u0275\u0275property("ngIf", ctx.localStore.getData("apiKey") !== null);
       \u0275\u0275advance();
       \u0275\u0275property("ngModel", ctx.theme.darkMode());
-      \u0275\u0275advance(2);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(10, 7, "opp.lang"), " ");
+      \u0275\u0275advance();
+      \u0275\u0275property("rounded", true)("text", true)("label", \u0275\u0275pipeBind1(9, 10, "opp.lang"))("ariaLabel", \u0275\u0275pipeBind1(10, 12, "opp.lang"));
     }
-  }, dependencies: [CommonModule, NgIf, FormsModule, NgControlStatus, NgModel, TranslateModule, TranslatePipe, ToolbarModule, Toolbar, ButtonModule, ToggleButtonModule, ToggleButton, ApiResetComponent], styles: ["\n\n  .p-toolbar {\n  background-color: transparent !important;\n  border: none !important;\n}\nheader[_ngcontent-%COMP%] {\n  border-bottom-style: solid;\n  border-bottom-color: var(--p-gray-400);\n  border-width: 1px;\n  margin-top: -4rem;\n}\n  .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-cyan-400) !important;\n}\n  html.dark-mode .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-amber-400) !important;\n}\n/*# sourceMappingURL=header.component.css.map */"] });
+  }, dependencies: [CommonModule, NgIf, FormsModule, NgControlStatus, NgModel, TranslateModule, TranslatePipe, ToolbarModule, Toolbar, ButtonModule, Button, ToggleButtonModule, ToggleButton, ApiResetComponent], styles: ["\n\n  .p-toolbar {\n  background-color: transparent !important;\n  border: none !important;\n}\nheader[_ngcontent-%COMP%] {\n  border-bottom-style: solid;\n  border-bottom-color: var(--p-gray-400);\n  border-width: 1px;\n  margin-top: -4rem;\n}\n  .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-cyan-400) !important;\n}\n  html.dark-mode .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-amber-400) !important;\n}\n/*# sourceMappingURL=header.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(HeaderComponent, [{
@@ -23549,7 +38345,7 @@ var HeaderComponent = class _HeaderComponent {
     </div>
     <div class="flex align-items-center gap-3">
       <ca-api-reset
-        *ngIf="this.localStore.getData('apiKey') != null">
+        *ngIf="this.localStore.getData('apiKey') !== null">
       </ca-api-reset>
 
       <p-togglebutton
@@ -23563,188 +38359,228 @@ var HeaderComponent = class _HeaderComponent {
         ariaLabel="Toggle between dark and light mode">
       </p-togglebutton>
 
-      <a
-        class="cursor-pointer underline font-medium text-blue-600 hover:text-blue-700"
-        tabindex="0"
-        (click)="selectLanguage()">
-        {{ 'opp.lang' | translate }}
-      </a>
+      <p-button (onClick)="selectLanguage()" [rounded]="true" [text]="true" styleClass="underline text-blue-600 hover:text-blue-700 nohover w-5rem" severity="secondary" [label]="'opp.lang' | translate" [ariaLabel]="'opp.lang' | translate"></p-button>
+
     </div>
   </p-toolbar>
 </header>
   `, styles: ["/* angular:styles/component:css;607ff6dd9fa2de823f98ca3db927b4c2688fafc0a7c156a199ce40df64b470ce;/home/naomi/content-assistant/src/app/template/header.component.ts */\n::ng-deep .p-toolbar {\n  background-color: transparent !important;\n  border: none !important;\n}\nheader {\n  border-bottom-style: solid;\n  border-bottom-color: var(--p-gray-400);\n  border-width: 1px;\n  margin-top: -4rem;\n}\n::ng-deep .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-cyan-400) !important;\n}\n::ng-deep html.dark-mode .darkmode-toggle:hover .p-togglebutton-icon {\n  color: var(--p-amber-400) !important;\n}\n/*# sourceMappingURL=header.component.css.map */\n"] }]
-  }], () => [{ type: TranslateService }, { type: LocalStorageService }, { type: ThemeService }], null);
+  }], () => [], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HeaderComponent, { className: "HeaderComponent", filePath: "src/app/template/header.component.ts", lineNumber: 77 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(HeaderComponent, { className: "HeaderComponent", filePath: "src/app/template/header.component.ts", lineNumber: 73 });
 })();
 
 // src/app/template/sidebar.component.ts
-var _c011 = () => ["/"];
-var _c111 = () => ["/page-assistant"];
-var _c23 = () => ["/image-assistant"];
-var _c33 = () => ["/translation-assistant"];
-var _c43 = () => ["/inventory-assistant"];
-var _c53 = () => ["/metadata-assistant"];
-var _c63 = () => ["/about-us"];
+var _c019 = () => ["/"];
+var _c120 = () => ["/page-assistant"];
+var _c210 = () => ["/image-assistant"];
+var _c38 = () => ["/translation-assistant"];
+var _c48 = () => ["/ia-assistant"];
+var _c58 = () => ["/inventory-assistant"];
+var _c67 = () => ["/metadata-assistant"];
+var _c76 = () => ["/llm-evaluation"];
+var _c86 = () => ["/about-us"];
 var SidebarComponent = class _SidebarComponent {
   // Section toggle state
   isExpanded = {
     main: true,
     project: true,
+    monitoring: true,
     info: true
   };
   toggleSection(section) {
     this.isExpanded[section] = !this.isExpanded[section];
   }
+  toggleOnEnter(event, section) {
+    if (event.key === "Enter" || event.key === " ") {
+      this.toggleSection(section);
+    }
+  }
   static \u0275fac = function SidebarComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _SidebarComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SidebarComponent, selectors: [["ca-sidebar"]], decls: 76, vars: 59, consts: [["id", "nav-bar", 1, "l-navbar", "show-n"], [1, "nav"], [1, "nav_logo"], [3, "routerLink"], [1, "material-icons", "text-primary-200"], [1, "logo_text"], [1, "nav_section"], [1, "nav_header", "text-primary-200", "hover:text-primary-400", 3, "click"], [1, "nav_section_text"], [1, "material-icons", "toggle-icon"], [1, "nav_section_body"], ["routerLinkActive", "active", 1, "nav_link", "flex", "hover:bg-primary-600", "border-round", 3, "routerLink"], [1, "material-icons"], [1, "nav_link_text"], [1, "section"], [1, "nav_header", "text-primary-200", "hover:text-primary-400", "hover:font-bold", 3, "click"], [1, "nav_link", "flex", "hover:bg-primary-600", "border-round", 3, "href"]], template: function SidebarComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SidebarComponent, selectors: [["ca-sidebar"]], decls: 92, vars: 74, consts: [["id", "nav-bar", 1, "l-navbar", "show-n"], [1, "nav"], [1, "flex", "flex-column", "justify-content-between", "min-h-full"], [1, "nav_logo"], [3, "routerLink"], [1, "material-icons", "text-primary-200"], [1, "logo_text"], [1, "section"], ["tabindex", "0", "role", "button", "aria-controls", "main", 1, "nav_header", "text-primary-200", "hover:text-primary-400", 3, "click", "keydown"], ["id", "menu-content", 1, "nav_section_text"], [1, "material-icons", "toggle-icon"], ["id", "main", "role", "region", "aria-labelledby", "menu-content", 1, "nav_section_body"], ["routerLinkActive", "active", 1, "nav_link", "flex", "hover:bg-primary-600", "border-round", 3, "routerLink"], [1, "material-icons"], [1, "nav_link_text"], ["tabindex", "0", "role", "button", "aria-controls", "project", 1, "nav_header", "text-primary-200", "hover:text-primary-400", "hover:font-bold", 3, "click", "keydown"], ["id", "menu-project", 1, "nav_section_text"], ["id", "project", "role", "region", "aria-labelledby", "menu-project", 1, "nav_section_body"], ["tabindex", "0", "role", "button", "aria-controls", "monitoring", 1, "nav_header", "text-primary-200", "hover:text-primary-400", "hover:font-bold", 3, "click", "keydown"], ["id", "menu-monitoring", 1, "nav_section_text"], ["id", "monitoring", "role", "region", "aria-labelledby", "menu-monitoring", 1, "nav_section_body"], [1, "nav_section_body"], [1, "nav_link", "flex", "hover:bg-primary-600", "border-round", 3, "href"]], template: function SidebarComponent_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275elementStart(0, "div", 0)(1, "nav", 1)(2, "div", 2)(3, "a", 3)(4, "span", 4);
-      \u0275\u0275text(5, "design_services");
+      \u0275\u0275elementStart(0, "div", 0)(1, "nav", 1)(2, "div", 2)(3, "div")(4, "div", 3)(5, "a", 4)(6, "span", 5);
+      \u0275\u0275text(7, "design_services");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(6, "span", 5);
-      \u0275\u0275text(7);
-      \u0275\u0275pipe(8, "translate");
+      \u0275\u0275elementStart(8, "span", 6);
+      \u0275\u0275text(9);
+      \u0275\u0275pipe(10, "translate");
       \u0275\u0275elementEnd()()();
-      \u0275\u0275elementStart(9, "div", 6)(10, "div", 7);
-      \u0275\u0275listener("click", function SidebarComponent_Template_div_click_10_listener() {
+      \u0275\u0275elementStart(11, "div", 7)(12, "div", 8);
+      \u0275\u0275listener("click", function SidebarComponent_Template_div_click_12_listener() {
         return ctx.toggleSection("main");
+      })("keydown", function SidebarComponent_Template_div_keydown_12_listener($event) {
+        return ctx.toggleOnEnter($event, "main");
       });
-      \u0275\u0275elementStart(11, "span", 8);
-      \u0275\u0275text(12);
-      \u0275\u0275pipe(13, "translate");
+      \u0275\u0275elementStart(13, "span", 9);
+      \u0275\u0275text(14);
+      \u0275\u0275pipe(15, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(14, "span", 9);
-      \u0275\u0275text(15);
+      \u0275\u0275elementStart(16, "span", 10);
+      \u0275\u0275text(17);
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(16, "div", 10)(17, "a", 11)(18, "span", 12);
-      \u0275\u0275text(19, "article");
+      \u0275\u0275elementStart(18, "div", 11)(19, "a", 12)(20, "span", 13);
+      \u0275\u0275text(21, "article");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(20, "span", 13);
-      \u0275\u0275text(21);
-      \u0275\u0275pipe(22, "translate");
+      \u0275\u0275elementStart(22, "span", 14);
+      \u0275\u0275text(23);
+      \u0275\u0275pipe(24, "translate");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(23, "a", 11)(24, "span", 12);
-      \u0275\u0275text(25, "photo");
+      \u0275\u0275elementStart(25, "a", 12)(26, "span", 13);
+      \u0275\u0275text(27, "photo");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(26, "span", 13);
-      \u0275\u0275text(27);
-      \u0275\u0275pipe(28, "translate");
+      \u0275\u0275elementStart(28, "span", 14);
+      \u0275\u0275text(29);
+      \u0275\u0275pipe(30, "translate");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(29, "a", 11)(30, "span", 12);
-      \u0275\u0275text(31, "language");
+      \u0275\u0275elementStart(31, "a", 12)(32, "span", 13);
+      \u0275\u0275text(33, "language");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(32, "span", 13);
-      \u0275\u0275text(33);
-      \u0275\u0275pipe(34, "translate");
+      \u0275\u0275elementStart(34, "span", 14);
+      \u0275\u0275text(35);
+      \u0275\u0275pipe(36, "translate");
       \u0275\u0275elementEnd()()()();
-      \u0275\u0275elementStart(35, "div", 14)(36, "div", 15);
-      \u0275\u0275listener("click", function SidebarComponent_Template_div_click_36_listener() {
+      \u0275\u0275elementStart(37, "div", 7)(38, "div", 15);
+      \u0275\u0275listener("click", function SidebarComponent_Template_div_click_38_listener() {
         return ctx.toggleSection("project");
+      })("keydown", function SidebarComponent_Template_div_keydown_38_listener($event) {
+        return ctx.toggleOnEnter($event, "project");
       });
-      \u0275\u0275elementStart(37, "span", 8);
-      \u0275\u0275text(38);
-      \u0275\u0275pipe(39, "translate");
+      \u0275\u0275elementStart(39, "span", 16);
+      \u0275\u0275text(40);
+      \u0275\u0275pipe(41, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(40, "span", 9);
-      \u0275\u0275text(41);
+      \u0275\u0275elementStart(42, "span", 10);
+      \u0275\u0275text(43);
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(42, "div", 10)(43, "a", 11)(44, "span", 12);
-      \u0275\u0275text(45, "inventory");
+      \u0275\u0275elementStart(44, "div", 17)(45, "a", 12)(46, "span", 13);
+      \u0275\u0275text(47, "lan");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(46, "span", 13);
-      \u0275\u0275text(47);
-      \u0275\u0275pipe(48, "translate");
+      \u0275\u0275elementStart(48, "span", 14);
+      \u0275\u0275text(49);
+      \u0275\u0275pipe(50, "translate");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(49, "a", 11)(50, "span", 12);
-      \u0275\u0275text(51, "description");
+      \u0275\u0275elementStart(51, "a", 12)(52, "span", 13);
+      \u0275\u0275text(53, "inventory");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(52, "span", 13);
-      \u0275\u0275text(53);
-      \u0275\u0275pipe(54, "translate");
-      \u0275\u0275elementEnd()()()();
-      \u0275\u0275elementStart(55, "div", 14)(56, "div", 7);
-      \u0275\u0275listener("click", function SidebarComponent_Template_div_click_56_listener() {
-        return ctx.toggleSection("info");
-      });
-      \u0275\u0275elementStart(57, "span", 8);
-      \u0275\u0275text(58);
-      \u0275\u0275pipe(59, "translate");
+      \u0275\u0275elementStart(54, "span", 14);
+      \u0275\u0275text(55);
+      \u0275\u0275pipe(56, "translate");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(57, "a", 12)(58, "span", 13);
+      \u0275\u0275text(59, "description");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(60, "span", 9);
+      \u0275\u0275elementStart(60, "span", 14);
       \u0275\u0275text(61);
-      \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(62, "div", 10)(63, "a", 11)(64, "span", 12);
-      \u0275\u0275text(65, "web_asset");
+      \u0275\u0275pipe(62, "translate");
+      \u0275\u0275elementEnd()()()();
+      \u0275\u0275elementStart(63, "div", 7)(64, "div", 18);
+      \u0275\u0275listener("click", function SidebarComponent_Template_div_click_64_listener() {
+        return ctx.toggleSection("monitoring");
+      })("keydown", function SidebarComponent_Template_div_keydown_64_listener($event) {
+        return ctx.toggleOnEnter($event, "monitoring");
+      });
+      \u0275\u0275elementStart(65, "span", 19);
+      \u0275\u0275text(66);
+      \u0275\u0275pipe(67, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(66, "span", 13);
-      \u0275\u0275text(67);
-      \u0275\u0275pipe(68, "translate");
+      \u0275\u0275elementStart(68, "span", 10);
+      \u0275\u0275text(69);
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(69, "a", 16);
-      \u0275\u0275pipe(70, "translate");
-      \u0275\u0275elementStart(71, "span", 12);
-      \u0275\u0275text(72, "feedback");
+      \u0275\u0275elementStart(70, "div", 20)(71, "a", 12)(72, "span", 13);
+      \u0275\u0275text(73, "assessment");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(73, "span", 13);
-      \u0275\u0275text(74);
-      \u0275\u0275pipe(75, "translate");
-      \u0275\u0275elementEnd()()()()()();
+      \u0275\u0275elementStart(74, "span", 14);
+      \u0275\u0275text(75);
+      \u0275\u0275pipe(76, "translate");
+      \u0275\u0275elementEnd()()()()();
+      \u0275\u0275elementStart(77, "div", 7)(78, "div", 21)(79, "a", 12)(80, "span", 13);
+      \u0275\u0275text(81, "web_asset");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(82, "span", 14);
+      \u0275\u0275text(83);
+      \u0275\u0275pipe(84, "translate");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(85, "a", 22);
+      \u0275\u0275pipe(86, "translate");
+      \u0275\u0275elementStart(87, "span", 13);
+      \u0275\u0275text(88, "feedback");
+      \u0275\u0275elementEnd();
+      \u0275\u0275elementStart(89, "span", 14);
+      \u0275\u0275text(90);
+      \u0275\u0275pipe(91, "translate");
+      \u0275\u0275elementEnd()()()()()()();
     }
     if (rf & 2) {
-      \u0275\u0275advance(3);
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(52, _c011));
-      \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(8, 28, "title.landing"));
       \u0275\u0275advance(5);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 30, "menu.content"));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(65, _c019));
+      \u0275\u0275advance(4);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(10, 37, "title.landing"));
+      \u0275\u0275advance(3);
+      \u0275\u0275attribute("aria-expanded", ctx.isExpanded.main);
+      \u0275\u0275advance(2);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(15, 39, "menu.content"));
       \u0275\u0275advance(3);
       \u0275\u0275textInterpolate(ctx.isExpanded.main ? "expand_less" : "expand_more");
       \u0275\u0275advance();
       \u0275\u0275classProp("hidden", !ctx.isExpanded.main);
       \u0275\u0275advance();
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(53, _c111));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(66, _c120));
       \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(22, 32, "menu.page"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(24, 41, "menu.page"));
       \u0275\u0275advance(2);
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(54, _c23));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(67, _c210));
       \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(28, 34, "menu.image"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(30, 43, "menu.image"));
       \u0275\u0275advance(2);
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(55, _c33));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(68, _c38));
       \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(34, 36, "menu.translation"));
-      \u0275\u0275advance(5);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(39, 38, "menu.project"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(36, 45, "menu.translation"));
+      \u0275\u0275advance(3);
+      \u0275\u0275attribute("aria-expanded", ctx.isExpanded.project);
+      \u0275\u0275advance(2);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(41, 47, "menu.project"));
       \u0275\u0275advance(3);
       \u0275\u0275textInterpolate(ctx.isExpanded.project ? "expand_less" : "expand_more");
       \u0275\u0275advance();
       \u0275\u0275classProp("hidden", !ctx.isExpanded.project);
       \u0275\u0275advance();
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(56, _c43));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(69, _c48));
       \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(48, 40, "menu.inventory"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(50, 49, "menu.ia"));
       \u0275\u0275advance(2);
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(57, _c53));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(70, _c58));
       \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(54, 42, "menu.metadata"));
-      \u0275\u0275advance(5);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(59, 44, "menu.appInfo"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(56, 51, "menu.inventory"));
+      \u0275\u0275advance(2);
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(71, _c67));
+      \u0275\u0275advance(4);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(62, 53, "menu.metadata"));
       \u0275\u0275advance(3);
-      \u0275\u0275textInterpolate(ctx.isExpanded.info ? "expand_less" : "expand_more");
+      \u0275\u0275attribute("aria-expanded", ctx.isExpanded.monitoring);
+      \u0275\u0275advance(2);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(67, 55, "menu.monitoring"));
+      \u0275\u0275advance(3);
+      \u0275\u0275textInterpolate(ctx.isExpanded.monitoring ? "expand_less" : "expand_more");
       \u0275\u0275advance();
+      \u0275\u0275classProp("hidden", !ctx.isExpanded.monitoring);
+      \u0275\u0275advance();
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(72, _c76));
+      \u0275\u0275advance(4);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(76, 57, "menu.llmEvaluation"));
+      \u0275\u0275advance(3);
       \u0275\u0275classProp("hidden", !ctx.isExpanded.info);
       \u0275\u0275advance();
-      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(58, _c63));
+      \u0275\u0275property("routerLink", \u0275\u0275pureFunction0(73, _c86));
       \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(68, 46, "menu.about"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(84, 59, "menu.about"));
       \u0275\u0275advance(2);
-      \u0275\u0275property("href", \u0275\u0275pipeBind1(70, 48, "feedback.email"), \u0275\u0275sanitizeUrl);
+      \u0275\u0275property("href", \u0275\u0275pipeBind1(86, 61, "feedback.email"), \u0275\u0275sanitizeUrl);
       \u0275\u0275advance(5);
-      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(75, 50, "menu.feedback"));
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(91, 63, "menu.feedback"));
     }
   }, dependencies: [CommonModule, RouterModule, RouterLink, RouterLinkActive, TranslateModule, TranslatePipe], styles: ["\n\n.l-navbar[_ngcontent-%COMP%]   a[_ngcontent-%COMP%] {\n  text-decoration: none;\n}\n.l-navbar[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 0;\n  left: -30%;\n  width: var(--nav-width);\n  height: 100vh;\n  background-color: var(--p-gray-800);\n  padding: .5rem 1rem 1rem;\n  transition: .3s;\n  z-index: var(--z-fixed);\n}\n.nav[_ngcontent-%COMP%] {\n  height: 100%;\n  display: contents;\n  flex-direction: column;\n  justify-content: space-between;\n  overflow: hidden;\n}\n.nav_link[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-columns: max-content max-content;\n  align-items: center;\n  column-gap: 1rem;\n  padding: .3rem 0 0 .3rem;\n  position: relative;\n  color: var(--first-color-light);\n  margin-bottom: .8rem;\n  transition: .3s;\n}\n.nav_link[_ngcontent-%COMP%]:hover {\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  margin-bottom: 0rem;\n}\n.nav_link.active[_ngcontent-%COMP%]:hover {\n  color: #fff;\n}\n.nav_link.active[_ngcontent-%COMP%] {\n  background-color: var(--p-primary-color);\n  border-radius: .25rem;\n  padding-bottom: .3rem;\n  margin-bottom: .1rem;\n}\n.nav_link.active-hide[_ngcontent-%COMP%] {\n  background-color: var(--p-primary-color);\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  width: 2.8rem;\n}\n.nav_logo[_ngcontent-%COMP%] {\n  display: flex;\n  grid-template-columns: max-content max-content;\n  align-items: center;\n  column-gap: 1rem;\n  padding: 0;\n  margin-bottom: 2rem;\n}\n.nav_logo-icon[_ngcontent-%COMP%] {\n  font-size: 1.25rem;\n}\n.nav_logo-name[_ngcontent-%COMP%] {\n  color: var(--first-color-light);\n  font-weight: 700;\n}\n.show-n[_ngcontent-%COMP%] {\n  left: 0;\n}\n.section[_ngcontent-%COMP%] {\n  padding: .1rem;\n}\n.nav_section_body[_ngcontent-%COMP%] {\n  padding-left: .7rem;\n}\n.nav_section_body.hidden[_ngcontent-%COMP%] {\n  display: none;\n}\n.nav_link_text[_ngcontent-%COMP%] {\n  margin-left: 0rem;\n}\n.nav_header[_ngcontent-%COMP%] {\n  font-size: 18px;\n  border-radius: .25rem;\n  display: flex;\n  align-items: center;\n  cursor: pointer;\n  padding: 0.5rem 0;\n}\n.nav_header[_ngcontent-%COMP%]:hover {\n  font-weight: bold;\n  padding-bottom: .5rem;\n}\n.nav_header.active[_ngcontent-%COMP%]:hover {\n  color: #fff;\n}\n.nav_header.active[_ngcontent-%COMP%] {\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  margin-bottom: .1rem;\n}\n.nav_header.active-hide[_ngcontent-%COMP%] {\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  width: 2.8rem;\n}\n.toggle-icon[_ngcontent-%COMP%] {\n  margin-left: auto;\n}\n.nav_icon[_ngcontent-%COMP%], \n.nav_section_text[_ngcontent-%COMP%] {\n  margin-left: .5rem;\n}\n.nav_section[_ngcontent-%COMP%] {\n  overflow: hidden;\n  max-width: 100%;\n}\n@media (max-width: 600px) {\n  .section[_ngcontent-%COMP%], \n   .nav_section-body[_ngcontent-%COMP%], \n   .nav_section_text[_ngcontent-%COMP%] {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    max-width: 100%;\n    min-width: 0;\n    display: block;\n  }\n  .nav_header[_ngcontent-%COMP%], \n   .nav_link_text[_ngcontent-%COMP%] {\n    display: none;\n  }\n  .toggle-icon[_ngcontent-%COMP%] {\n    margin-left: 0;\n    margin-top: 0.5rem;\n    align-self: flex-end;\n  }\n  .logo_text[_ngcontent-%COMP%] {\n    display: none;\n  }\n}\n.nav_logo[_ngcontent-%COMP%]   a[_ngcontent-%COMP%] {\n  display: flex;\n  align-items: center;\n  padding: 0;\n  color: var(--first-color-light);\n}\n.nav_logo[_ngcontent-%COMP%]   .material-icons[_ngcontent-%COMP%] {\n  font-size: 2.2rem;\n  align-self: flex-start;\n  margin-right: 0.5rem;\n  border-radius: 0.25rem;\n}\n.logo_text[_ngcontent-%COMP%] {\n  font-size: 1.1rem;\n  font-weight: 600;\n  letter-spacing: 0.05em;\n  padding: 0 .5rem;\n  align-self: flex-start;\n}\n@media screen and (min-width: 600px) {\n  .l-navbar[_ngcontent-%COMP%] {\n    left: 0;\n    padding: 1rem 1rem 0;\n  }\n  .show-n[_ngcontent-%COMP%] {\n    width: calc(var(--nav-width) + 110px);\n  }\n}\n/*# sourceMappingURL=sidebar.component.css.map */"] });
 };
@@ -23753,80 +38589,101 @@ var SidebarComponent = class _SidebarComponent {
     type: Component,
     args: [{ selector: "ca-sidebar", standalone: true, imports: [CommonModule, RouterModule, TranslateModule], template: `<div class="l-navbar show-n" id="nav-bar">
   <nav class="nav">
-    <!-- App Title -->
-    <div class="nav_logo">
-      <a [routerLink]="['/']">
-        <span class="material-icons text-primary-200">design_services</span>
-        <span class="logo_text">{{ 'title.landing' | translate }}</span>
-      </a>
-    </div>
+    <div class="flex flex-column justify-content-between min-h-full">
+      <div>
+        <!-- App Title -->
+        <div class="nav_logo">
+          <a [routerLink]="['/']">
+            <span class="material-icons text-primary-200">design_services</span>
+            <span class="logo_text">{{ 'title.landing' | translate }}</span>
+          </a>
+        </div>
 
-    <!-- Main Tools -->
-    <div class="nav_section">
-      <div class="nav_header text-primary-200 hover:text-primary-400" (click)="toggleSection('main')">
-        <span class="nav_section_text">{{ 'menu.content' | translate }}</span>
-        <span class="material-icons toggle-icon">{{ isExpanded.main ? 'expand_less' : 'expand_more' }}</span>
+        <!-- Main Tools -->
+        <div class="section">
+          <div class="nav_header text-primary-200 hover:text-primary-400" (click)="toggleSection('main')" (keydown)="toggleOnEnter($event, 'main')" tabindex="0" role="button" [attr.aria-expanded]="isExpanded.main" aria-controls="main">
+            <span id="menu-content" class="nav_section_text">{{ 'menu.content' | translate }}</span>
+            <span class="material-icons toggle-icon">{{ isExpanded.main ? 'expand_less' : 'expand_more' }}</span>
+          </div>
+          <div class="nav_section_body" id="main" role="region" aria-labelledby="menu-content" [class.hidden]="!isExpanded.main">
+            <a [routerLink]="['/page-assistant']" routerLinkActive="active"
+               class="nav_link flex hover:bg-primary-600 border-round ">
+              <span class="material-icons">article</span>
+              <span class="nav_link_text">{{ 'menu.page' | translate }}</span>
+            </a>
+            <a [routerLink]="['/image-assistant']" routerLinkActive="active"
+               class="nav_link flex hover:bg-primary-600 border-round">
+              <span class="material-icons">photo</span>
+              <span class="nav_link_text">{{ 'menu.image' | translate }}</span>
+            </a>
+            <a [routerLink]="['/translation-assistant']" routerLinkActive="active"
+               class="nav_link flex hover:bg-primary-600 border-round">
+              <span class="material-icons">language</span>
+              <span class="nav_link_text">{{ 'menu.translation' | translate }}</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project Tools -->
+        <div class="section">
+          <div class="nav_header text-primary-200 hover:text-primary-400 hover:font-bold" (click)="toggleSection('project')" (keydown)="toggleOnEnter($event, 'project')" tabindex="0" role="button" [attr.aria-expanded]="isExpanded.project" aria-controls="project">
+            <span id="menu-project" class="nav_section_text">{{ 'menu.project' | translate }}</span>
+            <span class="material-icons toggle-icon">{{ isExpanded.project ? 'expand_less' : 'expand_more' }}</span>
+          </div>
+          <div class="nav_section_body" id="project" role="region" aria-labelledby="menu-project" [class.hidden]="!isExpanded.project">
+            <a [routerLink]="['/ia-assistant']" routerLinkActive="active"
+               class="nav_link flex hover:bg-primary-600 border-round">
+              <span class="material-icons">lan</span>
+              <span class="nav_link_text">{{ 'menu.ia' | translate }}</span>
+            </a>
+            <a [routerLink]="['/inventory-assistant']" routerLinkActive="active"
+               class="nav_link flex hover:bg-primary-600 border-round">
+              <span class="material-icons">inventory</span>
+              <span class="nav_link_text">{{ 'menu.inventory' | translate }}</span>
+            </a>
+            <a [routerLink]="['/metadata-assistant']" routerLinkActive="active"
+               class="nav_link flex hover:bg-primary-600 border-round">
+              <span class="material-icons">description</span>
+              <span class="nav_link_text">{{ 'menu.metadata' | translate }}</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Monitoring Tools -->
+        <div class="section">
+          <div class="nav_header text-primary-200 hover:text-primary-400 hover:font-bold" (click)="toggleSection('monitoring')" (keydown)="toggleOnEnter($event, 'monitoring')" tabindex="0" role="button" [attr.aria-expanded]="isExpanded.monitoring" aria-controls="monitoring">
+            <span id="menu-monitoring" class="nav_section_text">{{ 'menu.monitoring' | translate }}</span>
+            <span class="material-icons toggle-icon">{{ isExpanded.monitoring ? 'expand_less' : 'expand_more' }}</span>
+          </div>
+          <div class="nav_section_body" id="monitoring" role="region" aria-labelledby="menu-monitoring" [class.hidden]="!isExpanded.monitoring">
+            <a [routerLink]="['/llm-evaluation']" routerLinkActive="active"
+               class="nav_link flex hover:bg-primary-600 border-round">
+              <span class="material-icons">assessment</span>
+              <span class="nav_link_text">{{ 'menu.llmEvaluation' | translate }}</span>
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="nav_section_body" [class.hidden]="!isExpanded.main">
-        <a [routerLink]="['/page-assistant']" routerLinkActive="active"
-          class="nav_link flex hover:bg-primary-600 border-round ">
-          <span class="material-icons">article</span>
-          <span class="nav_link_text">{{ 'menu.page' | translate }}</span>
-        </a>
-        <a [routerLink]="['/image-assistant']" routerLinkActive="active"
-          class="nav_link flex hover:bg-primary-600 border-round">
-          <span class="material-icons">photo</span>
-          <span class="nav_link_text">{{ 'menu.image' | translate }}</span>
-        </a>
-        <a [routerLink]="['/translation-assistant']" routerLinkActive="active"
-          class="nav_link flex hover:bg-primary-600 border-round">
-          <span class="material-icons">language</span>
-          <span class="nav_link_text">{{ 'menu.translation' | translate }}</span>
-        </a>
+      <!-- App Info -->
+      <div class="section">
+        <!--div class="nav_header text-primary-200 hover:text-primary-400" (click)="toggleSection('info')">
+          <span class="nav_section_text">{{ 'menu.appInfo' | translate }}</span>
+          <span class="material-icons toggle-icon">{{ isExpanded.info ? 'expand_less' : 'expand_more' }}</span>
+        </div-->
+        <div class="nav_section_body" [class.hidden]="!isExpanded.info">
+          <a [routerLink]="['/about-us']" routerLinkActive="active" class="nav_link flex hover:bg-primary-600 border-round">
+            <span class="material-icons">web_asset</span>
+            <span class="nav_link_text">{{ 'menu.about' | translate }}</span>
+          </a>
+          <a [href]="'feedback.email' | translate" class="nav_link flex hover:bg-primary-600 border-round">
+            <span class="material-icons">feedback</span>
+            <span class="nav_link_text">{{ 'menu.feedback' | translate }}</span>
+          </a>
+        </div>
       </div>
     </div>
-
-    <!-- Project Tools -->
-    <div class="section">
-      <div class="nav_header text-primary-200 hover:text-primary-400 hover:font-bold" (click)="toggleSection('project')">
-        <span class="nav_section_text">{{ 'menu.project' | translate }}</span>
-        <span class="material-icons toggle-icon">{{ isExpanded.project ? 'expand_less' : 'expand_more' }}</span>
-      </div>
-      <div class="nav_section_body" [class.hidden]="!isExpanded.project">
-        <a [routerLink]="['/inventory-assistant']" routerLinkActive="active"
-          class="nav_link flex hover:bg-primary-600 border-round">
-          <span class="material-icons">inventory</span>
-          <span class="nav_link_text">{{ 'menu.inventory' | translate }}</span>
-        </a>
-        <a [routerLink]="['/metadata-assistant']" routerLinkActive="active"
-          class="nav_link flex hover:bg-primary-600 border-round">
-          <span class="material-icons">description</span>
-          <span class="nav_link_text">{{ 'menu.metadata' | translate }}</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- App Info -->
-    <div class="section">
-      <div class="nav_header text-primary-200 hover:text-primary-400" (click)="toggleSection('info')">
-        <span class="nav_section_text">{{ 'menu.appInfo' | translate }}</span>
-        <span class="material-icons toggle-icon">{{ isExpanded.info ? 'expand_less' : 'expand_more' }}</span>
-      </div>
-      <div class="nav_section_body" [class.hidden]="!isExpanded.info">
-        <a [routerLink]="['/about-us']" routerLinkActive="active" class="nav_link flex hover:bg-primary-600 border-round">
-          <span class="material-icons">web_asset</span>
-          <span class="nav_link_text">{{ 'menu.about' | translate }}</span>
-        </a>
-        <a [href]="'feedback.email' | translate" class="nav_link flex hover:bg-primary-600 border-round">
-          <span class="material-icons">feedback</span>
-          <span class="nav_link_text">{{ 'menu.feedback' | translate }}</span>
-        </a>
-      </div>
-    </div>
-
   </nav>
-</div>
-`, styles: ["/* src/app/template/sidebar.component.css */\n.l-navbar a {\n  text-decoration: none;\n}\n.l-navbar {\n  position: fixed;\n  top: 0;\n  left: -30%;\n  width: var(--nav-width);\n  height: 100vh;\n  background-color: var(--p-gray-800);\n  padding: .5rem 1rem 1rem;\n  transition: .3s;\n  z-index: var(--z-fixed);\n}\n.nav {\n  height: 100%;\n  display: contents;\n  flex-direction: column;\n  justify-content: space-between;\n  overflow: hidden;\n}\n.nav_link {\n  display: grid;\n  grid-template-columns: max-content max-content;\n  align-items: center;\n  column-gap: 1rem;\n  padding: .3rem 0 0 .3rem;\n  position: relative;\n  color: var(--first-color-light);\n  margin-bottom: .8rem;\n  transition: .3s;\n}\n.nav_link:hover {\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  margin-bottom: 0rem;\n}\n.nav_link.active:hover {\n  color: #fff;\n}\n.nav_link.active {\n  background-color: var(--p-primary-color);\n  border-radius: .25rem;\n  padding-bottom: .3rem;\n  margin-bottom: .1rem;\n}\n.nav_link.active-hide {\n  background-color: var(--p-primary-color);\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  width: 2.8rem;\n}\n.nav_logo {\n  display: flex;\n  grid-template-columns: max-content max-content;\n  align-items: center;\n  column-gap: 1rem;\n  padding: 0;\n  margin-bottom: 2rem;\n}\n.nav_logo-icon {\n  font-size: 1.25rem;\n}\n.nav_logo-name {\n  color: var(--first-color-light);\n  font-weight: 700;\n}\n.show-n {\n  left: 0;\n}\n.section {\n  padding: .1rem;\n}\n.nav_section_body {\n  padding-left: .7rem;\n}\n.nav_section_body.hidden {\n  display: none;\n}\n.nav_link_text {\n  margin-left: 0rem;\n}\n.nav_header {\n  font-size: 18px;\n  border-radius: .25rem;\n  display: flex;\n  align-items: center;\n  cursor: pointer;\n  padding: 0.5rem 0;\n}\n.nav_header:hover {\n  font-weight: bold;\n  padding-bottom: .5rem;\n}\n.nav_header.active:hover {\n  color: #fff;\n}\n.nav_header.active {\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  margin-bottom: .1rem;\n}\n.nav_header.active-hide {\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  width: 2.8rem;\n}\n.toggle-icon {\n  margin-left: auto;\n}\n.nav_icon,\n.nav_section_text {\n  margin-left: .5rem;\n}\n.nav_section {\n  overflow: hidden;\n  max-width: 100%;\n}\n@media (max-width: 600px) {\n  .section,\n  .nav_section-body,\n  .nav_section_text {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    max-width: 100%;\n    min-width: 0;\n    display: block;\n  }\n  .nav_header,\n  .nav_link_text {\n    display: none;\n  }\n  .toggle-icon {\n    margin-left: 0;\n    margin-top: 0.5rem;\n    align-self: flex-end;\n  }\n  .logo_text {\n    display: none;\n  }\n}\n.nav_logo a {\n  display: flex;\n  align-items: center;\n  padding: 0;\n  color: var(--first-color-light);\n}\n.nav_logo .material-icons {\n  font-size: 2.2rem;\n  align-self: flex-start;\n  margin-right: 0.5rem;\n  border-radius: 0.25rem;\n}\n.logo_text {\n  font-size: 1.1rem;\n  font-weight: 600;\n  letter-spacing: 0.05em;\n  padding: 0 .5rem;\n  align-self: flex-start;\n}\n@media screen and (min-width: 600px) {\n  .l-navbar {\n    left: 0;\n    padding: 1rem 1rem 0;\n  }\n  .show-n {\n    width: calc(var(--nav-width) + 110px);\n  }\n}\n/*# sourceMappingURL=sidebar.component.css.map */\n"] }]
+</div>`, styles: ["/* src/app/template/sidebar.component.css */\n.l-navbar a {\n  text-decoration: none;\n}\n.l-navbar {\n  position: fixed;\n  top: 0;\n  left: -30%;\n  width: var(--nav-width);\n  height: 100vh;\n  background-color: var(--p-gray-800);\n  padding: .5rem 1rem 1rem;\n  transition: .3s;\n  z-index: var(--z-fixed);\n}\n.nav {\n  height: 100%;\n  display: contents;\n  flex-direction: column;\n  justify-content: space-between;\n  overflow: hidden;\n}\n.nav_link {\n  display: grid;\n  grid-template-columns: max-content max-content;\n  align-items: center;\n  column-gap: 1rem;\n  padding: .3rem 0 0 .3rem;\n  position: relative;\n  color: var(--first-color-light);\n  margin-bottom: .8rem;\n  transition: .3s;\n}\n.nav_link:hover {\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  margin-bottom: 0rem;\n}\n.nav_link.active:hover {\n  color: #fff;\n}\n.nav_link.active {\n  background-color: var(--p-primary-color);\n  border-radius: .25rem;\n  padding-bottom: .3rem;\n  margin-bottom: .1rem;\n}\n.nav_link.active-hide {\n  background-color: var(--p-primary-color);\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  width: 2.8rem;\n}\n.nav_logo {\n  display: flex;\n  grid-template-columns: max-content max-content;\n  align-items: center;\n  column-gap: 1rem;\n  padding: 0;\n  margin-bottom: 2rem;\n}\n.nav_logo-icon {\n  font-size: 1.25rem;\n}\n.nav_logo-name {\n  color: var(--first-color-light);\n  font-weight: 700;\n}\n.show-n {\n  left: 0;\n}\n.section {\n  padding: .1rem;\n}\n.nav_section_body {\n  padding-left: .7rem;\n}\n.nav_section_body.hidden {\n  display: none;\n}\n.nav_link_text {\n  margin-left: 0rem;\n}\n.nav_header {\n  font-size: 18px;\n  border-radius: .25rem;\n  display: flex;\n  align-items: center;\n  cursor: pointer;\n  padding: 0.5rem 0;\n}\n.nav_header:hover {\n  font-weight: bold;\n  padding-bottom: .5rem;\n}\n.nav_header.active:hover {\n  color: #fff;\n}\n.nav_header.active {\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  margin-bottom: .1rem;\n}\n.nav_header.active-hide {\n  border-radius: .25rem;\n  padding-bottom: .5rem;\n  width: 2.8rem;\n}\n.toggle-icon {\n  margin-left: auto;\n}\n.nav_icon,\n.nav_section_text {\n  margin-left: .5rem;\n}\n.nav_section {\n  overflow: hidden;\n  max-width: 100%;\n}\n@media (max-width: 600px) {\n  .section,\n  .nav_section-body,\n  .nav_section_text {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    max-width: 100%;\n    min-width: 0;\n    display: block;\n  }\n  .nav_header,\n  .nav_link_text {\n    display: none;\n  }\n  .toggle-icon {\n    margin-left: 0;\n    margin-top: 0.5rem;\n    align-self: flex-end;\n  }\n  .logo_text {\n    display: none;\n  }\n}\n.nav_logo a {\n  display: flex;\n  align-items: center;\n  padding: 0;\n  color: var(--first-color-light);\n}\n.nav_logo .material-icons {\n  font-size: 2.2rem;\n  align-self: flex-start;\n  margin-right: 0.5rem;\n  border-radius: 0.25rem;\n}\n.logo_text {\n  font-size: 1.1rem;\n  font-weight: 600;\n  letter-spacing: 0.05em;\n  padding: 0 .5rem;\n  align-self: flex-start;\n}\n@media screen and (min-width: 600px) {\n  .l-navbar {\n    left: 0;\n    padding: 1rem 1rem 0;\n  }\n  .show-n {\n    width: calc(var(--nav-width) + 110px);\n  }\n}\n/*# sourceMappingURL=sidebar.component.css.map */\n"] }]
   }], null, null);
 })();
 (() => {
@@ -23835,15 +38692,12 @@ var SidebarComponent = class _SidebarComponent {
 
 // src/app/template/footer.component.ts
 var FooterComponent = class _FooterComponent {
-  theme;
-  constructor(theme8) {
-    this.theme = theme8;
-  }
+  theme = inject(ThemeService);
   get logoSrc() {
     return this.theme.darkMode() ? "canada-logo-dark.png" : "canada-logo.png";
   }
   static \u0275fac = function FooterComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _FooterComponent)(\u0275\u0275directiveInject(ThemeService));
+    return new (__ngFactoryType__ || _FooterComponent)();
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _FooterComponent, selectors: [["ca-footer"]], decls: 9, vars: 7, consts: [[1, "container"], [1, "flex", "align-items-end"], [1, "text-color-secondary", "text-sm", "pt-5"], [1, "img-fluid", "fip-colour", 3, "src", "alt"]], template: function FooterComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -23883,17 +38737,17 @@ var FooterComponent = class _FooterComponent {
   </p-toolbar>
 </footer>
   `, styles: ["/* angular:styles/component:css;219558ef63f119a92210704329b58a3cdceaa4fb296db559e672f74512827dc7;/home/naomi/content-assistant/src/app/template/footer.component.ts */\n:host {\n  display: block;\n}\n/*# sourceMappingURL=footer.component.css.map */\n"] }]
-  }], () => [{ type: ThemeService }], null);
+  }], null, null);
 })();
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(FooterComponent, { className: "FooterComponent", filePath: "src/app/template/footer.component.ts", lineNumber: 32 });
 })();
 
 // src/app/template/api-key.component.ts
-function ApiKeyComponent_div_13_ng_container_1_Template(rf, ctx) {
+function ApiKeyComponent_div_17_ng_container_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementContainerStart(0);
-    \u0275\u0275elementStart(1, "p", 3);
+    \u0275\u0275elementStart(1, "p", 10);
     \u0275\u0275text(2);
     \u0275\u0275pipe(3, "translate");
     \u0275\u0275elementEnd();
@@ -23904,33 +38758,30 @@ function ApiKeyComponent_div_13_ng_container_1_Template(rf, ctx) {
     \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(3, 1, "apiKey.error"));
   }
 }
-function ApiKeyComponent_div_13_Template(rf, ctx) {
+function ApiKeyComponent_div_17_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div", 8);
-    \u0275\u0275template(1, ApiKeyComponent_div_13_ng_container_1_Template, 4, 3, "ng-container", 9);
+    \u0275\u0275elementStart(0, "div");
+    \u0275\u0275template(1, ApiKeyComponent_div_17_ng_container_1_Template, 4, 3, "ng-container", 8);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
     \u0275\u0275nextContext();
-    const apiField_r2 = \u0275\u0275reference(8);
+    const apiField_r2 = \u0275\u0275reference(9);
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", apiField_r2.errors == null ? null : apiField_r2.errors["required"]);
   }
 }
 var ApiKeyComponent = class _ApiKeyComponent {
-  localStore;
+  localStore = inject(LocalStorageService);
   api = "";
   error = "";
   emailLink = "";
   messageTemplate = "";
   apiKeyInstructions = "";
-  constructor(localStore) {
-    this.localStore = localStore;
-  }
   static \u0275fac = function ApiKeyComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _ApiKeyComponent)(\u0275\u0275directiveInject(LocalStorageService));
+    return new (__ngFactoryType__ || _ApiKeyComponent)();
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ApiKeyComponent, selectors: [["ca-api-key"]], decls: 16, vars: 18, consts: [["apiField", "ngModel", "apiKey", ""], [3, "header"], [1, "flex", "flex-column", "gap-3"], [1, "m-0"], ["pInputText", "", "required", "", 3, "ngModelChange", "placeholder", "ngModel"], ["pButton", "", "icon", "pi pi-key", "severity", "success", 3, "click", "label", "raised"], ["class", "text-danger small", 4, "ngIf"], [3, "innerHTML"], [1, "text-danger", "small"], [4, "ngIf"]], template: function ApiKeyComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ApiKeyComponent, selectors: [["ca-api-key"]], decls: 20, vars: 17, consts: [["apiField", "ngModel", "apiKey", ""], [3, "header"], [1, "flex", "flex-column", "gap-3"], [1, "m-0"], ["id", "apiKeyInput", "pInputText", "", "variant", "outlined", "required", "", "fluid", "", 1, "w-full", 3, "ngModelChange", "ngModel"], ["for", "apiKeyInput"], [1, "flex-none"], ["icon", "pi pi-key", "severity", "success", 3, "click", "label"], [4, "ngIf"], [3, "innerHTML"], [1, "m-0", "text-red-500", "text-sm"]], template: function ApiKeyComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "p-card", 1);
@@ -23939,72 +38790,80 @@ var ApiKeyComponent = class _ApiKeyComponent {
       \u0275\u0275text(4);
       \u0275\u0275pipe(5, "translate");
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(6, "p-inputGroup")(7, "input", 4, 0);
-      \u0275\u0275pipe(10, "translate");
-      \u0275\u0275twoWayListener("ngModelChange", function ApiKeyComponent_Template_input_ngModelChange_7_listener($event) {
+      \u0275\u0275elementStart(6, "p-inputgroup")(7, "p-iftalabel")(8, "input", 4, 0);
+      \u0275\u0275twoWayListener("ngModelChange", function ApiKeyComponent_Template_input_ngModelChange_8_listener($event) {
         \u0275\u0275restoreView(_r1);
         \u0275\u0275twoWayBindingSet(ctx.api, $event) || (ctx.api = $event);
         return \u0275\u0275resetView($event);
       });
       \u0275\u0275elementEnd();
-      \u0275\u0275elementStart(11, "button", 5);
-      \u0275\u0275pipe(12, "translate");
-      \u0275\u0275listener("click", function ApiKeyComponent_Template_button_click_11_listener() {
+      \u0275\u0275elementStart(11, "label", 5);
+      \u0275\u0275text(12);
+      \u0275\u0275pipe(13, "translate");
+      \u0275\u0275elementEnd()();
+      \u0275\u0275elementStart(14, "p-inputgroup-addon", 6)(15, "p-button", 7);
+      \u0275\u0275pipe(16, "translate");
+      \u0275\u0275listener("click", function ApiKeyComponent_Template_p_button_click_15_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.localStore.saveData("apiKey", ctx.api));
       });
-      \u0275\u0275elementEnd()();
-      \u0275\u0275template(13, ApiKeyComponent_div_13_Template, 2, 1, "div", 6);
-      \u0275\u0275element(14, "div", 7);
-      \u0275\u0275pipe(15, "translate");
+      \u0275\u0275elementEnd()()();
+      \u0275\u0275template(17, ApiKeyComponent_div_17_Template, 2, 1, "div", 8);
+      \u0275\u0275element(18, "div", 9);
+      \u0275\u0275pipe(19, "translate");
       \u0275\u0275elementEnd()();
     }
     if (rf & 2) {
-      const apiField_r2 = \u0275\u0275reference(8);
-      \u0275\u0275property("header", \u0275\u0275pipeBind1(1, 8, "title.apiKey"));
+      const apiField_r2 = \u0275\u0275reference(9);
+      \u0275\u0275property("header", \u0275\u0275pipeBind1(1, 7, "title.apiKey"));
       \u0275\u0275advance(4);
-      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 10, "apiKey.intro"), " ");
-      \u0275\u0275advance(3);
-      \u0275\u0275property("placeholder", \u0275\u0275pipeBind1(10, 12, "apiKey.placeholder"));
+      \u0275\u0275textInterpolate1(" ", \u0275\u0275pipeBind1(5, 9, "apiKey.intro"), " ");
+      \u0275\u0275advance(4);
       \u0275\u0275twoWayProperty("ngModel", ctx.api);
       \u0275\u0275advance(4);
-      \u0275\u0275property("label", \u0275\u0275pipeBind1(12, 14, "apiKey.save"))("raised", true);
+      \u0275\u0275textInterpolate(\u0275\u0275pipeBind1(13, 11, "apiKey.placeholder"));
+      \u0275\u0275advance(3);
+      \u0275\u0275property("label", \u0275\u0275pipeBind1(16, 13, "apiKey.save"));
       \u0275\u0275advance(2);
       \u0275\u0275property("ngIf", apiField_r2.invalid && apiField_r2.touched);
       \u0275\u0275advance();
-      \u0275\u0275property("innerHTML", \u0275\u0275pipeBind1(15, 16, "apiKey.instructions"), \u0275\u0275sanitizeHtml);
+      \u0275\u0275property("innerHTML", \u0275\u0275pipeBind1(19, 15, "apiKey.instructions"), \u0275\u0275sanitizeHtml);
     }
-  }, dependencies: [CommonModule, NgIf, FormsModule, DefaultValueAccessor, NgControlStatus, RequiredValidator, NgModel, TranslateModule, TranslatePipe, ButtonModule, ButtonDirective, InputGroupModule, InputGroup, CardModule, Card], encapsulation: 2 });
+  }, dependencies: [CommonModule, NgIf, FormsModule, DefaultValueAccessor, NgControlStatus, RequiredValidator, NgModel, TranslateModule, TranslatePipe, ButtonModule, Button, InputGroupModule, InputGroup, InputGroupAddon, IftaLabel, CardModule, Card], encapsulation: 2 });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(ApiKeyComponent, [{
     type: Component,
-    args: [{ selector: "ca-api-key", imports: [CommonModule, FormsModule, TranslateModule, ButtonModule, InputGroupModule, CardModule], template: `<p-card [header]="'title.apiKey' | translate">
+    args: [{ selector: "ca-api-key", imports: [CommonModule, FormsModule, TranslateModule, ButtonModule, InputGroupModule, InputGroupAddon, IftaLabel, CardModule], template: `<p-card [header]="'title.apiKey' | translate">
   <div class="flex flex-column gap-3">
 
     <p class="m-0">
       {{'apiKey.intro' | translate}}
     </p>
 
-    <p-inputGroup>
-      <input pInputText [placeholder]="'apiKey.placeholder' | translate" [(ngModel)]="api" #apiField="ngModel" #apiKey required />
-      <button pButton icon="pi pi-key" [label]="'apiKey.save' | translate" [raised]="true" severity="success"
-              (click)="this.localStore.saveData('apiKey', api)"></button>
-    </p-inputGroup>
+    <p-inputgroup>
+      <p-iftalabel>
+        <input id="apiKeyInput" pInputText variant="outlined" [(ngModel)]="api" #apiField="ngModel" #apiKey required class="w-full" fluid />
+        <label for="apiKeyInput">{{'apiKey.placeholder' | translate}}</label>
+      </p-iftalabel>
+      <p-inputgroup-addon class="flex-none">
+        <p-button icon="pi pi-key" [label]="'apiKey.save' | translate" severity="success" (click)="this.localStore.saveData('apiKey', api)" />
+      </p-inputgroup-addon>
+    </p-inputgroup>
 
-    <div *ngIf="apiField.invalid && apiField.touched" class="text-danger small">
+
+    <div *ngIf="apiField.invalid && apiField.touched">
       <ng-container *ngIf="apiField.errors?.['required']">
-        <p class="m-0">{{'apiKey.error' | translate}}</p>
+        <p class="m-0 text-red-500 text-sm">{{'apiKey.error' | translate}}</p>
       </ng-container>
     </div>
-<div [innerHTML]="'apiKey.instructions' | translate"></div>
-</div>
-</p-card>
-` }]
-  }], () => [{ type: LocalStorageService }], null);
+    <div [innerHTML]="'apiKey.instructions' | translate"></div>
+  </div>
+</p-card>` }]
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ApiKeyComponent, { className: "ApiKeyComponent", filePath: "src/app/template/api-key.component.ts", lineNumber: 18 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(ApiKeyComponent, { className: "ApiKeyComponent", filePath: "src/app/template/api-key.component.ts", lineNumber: 20 });
 })();
 
 // src/app/app.component.ts
@@ -24019,22 +38878,31 @@ function AppComponent_router_outlet_5_Template(rf, ctx) {
   }
 }
 var AppComponent = class _AppComponent {
-  CustomTitle;
-  titleService;
-  localStore;
-  primeng;
-  constructor(CustomTitle, titleService, localStore, primeng) {
-    this.CustomTitle = CustomTitle;
-    this.titleService = titleService;
-    this.localStore = localStore;
-    this.primeng = primeng;
-  }
+  CustomTitle = inject(CustomTitleStrategy);
+  titleService = inject(Title);
+  localStore = inject(LocalStorageService);
+  primeng = inject(PrimeNG);
+  router = inject(Router);
+  route = inject(ActivatedRoute);
   ngOnInit() {
     this.primeng.ripple.set(true);
+    this.route.queryParams.subscribe((params) => {
+      const apiKey = params["key"];
+      if (apiKey) {
+        this.localStore.saveData("apiKey", apiKey);
+        const allParams = __spreadValues({}, params);
+        delete allParams["key"];
+        this.router.navigate([], {
+          queryParams: allParams,
+          replaceUrl: true
+          // replaces the current history entry
+        });
+      }
+    });
     console.log("The initial API key is: ", this.localStore.getData("apiKey"));
   }
   static \u0275fac = function AppComponent_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _AppComponent)(\u0275\u0275directiveInject(CustomTitleStrategy), \u0275\u0275directiveInject(Title), \u0275\u0275directiveInject(LocalStorageService), \u0275\u0275directiveInject(PrimeNG));
+    return new (__ngFactoryType__ || _AppComponent)();
   };
   static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["ca-root"]], decls: 7, vars: 2, consts: [["vocab", "http://schema.org/", "typeof", "WebPage", 1, "mx-8", "my-2", "container"], [1, "container"], [4, "ngIf"]], template: function AppComponent_Template(rf, ctx) {
     if (rf & 1) {
@@ -24049,7 +38917,7 @@ var AppComponent = class _AppComponent {
       \u0275\u0275advance(4);
       \u0275\u0275property("ngIf", ctx.localStore.getData("apiKey") === null);
       \u0275\u0275advance();
-      \u0275\u0275property("ngIf", ctx.localStore.getData("apiKey") != null);
+      \u0275\u0275property("ngIf", ctx.localStore.getData("apiKey") !== null);
     }
   }, dependencies: [CommonModule, NgIf, RouterOutlet, RouterModule, TranslateModule, HeaderComponent, SidebarComponent, FooterComponent, ApiKeyComponent], encapsulation: 2 });
 };
@@ -24061,14 +38929,14 @@ var AppComponent = class _AppComponent {
     <ca-header></ca-header>
     <ca-sidebar></ca-sidebar>
     <ca-api-key *ngIf="this.localStore.getData('apiKey') === null"></ca-api-key>
-    <router-outlet *ngIf="this.localStore.getData('apiKey') != null"></router-outlet>
+    <router-outlet *ngIf="this.localStore.getData('apiKey') !== null"></router-outlet>
   </main>
   <ca-footer></ca-footer>
 </body>` }]
-  }], () => [{ type: CustomTitleStrategy }, { type: Title }, { type: LocalStorageService }, { type: PrimeNG }], null);
+  }], null, null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 21 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 20 });
 })();
 
 // src/main.ts
@@ -24077,7 +38945,7 @@ bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err))
 
 @angular/platform-browser/fesm2022/animations/async.mjs:
   (**
-   * @license Angular v19.2.14
+   * @license Angular v19.2.15
    * (c) 2010-2025 Google LLC. https://angular.io/
    * License: MIT
    *)
